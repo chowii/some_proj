@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2AC86D</color>
+
+    <color name="redPrimary">#D71D34</color>
+    <color name="greyLightPrimary">#CCCCCC</color>
+    <color name="greyDarkPrimary">#888888</color>
+    <color name="blueLightPrimary">#888888</color>
+    <color name="blackPrimary">#111111</color>
+    <color name="orangePrimary">#F58A18</color>
+    <color name="whitePrimary">#FFE6E6E6</color>
+
+    <color name="white">#FFF</color>
+
+    <color name="blueFacebookLogin">#1A78E5</color>
+    <color name="redGooglePlusLogin">#D1422B</color>
+
+
+
+
+
+</resources>
