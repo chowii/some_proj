@@ -6,7 +6,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
-import com.soho.sohoapp.dev.landing.LandingActivity
+import com.soho.sohoapp.dev.feature.landing.LandingActivity
 
 class SplashActivity : AppCompatActivity() {
 

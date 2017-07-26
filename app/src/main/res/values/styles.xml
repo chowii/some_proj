@@ -19,6 +19,7 @@
 
     <style name="Text" >
         <item name="fontPath">fonts/Gibson-Regular.ttf</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
     <style name="Text.Small">
@@ -55,6 +56,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="fontPath">fonts/Gibson-Regular.ttf</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
     <style name="Button.Green">
@@ -89,7 +91,7 @@
     </style>
 
     <style name="TextView.Title">
-        <item name="fontPath">fonts/Gibson-Bold.ttf</item>
+        <item name="fontPath">fonts/Gibson-Regular.ttf</item>
         <item name="android:textSize">15sp</item>
     </style>
 
@@ -106,7 +108,127 @@
         <item name="android:layout_marginLeft">50dp</item>
     </style>
 
-    // MARK: - ================== TextView Styles ==================
+    <style name="TextView.Header">
+        <item name="fontPath">fonts/Gibson-Bold.ttf</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextView.Header.Center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView.Title.Center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView.SubTitle">
+        <item name="fontPath">fonts/Gibson-Thin.ttf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="TextView.SubTitle.Center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView.Header.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.Title.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.Header.PrimaryWhite">
+        <item name="android:textColor">@color/whitePrimary</item>
+    </style>
+
+    <style name="TextView.Title.PrimaryWhite">
+        <item name="android:textColor">@color/whitePrimary</item>
+    </style>
+
+    <style name="TextView.Header.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Title.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.SubTitle.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.SubTitle.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Header.Center.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.Title.Center.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.Header.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Title.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.SubTitle.Center.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextView.SubTitle.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Large" parent="TextView.SubTitle">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextView.Message.Small" parent="TextView.SubTitle">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="TextView.Message.Large.Center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView.Message.Small.Center">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView.Message.Large.Center.HyperLink">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Large.Center.Dark" >
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Small.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Small.Center.HyperLink">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
+
+
+    // MARK: - ================== CustomView Styles ==================
 
     <style name="CustomView"></style>
 
@@ -117,6 +239,28 @@
         <item name="android:paddingRight">0dp</item>
 
     </style>
+
+    // MARK: - ================== EditText Styles ==================
+
+    <style name="EditText">
+        <item name="fontPath">fonts/Gibson-Light.ttf</item>
+    </style>
+
+    <style name="EditText.RegisterTheme">
+        <item name="colorControlNormal">@color/whitePrimary</item>
+        <item name="colorControlActivated">@color/whitePrimary</item>
+        <item name="colorControlHighlight">@color/whitePrimary</item>
+    </style>
+
+    <style name="EditText.RegisterStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/whitePrimary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
 
 
 </resources>

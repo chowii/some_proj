@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name1">Soho</string>
+    <string name="register_agreement_message">By signing up, you agree to Soho’s</string>
+    <string name="register_terms_of_condition">Terms of Condition</string>
+    <string name="register_button">SIGN UP</string>
 </resources>

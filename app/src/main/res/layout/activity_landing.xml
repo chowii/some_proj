@@ -1,9 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_container"
+    android:background="@drawable/building_facade"
     >
 
-</FrameLayout>
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The Property Network For Everyone"
+        style="@style/TextView.SubTitle.Dark"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/blackDarkPrimary"
+        android:drawableTop="@drawable/soho_logo"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blueFacebookLogin"
+            >
+
+            <ImageView
+                style="@style/CustomView.SocialLoginImageView"
+                />Invalidate Caches
+
+            <TextView
+                android:text="LOGIN WITH FACEBOOK"
+                style="@style/TextView.SocialLoginText"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/redGooglePlusLogin"
+            >
+
+            <ImageView
+                style="@style/CustomView.SocialLoginImageView"
+                />
+
+            <TextView
+                android:text="LOGIN WITH GOOGLE+"
+                android:textStyle="bold"
+                style="@style/TextView.SocialLoginText"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/login_social_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            >
+
+            <Button
+                android:id="@+id/signup"
+                style="@style/Button.UserAuth"
+                android:text="S I G N  U P"
+                />
+
+            <Button
+                android:id="@+id/login"
+                style="@style/Button.UserAuth"
+                android:text="L O G  I N"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
