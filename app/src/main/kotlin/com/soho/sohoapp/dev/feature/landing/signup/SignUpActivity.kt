@@ -13,6 +13,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.dev.R
+import com.soho.sohoapp.dev.helper.NavHelper
 import com.soho.sohoapp.dev.helper.SharedPrefsHelper
 import com.soho.sohoapp.dev.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -70,6 +71,7 @@ class SignUpActivity : AppCompatActivity() {
                             SharedPrefsHelper.getInstance().mUser = user
                             SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
                             initProgressDialog()!!.dismiss()
+                            NavHelper.showRegisterUserInfoActivity(this)
                         },
                         { error ->
                             Log.v("LOG_TAG---", "error")

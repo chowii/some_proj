@@ -3,6 +3,8 @@ package com.soho.sohoapp.dev.helper
 import android.app.Activity
 import android.content.Intent
 import com.soho.sohoapp.dev.feature.landing.LandingActivity
+import com.soho.sohoapp.dev.feature.landing.signup.RegisterUserInfoActivity
+import com.soho.sohoapp.dev.feature.landing.signup.SignUpActivity
 
 /**
  * Created by chowii on 25/7/17.
@@ -18,6 +20,13 @@ class NavHelper {
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             )
         }
+
+        fun showRegisterUserInfoActivity(activity: SignUpActivity) {
+            activity.startActivity(
+                    Intent(activity, RegisterUserInfoActivity::class.java)
+            )
+        }
+
 
     }
 

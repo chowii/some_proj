@@ -204,6 +204,11 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextView.Message.Large.Start">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:gravity">start</item>
+    </style>
+
     <style name="TextView.Message.Small.Center">
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
@@ -225,7 +230,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-
+    <style name="TextView.Message.Large.Start.LightWhite">
+        <item name="android:textColor">@color/whiteLight</item>
+    </style>
 
 
     // MARK: - ================== CustomView Styles ==================
@@ -237,7 +244,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">13dp</item>
         <item name="android:paddingRight">0dp</item>
-
     </style>
 
     // MARK: - ================== EditText Styles ==================
@@ -259,6 +265,25 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    // MARK: - ================== EditText Styles ==================
+
+    <style name="Checkbox" parent="AppTheme">
+        <item name="fontPath">fonts/Gibson-Light.ttf</item>
+    </style>
+
+
+    <style name="Checkbox.Theme" parent="AppTheme">
+        <item name="colorControlNormal">@color/whiteLight</item>
+        <item name="colorControlActivated">@color/whiteLight</item>
+    </style>
+
+    <style name="Checkbox.Style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginLeft">-5dp</item>
     </style>
 
 

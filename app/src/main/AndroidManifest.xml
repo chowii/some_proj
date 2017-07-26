@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.landing.LandingActivity" />
-        <activity android:name=".feature.landing.signup.SignUpActivity"/>
+        <activity android:name=".feature.landing.signup.SignUpActivity" />
+        <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
     </application>
 
 </manifest>
