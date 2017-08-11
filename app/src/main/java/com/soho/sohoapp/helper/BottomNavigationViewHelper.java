@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.helper;
+package com.soho.sohoapp.helper;
 
 /**
  * Created by Jovan on 13/4/17.

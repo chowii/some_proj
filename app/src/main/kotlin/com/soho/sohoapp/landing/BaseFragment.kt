@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.landing
+package com.soho.sohoapp.landing
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import com.soho.sohoapp.dev.helper.NavHelper
-import com.soho.sohoapp.dev.helper.SohoSnackbar
-import com.soho.sohoapp.dev.network.HttpStatusException
-import com.soho.sohoapp.dev.network.HttpErrorType.*
+import com.soho.sohoapp.helper.NavHelper
+import com.soho.sohoapp.helper.SohoSnackbar
+import com.soho.sohoapp.network.HttpStatusException
+import com.soho.sohoapp.network.HttpErrorType.*
 
 /**
  * Created by chowii on 25/7/17.

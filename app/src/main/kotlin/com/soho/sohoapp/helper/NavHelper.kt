@@ -1,8 +1,8 @@
-package com.soho.sohoapp.dev.helper
+package com.soho.sohoapp.helper
 
 import android.app.Activity
 import android.content.Intent
-import com.soho.sohoapp.dev.landing.LandingActivity
+import com.soho.sohoapp.landing.LandingActivity
 
 /**
  * Created by chowii on 25/7/17.

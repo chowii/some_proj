@@ -2,8 +2,8 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
 
-import com.soho.sohoapp.dev.R;
-import com.soho.sohoapp.dev.SplashActivity;
+import com.soho.sohoapp.R;
+import com.soho.sohoapp.SplashActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

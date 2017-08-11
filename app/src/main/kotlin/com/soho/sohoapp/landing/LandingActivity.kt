@@ -1,8 +1,8 @@
-package com.soho.sohoapp.dev.landing
+package com.soho.sohoapp.landing
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.soho.sohoapp.dev.R
+import com.soho.sohoapp.R
 
 
 /**

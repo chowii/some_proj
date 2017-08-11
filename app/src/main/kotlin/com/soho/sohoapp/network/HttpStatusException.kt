@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.network
+package com.soho.sohoapp.network
 
 import java.io.IOException
 

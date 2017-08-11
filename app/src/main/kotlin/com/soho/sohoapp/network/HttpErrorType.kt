@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.network
+package com.soho.sohoapp.network
 
 /**
  * Created by chowii on 25/7/17.

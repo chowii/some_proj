@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.helper
+package com.soho.sohoapp.helper
 
 import android.support.design.widget.Snackbar
 import android.view.Gravity.TOP

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name1">Soho</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_more">More</string>
+    <string name="tab_offers">Offers</string>
+    <string name="tab_manage">Manage</string>
+    <string name="tab_marketplace">Marketplace</string>
 </resources>
