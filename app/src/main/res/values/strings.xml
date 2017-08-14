@@ -3,4 +3,12 @@
     <string name="register_agreement_message">By signing up, you agree to Soho’s</string>
     <string name="register_terms_of_condition">Terms of Condition</string>
     <string name="register_button">SIGN UP</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_more">More</string>
+    <string name="tab_offers">Offers</string>
+    <string name="tab_manage">Manage</string>
+    <string name="tab_marketplace">Marketplace</string>
 </resources>

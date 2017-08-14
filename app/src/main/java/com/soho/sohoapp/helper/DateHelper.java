@@ -1,4 +1,4 @@
-package com.soho.sohoapp.dev.helper;
+package com.soho.sohoapp.helper;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

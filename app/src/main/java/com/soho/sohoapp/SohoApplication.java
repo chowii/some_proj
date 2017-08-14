@@ -3,9 +3,6 @@ package com.soho.sohoapp;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
-
-import com.soho.sohoapp.Constants;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
