@@ -6,17 +6,17 @@
     <color name="greyLightPrimary">#CCCCCC</color>
     <color name="greyDarkPrimary">#888888</color>
     <color name="blueLightPrimary">#888888</color>
-    <color name="blackPrimary">#111111</color>
+    <color name="blackLightPrimary">#111111</color>
     <color name="orangePrimary">#F58A18</color>
-    <color name="whitePrimary">#FFE6E6E6</color>
-
+    <color name="whitePrimary">#E6E6E6</color>
+s
     <color name="white">#FFF</color>
+    <color name="blackDarkPrimary">#2D2D2D</color>
 
     <color name="blueFacebookLogin">#1A78E5</color>
     <color name="redGooglePlusLogin">#D1422B</color>
 
-
-
+    <color name="whiteLight">#C5C2C2</color>
 
 
 </resources>
