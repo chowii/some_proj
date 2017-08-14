@@ -3,6 +3,7 @@ package com.soho.sohoapp;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -20,9 +21,10 @@ public class SohoApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        Dependencies.INSTANCE.init(this);
     }
 
-    public void createShortCut(){
+    public void createShortCut() {
         Intent shortcutintent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
         shortcutintent.putExtra("duplicate", false);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));

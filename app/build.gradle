@@ -86,5 +86,8 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
     testCompile 'junit:junit:4.12'
+
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
