@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,11 +27,11 @@ public class ApiClient {
 
     private static SohoService service;
 
-    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+//    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new AddAuthorizationInterceptor())
-            .addInterceptor(loggingInterceptor)
+//            .addInterceptor(loggingInterceptor)
             .addInterceptor(new StatusCodeInterceptor())
             .build();
 

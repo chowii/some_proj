@@ -34,7 +34,7 @@
 
             <ImageView
                 style="@style/CustomView.SocialLoginImageView"
-                />Invalidate Caches
+                />
 
             <TextView
                 android:text="LOGIN WITH FACEBOOK"

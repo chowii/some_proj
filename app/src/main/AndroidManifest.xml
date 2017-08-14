@@ -16,7 +16,6 @@
             android:name=".home.HomeActivity"
             >
         </activity>
-        <activity android:name=".landing.LandingActivity"/>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
