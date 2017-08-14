@@ -7,7 +7,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "dev.sohoapp.soho.com.soho"
+        applicationId "com.soho.sohoapp"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -68,6 +68,8 @@ dependencies {
     //RxAndroid
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
