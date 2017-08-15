@@ -13,4 +13,5 @@
     <string name="tab_marketplace">Marketplace</string>
     <string name="marketplace_buy_tab">Buy</string>
     <string name="marketplace_rent_tab">Rent</string>
+    <string name="market_place_search_box_all_suburb">All suburb</string>
 </resources>

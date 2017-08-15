@@ -1,85 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/image_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/whitePrimary"/>
+        android:layout_height="300dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/image_view_pager"
         android:orientation="vertical"
         android:layout_margin="20dp"
         >
 
         <TextView
             android:id="@+id/title_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextView.Title.Dark"
-            android:textSize="24sp"
-            android:paddingBottom="10dp"
-            android:text="12341323"
-
+            style="@style/PropertyTitle"
+            tools:text="Title"
             />
 
         <TextView
             android:id="@+id/street_address_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:paddingBottom="10dp"
-            android:text="12341323"
-
+            style="@style/PropertyAddress"
+            tools:text="Street Address"
             />
 
         <TextView
             android:id="@+id/suburb_address_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="12341323"
-
+            style="@style/PropertyAddress"
+            tools:text="Suburb Address"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/bedroom_text_view"
-                android:paddingRight="15dp"
-                android:drawablePadding="5dp"
-                android:text="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/PropertyDetails"
+                tools:text="1"
                 android:drawableRight="@drawable/bed"
                 />
 
             <TextView
                 android:id="@+id/bathroom_text_view"
-                android:paddingRight="15dp"
-                android:drawablePadding="5dp"
-                android:text="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/PropertyDetails"
+                tools:text="1"
                 android:drawableRight="@drawable/shower"
                 />
 
             <TextView
                 android:id="@+id/parking_text_view"
-                android:paddingRight="15dp"
-                android:drawablePadding="5dp"
-                android:text="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/PropertyDetails"
+                tools:text="1"
                 android:drawableRight="@drawable/car"
                 />
 
