@@ -2,12 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "dev.sohoapp.soho.com.soho"
+        applicationId "com.soho.sohoapp"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -19,6 +20,26 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'sentia'
+            keyPassword 'sentia'
+            storePassword 'sentia'
+            storeFile file('../keystore/sentia.jks')
+        }
+        release {
+            keyAlias 'sentia'
+            keyPassword 'sentia'
+            storePassword 'sentia'
+            storeFile file('../keystore/sentia.jks')
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     productFlavors {
@@ -89,5 +110,21 @@ dependencies {
 
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //Google Play Services
+    compile("com.google.android.gms:play-services-location:$playServicesVersion") {
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+        exclude module: 'firebase-core'
+    }
+
+    compile("com.google.android.gms:play-services-places:$playServicesVersion") {
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+    }
+
+    //UI binding
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 }
 
