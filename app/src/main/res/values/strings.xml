@@ -11,4 +11,6 @@
     <string name="tab_offers">Offers</string>
     <string name="tab_manage">Manage</string>
     <string name="tab_marketplace">Marketplace</string>
+    <string name="marketplace_buy_tab">Buy</string>
+    <string name="marketplace_rent_tab">Rent</string>
 </resources>
