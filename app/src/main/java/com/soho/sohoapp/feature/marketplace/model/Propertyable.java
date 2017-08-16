@@ -6,7 +6,7 @@ import com.soho.sohoapp.home.BaseModel;
  * Created by chowii on 14/8/17.
  */
 
-public interface Propertiable extends BaseModel {
+public interface Propertyable extends BaseModel {
 
     int id();
     String state();

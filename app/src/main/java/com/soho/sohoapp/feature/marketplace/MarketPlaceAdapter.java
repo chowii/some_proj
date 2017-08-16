@@ -16,16 +16,14 @@ import java.util.List;
 
 class MarketPlaceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private final List<BaseModel> propertyList;
+    private final List<? extends BaseModel> propertyList;
 
-    MarketPlaceAdapter(List<BaseModel> propertyList) {
+    MarketPlaceAdapter(List<? extends BaseModel> propertyList) {
         this.propertyList = propertyList;
     }
 
     @Override
-    public int getItemCount() {
-        return propertyList.size();
-    }
+    public int getItemCount() { return propertyList.size(); }
 
     @Override
     public int getItemViewType(int position) {
