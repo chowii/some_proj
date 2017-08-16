@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.soho.sohoapp.feature.marketplace.MarketPlaceFragment;
 import com.soho.sohoapp.home.more.MoreFragment;
 
 /**
@@ -18,7 +19,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //TODO: Return correct fragment for position @Sabbib
+        switch(position){
+            case 0: return MarketPlaceFragment.newInstance();
+        }
         return MoreFragment.newInstance();
     }
 
