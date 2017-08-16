@@ -11,6 +11,9 @@
     <string name="tab_offers">Offers</string>
     <string name="tab_manage">Manage</string>
     <string name="tab_marketplace">Marketplace</string>
+    <string name="marketplace_buy_tab">Buy</string>
+    <string name="marketplace_rent_tab">Rent</string>
+    <string name="market_place_search_box_all_suburb">All suburb</string>
 
     <!--Common strings start-->
     <string name="common_loading">Loading..</string>
@@ -23,5 +26,4 @@
     <string name="add_property_enter_the_address">Enter the address</string>
     <string name="add_property_empty_address_error">Please enter the address</string>
     <!--Add Property screen end-->
-
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/greyLightPrimary"
+    >
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorPrimary"
+        android:background="@color/white"
+        android:textAllCaps="false"
+        />
+
+    <LinearLayout
+        android:layout_below="@id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_marketplace_search_bar_layer"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/search_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/market_place_search_box_all_suburb"
+            android:layout_margin="15dp"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/tab_browse"
+            android:drawableRight="@drawable/tab_browse"
+            />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="70dp"
+            />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

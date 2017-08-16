@@ -54,7 +54,6 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-
     // MARK: - ================== Button Styles ==================
 
     <style name="Button" parent="Base.Widget.AppCompat.Button.Borderless">
@@ -95,13 +94,23 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    // MARK: - ================== Base TextView Styles =============
+
+    <style name="TextView.Header">
+        <item name="fontPath">fonts/Gibson-Bold.ttf</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="TextView.Title">
         <item name="fontPath">fonts/Gibson-Regular.ttf</item>
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="TextView.Title.Bold">
-        <item name="android:textStyle">bold</item>
+    <style name="TextView.SubTitle">
+        <item name="fontPath">fonts/Gibson-Thin.ttf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
     <style name="TextView.SocialLoginText" parent="TextView.Title.Bold">
@@ -113,11 +122,21 @@
         <item name="android:layout_marginLeft">50dp</item>
     </style>
 
-    <style name="TextView.Header">
-        <item name="fontPath">fonts/Gibson-Bold.ttf</item>
-        <item name="android:textSize">17sp</item>
-        <item name="android:textAllCaps">true</item>
+    // MARK: - ================== Bold TextView Styles =============
+
+    <style name="TextView.Header.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextView.Title.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextView.SubTitle.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    // MARK: - ================== Center TextView Styles ===========
 
     <style name="TextView.Header.Center">
         <item name="android:layout_gravity">center</item>
@@ -129,16 +148,12 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="TextView.SubTitle">
-        <item name="fontPath">fonts/Gibson-Thin.ttf</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingMultiplier">1.5</item>
-    </style>
-
     <style name="TextView.SubTitle.Center">
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
     </style>
+
+    // MARK: - ================== White TextView Styles ============
 
     <style name="TextView.Header.White">
         <item name="android:textColor">@color/white</item>
@@ -148,6 +163,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="TextView.SubTitle.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    // MARK: - ================== Primary White TextView Styles ====
+
     <style name="TextView.Header.PrimaryWhite">
         <item name="android:textColor">@color/whitePrimary</item>
     </style>
@@ -155,6 +176,12 @@
     <style name="TextView.Title.PrimaryWhite">
         <item name="android:textColor">@color/whitePrimary</item>
     </style>
+
+    <style name="TextView.SubTitle.PrimaryWhite">
+        <item name="android:textColor">@color/whitePrimary</item>
+    </style>
+
+    // MARK: - ================== Dark TextView Styles =============
 
     <style name="TextView.Header.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
@@ -164,13 +191,25 @@
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
-    <style name="TextView.SubTitle.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
     <style name="TextView.SubTitle.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
+
+    // MARK: - ================== Grey TextView Styles =============
+
+    <style name="TextView.Header.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
+    <style name="TextView.Title.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
+    <style name="TextView.SubTitle.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
+    // MARK: - ================== Center White TextView Styles =====
 
     <style name="TextView.Header.Center.White">
         <item name="android:textColor">@color/white</item>
@@ -180,6 +219,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="TextView.SubTitle.Center.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    // MARK: - ================== Center Dark TextView Styles ======
+
     <style name="TextView.Header.Center.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
@@ -188,13 +233,11 @@
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
-    <style name="TextView.SubTitle.Center.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
     <style name="TextView.SubTitle.Center.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
+
+    // MARK: - ================== Message TextView Styles ====
 
     <style name="TextView.Message.Large" parent="TextView.SubTitle">
         <item name="android:textSize">14sp</item>
@@ -239,6 +282,29 @@
         <item name="android:textColor">@color/whiteLight</item>
     </style>
 
+    // MARK: - ================== MarketPlace TextView Styles ======
+
+    <style name="PropertyTitle" parent="TextView.Header.Dark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="PropertyAddress" parent="TextView.SubTitle.Grey">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="PropertyDetails" parent="TextView.SubTitle.Dark">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
 
     // MARK: - ================== CustomView Styles ==================
 
@@ -277,7 +343,6 @@
     <style name="Checkbox" parent="AppTheme">
         <item name="fontPath">fonts/Gibson-Light.ttf</item>
     </style>
-
 
     <style name="Checkbox.Theme" parent="AppTheme">
         <item name="colorControlNormal">@color/whiteLight</item>
