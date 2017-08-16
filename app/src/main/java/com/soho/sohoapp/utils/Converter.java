@@ -2,11 +2,8 @@ package com.soho.sohoapp.utils;
 
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.maps.model.LatLng;
 import com.soho.sohoapp.data.PropertyAddress;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class Converter {
 
@@ -15,16 +12,13 @@ public final class Converter {
     }
 
     @NonNull
-    public static List<PropertyAddress> toAddressList(@NonNull List<AutocompletePrediction> predictionList) {
-        List<PropertyAddress> addressList = new ArrayList<>();
-        PropertyAddress address;
-
-        for (AutocompletePrediction prediction : predictionList) {
-            address = new PropertyAddress();
-            address.setFullAddress(prediction.getFullText(null).toString());
-            addressList.add(address);
+    public static PropertyAddress toPropertyAddress(LatLng latLng, String fullAddress) {
+        PropertyAddress address = new PropertyAddress();
+        address.setFullAddress(fullAddress);
+        if (latLng != null) {
+            address.setLat(latLng.latitude);
+            address.setLng(latLng.longitude);
         }
-
-        return addressList;
+        return address;
     }
 }

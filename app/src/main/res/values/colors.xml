@@ -21,5 +21,6 @@
     <color name="primaryText">@color/blackDarkPrimary</color>
     <color name="secondaryText">@color/greyDarkPrimary</color>
     <color name="hintText">@color/greyLightPrimary</color>
+    <color name="grayIcon">@color/greyLightPrimary</color>
 
 </resources>

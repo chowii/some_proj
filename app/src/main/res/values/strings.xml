@@ -12,11 +12,16 @@
     <string name="tab_manage">Manage</string>
     <string name="tab_marketplace">Marketplace</string>
 
+    <!--Common strings start-->
+    <string name="common_loading">Loading..</string>
+    <!--Common strings end-->
+
     <!--Add Property screen start-->
     <string name="add_property_toolbar_title">Add Property</string>
     <string name="add_property_autocomplete_hint">Enter your address</string>
     <string name="add_property_continue">Continue</string>
     <string name="add_property_enter_the_address">Enter the address</string>
+    <string name="add_property_empty_address_error">Please enter the address</string>
     <!--Add Property screen end-->
 
 </resources>

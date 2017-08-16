@@ -7,16 +7,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddPropertyActivity extends AppCompatActivity implements AddPropertyContract.View {
+public class AddPropertyActivity extends AbsActivity implements AddPropertyContract.View, AddressFragment.Listener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -89,5 +90,12 @@ public class AddPropertyActivity extends AppCompatActivity implements AddPropert
         } else {
             supportFragmentManager.popBackStack();
         }
+    }
+
+    @Override
+    public void OnAddressSelected(PropertyAddress propertyAddress) {
+        System.out.println("Address: " + propertyAddress.getFullAddress());
+        System.out.println("Address: " + propertyAddress.getLat());
+        System.out.println("Address: " + propertyAddress.getLng());
     }
 }

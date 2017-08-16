@@ -4,23 +4,39 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.Places;
+import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.landing.BaseFragment;
+import com.soho.sohoapp.location.AndroidLocationProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class AddressFragment extends BaseFragment {
+public class AddressFragment extends BaseFragment implements AddressContract.View {
     public static final String TAG = AddressFragment.class.getSimpleName();
+    private static final int GOOGLE_CLIENT_ID = 100;
 
     @BindView(R.id.autocomplete)
     AutoCompleteTextView autocomplete;
+
+    private AddressContract.ViewActionsListener actionsListener;
+    private AddressPresenter presenter;
+    private GoogleApiClient googleApiClient;
+    private LoadingDialog loadingDialog;
 
     @NonNull
     public static Fragment newInstance() {
@@ -39,37 +55,102 @@ public class AddressFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initAutocomplete();
 
-        PlaceAutocompleteAdapter mAdapter = new PlaceAutocompleteAdapter(getActivity(), null);
-        autocomplete.setAdapter(mAdapter);
+        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(googleApiClient));
+        presenter.startPresenting();
     }
 
-    private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            /*
-             Retrieve the place ID of the selected item from the Adapter.
-             The adapter stores each Place suggestion in a AutocompletePrediction from which we
-             read the place ID and title.
-//              */
-//            final AutocompletePrediction item = mAdapter.getItem(position);
-//            final String placeId = item.getPlaceId();
-//            final CharSequence primaryText = item.getPrimaryText(null);
-//
-//            Log.i(TAG, "Autocomplete item selected: " + primaryText);
-//
-//            /*
-//             Issue a request to the Places Geo Data API to retrieve a Place object with additional
-//             details about the place.
-//              */
-//            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-//                    .getPlaceById(mGoogleApiClient, placeId);
-//            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+    @Override
+    public void onDestroyView() {
+        presenter.stopPresenting();
+        super.onDestroyView();
+    }
 
-//            Toast.makeText(getApplicationContext(), "Clicked: " + primaryText,
-//                    Toast.LENGTH_SHORT.show();
-//            Log.i(TAG, "Called getPlaceById to get Place details for " + placeId);
-        }
-    };
+    @Override
+    public void setActionsListener(AddressContract.ViewActionsListener actionsListener) {
+        this.actionsListener = actionsListener;
+    }
 
+    @Override
+    public void showLoadingDialog() {
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.show();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        loadingDialog.dismiss();
+    }
+
+    @Override
+    public void showError(Throwable t) {
+        handleError(t);
+    }
+
+    @Override
+    public void setAddress(String s) {
+        autocomplete.setText("");
+    }
+
+    @Override
+    public void showEmptyLocationError() {
+        Toast.makeText(getContext(), R.string.add_property_empty_address_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getAddress() {
+        return autocomplete.getText().toString();
+    }
+
+    @Override
+    public void sendAddressToActivity(PropertyAddress address) {
+        Listener listener = (Listener) getActivity();
+        listener.OnAddressSelected(address);
+    }
+
+    @OnClick(R.id.clearAddress)
+    void clearAddress() {
+        actionsListener.onClearClicked();
+    }
+
+    @OnClick(R.id.done)
+    void done() {
+        actionsListener.onDoneClicked();
+    }
+
+    private void initAutocomplete() {
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity(), GOOGLE_CLIENT_ID, connectionResult -> Dependencies.INSTANCE.getLogger().w("Connection failed"))
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(getActivity(), googleApiClient, null);
+        autocomplete.setOnItemClickListener((parent, view, position, id) -> {
+            AutocompletePrediction item = adapter.getItem(position);
+            if (item != null) {
+                actionsListener.onAddressClicked(item.getPlaceId(), item.getFullText(null).toString());
+            }
+        });
+        autocomplete.setAdapter(adapter);
+        autocomplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //not needed here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                actionsListener.onAddressChanged(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //not needed here
+            }
+        });
+    }
+
+    public interface Listener {
+        void OnAddressSelected(PropertyAddress propertyAddress);
+    }
 }

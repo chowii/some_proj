@@ -32,7 +32,8 @@
 
         <activity
             android:name=".home.addproperty.AddPropertyActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
