@@ -11,9 +11,11 @@ import java.util.List;
 interface MarketPlaceContract {
 
     interface ViewPresentable {
-        void startPresenting();
+        void createPresentation();
+        void startPresenting(boolean isBuySection);
         void stopPresenting();
-        void onRefresh();
+        void destroyPresentation();
+        void onRefresh(boolean isBuySection);
     }
 
     interface ViewInteractable {
