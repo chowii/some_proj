@@ -23,6 +23,6 @@
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
 
-    <color name="whiteSelector">#d1d1d1</color>
+    <color name="whiteSelector">#c1c1c1</color>
 
 </resources>
