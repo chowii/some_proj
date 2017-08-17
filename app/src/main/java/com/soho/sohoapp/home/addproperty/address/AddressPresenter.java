@@ -24,10 +24,12 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
+        view.showKeyboard();
     }
 
     @Override
     public void stopPresenting() {
+        view.hideKeyboard();
         compositeSubscription.unsubscribe();
     }
 
@@ -57,6 +59,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
                 propertyAddress = new PropertyAddress();
             }
             propertyAddress.setFullAddress(address);
+            view.hideKeyboard();
             view.sendAddressToActivity(this.propertyAddress);
         }
     }

@@ -12,10 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--windowSoftInputMode is required here to close keyboard after exit from AddProperty screen-->
         <activity
             android:name=".home.HomeActivity"
-            >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
@@ -32,8 +34,7 @@
 
         <activity
             android:name=".home.addproperty.AddPropertyActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

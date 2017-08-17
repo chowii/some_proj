@@ -30,5 +30,9 @@ public class AddressContract {
         String getAddress();
 
         void sendAddressToActivity(PropertyAddress address);
+
+        void showKeyboard();
+
+        void hideKeyboard();
     }
 }
