@@ -86,6 +86,13 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="BorderWhiteButton" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/border_white_button</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="fontPath">fonts/Gibson-Light.ttf</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     // MARK: - ================== TextView Styles ==================
 
     <style name="TextView" parent="Text">

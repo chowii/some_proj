@@ -106,7 +106,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     @Override
     public void sendAddressToActivity(PropertyAddress address) {
         Listener listener = (Listener) getActivity();
-        listener.OnAddressSelected(address);
+        listener.onAddressSelected(address);
     }
 
     @OnClick(R.id.clearAddress)
@@ -151,6 +151,6 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     }
 
     public interface Listener {
-        void OnAddressSelected(PropertyAddress propertyAddress);
+        void onAddressSelected(PropertyAddress propertyAddress);
     }
 }

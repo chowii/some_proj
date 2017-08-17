@@ -25,5 +25,9 @@
     <string name="add_property_continue">Continue</string>
     <string name="add_property_enter_the_address">Enter the address</string>
     <string name="add_property_empty_address_error">Please enter the address</string>
+    <string name="add_property_relation_question">How are you related to the property?</string>
+    <string name="add_property_relation_owner">Owner</string>
+    <string name="add_property_relation_agent">Agent</string>
+    <string name="add_property_relation_other">Other</string>
     <!--Add Property screen end-->
 </resources>

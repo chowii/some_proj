@@ -8,16 +8,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
+import com.soho.sohoapp.home.addproperty.relation.RelationFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddPropertyActivity extends AbsActivity implements AddPropertyContract.View, AddressFragment.Listener {
+public class AddPropertyActivity extends AbsActivity implements AddPropertyContract.View, AddressFragment.Listener, RelationFragment.Listener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -69,10 +73,11 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
 
     @Override
     public void showRelationFragment() {
-//        if (relationFragment == null) {
-//            relationFragment = RelationFragment.newInstance();
-//        }
-//        showFragment(relationFragment, RelationFragment.TAG);
+        hideKeyboard();
+        if (relationFragment == null) {
+            relationFragment = RelationFragment.newInstance();
+        }
+        showFragment(relationFragment, RelationFragment.TAG);
     }
 
     private void showFragment(Fragment fragment, String fragmentTag) {
@@ -93,9 +98,22 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
     }
 
     @Override
-    public void OnAddressSelected(PropertyAddress propertyAddress) {
-        System.out.println("Address: " + propertyAddress.getFullAddress());
-        System.out.println("Address: " + propertyAddress.getLat());
-        System.out.println("Address: " + propertyAddress.getLng());
+    public void onAddressSelected(PropertyAddress propertyAddress) {
+        actionsListener.onAddressSelected(propertyAddress);
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+    }
+
+    @Override
+    public void onPropertyRoleSelected(PropertyRole propertyRole) {
+        actionsListener.onPropertyRoleSelected(propertyRole);
     }
 }
