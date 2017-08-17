@@ -103,7 +103,7 @@ public class AddPropertyActivity extends AbsActivity implements
         Fragment fragmentByTag = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragmentByTag == null) {
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_open_anim, R.anim.fragment_close_anim)
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.container, fragment)
                     .addToBackStack(fragmentTag)
                     .commitAllowingStateLoss();
