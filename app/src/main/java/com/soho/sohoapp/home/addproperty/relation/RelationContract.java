@@ -4,7 +4,7 @@ import com.soho.sohoapp.data.PropertyRole;
 
 import java.util.List;
 
-public class RelationContract {
+public interface RelationContract {
 
     interface ViewActionsListener {
         void onOwnerSelected();
