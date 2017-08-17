@@ -8,6 +8,7 @@ import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.QueryMap
 
 /**
  * Created by chowii on 25/7/17.
@@ -18,7 +19,7 @@ interface SohoService {
     fun register(@Body map: Map<String, String>): Observable<User>
 
     @POST("search/properties")
-    fun searchProperties(): Observable<java.util.List<SohoProperty>>
+    fun searchProperties(@QueryMap map: java.util.Map<String, Object>): Observable<java.util.List<SohoProperty>>
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>

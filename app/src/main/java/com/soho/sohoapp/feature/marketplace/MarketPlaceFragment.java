@@ -47,6 +47,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     SwipeRefreshLayout swipeLayout;
 
     MarketPlacePresenter presenter;
+    private boolean isBuySection;
 
     @Nullable
     @Override
@@ -55,8 +56,9 @@ public class MarketPlaceFragment extends BaseFragment implements
         ButterKnife.bind(this, view);
 
         presenter = new MarketPlacePresenter(this);
-        presenter.startPresenting();
-        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh());
+        presenter.createPresentation();
+        presenter.startPresenting(true);
+        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(isBuySection));
         return view;
     }
 
@@ -70,9 +72,13 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getText().toString().equalsIgnoreCase(getString(R.string.marketplace_buy_tab)))
-            presenter.startPresenting();
-        else presenter.startPresenting();
+        if(tab.getText().toString().equalsIgnoreCase(getString(R.string.marketplace_buy_tab))){
+            isBuySection = true;
+            presenter.startPresenting(isBuySection);
+        }else{
+            isBuySection = false;
+            presenter.startPresenting(isBuySection);
+        }
     }
 
     @Override
@@ -106,6 +112,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         presenter.stopPresenting();
+        presenter.destroyPresentation();
         presenter = null;
         super.onDestroyView();
     }
