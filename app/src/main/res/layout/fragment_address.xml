@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tall_white_window"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tall_white_window"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_property_enter_the_address"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+
+                android:background="@android:color/transparent"
+                android:hint="@string/add_property_autocomplete_hint"
+                android:singleLine="true"
+                android:textColor="@color/primaryText"
+                android:textColorHint="@color/hintText"
+                tools:ignore="RtlHardcoded"/>
+
+            <ImageView
+                android:id="@+id/clearAddress"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_clear_gray_drawable"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/done"
+            style="@style/Button.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_property_continue"
+            android:textAllCaps="true"/>
+    </LinearLayout>
+</RelativeLayout>

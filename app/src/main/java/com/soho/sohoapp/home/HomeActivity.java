@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.helper.BottomNavigationViewHelper;
+import com.soho.sohoapp.navigator.AndroidNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +64,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_property)
     void onAddPropertyClicked(View view) {
-        //TODO: Show add property flow @Julia
+        AndroidNavigator.newInstance(this).openAddPropertyScreen();
     }
 }

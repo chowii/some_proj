@@ -29,6 +29,16 @@
         <activity android:name=".feature.landing.LandingActivity" />
         <activity android:name=".feature.landing.signup.SignUpActivity" />
         <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
+
+        <activity
+            android:name=".home.addproperty.AddPropertyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4"/>
+
     </application>
 
 </manifest>

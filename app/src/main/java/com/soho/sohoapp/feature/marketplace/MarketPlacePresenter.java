@@ -1,9 +1,7 @@
 package com.soho.sohoapp.feature.marketplace;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.soho.sohoapp.R;
@@ -78,7 +76,4 @@ public class MarketPlacePresenter implements
 
     @Override
     public void onRefresh(boolean isBuySection){ loadData(isBuySection); }
-
-    String getString(@StringRes int resource){
-        return Resources.getSystem().getString(R.string.marketplace_buy_query_param); }
 }
