@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
 import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.data.PropertyRole;
+import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
 import java.util.ArrayList;
@@ -42,5 +44,22 @@ public final class Converter {
         propertyRole.setKey(result.key);
         propertyRole.setLabel(result.label);
         return propertyRole;
+    }
+
+    @NonNull
+    public static List<PropertyType> toPropertyTypeList(List<PropertyTypesResult> results) {
+        List<PropertyType> propertyTypeList = new ArrayList<>();
+        for (PropertyTypesResult result : results) {
+            propertyTypeList.add(toPropertyType(result));
+        }
+        return propertyTypeList;
+    }
+
+    @NonNull
+    private static PropertyType toPropertyType(PropertyTypesResult result) {
+        PropertyType propertyType = new PropertyType();
+        propertyType.setKey(result.key);
+        propertyType.setLabel(result.label);
+        return propertyType;
     }
 }

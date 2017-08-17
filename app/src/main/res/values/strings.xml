@@ -29,5 +29,6 @@
     <string name="add_property_relation_owner">Owner</string>
     <string name="add_property_relation_agent">Agent</string>
     <string name="add_property_relation_other">Other</string>
+    <string name="add_property_what_type_of_property">Oh, that\'s a nice suburb!\nWhat type of property is it?</string>
     <!--Add Property screen end-->
 </resources>

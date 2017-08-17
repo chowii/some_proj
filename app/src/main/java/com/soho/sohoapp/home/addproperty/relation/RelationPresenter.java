@@ -17,12 +17,11 @@ public class RelationPresenter implements AbsPresenter, RelationContract.ViewAct
 
     public RelationPresenter(RelationContract.View view) {
         this.view = view;
-        compositeDisposable =
-                new CompositeDisposable();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void startPresenting() {
+    public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
     }
 

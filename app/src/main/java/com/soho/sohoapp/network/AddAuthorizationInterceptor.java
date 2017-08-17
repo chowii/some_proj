@@ -21,7 +21,7 @@ public class AddAuthorizationInterceptor implements Interceptor {
 
         String authToken = SharedPrefsHelper.Companion.getInstance().getAuthToken();
         Request newRequest = request.newBuilder()
-                .addHeader("Authorization", authToken)
+                .addHeader("Authorization", "TKCpRQp8fb9Ycg6CbzqgfQqu")
                 .build();
 
         return chain.proceed(newRequest);

@@ -22,7 +22,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
     }
 
     @Override
-    public void startPresenting() {
+    public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
     }
 

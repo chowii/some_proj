@@ -58,14 +58,31 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
         initAutocomplete();
 
         presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(googleApiClient));
-        presenter.startPresenting();
+        presenter.startPresenting(savedInstanceState!=null);
     }
 
     @Override
     public void onDestroyView() {
         presenter.stopPresenting();
+        presenter = null;
+        if (googleApiClient != null) {
+            googleApiClient.stopAutoManage(getActivity());
+            googleApiClient.disconnect();
+            googleApiClient = null;
+        }
         super.onDestroyView();
     }
+
+//    @Override
+//    public void onDestroy() {
+//        presenter.stopPresenting();
+//        if (googleApiClient != null) {
+//            googleApiClient.stopAutoManage(getActivity());
+//            googleApiClient.disconnect();
+//            googleApiClient = null;
+//        }
+//        super.onDestroy();
+//    }
 
     @Override
     public void setActionsListener(AddressContract.ViewActionsListener actionsListener) {

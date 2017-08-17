@@ -34,7 +34,7 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_relation, container, false);
+        View view = inflater.inflate(R.layout.fragment_relation_to_property, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -44,12 +44,13 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new RelationPresenter(this);
-        presenter.startPresenting();
+        presenter.startPresenting(savedInstanceState!=null);
     }
 
     @Override
     public void onDestroyView() {
         presenter.stopPresenting();
+        presenter = null;
         super.onDestroyView();
     }
 

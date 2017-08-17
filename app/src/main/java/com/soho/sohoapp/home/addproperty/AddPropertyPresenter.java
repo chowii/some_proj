@@ -3,6 +3,7 @@ package com.soho.sohoapp.home.addproperty;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.data.PropertyRole;
+import com.soho.sohoapp.data.PropertyType;
 
 public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewActionsListener {
     private final AddPropertyContract.View view;
@@ -12,9 +13,11 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     }
 
     @Override
-    public void startPresenting() {
+    public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
-        view.showAddressFragment();
+        if(!fromConfigChanges) {
+            view.showAddressFragment();
+        }
     }
 
     @Override
@@ -31,6 +34,12 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     @Override
     public void onPropertyRoleSelected(PropertyRole propertyRole) {
         //todo: save property role
-        //todo: show next params
+        view.showPropertyTypeFragment();
+    }
+
+    @Override
+    public void onPropertyTypeSelected(PropertyType propertyType) {
+        //todo: save property type
+        System.out.println("Property Type: " + propertyType.getLabel());
     }
 }

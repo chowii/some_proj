@@ -15,21 +15,25 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.data.PropertyRole;
+import com.soho.sohoapp.data.PropertyType;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
 import com.soho.sohoapp.home.addproperty.relation.RelationFragment;
+import com.soho.sohoapp.home.addproperty.type.PropertyTypeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddPropertyActivity extends AbsActivity implements AddPropertyContract.View, AddressFragment.Listener, RelationFragment.Listener {
+public class AddPropertyActivity extends AbsActivity implements
+        AddPropertyContract.View,
+        AddressFragment.Listener,
+        RelationFragment.Listener,
+        PropertyTypeFragment.Listener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     private AddPropertyPresenter presenter;
     private AddPropertyContract.ViewActionsListener actionsListener;
-    private Fragment addressFragment;
-    private Fragment relationFragment;
 
     @NonNull
     public static Intent createIntent(Context context) {
@@ -44,7 +48,7 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
         toolbar.setNavigationOnClickListener(v -> closeCurrentScreen());
 
         presenter = new AddPropertyPresenter(this);
-        presenter.startPresenting();
+        presenter.startPresenting(savedInstanceState != null);
     }
 
     @Override
@@ -65,27 +69,45 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
 
     @Override
     public void showAddressFragment() {
-        if (addressFragment == null) {
-            addressFragment = AddressFragment.newInstance();
-        }
-        showFragment(addressFragment, AddressFragment.TAG);
+        showFragment(AddressFragment.newInstance(), AddressFragment.TAG);
     }
 
     @Override
     public void showRelationFragment() {
         hideKeyboard();
-        if (relationFragment == null) {
-            relationFragment = RelationFragment.newInstance();
-        }
-        showFragment(relationFragment, RelationFragment.TAG);
+        showFragment(RelationFragment.newInstance(), RelationFragment.TAG);
+    }
+
+    @Override
+    public void showPropertyTypeFragment() {
+        showFragment(PropertyTypeFragment.newInstance(), PropertyTypeFragment.TAG);
+    }
+
+    @Override
+    public void onAddressSelected(PropertyAddress propertyAddress) {
+        actionsListener.onAddressSelected(propertyAddress);
+    }
+
+    @Override
+    public void onPropertyRoleSelected(PropertyRole propertyRole) {
+        actionsListener.onPropertyRoleSelected(propertyRole);
+    }
+
+    @Override
+    public void onPropertyTypeSelected(PropertyType propertyType) {
+        actionsListener.onPropertyTypeSelected(propertyType);
     }
 
     private void showFragment(Fragment fragment, String fragmentTag) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, fragment)
-                .addToBackStack(fragmentTag)
-                .commitAllowingStateLoss();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragmentByTag = fragmentManager.findFragmentByTag(fragmentTag);
+        if (fragmentByTag == null) {
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.fragment_open_anim, R.anim.fragment_close_anim)
+                    .replace(R.id.container, fragment)
+                    .addToBackStack(fragmentTag)
+                    .commitAllowingStateLoss();
+        }
     }
 
     private void closeCurrentScreen() {
@@ -95,11 +117,6 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
         } else {
             supportFragmentManager.popBackStack();
         }
-    }
-
-    @Override
-    public void onAddressSelected(PropertyAddress propertyAddress) {
-        actionsListener.onAddressSelected(propertyAddress);
     }
 
     private void hideKeyboard() {
@@ -112,8 +129,4 @@ public class AddPropertyActivity extends AbsActivity implements AddPropertyContr
         }
     }
 
-    @Override
-    public void onPropertyRoleSelected(PropertyRole propertyRole) {
-        actionsListener.onPropertyRoleSelected(propertyRole);
-    }
 }
