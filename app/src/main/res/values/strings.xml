@@ -53,8 +53,8 @@
         <item quantity="other">%d Bathrooms</item>
     </plurals>
     <plurals name="rooms_picker_carspots">
-        <item quantity="one">%d Capspot</item>
-        <item quantity="other">%d Capspots</item>
+        <item quantity="one">%d Carspot</item>
+        <item quantity="other">%d Carspots</item>
     </plurals>
     <!--Rooms number picker screen end-->
 
