@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
@@ -102,13 +103,26 @@ public class AddPropertyActivity extends AbsActivity implements
         actionsListener.onPropertyTypeSelected(propertyType);
     }
 
+    @Override
+    public void onHomeOrInvestmentSelected(boolean isInvestment) {
+        actionsListener.onHomeOrInvestmentSelected(isInvestment);
+    }
+
     private void showFragment(Fragment fragment, String fragmentTag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragmentByTag = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragmentByTag == null) {
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.container, fragment)
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            //animations is not needed for first fragment
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                transaction.setCustomAnimations(R.anim.enter_from_right,
+                        R.anim.exit_to_left,
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right);
+            }
+
+            transaction.replace(R.id.container, fragment)
                     .addToBackStack(fragmentTag)
                     .commitAllowingStateLoss();
         }
@@ -121,10 +135,5 @@ public class AddPropertyActivity extends AbsActivity implements
         } else {
             supportFragmentManager.popBackStack();
         }
-    }
-
-    @Override
-    public void onHomeOrInvestmentSelected(boolean isInvestment) {
-        actionsListener.onHomeOrInvestmentSelected(isInvestment);
     }
 }
