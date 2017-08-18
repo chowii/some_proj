@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplace.model.SohoProperty;
+import com.soho.sohoapp.feature.marketplaceview.model.SohoProperty;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

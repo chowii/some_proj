@@ -1,10 +1,7 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
-import android.content.res.Resources;
-import android.support.annotation.StringRes;
 import android.util.Log;
 
-import com.soho.sohoapp.R;
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.HashMap;

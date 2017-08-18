@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.soho.sohoapp.feature.marketplace.MarketPlaceFragment;
+import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
 import com.soho.sohoapp.home.more.MoreFragment;
 
 /**

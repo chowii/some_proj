@@ -131,5 +131,7 @@ dependencies {
     //UI binding
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
+
+    compile 'com.wefika:horizontal-picker:1.1.1'
 }
 

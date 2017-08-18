@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

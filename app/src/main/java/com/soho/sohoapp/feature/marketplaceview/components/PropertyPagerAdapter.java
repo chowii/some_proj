@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

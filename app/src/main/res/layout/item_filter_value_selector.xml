@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/subtract_button"
+        style="@style/FilterButton"
+        android:text="@string/item_filter_value_selector_subtract_text"
+        />
+
+    <TextView
+        android:id="@+id/value_text_view"
+        android:layout_width="0dp"
+        style="@style/FilterPropertyRegular"
+        android:layout_weight="1"
+        android:text="@string/item_filter_value_selector_default_value"
+        />
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_gravity="end"
+        style="@style/FilterButton"
+        android:text="@string/item_filter_value_selector_add_text"
+        />
+
+</LinearLayout>

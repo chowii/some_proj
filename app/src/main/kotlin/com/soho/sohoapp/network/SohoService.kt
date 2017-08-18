@@ -1,7 +1,7 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.dev.feature.User
-import com.soho.sohoapp.feature.marketplace.model.SohoProperty
+import com.soho.sohoapp.feature.marketplaceview.model.SohoProperty
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
 import retrofit2.http.Body

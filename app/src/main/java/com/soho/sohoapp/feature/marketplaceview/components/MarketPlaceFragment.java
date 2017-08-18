@@ -1,6 +1,7 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.landing.BaseFragment;
 
@@ -20,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chowii on 14/8/17.
@@ -45,6 +49,15 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @BindView(R.id.swipeLayout)
     SwipeRefreshLayout swipeLayout;
+
+    @BindView(R.id.search_text)
+    TextView tv;
+
+    @OnClick(R.id.search_text)
+    public void onSearchTextClicked(View view){
+        Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
+        startActivity(filterIntent);
+    }
 
     MarketPlacePresenter presenter;
     private boolean isBuySection;

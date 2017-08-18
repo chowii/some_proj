@@ -3,12 +3,12 @@
     <color name="colorPrimary">#2AC86D</color>
 
     <color name="redPrimary">#D71D34</color>
-    <color name="greyLightPrimary">#AAA</color>
+    <color name="greyLightPrimary">#BEBABA</color>
     <color name="greyDarkPrimary">#888888</color>
     <color name="blueLightPrimary">#888888</color>
     <color name="blackLightPrimary">#111111</color>
     <color name="orangePrimary">#F58A18</color>
-    <color name="whitePrimary">#E6E6E6</color>
+    <color name="whitePrimary">#F8F8F8</color>
 
     <color name="white">#FFF</color>
     <color name="blackDarkPrimary">#2D2D2D</color>
