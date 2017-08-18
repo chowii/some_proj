@@ -14,6 +14,8 @@ public interface AddPropertyContract {
         void onPropertyTypeSelected(PropertyType propertyType);
 
         void onHomeOrInvestmentSelected(boolean isInvestment);
+
+        void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
     }
 
     interface View {
@@ -26,5 +28,9 @@ public interface AddPropertyContract {
         void showPropertyTypeFragment();
 
         void showInvestmentFragment(boolean forOwner);
+
+        void showRoomsFragment();
+
+        void showMessage(String s);
     }
 }

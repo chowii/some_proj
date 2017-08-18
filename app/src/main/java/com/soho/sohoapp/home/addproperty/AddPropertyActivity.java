@@ -18,6 +18,7 @@ import com.soho.sohoapp.data.PropertyType;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
 import com.soho.sohoapp.home.addproperty.investment.InvestmentFragment;
 import com.soho.sohoapp.home.addproperty.relation.RelationFragment;
+import com.soho.sohoapp.home.addproperty.rooms.RoomsFragment;
 import com.soho.sohoapp.home.addproperty.type.PropertyTypeFragment;
 
 import butterknife.BindView;
@@ -28,7 +29,8 @@ public class AddPropertyActivity extends AbsActivity implements
         AddressFragment.Listener,
         RelationFragment.Listener,
         PropertyTypeFragment.Listener,
-        InvestmentFragment.Listener {
+        InvestmentFragment.Listener,
+        RoomsFragment.Listener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -89,6 +91,16 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
+    public void showRoomsFragment() {
+        showFragment(RoomsFragment.newInstance(), RoomsFragment.TAG);
+    }
+
+    @Override
+    public void showMessage(String s) {
+        showToast(s);
+    }
+
+    @Override
     public void onAddressSelected(PropertyAddress propertyAddress) {
         actionsListener.onAddressSelected(propertyAddress);
     }
@@ -135,5 +147,10 @@ public class AddPropertyActivity extends AbsActivity implements
         } else {
             supportFragmentManager.popBackStack();
         }
+    }
+
+    @Override
+    public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
+        actionsListener.onRoomsSelected(bedrooms, bathrooms, carspots);
     }
 }

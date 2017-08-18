@@ -36,5 +36,26 @@
     <string name="add_property_agent_home_question">Is this a home or investment property?</string>
     <string name="add_property_agent_home_button">It\'s the owner\'s home</string>
     <string name="add_property_agent_investment_button">It\'s an investment property</string>
+    <string name="add_property_how_many_rooms">How many Bedrooms, Bathrooms and Carspots?</string>
+    <string name="add_property">Add Property</string>
     <!--Add Property screen end-->
+
+    <!--Rooms number picker screen start-->
+    <string name="rooms_picker_decrease">-</string>
+    <string name="rooms_picker_increase">+</string>
+    <string name="rooms_picker_studio">Studio</string>
+    <plurals name="rooms_picker_bedrooms">
+        <item quantity="one">%d Bedroom</item>
+        <item quantity="other">%d Bedrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_bathrooms">
+        <item quantity="one">%d Bathroom</item>
+        <item quantity="other">%d Bathrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_carspots">
+        <item quantity="one">%d Capspot</item>
+        <item quantity="other">%d Capspots</item>
+    </plurals>
+    <!--Rooms number picker screen end-->
+
 </resources>

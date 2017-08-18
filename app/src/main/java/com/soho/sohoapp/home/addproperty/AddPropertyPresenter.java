@@ -47,6 +47,12 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     @Override
     public void onHomeOrInvestmentSelected(boolean isInvestment) {
         //todo: save result
-        System.out.println("Investment " + isInvestment);
+        view.showRoomsFragment();
+    }
+
+    @Override
+    public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
+        //todo: save result
+        view.showMessage("Ready!");
     }
 }
