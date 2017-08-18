@@ -3,6 +3,8 @@ package com.soho.sohoapp.data;
 import android.support.annotation.NonNull;
 
 public class PropertyRole {
+    public static final String OWNER = "Owner";
+    public static final String AGENT = "Agent";
     private String key;
     private String label;
 
@@ -26,7 +28,7 @@ public class PropertyRole {
     public static PropertyRole createOwnerRole() {
         PropertyRole propertyRole = new PropertyRole();
         propertyRole.setKey("owner");
-        propertyRole.setLabel("Owner");
+        propertyRole.setLabel(OWNER);
         return propertyRole;
     }
 
@@ -34,7 +36,7 @@ public class PropertyRole {
     public static PropertyRole createAgentRole() {
         PropertyRole propertyRole = new PropertyRole();
         propertyRole.setKey("agent");
-        propertyRole.setLabel("Agent");
+        propertyRole.setLabel(AGENT);
         return propertyRole;
     }
 }

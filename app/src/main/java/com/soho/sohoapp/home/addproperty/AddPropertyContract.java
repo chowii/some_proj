@@ -12,6 +12,8 @@ public interface AddPropertyContract {
         void onPropertyRoleSelected(PropertyRole propertyRole);
 
         void onPropertyTypeSelected(PropertyType propertyType);
+
+        void onHomeOrInvestmentSelected(boolean isInvestment);
     }
 
     interface View {
@@ -22,5 +24,7 @@ public interface AddPropertyContract {
         void showRelationFragment();
 
         void showPropertyTypeFragment();
+
+        void showInvestmentFragment(boolean forOwner);
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -23,9 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/add_property_owner_home_question"
             android:textColor="@color/primaryText"
-            android:textSize="16sp"
-            tools:text="Do you live in this property?"/>
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/home"
@@ -33,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="It's the owner's home"/>
+            android:text="@string/add_property_owner_home_button"/>
 
         <Button
             android:id="@+id/investment"
@@ -41,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="It's an investment property"/>
+            android:text="@string/add_property_owner_investment_button"/>
 
     </LinearLayout>
 </RelativeLayout>

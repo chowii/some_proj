@@ -15,6 +15,7 @@ import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.data.PropertyRole;
 import com.soho.sohoapp.data.PropertyType;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
+import com.soho.sohoapp.home.addproperty.investment.InvestmentFragment;
 import com.soho.sohoapp.home.addproperty.relation.RelationFragment;
 import com.soho.sohoapp.home.addproperty.type.PropertyTypeFragment;
 
@@ -25,7 +26,8 @@ public class AddPropertyActivity extends AbsActivity implements
         AddPropertyContract.View,
         AddressFragment.Listener,
         RelationFragment.Listener,
-        PropertyTypeFragment.Listener {
+        PropertyTypeFragment.Listener,
+        InvestmentFragment.Listener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -81,6 +83,11 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
+    public void showInvestmentFragment(boolean forOwner) {
+        showFragment(InvestmentFragment.newInstance(forOwner), InvestmentFragment.TAG);
+    }
+
+    @Override
     public void onAddressSelected(PropertyAddress propertyAddress) {
         actionsListener.onAddressSelected(propertyAddress);
     }
@@ -116,4 +123,8 @@ public class AddPropertyActivity extends AbsActivity implements
         }
     }
 
+    @Override
+    public void onHomeOrInvestmentSelected(boolean isInvestment) {
+        actionsListener.onHomeOrInvestmentSelected(isInvestment);
+    }
 }

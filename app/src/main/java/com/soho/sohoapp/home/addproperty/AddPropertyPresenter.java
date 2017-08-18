@@ -7,6 +7,7 @@ import com.soho.sohoapp.data.PropertyType;
 
 public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewActionsListener {
     private final AddPropertyContract.View view;
+    private PropertyRole propertyRole;
 
     public AddPropertyPresenter(AddPropertyContract.View view) {
         this.view = view;
@@ -15,7 +16,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
-        if(!fromConfigChanges) {
+        if (!fromConfigChanges) {
             view.showAddressFragment();
         }
     }
@@ -33,13 +34,19 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
 
     @Override
     public void onPropertyRoleSelected(PropertyRole propertyRole) {
-        //todo: save property role
+        this.propertyRole = propertyRole;
         view.showPropertyTypeFragment();
     }
 
     @Override
     public void onPropertyTypeSelected(PropertyType propertyType) {
         //todo: save property type
-        System.out.println("Property Type: " + propertyType.getLabel());
+        view.showInvestmentFragment(PropertyRole.OWNER.equals(propertyRole.getLabel()));
+    }
+
+    @Override
+    public void onHomeOrInvestmentSelected(boolean isInvestment) {
+        //todo: save result
+        System.out.println("Investment " + isInvestment);
     }
 }

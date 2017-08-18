@@ -30,5 +30,11 @@
     <string name="add_property_relation_agent">Agent</string>
     <string name="add_property_relation_other">Other</string>
     <string name="add_property_what_type_of_property">Oh, that\'s a nice suburb!\nWhat type of property is it?</string>
+    <string name="add_property_owner_home_question">Do you live in this property?</string>
+    <string name="add_property_owner_home_button">Yes - It\'s my home</string>
+    <string name="add_property_owner_investment_button">No - It\'s an investment</string>
+    <string name="add_property_agent_home_question">Is this a home or investment property?</string>
+    <string name="add_property_agent_home_button">It\'s the owner\'s home</string>
+    <string name="add_property_agent_investment_button">It\'s an investment property</string>
     <!--Add Property screen end-->
 </resources>
