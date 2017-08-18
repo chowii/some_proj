@@ -1,8 +1,8 @@
 package com.soho.sohoapp;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.multidex.MultiDexApplication;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -10,7 +10,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by chowii on 25/7/17.
  */
 
-public class SohoApplication extends MultiDexApplication {
+public class SohoApplication extends Application {
 
     @Override
     public void onCreate() {
