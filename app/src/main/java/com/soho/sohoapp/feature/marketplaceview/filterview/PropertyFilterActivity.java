@@ -49,6 +49,10 @@ public class PropertyFilterActivity extends AppCompatActivity {
         modelList.add(() -> R.layout.item_filter_range);
 
 
+        modelList.add(new HeaderItem("Property Type"));
+        modelList.add(() -> R.layout.item_filter_checkbox);
+
+
         recyclerView.setAdapter(new PropertyFilterAdapter(modelList));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
