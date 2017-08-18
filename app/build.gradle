@@ -11,7 +11,6 @@ android {
         applicationId "com.soho.sohoapp"
         minSdkVersion 17
         targetSdkVersion 25
-        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -123,9 +122,6 @@ dependencies {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
     }
-
-    //Multidex
-    compile 'com.android.support:multidex:1.0.1'
 
     //UI binding
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
