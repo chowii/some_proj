@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
 import com.soho.sohoapp.home.BaseModel;
 
@@ -50,7 +51,15 @@ public class PropertyFilterActivity extends AppCompatActivity {
 
 
         modelList.add(new HeaderItem("Property Type"));
-        modelList.add(() -> R.layout.item_filter_checkbox);
+        modelList.add(new CheckboxTitle("All"));
+        modelList.add(new CheckboxTitle("House"));
+        modelList.add(new CheckboxTitle("Unit or Apartment"));
+        modelList.add(new CheckboxTitle("Duplex or Semi"));
+        modelList.add(new CheckboxTitle("Terrace"));
+        modelList.add(new CheckboxTitle("Condo"));
+
+        modelList.add(new HeaderItem("test"));
+        modelList.add(() -> R.layout.item_filter_test);
 
 
         recyclerView.setAdapter(new PropertyFilterAdapter(modelList));

@@ -290,6 +290,11 @@
         <item name="android:gravity">start</item>
     </style>
 
+    <style name="TextView.Message.Small.Start">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:gravity">start</item>
+    </style>
+
     <style name="TextView.Message.Small.Center">
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
@@ -300,6 +305,10 @@
     </style>
 
     <style name="TextView.Message.Large.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Small.Start.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
@@ -346,7 +355,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/greyLightPrimary</item>
         <item name="android:background">@color/whitePrimary</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="FilterPropertyRegular" parent="TextView.SubTitle.Center">
@@ -356,6 +366,15 @@
         <item name="android:background">@color/whitePrimary</item>
         <item name="android:padding">15dp</item>
     </style>
+
+    <style name="FilterCheckboxItem" parent="TextView.Message.Small.Start.Dark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+
 
     // MARK: - ================== CustomView Styles ==================
 

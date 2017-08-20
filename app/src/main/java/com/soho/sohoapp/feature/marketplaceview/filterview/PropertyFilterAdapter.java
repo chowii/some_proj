@@ -10,6 +10,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRangeViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.RecyclerViewViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.TextSearchViewHolder;
 import com.soho.sohoapp.home.BaseModel;
 
@@ -51,6 +52,8 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 return new FilterRangeViewHolder(itemView);
             case R.layout.item_filter_checkbox:
                 return new FilterCheckboxViewHolder(itemView);
+            case R.layout.item_filter_test:
+                return new RecyclerViewViewHolder(itemView);
             default:
                 return null;
         }

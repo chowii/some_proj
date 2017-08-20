@@ -16,11 +16,15 @@
         android:textStyle="bold"
         />
 
+    <include layout="@layout/horizontal_rule"/>
+
     <TextView
         android:text="to"
         style="@style/TextView.SubTitle.Center.Grey"
         android:padding="20dp"
         />
+
+    <include layout="@layout/horizontal_rule"/>
 
     <com.wefika.horizontalpicker.HorizontalPicker
         android:id="@+id/picker_to"
@@ -33,5 +37,6 @@
         android:textStyle="bold"
         />
 
+    <include layout="@layout/horizontal_rule"/>
 
 </LinearLayout>

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:id="@+id/header_text_view"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/FilterPropertyHeader"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:text="Header"
-    />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/header_text_view"
+        style="@style/FilterPropertyHeader"
+        tools:text="Header"
+        />
+
+    <include layout="@layout/horizontal_rule"/>
+
+</LinearLayout>
