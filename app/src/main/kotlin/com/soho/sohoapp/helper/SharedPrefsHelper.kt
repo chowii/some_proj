@@ -1,7 +1,10 @@
 package com.soho.sohoapp.helper
 
+import android.content.Context
 import android.content.SharedPreferences
-import com.soho.sohoapp.dev.feature.User
+import android.preference.PreferenceManager
+import android.util.Log
+import com.soho.sohoapp.feature.User
 
 /**
  * Created by chowii on 25/7/17.
@@ -14,12 +17,21 @@ class SharedPrefsHelper {
         private val INSTANCE : SharedPrefsHelper = SharedPrefsHelper()
         fun getInstance(): SharedPrefsHelper = INSTANCE
 
+        private var sharedPreference: SharedPreferences? = null
+        fun init(context: Context){
+            sharedPreference =  PreferenceManager.getDefaultSharedPreferences(context)
+        }
     }
-    private var sharedPreference: SharedPreferences? = null
 
     var mUser: User? = null
 
-    var authToken: String = sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, "") ?: ""
+    var authToken: String?
+        set(value) {
+            sharedPreference?.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
+            Log.d("LOG_TAG---", sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, ""))
+        }get() {
+        return sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, "") ?: ""
+    }
 
 
 
