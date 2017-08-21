@@ -12,14 +12,16 @@ import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
-import com.soho.sohoapp.data.PropertyAddress;
-import com.soho.sohoapp.data.PropertyRole;
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.home.addproperty.address.AddressFragment;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyRole;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.home.addproperty.investment.InvestmentFragment;
 import com.soho.sohoapp.home.addproperty.relation.RelationFragment;
 import com.soho.sohoapp.home.addproperty.rooms.RoomsFragment;
 import com.soho.sohoapp.home.addproperty.type.PropertyTypeFragment;
+import com.soho.sohoapp.navigator.AndroidNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +39,7 @@ public class AddPropertyActivity extends AbsActivity implements
 
     private AddPropertyPresenter presenter;
     private AddPropertyContract.ViewActionsListener actionsListener;
+    private LoadingDialog loadingDialog;
 
     @NonNull
     public static Intent createIntent(Context context) {
@@ -50,7 +53,7 @@ public class AddPropertyActivity extends AbsActivity implements
         ButterKnife.bind(this);
         toolbar.setNavigationOnClickListener(v -> closeCurrentScreen());
 
-        presenter = new AddPropertyPresenter(this);
+        presenter = new AddPropertyPresenter(this, AndroidNavigator.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -119,6 +122,18 @@ public class AddPropertyActivity extends AbsActivity implements
     public void onHomeOrInvestmentSelected(boolean isInvestment) {
         actionsListener.onHomeOrInvestmentSelected(isInvestment);
     }
+
+    @Override
+    public void showLoadingDialog() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        loadingDialog.dismiss();
+    }
+
 
     private void showFragment(Fragment fragment, String fragmentTag) {
         FragmentManager fragmentManager = getSupportFragmentManager();

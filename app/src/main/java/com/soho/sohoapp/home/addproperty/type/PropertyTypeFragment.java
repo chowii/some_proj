@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import java.util.List;

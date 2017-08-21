@@ -1,7 +1,7 @@
 package com.soho.sohoapp.network
 
+import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.dev.feature.User
-import com.soho.sohoapp.feature.marketplace.model.SohoProperty
 import com.soho.sohoapp.network.results.PropertyTypesResult
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
@@ -26,6 +26,9 @@ interface SohoService {
 
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>
+
+    @POST("properties")
+    fun createProperty(@QueryMap map: java.util.Map<String,Object>): Observable<SohoProperty>
 
 }
 

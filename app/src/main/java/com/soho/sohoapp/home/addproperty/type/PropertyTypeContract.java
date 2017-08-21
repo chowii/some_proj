@@ -2,7 +2,7 @@ package com.soho.sohoapp.home.addproperty.type;
 
 import android.support.annotation.NonNull;
 
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 
 import java.util.List;
 

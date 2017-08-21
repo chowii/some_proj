@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplace.model.SohoProperty;
+import com.soho.sohoapp.data.SohoProperty;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

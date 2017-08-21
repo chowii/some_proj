@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 
 import java.util.ArrayList;
 import java.util.List;
