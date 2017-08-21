@@ -11,6 +11,9 @@
         android:id="@+id/header_text_view"
         style="@style/FilterPropertyHeader"
         tools:text="Header"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
         />
 
     <include layout="@layout/horizontal_rule"/>

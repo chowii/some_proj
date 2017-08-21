@@ -54,6 +54,8 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 return new FilterCheckboxViewHolder(itemView);
             case R.layout.item_filter_test:
                 return new RecyclerViewViewHolder(itemView);
+            case R.layout.item_radio_group:
+                return new RadioGroupViewHolder(itemView);
             default:
                 return null;
         }

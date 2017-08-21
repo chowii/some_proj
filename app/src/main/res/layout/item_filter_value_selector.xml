@@ -2,12 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
 
     <Button
         android:id="@+id/subtract_button"
         style="@style/FilterButton"
         android:text="@string/item_filter_value_selector_subtract_text"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
         />
 
     <TextView
@@ -23,6 +28,9 @@
         android:layout_gravity="end"
         style="@style/FilterButton"
         android:text="@string/item_filter_value_selector_add_text"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
         />
 
 </LinearLayout>

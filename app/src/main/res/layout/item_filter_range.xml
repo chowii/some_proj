@@ -14,6 +14,10 @@
         android:paddingBottom="20dp"
         app:sideItems="2"
         android:textStyle="bold"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
         />
 
     <include layout="@layout/horizontal_rule"/>
@@ -35,6 +39,10 @@
         android:paddingBottom="20dp"
         app:sideItems="2"
         android:textStyle="bold"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
         />
 
     <include layout="@layout/horizontal_rule"/>
