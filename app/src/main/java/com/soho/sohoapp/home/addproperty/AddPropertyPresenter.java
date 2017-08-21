@@ -91,6 +91,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                 }, throwable -> {
                     view.showMessage("error during creating new property");
                     view.hideLoadingDialog();
+                    throwable.printStackTrace();
                 });
         compositeDisposable.add(disposable);
     }

@@ -58,4 +58,10 @@
     </plurals>
     <!--Rooms number picker screen end-->
 
+    <!--Portfolio screen start-->
+    <string name="portfolio_owner">Owner</string>
+    <string name="portfolio_manager">Manager</string>
+    <string name="portfolio_requests">Requests</string>
+    <!--Portfolio screen end-->
+
 </resources>
