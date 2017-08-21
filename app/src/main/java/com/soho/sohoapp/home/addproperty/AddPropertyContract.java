@@ -1,8 +1,8 @@
 package com.soho.sohoapp.home.addproperty;
 
-import com.soho.sohoapp.data.PropertyAddress;
-import com.soho.sohoapp.data.PropertyRole;
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyRole;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 
 public interface AddPropertyContract {
 
@@ -32,5 +32,9 @@ public interface AddPropertyContract {
         void showRoomsFragment();
 
         void showMessage(String s);
+
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
     }
 }

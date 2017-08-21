@@ -1,7 +1,7 @@
 package com.soho.sohoapp.home.addproperty.type;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.data.PropertyType;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 

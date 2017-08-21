@@ -1,7 +1,7 @@
 package com.soho.sohoapp.home.addproperty.relation;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.data.PropertyRole;
+import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 

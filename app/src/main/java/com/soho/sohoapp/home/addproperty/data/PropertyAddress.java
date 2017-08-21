@@ -1,4 +1,4 @@
-package com.soho.sohoapp.data;
+package com.soho.sohoapp.home.addproperty.data;
 
 public class PropertyAddress {
     private String suburb;

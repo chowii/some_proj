@@ -1,4 +1,4 @@
-package com.soho.sohoapp.data;
+package com.soho.sohoapp.home.addproperty.data;
 
 import android.support.annotation.NonNull;
 

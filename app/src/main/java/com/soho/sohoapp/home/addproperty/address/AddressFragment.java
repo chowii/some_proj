@@ -19,7 +19,7 @@ import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.location.AndroidLocationProvider;
@@ -59,7 +59,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
         super.onViewCreated(view, savedInstanceState);
         initAutocomplete();
 
-        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(googleApiClient));
+        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(getContext(), googleApiClient));
         presenter.startPresenting(savedInstanceState != null);
     }
 
