@@ -1,9 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel;
 
-import android.content.Context;
-
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.home.BaseFormModel;
 
 import java.util.List;
 
@@ -11,19 +9,41 @@ import java.util.List;
  * Created by chowii on 21/8/17.
  */
 
-public class RadioGroupView implements BaseModel {
+public class RadioGroupView<T> extends BaseFormModel<T> {
 
-    private final List<String> group;
+    List<T> group;
+    private boolean isAdded;
+    private int mIndex;
 
-    public RadioGroupView(Context context, List<String> group) {
-        this.group = group;
+    private RadioGroupView(){}
+
+    public RadioGroupView(List<T> object) {
+        group = object;
     }
 
-    public List<String> getGroup() {
+    public List<T> getGroup() {
         return group;
     }
 
     public int getSize(){ return group.size(); }
+
+    @Override
+    protected T getModelValue() { return group.get(mIndex); }
+
+    @Override
+    protected void setModelValue(T value) { isAdded = group.add(value); }
+
+    public T get(int index){
+        mIndex = index;
+        T value = getModelValue();
+        mIndex = -1;
+        return value;
+    }
+
+    public boolean add(T item){
+        setModelValue(item);
+        return isAdded;
+    }
 
     @Override
     public int getItemViewType() {

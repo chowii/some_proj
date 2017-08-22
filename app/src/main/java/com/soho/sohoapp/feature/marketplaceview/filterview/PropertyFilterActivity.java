@@ -6,17 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGroupView;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
+import com.soho.sohoapp.home.BaseFormModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +42,20 @@ public class PropertyFilterActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
 
-        final List<BaseModel> modelList = new ArrayList<>();
+        final List<BaseFormModel> modelList = new ArrayList<>();
 
-        modelList.add(new HeaderItem(getString(R.string.filter_suburb_search_header)));
-        modelList.add(() -> R.layout.item_filter_search);
+        modelList.add(new HeaderItem<String>(getString(R.string.filter_suburb_search_header)));
+        modelList.add(new FilterSearchItem());
 
         modelList.add(new HeaderItem(getString(R.string.filter_radius_header)));
-        modelList.add(() -> R.layout.item_filter_value_selector);
+        modelList.add(new ValueSelectorItem<Integer>());
 
         modelList.add(new HeaderItem(getString(R.string.filter_price_range_header)));
-        modelList.add(() -> R.layout.item_filter_range);
+        modelList.add(new RangeItem<ArrayList<String>>());
 
 
         modelList.add(new HeaderItem("Property Type"));
+        CheckboxTitle checkboxTitle = new CheckboxTitle("All");
         modelList.add(new CheckboxTitle("All"));
         modelList.add(new CheckboxTitle("House"));
         modelList.add(new CheckboxTitle("Unit or Apartment"));
@@ -66,13 +65,10 @@ public class PropertyFilterActivity extends AppCompatActivity {
 
         modelList.add(new HeaderItem("Property Status"));
 
-//        modelList.add(new HeaderItem("Test"));
-//        modelList.add(() -> R.layout.item_filter_test);
-
         List<String> group = new ArrayList<>();
         group.add("All properties");
         group.add("Properties actively for Sale or Auction");
-        RadioGroupView v = new RadioGroupView(this, group);
+        RadioGroupView<String> v = new RadioGroupView(group);
         modelList.add(v);
 
 

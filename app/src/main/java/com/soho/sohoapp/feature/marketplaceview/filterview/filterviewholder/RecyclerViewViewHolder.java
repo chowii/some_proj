@@ -4,14 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.soho.sohoapp.BaseViewHolder;
+import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceAdapter;
-import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.home.BaseFormModel;
 import com.soho.sohoapp.network.ApiClient;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -22,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by chowii on 20/08/17.
  */
 
-public class RecyclerViewViewHolder extends BaseViewHolder {
+public class RecyclerViewViewHolder extends BaseFormViewHolder {
 
     @BindView(R.id.recyclerViewTest)
     RecyclerView recyclerView;
@@ -32,7 +30,7 @@ public class RecyclerViewViewHolder extends BaseViewHolder {
     }
 
     @Override
-    public void onBindViewHolder(BaseModel model) {
+    public void onBindViewHolder(BaseFormModel model) {
         HashMap<String, Object> s = new HashMap<>();
         s.put("by_listing_type", "sale/auction");
         ApiClient.getService().searchProperties(s)

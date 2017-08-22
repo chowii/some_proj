@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -7,9 +7,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.soho.sohoapp.BaseViewHolder;
+import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGroupView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,14 +20,13 @@ import butterknife.ButterKnife;
  * Created by chowii on 21/8/17.
  */
 
-class RadioGroupViewHolder extends BaseViewHolder<RadioGroupView> {
+public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupView<String>> {
     private final Context context;
 
     @BindView(R.id.group)
-    RadioGroup group;
+    RadioGroup radioGroup;
 
-
-    RadioGroupViewHolder(View itemView) {
+    public FilterRadioGroupViewHolder(View itemView) {
         super(itemView);
         context = itemView.getContext();
         ButterKnife.bind(this, itemView);
@@ -37,10 +38,10 @@ class RadioGroupViewHolder extends BaseViewHolder<RadioGroupView> {
                 RadioGroup.LayoutParams.MATCH_PARENT,
                 RadioGroup.LayoutParams.WRAP_CONTENT);
 
-        model.getGroup().stream().filter(
-                radioText -> group.getChildCount() <= model.getSize()).forEach(radioText ->
-            addRadioButton(layoutParams, radioText)
-        );
+        for(String radioText : (List<String>)model.getGroup()){
+            if(radioGroup.getChildCount() <= model.getSize())
+                addRadioButton(layoutParams, radioText);
+        }
     }
 
     private void addRadioButton(LinearLayout.LayoutParams layoutParams, String radioText) {
@@ -53,6 +54,6 @@ class RadioGroupViewHolder extends BaseViewHolder<RadioGroupView> {
                 R.drawable.seperator,
                 R.drawable.seperator
         );
-        group.addView(button, layoutParams);
+        radioGroup.addView(button, layoutParams);
     }
 }

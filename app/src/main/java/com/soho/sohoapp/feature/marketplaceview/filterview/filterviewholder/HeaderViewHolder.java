@@ -3,7 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder;
 import android.view.View;
 import android.widget.TextView;
 
-import com.soho.sohoapp.BaseViewHolder;
+import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
 
@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by chowii on 18/8/17.
  */
 
-public class HeaderViewHolder extends BaseViewHolder<HeaderItem> {
+public class HeaderViewHolder extends BaseFormViewHolder<HeaderItem> {
 
     @BindView(R.id.header_text_view)
     TextView headerTextView;
