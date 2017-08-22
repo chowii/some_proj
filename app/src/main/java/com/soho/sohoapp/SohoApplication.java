@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
 
+import com.crashlytics.android.Crashlytics;
+import com.soho.sohoapp.helper.SharedPrefsHelper;
+
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -15,7 +19,9 @@ public class SohoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         Constants.init(this);
+        SharedPrefsHelper.Companion.init(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Gibson-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)

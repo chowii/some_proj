@@ -28,6 +28,7 @@
         </activity>
         <activity android:name=".feature.landing.LandingActivity" />
         <activity android:name=".feature.landing.signup.SignUpActivity" />
+        <activity android:name=".feature.landing.LoginActivity" />
         <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
 
         <activity
@@ -38,6 +39,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />
     </application>
 
 </manifest>

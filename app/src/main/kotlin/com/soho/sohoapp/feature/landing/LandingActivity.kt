@@ -7,6 +7,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity
+import com.soho.sohoapp.helper.NavHelper
 
 
 /**
@@ -18,6 +19,11 @@ class LandingActivity: AppCompatActivity() {
     fun onSignUpClicked(){
         startActivity(Intent(this, SignUpActivity::class.java))
     }
+
+    @OnClick(R.id.login)
+    fun onLoginClicked() {
+        startActivity(Intent(this, LoginActivity::class.java))
+            }
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
