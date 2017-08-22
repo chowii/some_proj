@@ -11,11 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.landing.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PortfolioFragment extends Fragment {
+public class PortfolioFragment extends BaseFragment {
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewPager)

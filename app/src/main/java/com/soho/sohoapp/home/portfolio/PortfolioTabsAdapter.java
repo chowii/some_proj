@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.portfolio.owner.PortfolioOwnerFragment;
 
 public class PortfolioTabsAdapter extends FragmentPagerAdapter {
 
@@ -27,13 +26,13 @@ public class PortfolioTabsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case ITEM_ONE:
-                return PortfolioOwnerFragment.newInstance();
+                return PortfolioListFragment.newInstance(PortfolioListFragment.Mode.OWNER);
             case ITEM_TWO:
-                return PortfolioOwnerFragment.newInstance();
+                return PortfolioListFragment.newInstance(PortfolioListFragment.Mode.MANAGER);
             case ITEM_THREE:
-                return PortfolioOwnerFragment.newInstance();
+                return PortfolioListFragment.newInstance(PortfolioListFragment.Mode.OWNER);
             default:
-                return PortfolioOwnerFragment.newInstance();
+                return null;
         }
     }
 

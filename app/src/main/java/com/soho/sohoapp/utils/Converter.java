@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.network.Keys;
+import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
@@ -45,6 +47,17 @@ public final class Converter {
         map.put(Keys.Property.ADDRESS2, propertyAddress.getAddressLine2());
 
         return map;
+    }
+
+    @NonNull
+    public static PortfolioCategory toPortfolioCategory(@NonNull PortfolioCategoryResult result) {
+        PortfolioCategory portfolioCategory = new PortfolioCategory();
+        portfolioCategory.setName(result.name);
+        portfolioCategory.setUserId(result.userId);
+        portfolioCategory.setPropertyCount(result.propertyCount);
+        portfolioCategory.setEstimatedValue(result.estimatedValue);
+        portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
+        return portfolioCategory;
     }
 
     @NonNull
