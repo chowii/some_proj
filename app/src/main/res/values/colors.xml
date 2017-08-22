@@ -24,5 +24,6 @@
     <color name="grayIcon">@color/greyLightPrimary</color>
 
     <color name="whiteSelector">#c1c1c1</color>
+    <color name="whiteSemitransparent">#80ffffff</color>
 
 </resources>
