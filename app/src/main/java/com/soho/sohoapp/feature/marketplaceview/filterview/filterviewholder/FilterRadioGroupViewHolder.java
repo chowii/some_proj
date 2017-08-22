@@ -48,12 +48,6 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
         RadioButton button = new RadioButton(context);
         button.setText(radioText);
         button.setGravity(Gravity.CENTER);
-        button.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.seperator,
-                R.drawable.seperator,
-                R.drawable.seperator,
-                R.drawable.seperator
-        );
         radioGroup.addView(button, layoutParams);
     }
 }

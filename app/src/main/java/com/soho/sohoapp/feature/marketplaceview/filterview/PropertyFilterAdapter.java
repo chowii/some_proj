@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseFormViewHolder;
-import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRadioGroupViewHolder;
@@ -18,9 +17,7 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.Text
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle;
 import com.soho.sohoapp.home.BaseFormModel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by chowii on 18/8/17.
@@ -66,37 +63,54 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
                 return null;
         }
     }
-    List<FilterCheckboxViewHolder> checkboxViewHolderList;
+    FilterCheckboxViewHolder view;
 
     @Override
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(filterItems.get(position));
 
         if(holder instanceof FilterCheckboxViewHolder){
-            FilterCheckboxViewHolder view = (FilterCheckboxViewHolder) holder;
-            checkboxViewHolderList = new ArrayList<>();
-
-            checkboxViewHolderList.add(view);
+            view = (FilterCheckboxViewHolder) holder;
 
             String checkBoxText = view.titleTextBox.getText().toString();
             view.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checkBoxText.equalsIgnoreCase("All")){
-                        for(BaseFormModel formModel: filterItems)
-                            if(formModel instanceof CheckboxTitle){
-                                CheckboxTitle c = (CheckboxTitle) formModel;
-                                if(c.getTitle().equalsIgnoreCase("all")){
-                                    c.setValue(view.checkBox.isChecked());
-                                }else{
-                                    if(!c.getTitle().equalsIgnoreCase("All")){
-                                        c.setValue(false);
-                                    }
-                                }
-                            }
-                        notifyDataSetChanged();
+                    for(BaseFormModel formModel: filterItems)
+                        toggleCheckbox(formModel, checkBoxText.equalsIgnoreCase("All"));
+
+                    notifyDataSetChanged();
+                }
+
+                private void toggleCheckbox(BaseFormModel formModel, boolean isCheckboxAll) {
+                    if(formModel instanceof CheckboxTitle){
+                        CheckboxTitle model = (CheckboxTitle) formModel;
+                        if(isCheckboxAll)
+                            toggleCheckboxAll(model, model.getTitle().equalsIgnoreCase("all"), isCheckboxAll);
+                        else toggleCheckboxAll(model, model.getTitle().equalsIgnoreCase("all"), isCheckboxAll);
                     }
                 }
+
+                /**
+                 * Toggles when the checkbox with text "All" is selected, all the other checkboxes are
+                 * checked off and checks itself off when the checkbox is checked on.
+                 * Toggles off checkbox with text "All" when a checkbox is clicked, and checks itself off
+                 * when checked on.
+                 *
+                 * @param model
+                 * @param isToggleWhenCheckIsAll true if the clicked item is the same item on the list of items
+                 * @param isCheckAll true if the clicked item is the checkbox with text "All"
+                 */
+                private void toggleCheckboxAll(CheckboxTitle model, boolean isToggleWhenCheckIsAll, boolean isCheckAll){
+                    if(isCheckAll)
+                        if(isToggleWhenCheckIsAll) model.setValue(view.checkBox.isChecked());
+                        else model.setValue(isToggleWhenCheckIsAll);
+                    else if(!isToggleWhenCheckIsAll){
+                        if(model.getTitle().equalsIgnoreCase(view.titleTextBox.getText().toString()))
+                            model.setValue(view.checkBox.isChecked());
+                    }else model.setValue(false);
+                }
+
             });
         }
 
