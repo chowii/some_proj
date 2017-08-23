@@ -13,8 +13,8 @@
         style="@style/FilterCheckboxItem"
         android:text="All"
         android:background="@color/white"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="@dimen/filter_padding_left"
+        android:paddingRight="@dimen/filter_padding_right"
         />
 
     <CheckBox

@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterButtonItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRadioGroupViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRangeViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterToggleItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterValueSelectorViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.RecyclerViewViewHolder;
@@ -25,9 +27,9 @@ import java.util.List;
 
 class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
 
-    List<BaseFormModel> filterItems;
+    List<? extends BaseFormModel> filterItems;
 
-    PropertyFilterAdapter(List<BaseFormModel> filterItems) {
+    PropertyFilterAdapter(List<? extends BaseFormModel> filterItems) {
         this.filterItems = filterItems;
     }
 
@@ -59,6 +61,11 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
                 return new RecyclerViewViewHolder(itemView);
             case R.layout.item_radio_group:
                 return new FilterRadioGroupViewHolder(itemView);
+            case R.layout.item_filter_toggle:
+                return new FilterToggleItemViewHolder(itemView);
+            case R.layout.item_button:
+            case R.layout.item_favourite_button:
+                return new FilterButtonItemViewHolder(itemView);
             default:
                 return null;
         }
@@ -80,6 +87,7 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
                         toggleCheckbox(formModel, checkBoxText.equalsIgnoreCase("All"));
 
                     notifyDataSetChanged();
+                    view = null;
                 }
 
                 private void toggleCheckbox(BaseFormModel formModel, boolean isCheckboxAll) {
@@ -106,7 +114,7 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
                         if(isToggleWhenCheckIsAll) model.setValue(view.checkBox.isChecked());
                         else model.setValue(isToggleWhenCheckIsAll);
                     else if(!isToggleWhenCheckIsAll){
-                        if(model.getTitle().equalsIgnoreCase(view.titleTextBox.getText().toString()))
+                        if(model.getTitle().equalsIgnoreCase(checkBoxText))
                             model.setValue(view.checkBox.isChecked());
                     }else model.setValue(false);
                 }

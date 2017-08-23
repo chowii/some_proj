@@ -10,9 +10,8 @@
         android:id="@+id/subtract_button"
         style="@style/FilterButton"
         android:text="@string/item_filter_value_selector_subtract_text"
-        android:paddingLeft="15dp"
-
-        android:paddingRight="15dp"
+        android:paddingLeft="@dimen/filter_padding_left"
+        android:paddingRight="@dimen/filter_padding_right"
         />
 
     <TextView
@@ -28,9 +27,6 @@
         android:layout_gravity="end"
         style="@style/FilterButton"
         android:text="@string/item_filter_value_selector_add_text"
-        android:paddingLeft="15dp"
-
-        android:paddingRight="15dp"
         />
 
 </LinearLayout>

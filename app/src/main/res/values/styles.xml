@@ -10,6 +10,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
+    <style name="AppTheme.Base.SwitchCompat" parent="AppTheme">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -365,6 +369,11 @@
         <item name="android:textColor">@color/blackDarkPrimary</item>
         <item name="android:background">@color/white</item>
         <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="FilterPropertyRegular.Left">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">left</item>
     </style>
 
     <style name="FilterCheckboxItem" parent="TextView.Message.Small.Start.Dark">

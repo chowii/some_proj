@@ -1,6 +1,7 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.dev.feature.User
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle
 import com.soho.sohoapp.feature.marketplaceview.model.SohoProperty
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
@@ -22,6 +23,10 @@ interface SohoService {
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>
+
+    @GET("options/property_types")
+    fun getPropertyTypes(): Observable<List<CheckboxTitle>>
+
 }
 
 

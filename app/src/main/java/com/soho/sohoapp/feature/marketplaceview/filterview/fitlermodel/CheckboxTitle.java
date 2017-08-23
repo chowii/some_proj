@@ -9,20 +9,21 @@ import com.soho.sohoapp.home.BaseFormModel;
 
 public class CheckboxTitle extends BaseFormModel<Boolean> {
 
-    private String title = "";
-    private boolean value = false;
+    private boolean itemValue = false;
 
+    private String key = "";
+    private String label = "";
 
-    public CheckboxTitle(String title) { this.title = title; }
+    public CheckboxTitle(String title) { this.label = title; }
 
-    public void setTitle(String title){ this.title = title; }
-    public String getTitle(){ return title; }
-
-    @Override
-    protected Boolean getModelValue() { return value; }
+    public void setTitle(String title){ this.key = title; }
+    public String getTitle(){ return label == null ? "" : label; }
 
     @Override
-    protected void setModelValue(Boolean value) { this.value = value; }
+    protected Boolean getModelValue() { return itemValue; }
+
+    @Override
+    protected void setModelValue(Boolean value) { this.itemValue = value; }
 
     public boolean getValue(){ return getModelValue(); }
     public void setValue(boolean value){ setModelValue(value); }
