@@ -23,7 +23,9 @@
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
 
-    <color name="whiteSelector">#c1c1c1</color>
+    <color name="greenButtonSelector">#22a45a</color>
+    <color name="whiteSelector">#d2d2d2</color>
     <color name="whiteSemitransparent">#80ffffff</color>
+    <color name="lightBackground">#EAEAEA</color>
 
 </resources>

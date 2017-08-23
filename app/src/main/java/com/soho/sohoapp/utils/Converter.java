@@ -7,6 +7,7 @@ import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
@@ -50,14 +51,21 @@ public final class Converter {
     }
 
     @NonNull
-    public static PortfolioCategory toPortfolioCategory(@NonNull PortfolioCategoryResult result) {
-        PortfolioCategory portfolioCategory = new PortfolioCategory();
-        portfolioCategory.setName(result.name);
-        portfolioCategory.setUserId(result.userId);
-        portfolioCategory.setPropertyCount(result.propertyCount);
-        portfolioCategory.setEstimatedValue(result.estimatedValue);
-        portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
-        return portfolioCategory;
+    public static List<PortfolioCategory> toPortfolioCategoryList(@NonNull List<PortfolioCategoryResult> results) {
+        List<PortfolioCategory> portfolioCategoryList = new ArrayList<>();
+        for (PortfolioCategoryResult result : results) {
+            portfolioCategoryList.add(toPortfolioCategory(result));
+        }
+        return portfolioCategoryList;
+    }
+
+    @NonNull
+    public static List<PortfolioManagerCategory> toPortfolioManagerCategoryList(@NonNull List<PortfolioCategoryResult> results) {
+        List<PortfolioManagerCategory> portfolioCategoryList = new ArrayList<>();
+        for (PortfolioCategoryResult result : results) {
+            portfolioCategoryList.add(toPortfolioManagerCategory(result));
+        }
+        return portfolioCategoryList;
     }
 
     @NonNull
@@ -111,4 +119,26 @@ public final class Converter {
         propertyRole.setLabel(result.label);
         return propertyRole;
     }
+
+    @NonNull
+    private static PortfolioCategory toPortfolioCategory(PortfolioCategoryResult result) {
+        PortfolioCategory portfolioCategory = new PortfolioCategory();
+        portfolioCategory.setName(result.name);
+        portfolioCategory.setUserId(result.userId);
+        portfolioCategory.setPropertyCount(result.propertyCount);
+        portfolioCategory.setEstimatedValue(result.estimatedValue);
+        return portfolioCategory;
+    }
+
+    @NonNull
+    private static PortfolioManagerCategory toPortfolioManagerCategory(PortfolioCategoryResult result) {
+        PortfolioManagerCategory portfolioCategory = new PortfolioManagerCategory();
+        portfolioCategory.setName(result.name);
+        portfolioCategory.setUserId(result.userId);
+        portfolioCategory.setPropertyCount(result.propertyCount);
+        portfolioCategory.setEstimatedValue(result.estimatedValue);
+        portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
+        return portfolioCategory;
+    }
+
 }

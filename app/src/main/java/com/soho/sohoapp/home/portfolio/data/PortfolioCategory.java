@@ -1,11 +1,13 @@
 package com.soho.sohoapp.home.portfolio.data;
 
-public class PortfolioCategory {
+import com.soho.sohoapp.R;
+import com.soho.sohoapp.home.BaseModel;
+
+public class PortfolioCategory implements BaseModel {
     private String name;
     private int userId;
     private int propertyCount;
     private double estimatedValue;
-    private int publicPropertiesCount;
 
     public String getName() {
         return name;
@@ -39,11 +41,8 @@ public class PortfolioCategory {
         this.estimatedValue = estimatedValue;
     }
 
-    public int getPublicPropertiesCount() {
-        return publicPropertiesCount;
-    }
-
-    public void setPublicPropertiesCount(int publicPropertiesCount) {
-        this.publicPropertiesCount = publicPropertiesCount;
+    @Override
+    public int getItemViewType() {
+        return R.layout.item_owner_portfolio;
     }
 }

@@ -2,6 +2,7 @@ package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
@@ -31,7 +32,13 @@ interface SohoService {
     fun updateUserProfile(@Body map: Map<String, String>): Observable<User>
 
     @POST("properties")
-    fun createProperty(@QueryMap map: java.util.Map<String,Object>): Observable<SohoProperty>
+    fun createProperty(@QueryMap map: java.util.Map<String, Object>): Observable<SohoProperty>
+
+    @GET("portfolios/owned")
+    fun getOwnedPortfolios(): Observable<List<PortfolioCategoryResult>>
+
+    @GET("portfolios/managed")
+    fun getManagedPortfolios(): Observable<List<PortfolioCategoryResult>>
 
 }
 

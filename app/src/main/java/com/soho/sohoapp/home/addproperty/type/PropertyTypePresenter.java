@@ -23,7 +23,8 @@ public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract
     public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
         view.showLoadingIndicator();
-        Disposable disposable = ApiClient.getService().getPropertyTypes().map(Converter::toPropertyTypeList)
+        Disposable disposable = ApiClient.getService().getPropertyTypes()
+                .map(Converter::toPropertyTypeList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(propertyTypes -> {

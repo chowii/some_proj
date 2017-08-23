@@ -4,20 +4,36 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.landing.BaseFragment;
+import com.soho.sohoapp.navigator.AndroidNavigator;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PortfolioListFragment extends BaseFragment implements PortfolioListContract.View {
     private static final String KEY_MODE = "KEY_MODE";
+
+    @BindView(R.id.portfolioList)
+    RecyclerView portfolioList;
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefresh;
+
     private PortfolioListContract.ViewActionsListener actionsListener;
     private AbsPresenter presenter;
+    private PortfolioAdapter adapter;
 
     @NonNull
     public static Fragment newInstance(@NonNull Mode mode) {
@@ -31,9 +47,9 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_portfolio_owner, container, false);
+        View view = inflater.inflate(R.layout.fragment_portfolios_list, container, false);
         ButterKnife.bind(this, view);
-
+        initView();
         return view;
     }
 
@@ -43,10 +59,10 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
         switch (getMode()) {
             case OWNER:
-                presenter = new PortfolioOwnerPresenter(this);
+                presenter = new PortfolioOwnerPresenter(this, AndroidNavigator.newInstance(getActivity()));
                 break;
             case MANAGER:
-                presenter = new PortfolioManagerPresenter(this);
+                presenter = new PortfolioManagerPresenter(this, AndroidNavigator.newInstance(getActivity()));
                 break;
             default:
                 throw new IllegalStateException();
@@ -64,6 +80,39 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
     @Override
     public void setActionsListener(PortfolioListContract.ViewActionsListener actionsListener) {
         this.actionsListener = actionsListener;
+    }
+
+    @Override
+    public void setData(List<BaseModel> dataList) {
+        adapter.setData(dataList);
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        handleError(throwable);
+    }
+
+    @Override
+    public void showPullToRefresh() {
+        if (!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    @Override
+    public void hidePullToRefresh() {
+        if (swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
+
+    private void initView() {
+        swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
+        adapter = new PortfolioAdapter(getContext());
+        adapter.setListener(() -> actionsListener.onAddPropertyClicked());
+        portfolioList.setAdapter(adapter);
+        portfolioList.setHasFixedSize(true);
+        portfolioList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
     }
 
     private Mode getMode() {

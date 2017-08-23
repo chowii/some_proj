@@ -33,7 +33,9 @@ public class PortfolioFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_portfolio, container, false);
         ButterKnife.bind(this, view);
 
-        viewPager.setAdapter(new PortfolioTabsAdapter(getContext(), getChildFragmentManager()));
+        PortfolioTabsAdapter adapter = new PortfolioTabsAdapter(getContext(), getChildFragmentManager());
+        viewPager.setOffscreenPageLimit(adapter.getCount());
+        viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
 
         return view;

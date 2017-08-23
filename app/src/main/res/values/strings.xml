@@ -19,6 +19,13 @@
     <string name="common_loading">Loading..</string>
     <!--Common strings end-->
 
+    <!--Test strings start-->
+    <string name="test_text_tiny">lorem</string>
+    <string name="test_text_short">Lorem ipsum</string>
+    <string name="test_text_medium">Lorem ipsum dolor sit amet</string>
+    <string name="test_text_long">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <!--Test strings end-->
+
     <!--Add Property screen start-->
     <string name="add_property_toolbar_title">Add Property</string>
     <string name="add_property_autocomplete_hint">Enter your address</string>
@@ -65,6 +72,13 @@
     <string name="portfolio_owner">Owner</string>
     <string name="portfolio_manager">Manager</string>
     <string name="portfolio_requests">Requests</string>
+    <string name="portfolio_add_property">+ Add a property</string>
+    <plurals name="portfolio_properties_quantity">
+        <item quantity="one">%d Property</item>
+        <item quantity="other">%d Properties</item>
+    </plurals>
+    <string name="portfolio_estimated_value" formatted="true">$%.2f</string>
+    <string name="portfolio_public_count" formatted="true">%d public</string>
     <!--Portfolio screen end-->
 
 </resources>
