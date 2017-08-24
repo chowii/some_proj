@@ -26,8 +26,6 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
 
     @Override
     public void onBindViewHolder(ButtonItem model) {
-        if(model.getButtonText().equalsIgnoreCase("Search"))
-
         toggleCheckAll.setText(model.getButtonText());
     }
 }

@@ -18,19 +18,38 @@ import butterknife.ButterKnife;
 public class FilterCheckboxViewHolder extends BaseFormViewHolder<CheckboxTitle> {
 
     @BindView(R.id.checkbox_title_text_view)
-    public TextView titleTextBox;
+    TextView titleTextBox;
 
     @BindView(R.id.checkbox)
-    public CheckBox checkBox;
+    CheckBox checkBox;
+
+    private OnCheckChangeListener listener;
 
     public FilterCheckboxViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
+    public FilterCheckboxViewHolder(View itemView, OnCheckChangeListener listener) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+        this.listener = listener;
+    }
+
     @Override
     public void onBindViewHolder(CheckboxTitle model) {
         titleTextBox.setText(model.getTitle());
         checkBox.setChecked(model.getValue());
+        checkBox.setOnClickListener((view) -> {
+            if(listener != null) listener.onCheckChanged(model.getTitle(), checkBox.isChecked());
+        });
+    }
+
+    public void setOnCheckedChangeListener(OnCheckChangeListener listener){
+        this.listener = listener;
+    }
+
+    public interface OnCheckChangeListener {
+        void onCheckChanged(String checkboxTitle, boolean isChecked);
     }
 }

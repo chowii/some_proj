@@ -76,53 +76,40 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(filterItems.get(position));
 
-        if(holder instanceof FilterCheckboxViewHolder){
-            view = (FilterCheckboxViewHolder) holder;
-
-            String checkBoxText = view.titleTextBox.getText().toString();
-            view.checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for(BaseFormModel formModel: filterItems)
-                        toggleCheckbox(formModel, checkBoxText.equalsIgnoreCase("All"));
-
-                    notifyDataSetChanged();
-                    view = null;
-                }
-
-                private void toggleCheckbox(BaseFormModel formModel, boolean isCheckboxAll) {
-                    if(formModel instanceof CheckboxTitle){
-                        CheckboxTitle model = (CheckboxTitle) formModel;
-                        if(isCheckboxAll)
-                            toggleCheckboxAll(model, model.getTitle().equalsIgnoreCase("all"), isCheckboxAll);
-                        else toggleCheckboxAll(model, model.getTitle().equalsIgnoreCase("all"), isCheckboxAll);
-                    }
-                }
-
-                /**
-                 * Toggles when the checkbox with text "All" is selected, all the other checkboxes are
-                 * checked off and checks itself off when the checkbox is checked on.
-                 * Toggles off checkbox with text "All" when a checkbox is clicked, and checks itself off
-                 * when checked on.
-                 *
-                 * @param model
-                 * @param isToggleWhenCheckIsAll true if the clicked item is the same item on the list of items
-                 * @param isCheckAll true if the clicked item is the checkbox with text "All"
-                 */
-                private void toggleCheckboxAll(CheckboxTitle model, boolean isToggleWhenCheckIsAll, boolean isCheckAll){
-                    if(isCheckAll)
-                        if(isToggleWhenCheckIsAll) model.setValue(view.checkBox.isChecked());
-                        else model.setValue(isToggleWhenCheckIsAll);
-                    else if(!isToggleWhenCheckIsAll){
-                        if(model.getTitle().equalsIgnoreCase(checkBoxText))
-                            model.setValue(view.checkBox.isChecked());
-                    }else model.setValue(false);
-                }
-
-            });
-        }
+        addCheckboxAction(holder);
 
     }
 
+    private void addCheckboxAction(BaseFormViewHolder holder) {
+        if(holder instanceof FilterCheckboxViewHolder){
+            view = (FilterCheckboxViewHolder) holder;
 
+            view.setOnCheckedChangeListener((title, isChecked) -> {
+                if(title.equalsIgnoreCase("All")) checkedAll();
+                else checkedIndividual(title, isChecked);
+                notifyDataSetChanged();
+            });
+        }
+    }
+
+    private void checkedAll() {
+        for(BaseFormModel modelItem: filterItems){
+            if(modelItem instanceof CheckboxTitle){
+                CheckboxTitle item = (CheckboxTitle) modelItem;
+                boolean isAll = item.getTitle().equalsIgnoreCase("All");
+                if(!isAll) item.setValue(false);
+                else item.setValue(true);
+            }
+        }
+    }
+
+    private void checkedIndividual(String title, boolean isChecked) {
+        for(BaseFormModel modelItem: filterItems)
+            if(modelItem instanceof CheckboxTitle){
+                CheckboxTitle item = (CheckboxTitle) modelItem;
+                boolean isAll = item.getTitle().equalsIgnoreCase("All");
+                if(isAll) item.setValue(false);
+                else if(item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
+            }
+    }
 }
