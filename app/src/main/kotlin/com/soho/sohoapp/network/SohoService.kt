@@ -3,6 +3,7 @@ package com.soho.sohoapp.network
 import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
+import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
@@ -39,6 +40,10 @@ interface SohoService {
 
     @GET("portfolios/managed")
     fun getManagedPortfolios(): Observable<List<PortfolioCategoryResult>>
+
+    @GET("portfolios")
+    fun getPortfolios(@Query("portfolio_type") portfolioType: String,
+                      @Query("user_id") userId: Int): Observable<List<PortfolioPropertyResult>>
 
 }
 

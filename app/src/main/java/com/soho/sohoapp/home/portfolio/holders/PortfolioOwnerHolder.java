@@ -21,21 +21,31 @@ public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
     TextView estimatedValue;
 
     private Context context;
+    private Listener listener;
 
     @Override
     public void onBindViewHolder(PortfolioCategory model) {
+        itemView.setOnClickListener(v -> listener.onClick());
         name.setText(model.getName());
 
         int propertyCount = model.getPropertyCount();
         properties.setText(context.getResources()
                 .getQuantityString(R.plurals.portfolio_properties_quantity, propertyCount, propertyCount));
 
-        estimatedValue.setText(context.getString(R.string.portfolio_estimated_value,model.getEstimatedValue()));
+        estimatedValue.setText(context.getString(R.string.portfolio_estimated_value, model.getEstimatedValue()));
     }
 
     public PortfolioOwnerHolder(@NonNull Context context, View itemView) {
         super(itemView);
         this.context = context;
         ButterKnife.bind(this, itemView);
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onClick();
     }
 }

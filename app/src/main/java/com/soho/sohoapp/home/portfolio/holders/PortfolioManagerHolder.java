@@ -21,10 +21,12 @@ public class PortfolioManagerHolder extends BaseViewHolder<PortfolioManagerCateg
     TextView publicCount;
 
     private Context context;
+    private Listener listener;
 
 
     @Override
     public void onBindViewHolder(PortfolioManagerCategory model) {
+        itemView.setOnClickListener(v -> listener.onClick());
         name.setText(model.getName());
 
         int propertyCount = model.getPropertyCount();
@@ -37,5 +39,13 @@ public class PortfolioManagerHolder extends BaseViewHolder<PortfolioManagerCateg
         super(itemView);
         this.context = context;
         ButterKnife.bind(this, itemView);
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onClick();
     }
 }

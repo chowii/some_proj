@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.AndroidNavigator;
 
@@ -33,7 +34,7 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
     private PortfolioListContract.ViewActionsListener actionsListener;
     private AbsPresenter presenter;
-    private PortfolioAdapter adapter;
+    private PortfolioListAdapter adapter;
 
     @NonNull
     public static Fragment newInstance(@NonNull Mode mode) {
@@ -108,8 +109,20 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
     private void initView() {
         swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
-        adapter = new PortfolioAdapter(getContext());
-        adapter.setListener(() -> actionsListener.onAddPropertyClicked());
+        adapter = new PortfolioListAdapter(getContext());
+
+        adapter.setListener(new PortfolioListAdapter.Listener() {
+            @Override
+            public void onAddPropertyClicked() {
+                actionsListener.onAddPropertyClicked();
+            }
+
+            @Override
+            public void onPortfolioClicked(PortfolioCategory portfolioCategory) {
+                actionsListener.onPortfolioClicked(portfolioCategory);
+            }
+        });
+
         portfolioList.setAdapter(adapter);
         portfolioList.setHasFixedSize(true);
         portfolioList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));

@@ -17,4 +17,7 @@ public class PortfolioCategoryResult {
 
     @SerializedName("public_properties_count")
     public int publicPropertiesCount;
+
+    @SerializedName("filter_for_portfolio")
+    public String filterForPortfolio;
 }

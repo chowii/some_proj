@@ -3,13 +3,17 @@ package com.soho.sohoapp.utils;
 import android.location.Address;
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioFinance;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
+import com.soho.sohoapp.network.results.PortfolioPropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
@@ -87,7 +91,7 @@ public final class Converter {
     }
 
     @NonNull
-    public static List<PropertyRole> toPropertyRoleList(List<PropertyUserRolesResult> results) {
+    public static List<PropertyRole> toPropertyRoleList(@NonNull List<PropertyUserRolesResult> results) {
         List<PropertyRole> propertyRoleList = new ArrayList<>();
         for (PropertyUserRolesResult result : results) {
             propertyRoleList.add(toPropertyRole(result));
@@ -96,12 +100,55 @@ public final class Converter {
     }
 
     @NonNull
-    public static List<PropertyType> toPropertyTypeList(List<PropertyTypesResult> results) {
+    public static List<PropertyType> toPropertyTypeList(@NonNull List<PropertyTypesResult> results) {
         List<PropertyType> propertyTypeList = new ArrayList<>();
         for (PropertyTypesResult result : results) {
             propertyTypeList.add(toPropertyType(result));
         }
         return propertyTypeList;
+    }
+
+    @NonNull
+    public static List<PortfolioProperty> toPortfolioPropertyList(@NonNull List<PortfolioPropertyResult> results, boolean isManagerPortfolio) {
+        List<PortfolioProperty> propertyList = new ArrayList<>();
+        for (PortfolioPropertyResult result : results) {
+            propertyList.add(toPortfolioProperty(result, isManagerPortfolio));
+        }
+        return propertyList;
+    }
+
+    @NonNull
+    private static PortfolioProperty toPortfolioProperty(@NonNull PortfolioPropertyResult result, boolean isManagerPortfolio) {
+        PortfolioProperty property = new PortfolioProperty();
+
+        if (isManagerPortfolio) {
+            property.setItemViewType(R.layout.item_manager_portfolio_details);
+        } else {
+            property.setItemViewType(R.layout.item_owner_portfolio_details);
+        }
+
+        property.setId(result.id);
+        property.setState(result.state);
+
+        if (result.location != null) {
+            PropertyAddress address = new PropertyAddress();
+            address.setAddressLine1(result.location.address1);
+            property.setPropertyAddress(address);
+        }
+
+        if (result.finance != null) {
+            PortfolioFinance finance = new PortfolioFinance();
+            finance.setId(result.finance.id);
+            finance.setPurchasePrice(result.finance.purchasePrice);
+            finance.setLoanAmount(result.finance.loanAmount);
+            finance.setEstimatedValue(result.finance.estimatedValue);
+            finance.setRented(result.finance.isRented);
+            finance.setActualRent(result.finance.actualRent);
+            finance.setEstimatedRent(result.finance.estimatedRent);
+            property.setPortfolioFinance(finance);
+        }
+
+        return property;
     }
 
     @NonNull
@@ -127,6 +174,7 @@ public final class Converter {
         portfolioCategory.setUserId(result.userId);
         portfolioCategory.setPropertyCount(result.propertyCount);
         portfolioCategory.setEstimatedValue(result.estimatedValue);
+        portfolioCategory.setFilterForPortfolio(result.filterForPortfolio);
         return portfolioCategory;
     }
 
@@ -138,6 +186,7 @@ public final class Converter {
         portfolioCategory.setPropertyCount(result.propertyCount);
         portfolioCategory.setEstimatedValue(result.estimatedValue);
         portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
+        portfolioCategory.setFilterForPortfolio(result.filterForPortfolio);
         return portfolioCategory;
     }
 

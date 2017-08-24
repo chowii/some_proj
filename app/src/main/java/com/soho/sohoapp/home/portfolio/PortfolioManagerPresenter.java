@@ -3,6 +3,8 @@ package com.soho.sohoapp.home.portfolio;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.common.SohoButton;
 import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.home.portfolio.data.Title;
 import com.soho.sohoapp.navigator.Navigator;
 import com.soho.sohoapp.network.ApiClient;
@@ -48,6 +50,11 @@ public class PortfolioManagerPresenter implements AbsPresenter, PortfolioListCon
         navigator.openAddPropertyScreen();
     }
 
+    @Override
+    public void onPortfolioClicked(PortfolioCategory portfolioCategory) {
+        navigator.openManagerPortfolioDetails((PortfolioManagerCategory) portfolioCategory);
+    }
+
     private void loadPortfolios() {
         view.showPullToRefresh();
         Disposable disposable = ApiClient.getService().getManagedPortfolios()
@@ -60,7 +67,6 @@ public class PortfolioManagerPresenter implements AbsPresenter, PortfolioListCon
                     dataList.addAll(portfolioCategories);
                     dataList.add(new SohoButton("+ Add property"));
                     view.setData(dataList);
-                    System.out.println("CLIENT PORTFOLIOS: " + portfolioCategories.size());
                     view.hidePullToRefresh();
                 }, throwable -> {
                     view.showError(throwable);

@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.home.addproperty.AddPropertyActivity;
+import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.home.portfolio.details.PortfolioDetailsActivity;
 
 public class AndroidNavigator implements Navigator {
     private Activity activity;
@@ -25,4 +28,15 @@ public class AndroidNavigator implements Navigator {
     public void openAddPropertyScreen() {
         activity.startActivity(AddPropertyActivity.createIntent(activity));
     }
+
+    @Override
+    public void openOwnerPortfolioDetails(@NonNull PortfolioCategory portfolioCategory) {
+        activity.startActivity(PortfolioDetailsActivity.createOwnerIntent(activity, portfolioCategory));
+    }
+
+    @Override
+    public void openManagerPortfolioDetails(@NonNull PortfolioManagerCategory portfolioCategory) {
+        activity.startActivity(PortfolioDetailsActivity.createManagerIntent(activity, portfolioCategory));
+    }
+
 }
