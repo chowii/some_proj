@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
-    <EditText
+    <AutoCompleteTextView
+        android:id="@+id/suburb_auto_complete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+
+        android:background="@android:color/transparent"
+        android:hint="@string/add_property_autocomplete_hint"
+        android:singleLine="true"
+        android:textColor="@color/primaryText"
+        android:textColorHint="@color/hintText"
+        tools:ignore="RtlHardcoded"
+        android:paddingLeft="@dimen/filter_padding_right"
         />
 
 </LinearLayout>

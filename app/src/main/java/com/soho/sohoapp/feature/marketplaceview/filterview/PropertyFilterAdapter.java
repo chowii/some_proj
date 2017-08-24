@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseFormViewHolder;
+import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterButtonItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
@@ -41,6 +42,11 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
 
     @Override
     public int getItemViewType(int position) { return filterItems.get(position).getItemViewType(); }
+
+    @Override
+    public void onViewDetachedFromWindow(BaseFormViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+    }
 
     @Override
     public BaseFormViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
