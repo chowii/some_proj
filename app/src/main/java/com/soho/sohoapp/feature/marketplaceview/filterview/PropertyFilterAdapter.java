@@ -28,6 +28,7 @@ import java.util.List;
 class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
 
     List<? extends BaseFormModel> filterItems;
+    FilterCheckboxViewHolder view;
 
     PropertyFilterAdapter(List<? extends BaseFormModel> filterItems) {
         this.filterItems = filterItems;
@@ -70,14 +71,11 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
                 return null;
         }
     }
-    FilterCheckboxViewHolder view;
 
     @Override
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(filterItems.get(position));
-
         addCheckboxAction(holder);
-
     }
 
     private void addCheckboxAction(BaseFormViewHolder holder) {
@@ -85,31 +83,28 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
             view = (FilterCheckboxViewHolder) holder;
 
             view.setOnCheckedChangeListener((title, isChecked) -> {
-                if(title.equalsIgnoreCase("All")) checkedAll();
-                else checkedIndividual(title, isChecked);
+                for(BaseFormModel modelItem: filterItems)
+                    if(modelItem instanceof CheckboxTitle)
+                        configureCheckboxAction((CheckboxTitle) modelItem, title, isChecked);
                 notifyDataSetChanged();
             });
         }
     }
 
-    private void checkedAll() {
-        for(BaseFormModel modelItem: filterItems){
-            if(modelItem instanceof CheckboxTitle){
-                CheckboxTitle item = (CheckboxTitle) modelItem;
-                boolean isAll = item.getTitle().equalsIgnoreCase("All");
-                if(!isAll) item.setValue(false);
-                else item.setValue(true);
-            }
-        }
+    private void configureCheckboxAction(CheckboxTitle modelItem, String title, boolean isChecked) {
+        if(title.equalsIgnoreCase("All")) checkedAll(modelItem);
+        else checkedIndividual(modelItem, title, isChecked);
     }
 
-    private void checkedIndividual(String title, boolean isChecked) {
-        for(BaseFormModel modelItem: filterItems)
-            if(modelItem instanceof CheckboxTitle){
-                CheckboxTitle item = (CheckboxTitle) modelItem;
-                boolean isAll = item.getTitle().equalsIgnoreCase("All");
-                if(isAll) item.setValue(false);
-                else if(item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
-            }
+    private void checkedAll(CheckboxTitle item) {
+        boolean isAll = item.getTitle().equalsIgnoreCase("All");
+        if(!isAll) item.setValue(false);
+        else item.setValue(true);
+    }
+
+    private void checkedIndividual(CheckboxTitle item, String title, boolean isChecked) {
+        boolean isAll = item.getTitle().equalsIgnoreCase("All");
+        if(isAll) item.setValue(false);
+        else if(item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
     }
 }
