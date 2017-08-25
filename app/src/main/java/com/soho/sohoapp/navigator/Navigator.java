@@ -9,7 +9,11 @@ public interface Navigator {
 
     void exitCurrentScreen();
 
+    void exitWithResultCodeOk();
+
     void openAddPropertyScreen();
+
+    void openAddPropertyScreen(int requestCode);
 
     void openOwnerPortfolioDetails(@NonNull PortfolioCategory portfolioCategory);
 

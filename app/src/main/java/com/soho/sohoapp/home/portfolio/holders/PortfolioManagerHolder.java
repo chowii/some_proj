@@ -20,9 +20,14 @@ public class PortfolioManagerHolder extends BaseViewHolder<PortfolioManagerCateg
     @BindView(R.id.publicCount)
     TextView publicCount;
 
-    private Context context;
+    private final Context context;
     private Listener listener;
 
+    public PortfolioManagerHolder(@NonNull Context context, View itemView) {
+        super(itemView);
+        this.context = context;
+        ButterKnife.bind(this, itemView);
+    }
 
     @Override
     public void onBindViewHolder(PortfolioManagerCategory model) {
@@ -33,12 +38,6 @@ public class PortfolioManagerHolder extends BaseViewHolder<PortfolioManagerCateg
         properties.setText(context.getResources()
                 .getQuantityString(R.plurals.portfolio_properties_quantity, propertyCount, propertyCount));
         publicCount.setText(context.getString(R.string.portfolio_public_count, model.getPublicPropertiesCount()));
-    }
-
-    public PortfolioManagerHolder(@NonNull Context context, View itemView) {
-        super(itemView);
-        this.context = context;
-        ButterKnife.bind(this, itemView);
     }
 
     public void setListener(Listener listener) {

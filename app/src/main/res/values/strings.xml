@@ -17,6 +17,7 @@
 
     <!--Common strings start-->
     <string name="common_loading">Loading..</string>
+    <string name="common_loading_error">Something went wrong..</string>
     <!--Common strings end-->
 
     <!--Test strings start-->
@@ -78,7 +79,16 @@
         <item quantity="other">%d Properties</item>
     </plurals>
     <string name="portfolio_estimated_value" formatted="true">$%.2f</string>
+    <string name="portfolio_estimated_value_k" formatted="true">$%.2fk</string>
+    <string name="portfolio_estimated_value_m" formatted="true">$%.2fm</string>
     <string name="portfolio_public_count" formatted="true">%d public</string>
+    <string name="portfolio_yield_null">Yield: --</string>
+    <string name="portfolio_yield" formatted="true">Yield: %.2f%%</string>
+    <string name="portfolio_lvr_null">LVR: --</string>
+    <string name="portfolio_lvr" formatted="true">LVR: $%.2f%%</string>
+    <string name="portfolio_changed_value_null">--</string>
+    <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
+    <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
     <!--Portfolio screen end-->
 
 </resources>

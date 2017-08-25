@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.utils.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
         properties.setText(context.getResources()
                 .getQuantityString(R.plurals.portfolio_properties_quantity, propertyCount, propertyCount));
 
-        estimatedValue.setText(context.getString(R.string.portfolio_estimated_value, model.getEstimatedValue()));
+        estimatedValue.setText(StringUtils.formatPrice(context, model.getEstimatedValue()));
     }
 
     public PortfolioOwnerHolder(@NonNull Context context, View itemView) {

@@ -130,14 +130,14 @@ public final class Converter {
         property.setId(result.id);
         property.setState(result.state);
 
+        PropertyAddress address = new PropertyAddress();
         if (result.location != null) {
-            PropertyAddress address = new PropertyAddress();
             address.setAddressLine1(result.location.address1);
-            property.setPropertyAddress(address);
         }
+        property.setPropertyAddress(address);
 
+        PortfolioFinance finance = new PortfolioFinance();
         if (result.finance != null) {
-            PortfolioFinance finance = new PortfolioFinance();
             finance.setId(result.finance.id);
             finance.setPurchasePrice(result.finance.purchasePrice);
             finance.setLoanAmount(result.finance.loanAmount);
@@ -145,8 +145,8 @@ public final class Converter {
             finance.setRented(result.finance.isRented);
             finance.setActualRent(result.finance.actualRent);
             finance.setEstimatedRent(result.finance.estimatedRent);
-            property.setPortfolioFinance(finance);
         }
+        property.setPortfolioFinance(finance);
 
         return property;
     }

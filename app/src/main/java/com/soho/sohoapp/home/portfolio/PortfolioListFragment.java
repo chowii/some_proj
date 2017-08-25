@@ -111,7 +111,7 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
         swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
         adapter = new PortfolioListAdapter(getContext());
 
-        adapter.setListener(new PortfolioListAdapter.Listener() {
+        adapter.setOnItemClickListener(new PortfolioListAdapter.OnItemClickListener() {
             @Override
             public void onAddPropertyClicked() {
                 actionsListener.onAddPropertyClicked();

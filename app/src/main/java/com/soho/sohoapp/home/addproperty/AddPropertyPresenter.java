@@ -87,7 +87,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sohoProperty -> {
                     view.hideLoadingDialog();
-                    navigator.exitCurrentScreen();
+                    navigator.exitWithResultCodeOk();
                 }, throwable -> {
                     view.showMessage("error during creating new property");
                     view.hideLoadingDialog();

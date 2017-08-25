@@ -25,8 +25,19 @@ public class AndroidNavigator implements Navigator {
     }
 
     @Override
+    public void exitWithResultCodeOk() {
+        activity.setResult(Activity.RESULT_OK);
+        activity.finish();
+    }
+
+    @Override
     public void openAddPropertyScreen() {
         activity.startActivity(AddPropertyActivity.createIntent(activity));
+    }
+
+    @Override
+    public void openAddPropertyScreen(int requestCode) {
+        activity.startActivityForResult(AddPropertyActivity.createIntent(activity), requestCode);
     }
 
     @Override

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/list_selector"
+              android:clickable="true"
+              android:focusable="true"
               android:orientation="vertical">
 
     <LinearLayout
@@ -15,7 +18,7 @@
         android:paddingTop="16dp">
 
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,8 +51,9 @@
 
         <TextView
             android:id="@+id/yield"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="12sp"
             tools:text="Yield: --"/>
 
@@ -58,10 +62,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="center"
             android:textSize="12sp"
             tools:ignore="RtlHardcoded"
             tools:text="LVR: --"/>
+
+        <TextView
+            android:id="@+id/changedValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="12sp"
+            tools:ignore="RtlHardcoded"
+            tools:text="+ $2.22"/>
 
         <TextView
             android:id="@+id/state"
