@@ -7,6 +7,7 @@ import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.home.portfolio.data.Title;
 import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
@@ -47,12 +48,17 @@ public class PortfolioManagerPresenter implements AbsPresenter, PortfolioListCon
 
     @Override
     public void onAddPropertyClicked() {
-        navigator.openAddPropertyScreen();
+        navigator.openAddPropertyScreen(RequestCode.PORTFOLIO_MANAGER_LIST_ADD_PROPERTY_REQUEST_CODE);
     }
 
     @Override
     public void onPortfolioClicked(PortfolioCategory portfolioCategory) {
         navigator.openManagerPortfolioDetails((PortfolioManagerCategory) portfolioCategory);
+    }
+
+    @Override
+    public void onNewPropertyCreated() {
+        loadPortfolios();
     }
 
     private void loadPortfolios() {

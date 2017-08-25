@@ -1,5 +1,7 @@
 package com.soho.sohoapp.home.portfolio;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.AndroidNavigator;
+import com.soho.sohoapp.navigator.RequestCode;
 
 import java.util.List;
 
@@ -60,10 +63,10 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
         switch (getMode()) {
             case OWNER:
-                presenter = new PortfolioOwnerPresenter(this, AndroidNavigator.newInstance(getActivity()));
+                presenter = new PortfolioOwnerPresenter(this, AndroidNavigator.newInstance(this));
                 break;
             case MANAGER:
-                presenter = new PortfolioManagerPresenter(this, AndroidNavigator.newInstance(getActivity()));
+                presenter = new PortfolioManagerPresenter(this, AndroidNavigator.newInstance(this));
                 break;
             default:
                 throw new IllegalStateException();
@@ -104,6 +107,17 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
     public void hidePullToRefresh() {
         if (swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RequestCode.PORTFOLIO_OWNER_LIST_ADD_PROPERTY_REQUEST_CODE
+                    || requestCode == RequestCode.PORTFOLIO_MANAGER_LIST_ADD_PROPERTY_REQUEST_CODE) {
+                actionsListener.onNewPropertyCreated();
+            }
         }
     }
 

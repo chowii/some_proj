@@ -13,6 +13,8 @@ public interface PortfolioListContract {
         void onAddPropertyClicked();
 
         void onPortfolioClicked(PortfolioCategory portfolioCategory);
+
+        void onNewPropertyCreated();
     }
 
     interface View {
