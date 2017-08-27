@@ -42,6 +42,7 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
             if(radioGroup.getChildCount() <= model.getSize())
                 addRadioButton(layoutParams, radioText);
         }
+
     }
 
     private void addRadioButton(LinearLayout.LayoutParams layoutParams, String radioText) {
@@ -49,5 +50,9 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
         button.setText(radioText);
         button.setGravity(Gravity.CENTER);
         radioGroup.addView(button, layoutParams);
+
+        button.setOnCheckedChangeListener((view, isChecked) ->{
+            itemMap.putIfAbsent(button.getText().toString(), isChecked);
+        });
     }
 }

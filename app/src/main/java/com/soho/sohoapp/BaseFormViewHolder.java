@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFormViewHolder<T extends BaseFormModel> extends RecyclerView.ViewHolder {
 
-    Map<String, Object> itemMap = new HashMap<>();
+    public Map<String, Object> itemMap = new HashMap<>();
 
     public BaseFormViewHolder(View itemView) {
         super(itemView);
