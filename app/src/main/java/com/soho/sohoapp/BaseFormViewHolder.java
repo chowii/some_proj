@@ -5,6 +5,9 @@ import android.view.View;
 
 import com.soho.sohoapp.home.BaseFormModel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.ButterKnife;
 
 /**
@@ -12,6 +15,9 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseFormViewHolder<T extends BaseFormModel> extends RecyclerView.ViewHolder {
+
+    Map<String, Object> itemMap = new HashMap<>();
+
     public BaseFormViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);

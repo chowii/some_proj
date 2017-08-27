@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
  * Created by chowii on 17/8/17.
  */
 
-public class PropertyFilterActivity extends AppCompatActivity implements PropertyFilterContract.ViewInteractable{
+public class PropertyFilterActivity extends AppCompatActivity
+        implements
+        TabLayout.OnTabSelectedListener
+{
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
 
     PropertyFilterPresenter presenter;
 
@@ -35,22 +35,33 @@ public class PropertyFilterActivity extends AppCompatActivity implements Propert
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
 
-        presenter = new PropertyFilterPresenter(this);
-        presenter.startPresenting();
-        presenter.retrieveFilterFromApi();
-
-    }
-
-    @Override
-    public void configureTabLayout() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
+                .commit();
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
+
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
+
     }
 
     @Override
-    public void configureAdapter(List<? extends BaseFormModel> formModelList) {
-
-        recyclerView.setAdapter(new PropertyFilterAdapter(formModelList));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public void onTabSelected(TabLayout.Tab tab) {
+        if(tab.getPosition() == 0){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
+                    .commit();
+        }else
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
+                    .commit();
     }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {}
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {}
 }

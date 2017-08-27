@@ -17,7 +17,6 @@ public interface PropertyFilterContract {
     }
 
     interface ViewInteractable{
-        void configureTabLayout();
         void configureAdapter(List<? extends BaseFormModel> formModelList);
     }
 }

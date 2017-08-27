@@ -27,7 +27,9 @@ import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
@@ -38,12 +40,14 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     private AutocompleteFilter placeFilter;
     private final Logger logger;
 
+    private List<String> suburbList;
+
     public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
         logger = Dependencies.INSTANCE.getLogger();
-
+        suburbList = new ArrayList<>();
     }
 
     @Override
@@ -70,17 +74,25 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         return row;
     }
 
+    public void addToList(String s){
+        suburbList.add(s);
+    }
+
     @NonNull
     @Override
     public Filter getFilter() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+
                 FilterResults results = new FilterResults();
                 ArrayList<AutocompletePrediction> filterData = new ArrayList<>();
-                if (constraint != null) {
+
+                if (constraint != null && !suburbList.isEmpty()) {
+                    String[] s = constraint.toString().split(",+");
+                    filterData = getAutocomplete(s[s.length-1]);
+                }else
                     filterData = getAutocomplete(constraint);
-                }
 
                 results.values = filterData;
                 if (filterData != null) {

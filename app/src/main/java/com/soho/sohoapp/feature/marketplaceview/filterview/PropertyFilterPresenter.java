@@ -31,7 +31,6 @@ public class PropertyFilterPresenter implements PropertyFilterContract.ViewPrese
 
     @Override
     public void startPresenting() {
-        interactable.configureTabLayout();
         initViewList();
     }
         List<BaseFormModel> modelList;

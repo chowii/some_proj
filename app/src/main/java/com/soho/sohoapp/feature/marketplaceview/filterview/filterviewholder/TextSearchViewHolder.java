@@ -58,7 +58,6 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(apiClient));
     }
 
-    int i = 0;
     @Override
     public void onBindViewHolder(FilterSearchItem model) {
         presenter.startPresenting();
@@ -79,16 +78,16 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
                     actionsListener.onAddressClicked(item.getPlaceId(), item.getPrimaryText(null).toString());
 
                     String suburbText = item.getPrimaryText(null).toString();
-
                     if(!suburbList.contains(suburbText)) suburbList.add(suburbText);
 
-                    String text = "";
 
-                    for(String suburb: suburbList){
-                        suburbText = text + "" + suburb;
+                    adapter.addToList(suburbText);
+                    StringBuilder builder = new StringBuilder();
 
-                    }
-                    suburbEditText.setText(suburbText + ",");
+                    for(String suburb: suburbList)
+                        builder.append(suburb + ", ");
+                    suburbEditText.setText(builder.toString());
+                    suburbEditText.setSelection(builder.length());
                 }
 
             }
@@ -96,7 +95,17 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
         suburbEditText.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                String string = s.toString();
+                String[] text = string.split(",+");
+                for(int i = 0; i < text.length; i++){
+                    if(suburbList.size() > 0){
+                        if(!suburbList.get(i).equalsIgnoreCase(text[i])){
+                            suburbList.set(i, text[i]);
+                        }
+                    }
+                }
+            }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 actionsListener.onAddressChanged(s.subSequence(start, s.length()).toString());
