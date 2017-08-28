@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.home.editproperty.dialogs.AddPhotoDialog;
+import com.soho.sohoapp.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.AndroidNavigator;
 
@@ -31,6 +33,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     private EditPropertyContract.ViewActionsListener actionsListener;
     private EditPropertyPresenter presenter;
+    private CameraPicker cameraPicker;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
@@ -59,6 +62,39 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void setActionsListener(EditPropertyContract.ViewActionsListener actionsListener) {
         this.actionsListener = actionsListener;
+    }
+
+    @Override
+    public void showAddPhotoDialog() {
+        AddPhotoDialog addPhotoDialog = new AddPhotoDialog(this);
+        addPhotoDialog.show(new AddPhotoDialog.OnItemClickedListener() {
+            @Override
+            public void onTakeNewPhotoClicked() {
+                actionsListener.onTakeNewPhotoClicked();
+            }
+
+            @Override
+            public void onChooseFromGalleryClicked() {
+                actionsListener.onChooseFromGalleryClicked();
+            }
+        });
+    }
+
+    @Override
+    public void capturePhoto() {
+        cameraPicker = new CameraPicker(this);
+        cameraPicker.takePhoto(new CameraPicker.ImageCapturedListener() {
+            @Override
+            public void onImageCaptured(String path) {
+                System.out.println("Photo path: " + path);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraPicker.onActivityResult(requestCode, resultCode);
     }
 
     private void initToolbar() {

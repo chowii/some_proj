@@ -6,9 +6,17 @@ public interface EditPropertyContract {
         void onBackClicked();
 
         void onAddPhotoClicked();
+
+        void onTakeNewPhotoClicked();
+
+        void onChooseFromGalleryClicked();
     }
 
     interface View {
         void setActionsListener(ViewActionsListener actionsListener);
+
+        void showAddPhotoDialog();
+
+        void capturePhoto();
     }
 }

@@ -29,6 +29,16 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void onAddPhotoClicked() {
-        System.out.println("Add photo");
+        view.showAddPhotoDialog();
+    }
+
+    @Override
+    public void onTakeNewPhotoClicked() {
+        view.capturePhoto();
+    }
+
+    @Override
+    public void onChooseFromGalleryClicked() {
+        System.out.println("Choose from gallery");
     }
 }
