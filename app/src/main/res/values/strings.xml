@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name1">Soho</string>
     <string name="register_agreement_message">By signing up, you agree to Soho’s</string>
     <string name="register_terms_of_condition">Terms of Condition</string>
@@ -82,13 +82,19 @@
     <string name="portfolio_estimated_value_k" formatted="true">$%.2fk</string>
     <string name="portfolio_estimated_value_m" formatted="true">$%.2fm</string>
     <string name="portfolio_public_count" formatted="true">%d public</string>
-    <string name="portfolio_yield_null">Yield: --</string>
+    <string name="portfolio_yield_null" tools:ignore="TypographyDashes">Yield: --</string>
     <string name="portfolio_yield" formatted="true">Yield: %.2f%%</string>
-    <string name="portfolio_lvr_null">LVR: --</string>
+    <string name="portfolio_lvr_null" tools:ignore="TypographyDashes">LVR: --</string>
     <string name="portfolio_lvr" formatted="true">LVR: $%.2f%%</string>
     <string name="portfolio_changed_value_null">--</string>
     <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
     <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
     <!--Portfolio screen end-->
+
+    <!--Edit property screen start-->
+    <string name="edit_property_overview">Overview</string>
+    <string name="edit_property_connection">Connection</string>
+    <string name="edit_property_files">Files</string>
+    <!--Edit property screen end-->
 
 </resources>

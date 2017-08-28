@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.home.portfolio.details.holders.PortfolioManagerDetailsHolder;
 import com.soho.sohoapp.home.portfolio.details.holders.PortfolioOwnerDetailsHolder;
 import com.soho.sohoapp.home.portfolio.holders.ButtonHolder;
@@ -44,7 +45,14 @@ public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.onBindViewHolder(dataList.get(holder.getAdapterPosition()));
+        BaseModel model = dataList.get(holder.getAdapterPosition());
+        switch (model.getItemViewType()) {
+            case R.layout.item_owner_portfolio_details:
+                PortfolioOwnerDetailsHolder ownerHolder = (PortfolioOwnerDetailsHolder) holder;
+                ownerHolder.setListener(() -> onItemClickListener.onOwnerPropertyClicked((PortfolioProperty) model));
+                break;
+        }
+        holder.onBindViewHolder(model);
     }
 
     @Override
@@ -70,5 +78,7 @@ public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder
 
     public interface OnItemClickListener {
         void onAddPropertyClicked();
+
+        void onOwnerPropertyClicked(PortfolioProperty property);
     }
 }

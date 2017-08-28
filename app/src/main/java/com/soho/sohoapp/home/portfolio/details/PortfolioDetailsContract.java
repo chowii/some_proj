@@ -3,6 +3,7 @@ package com.soho.sohoapp.home.portfolio.details;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface PortfolioDetailsContract {
         void onPullToRefresh();
 
         void onNewPropertyCreated();
+
+        void onOwnerPropertyClicked(PortfolioProperty property);
     }
 
     interface View {

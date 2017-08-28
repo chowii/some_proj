@@ -17,6 +17,7 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.AndroidNavigator;
 import com.soho.sohoapp.navigator.RequestCode;
 
@@ -137,7 +138,17 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     private void initView() {
         swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
         adapter = new PortfolioDetailsAdapter(this);
-        adapter.setOnItemClickListener(() -> actionsListener.onAddPropertyClicked());
+        adapter.setOnItemClickListener(new PortfolioDetailsAdapter.OnItemClickListener() {
+            @Override
+            public void onAddPropertyClicked() {
+                actionsListener.onAddPropertyClicked();
+            }
+
+            @Override
+            public void onOwnerPropertyClicked(PortfolioProperty property) {
+                actionsListener.onOwnerPropertyClicked(property);
+            }
+        });
 
         portfolioDetailsList.setAdapter(adapter);
         portfolioDetailsList.setHasFixedSize(true);

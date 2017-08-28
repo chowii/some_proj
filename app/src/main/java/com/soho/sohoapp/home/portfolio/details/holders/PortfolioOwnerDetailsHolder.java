@@ -30,6 +30,7 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
     TextView state;
 
     private final Context context;
+    private OnItemClickListener listener;
 
     public PortfolioOwnerDetailsHolder(@NonNull Context context, View itemView) {
         super(itemView);
@@ -39,6 +40,7 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
 
     @Override
     public void onBindViewHolder(PortfolioProperty model) {
+        itemView.setOnClickListener(v -> listener.onClick());
         state.setText(model.getState());
 
         PropertyAddress propertyAddress = model.getPropertyAddress();
@@ -58,6 +60,13 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
 
         double changedValue = PropertyCalculator.calculateValueChange(model);
         this.changedValue.setText(StringUtils.formatChangedValue(context, changedValue));
+    }
 
+    public void setListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onClick();
     }
 }

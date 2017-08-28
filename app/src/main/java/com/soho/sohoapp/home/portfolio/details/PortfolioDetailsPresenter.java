@@ -4,6 +4,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.common.SohoButton;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.Navigator;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
@@ -64,6 +65,11 @@ public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetails
     @Override
     public void onNewPropertyCreated() {
         loadData();
+    }
+
+    @Override
+    public void onOwnerPropertyClicked(PortfolioProperty property) {
+        navigator.openEditPropertyScreen(property);
     }
 
     private void loadData() {

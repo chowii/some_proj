@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import com.soho.sohoapp.home.addproperty.AddPropertyActivity;
+import com.soho.sohoapp.home.editproperty.EditPropertyActivity;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.home.portfolio.details.PortfolioDetailsActivity;
 
 public class AndroidNavigator implements Navigator {
@@ -66,6 +68,15 @@ public class AndroidNavigator implements Navigator {
             fragment.startActivityForResult(AddPropertyActivity.createIntent(fragment.getActivity()), requestCode);
         } else {
             activity.startActivityForResult(AddPropertyActivity.createIntent(activity), requestCode);
+        }
+    }
+
+    @Override
+    public void openEditPropertyScreen(PortfolioProperty property) {
+        if (fragment != null) {
+            fragment.startActivity(EditPropertyActivity.createIntent(fragment.getActivity(), property));
+        } else {
+            activity.startActivity(EditPropertyActivity.createIntent(activity, property));
         }
     }
 
