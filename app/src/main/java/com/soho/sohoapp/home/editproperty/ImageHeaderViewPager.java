@@ -23,11 +23,6 @@ public class ImageHeaderViewPager extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
-
-    @Override
     public int getCount() {
         return 2;
     }

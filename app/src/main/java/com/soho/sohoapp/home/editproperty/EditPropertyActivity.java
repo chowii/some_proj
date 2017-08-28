@@ -7,10 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.navigator.AndroidNavigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,9 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     @BindView(R.id.imageViewPager)
     ViewPager imageViewPager;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private EditPropertyContract.ViewActionsListener actionsListener;
     private EditPropertyPresenter presenter;
@@ -37,9 +42,11 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_property);
         ButterKnife.bind(this);
+
+        initToolbar();
         initTabs();
 
-        presenter = new EditPropertyPresenter(this);
+        presenter = new EditPropertyPresenter(this, AndroidNavigator.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -52,6 +59,21 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void setActionsListener(EditPropertyContract.ViewActionsListener actionsListener) {
         this.actionsListener = actionsListener;
+    }
+
+    private void initToolbar() {
+        toolbar.inflateMenu(R.menu.edit_property_toolbar);
+        toolbar.setNavigationOnClickListener(view -> actionsListener.onBackClicked());
+        toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_add_photo:
+                    actionsListener.onAddPhotoClicked();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
     }
 
     private void initTabs() {

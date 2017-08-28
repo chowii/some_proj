@@ -95,6 +95,7 @@
     <string name="edit_property_overview">Overview</string>
     <string name="edit_property_connection">Connection</string>
     <string name="edit_property_files">Files</string>
+    <string name="edit_property_add_photo">Add photo</string>
     <!--Edit property screen end-->
 
 </resources>
