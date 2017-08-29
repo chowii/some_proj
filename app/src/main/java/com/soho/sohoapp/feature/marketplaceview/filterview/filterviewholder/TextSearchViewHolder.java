@@ -40,7 +40,8 @@ import butterknife.BindView;
 public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         implements AddressContract.View,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks
+        GoogleApiClient.ConnectionCallbacks,
+        TokenCompleteTextView.TokenListener<AutocompletePrediction>
 {
 
     private final View view;
@@ -53,9 +54,10 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
     @BindView(R.id.suburb_auto_complete)
     TokenizedSuburbAutoCompleteTextView suburbEditText;
 
-    public TextSearchViewHolder(View itemView) {
+    public TextSearchViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         view = itemView;
+        updatedListener = listener;
         suburbList = new ArrayList();
         presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(apiClient));
     }
@@ -72,6 +74,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(view.getContext(), apiClient, null);
         suburbEditText.setAdapter(adapter);
         suburbEditText.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
+        suburbEditText.setTokenListener(this);
     }
 
     @Override
@@ -119,4 +122,16 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     @Override
     public void onConnectionSuspended(int i) { }
+
+    @Override
+    public void onTokenAdded(AutocompletePrediction token) {
+        suburbList.add(token.getPlaceId());
+        updatedListener.onChange("by_google_places[place_ids]", suburbList);
+    }
+
+    @Override
+    public void onTokenRemoved(AutocompletePrediction token) {
+        suburbList.remove(token.getPlaceId());
+        updatedListener.onChange("by_google_places[place_ids]", suburbList);
+    }
 }

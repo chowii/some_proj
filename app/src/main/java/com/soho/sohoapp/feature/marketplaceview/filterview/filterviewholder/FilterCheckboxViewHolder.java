@@ -8,9 +8,6 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,13 +24,11 @@ public class FilterCheckboxViewHolder extends BaseFormViewHolder<FilterCheckboxI
     CheckBox checkBox;
 
     private OnCheckChangeListener listener;
-    private List<String> propertyTypeList;
 
     public FilterCheckboxViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         updatedListener = listener;
-        propertyTypeList = new ArrayList<>();
     }
 
     @Override
@@ -42,8 +37,7 @@ public class FilterCheckboxViewHolder extends BaseFormViewHolder<FilterCheckboxI
         checkBox.setChecked(model.getValue());
         checkBox.setOnClickListener((view) -> {
             if(listener != null) listener.onCheckChanged(model.getTitle(), checkBox.isChecked());
-            propertyTypeList.add(model.getKey());
-            updatedListener.onChange("by_property_types", propertyTypeList);
+            updatedListener.onChange("by_property_types", model.getKey());
         });
     }
 

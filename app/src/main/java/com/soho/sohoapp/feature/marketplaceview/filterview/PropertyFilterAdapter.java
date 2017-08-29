@@ -2,7 +2,6 @@ package com.soho.sohoapp.feature.marketplaceview.filterview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,9 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.Filt
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterToggleItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterValueSelectorViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.RecyclerViewViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.TextSearchViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.home.BaseFormModel;
@@ -26,7 +25,7 @@ import com.soho.sohoapp.home.BaseFormModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +73,7 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
             case R.layout.item_filter_header:
                 return new HeaderViewHolder(itemView);
             case R.layout.item_filter_search:
-                return new TextSearchViewHolder(itemView);
+                return new TextSearchViewHolder(itemView, this);
             case R.layout.item_filter_value_selector:
                 return new FilterValueSelectorViewHolder(itemView, this);
             case R.layout.item_filter_range:
@@ -144,18 +143,19 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
 
     @Override
     public void onChange(CharSequence key, Object value) {
-        if(value instanceof AbstractList) addListToFilterMap((List<String>) value);
-        else mFilterMap.put(key.toString(), value);
+        if(key.toString().equalsIgnoreCase("by_property_types")) addListToFilterMap((String) value);
+        else  mFilterMap.put(key.toString(), value);
     }
 
-    private void addListToFilterMap(List<String> value) {
-        List<String> list = value;
-        List<String> item = (List<String>) mFilterMap.get("by_property_type");
-        if(item == null) mFilterMap.put("by_property_type", list);
-        else {
-            item.addAll(list);
-            mFilterMap.put("by_property_type", item);
-        }
+    private void addListToFilterMap(String value) {
+        String list = value;
+        List<String> item = (List<String>) mFilterMap.get("by_property_types");
+        if(item == null){
+            item = new ArrayList<>();
+            item.add(list);
+        }else if(item.contains(list)) item.remove(list);
+        else item.add(list);
+        mFilterMap.put("by_property_types", item);
     }
 
     interface OnSearchClickListener {
