@@ -24,14 +24,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditPropertyActivity extends AbsActivity implements EditPropertyContract.View {
+    private static final String KEY_PORTFOLIO = "KEY_PORTFOLIO";
+
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
     @BindView(R.id.imageViewPager)
     ViewPager imageViewPager;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -43,7 +43,9 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
-        return new Intent(context, EditPropertyActivity.class);
+        Intent intent = new Intent(context, EditPropertyActivity.class);
+        intent.putExtra(KEY_PORTFOLIO, property);
+        return intent;
     }
 
     @Override
@@ -88,10 +90,12 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void capturePhoto() {
         cameraPicker = new CameraPicker(this);
-        cameraPicker.takePhoto(path -> {
-            actionsListener.onPhotoReady(path);
-            System.out.println("Photo path: " + path);
-        });
+        cameraPicker.takePhoto(path -> actionsListener.onPhotoReady(path));
+    }
+
+    @Override
+    public void setCurrentPropertyImage(int position) {
+        imageViewPager.setCurrentItem(position);
     }
 
     @Override
@@ -102,10 +106,16 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void pickImageFromGallery() {
         galleryPicker = new GalleryPicker(this);
-        galleryPicker.choosePhoto(uri -> {
-            actionsListener.onPhotoPicked(uri);
-            System.out.println("Gallery photo path: " + uri.getPath());
-        });
+        galleryPicker.choosePhoto(uri -> actionsListener.onPhotoPicked(uri));
+    }
+
+    @Override
+    public PortfolioProperty getProperty() {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return null;
+        }
+        return (PortfolioProperty) extras.getParcelable(KEY_PORTFOLIO);
     }
 
     @Override

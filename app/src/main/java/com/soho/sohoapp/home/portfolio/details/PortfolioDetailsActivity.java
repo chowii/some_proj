@@ -104,8 +104,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
 
     @Override
     public PortfolioCategory getOwnerPortfolio() {
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras == null) {
             return null;
         }
@@ -114,8 +113,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
 
     @Override
     public PortfolioManagerCategory getManagerPortfolio() {
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras == null) {
             return null;
         }

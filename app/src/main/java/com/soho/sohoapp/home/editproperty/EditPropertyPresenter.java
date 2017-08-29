@@ -2,8 +2,10 @@ package com.soho.sohoapp.home.editproperty;
 
 import android.net.Uri;
 
+import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.Navigator;
 
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
+        PortfolioProperty property = view.getProperty();
+
+        initPropertyImages(property);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         PropertyImage propertyImage = new PropertyImage();
         propertyImage.setFilePath(path);
         propertyImages.add(propertyImage);
-        view.setPropertyImages(propertyImages);
+        setPropertyImages();
     }
 
     @Override
@@ -65,7 +70,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         PropertyImage propertyImage = new PropertyImage();
         propertyImage.setUri(uri);
         propertyImages.add(propertyImage);
-        view.setPropertyImages(propertyImages);
+        setPropertyImages();
     }
 
     private void clearImagesListIfNeeded() {
@@ -73,4 +78,25 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
             propertyImages.clear();
         }
     }
+
+    private void setPropertyImages() {
+        view.setPropertyImages(propertyImages);
+        int size = propertyImages.size();
+        if (size > 0) {
+            view.setCurrentPropertyImage(size - 1);
+        }
+    }
+
+    private void initPropertyImages(PortfolioProperty property) {
+        List<PropertyImage> propertyImagesFromServer = property.getPropertyImageList();
+        if (propertyImagesFromServer.isEmpty()) {
+            PropertyImage propertyImage = new PropertyImage();
+            propertyImage.setDrawableId(R.drawable.others);
+            propertyImages.add(propertyImage);
+        } else {
+            propertyImages.addAll(propertyImagesFromServer);
+        }
+        setPropertyImages();
+    }
 }
+
