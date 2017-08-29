@@ -3,11 +3,11 @@ package com.soho.sohoapp.customviews;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.location.places.AutocompletePrediction;
 import com.soho.sohoapp.R;
 import com.tokenautocomplete.TokenCompleteTextView;
 
@@ -15,7 +15,7 @@ import com.tokenautocomplete.TokenCompleteTextView;
  * Created by chowii on 28/8/17.
  */
 
-public class TokenizedSuburbAutoCompleteTextView extends TokenCompleteTextView {
+public class TokenizedSuburbAutoCompleteTextView extends TokenCompleteTextView<AutocompletePrediction> {
 
     public TokenizedSuburbAutoCompleteTextView(Context context) {
         super(context);
@@ -30,16 +30,15 @@ public class TokenizedSuburbAutoCompleteTextView extends TokenCompleteTextView {
     }
 
     @Override
-    protected View getViewForObject(Object object) {
+    protected View getViewForObject(AutocompletePrediction object) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         TokenTextView textView = (TokenTextView) inflater.inflate(R.layout.suburb_token_item, (ViewGroup) getParent(), false);
-        textView.setText(object.toString());
+        textView.setText(object.getPrimaryText(null).toString());
         return textView;
     }
 
     @Override
-    protected Object defaultObject(String completionText) {
-        Log.d("LOG_TAG---", completionText);
-        return completionText;
+    protected AutocompletePrediction defaultObject(String completionText) {
+        return null;
     }
 }
