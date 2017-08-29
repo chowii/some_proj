@@ -27,9 +27,7 @@ import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
@@ -40,14 +38,14 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     private AutocompleteFilter placeFilter;
     private final Logger logger;
 
-    private List<String> suburbList;
+//    private List<String> suburbList;
 
     public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
         logger = Dependencies.INSTANCE.getLogger();
-        suburbList = new ArrayList<>();
+//        suburbList = new ArrayList<>();
     }
 
     @Override
@@ -72,10 +70,6 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
             textView2.setText(item.getSecondaryText(STYLE_BOLD));
         }
         return row;
-    }
-
-    public void addToList(String s){
-        suburbList.add(s);
     }
 
     @NonNull

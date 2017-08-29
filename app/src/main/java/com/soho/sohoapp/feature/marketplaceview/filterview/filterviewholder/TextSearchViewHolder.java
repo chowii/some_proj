@@ -40,8 +40,7 @@ import butterknife.BindView;
 public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         implements AddressContract.View,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks,
-        TokenCompleteTextView.TokenListener
+        GoogleApiClient.ConnectionCallbacks
 {
 
     private final View view;
@@ -61,8 +60,6 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(apiClient));
     }
 
-    boolean hasChanged = false;
-
     @Override
     public void onBindViewHolder(FilterSearchItem model) {
         presenter.startPresenting();
@@ -74,48 +71,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         apiClient.connect();
         PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(view.getContext(), apiClient, null);
         suburbEditText.setAdapter(adapter);
-        suburbEditText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-        suburbEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AutocompletePrediction item = adapter.getItem(position);
-                if(item != null){
-                    actionsListener.onAddressClicked(item.getPlaceId(), item.getPrimaryText(null).toString());
-
-                    String suburbText = item.getPrimaryText(null).toString();
-//                    if(!suburbList.contains(suburbText)) suburbList.add(suburbText);
-
-                    adapter.addToList(suburbText);
-                    StringBuilder builder = new StringBuilder(suburbEditText.getText());
-
-                    builder.append(suburbText + ", ");
-                    suburbEditText.setText(builder.toString());
-                    suburbEditText.setSelection(builder.length()-1);
-                }
-
-            }
-        });
-
-        suburbEditText.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void afterTextChanged(Editable s) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count == 0 && !hasChanged){
-                    hasChanged = false;
-                    String[] sArray = s.toString().split(",+");
-                    int length = sArray.length - 1;
-                    if(length > 0)
-                        for(int i = 0; i < length; i++)
-                            suburbEditText.setText(sArray[i]);
-                    else {
-                        hasChanged = true;
-                        suburbEditText.setText("");
-                    }
-                }else  hasChanged = false;
-            }
-        });
+        suburbEditText.setTokenClickStyle(TokenCompleteTextView.TokenClickStyle.Select);
     }
 
     @Override
@@ -163,25 +119,4 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     @Override
     public void onConnectionSuspended(int i) { }
-
-    private void updateTokenConfirmation() {
-        StringBuilder sb = new StringBuilder("Current tokens:\n");
-        for (Object token: suburbEditText.getObjects()) {
-            sb.append(token.toString());
-            sb.append("\n");
-        }
-        suburbEditText.setText(sb.toString());
-    }
-
-    @Override
-    public void onTokenAdded(Object token) {
-        Log.d("LOG_TAG---", token.toString());
-        updateTokenConfirmation();
-    }
-
-    @Override
-    public void onTokenRemoved(Object token) {
-        Log.d("LOG_TAG---1", token.toString());
-        updateTokenConfirmation();
-    }
 }
