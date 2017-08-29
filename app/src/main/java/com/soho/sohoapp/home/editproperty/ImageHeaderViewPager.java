@@ -1,6 +1,7 @@
 package com.soho.sohoapp.home.editproperty;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -37,7 +38,13 @@ public class ImageHeaderViewPager extends PagerAdapter {
         PropertyImage image = propertyImages.get(position);
         if (image.getFilePath() != null) {
             ImageLoader.Params params = ImageLoader.Params.create()
-                    .file(new File(image.getFilePath()))
+                    .file(Uri.fromFile(new File(image.getFilePath())))
+                    .view(imageView)
+                    .placeHolder(R.drawable.semiduplex);
+            imageLoader.load(params);
+        } else if (image.getUri() != null) {
+            ImageLoader.Params params = ImageLoader.Params.create()
+                    .file(image.getUri())
                     .view(imageView)
                     .placeHolder(R.drawable.semiduplex);
             imageLoader.load(params);
@@ -55,6 +62,11 @@ public class ImageHeaderViewPager extends PagerAdapter {
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View) object);
     }
 
     public void setData(@NonNull List<PropertyImage> newPropertyImageList) {

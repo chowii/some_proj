@@ -1,5 +1,7 @@
 package com.soho.sohoapp.home.editproperty;
 
+import android.net.Uri;
+
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public interface EditPropertyContract {
         void onChooseFromGalleryClicked();
 
         void onPhotoReady(String path);
+
+        void onPhotoPicked(Uri uri);
     }
 
     interface View {
@@ -26,5 +30,7 @@ public interface EditPropertyContract {
         void capturePhoto();
 
         void setPropertyImages(List<PropertyImage> propertyImages);
+
+        void pickImageFromGallery();
     }
 }

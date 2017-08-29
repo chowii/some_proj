@@ -14,6 +14,7 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.home.editproperty.photos.CameraPicker;
+import com.soho.sohoapp.home.editproperty.photos.GalleryPicker;
 import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.AndroidNavigator;
 
@@ -38,6 +39,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     private EditPropertyPresenter presenter;
     private CameraPicker cameraPicker;
     private ImageHeaderViewPager pagerAdapter;
+    private GalleryPicker galleryPicker;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
@@ -50,8 +52,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         setContentView(R.layout.activity_edit_property);
         ButterKnife.bind(this);
 
-        initToolbar();
-        initTabs();
+        initView();
 
         presenter = new EditPropertyPresenter(this, AndroidNavigator.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
@@ -99,9 +100,23 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
+    public void pickImageFromGallery() {
+        galleryPicker = new GalleryPicker(this);
+        galleryPicker.choosePhoto(uri -> {
+            actionsListener.onPhotoPicked(uri);
+            System.out.println("Gallery photo path: " + uri.getPath());
+        });
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        cameraPicker.onActivityResult(requestCode, resultCode);
+        if (cameraPicker != null) {
+            cameraPicker.onActivityResult(requestCode, resultCode);
+        }
+        if (galleryPicker != null) {
+            galleryPicker.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void initToolbar() {
@@ -124,7 +139,11 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
+    }
 
+    private void initView() {
+        initToolbar();
+        initTabs();
         pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
     }

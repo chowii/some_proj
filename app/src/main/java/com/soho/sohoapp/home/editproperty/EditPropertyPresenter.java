@@ -1,5 +1,7 @@
 package com.soho.sohoapp.home.editproperty;
 
+import android.net.Uri;
+
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.navigator.Navigator;
@@ -45,18 +47,30 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void onChooseFromGalleryClicked() {
-        System.out.println("Choose from gallery");
+        view.pickImageFromGallery();
     }
 
     @Override
     public void onPhotoReady(String path) {
-        if (propertyImages.size() == 1 && propertyImages.get(0).getDrawableId() != 0) {
-            propertyImages.clear();
-        }
-
+        clearImagesListIfNeeded();
         PropertyImage propertyImage = new PropertyImage();
         propertyImage.setFilePath(path);
         propertyImages.add(propertyImage);
         view.setPropertyImages(propertyImages);
+    }
+
+    @Override
+    public void onPhotoPicked(Uri uri) {
+        clearImagesListIfNeeded();
+        PropertyImage propertyImage = new PropertyImage();
+        propertyImage.setUri(uri);
+        propertyImages.add(propertyImage);
+        view.setPropertyImages(propertyImages);
+    }
+
+    private void clearImagesListIfNeeded() {
+        if (propertyImages.size() == 1 && propertyImages.get(0).getDrawableId() != 0) {
+            propertyImages.clear();
+        }
     }
 }

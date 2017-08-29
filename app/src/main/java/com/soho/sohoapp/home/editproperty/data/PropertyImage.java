@@ -1,5 +1,6 @@
 package com.soho.sohoapp.home.editproperty.data;
 
+import android.net.Uri;
 import android.support.annotation.DrawableRes;
 
 public class PropertyImage {
@@ -7,6 +8,7 @@ public class PropertyImage {
     private int drawableId;
     private String imageUrl;
     private String filePath;
+    private Uri uri;
 
     public int getDrawableId() {
         return drawableId;
@@ -30,5 +32,13 @@ public class PropertyImage {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 }
