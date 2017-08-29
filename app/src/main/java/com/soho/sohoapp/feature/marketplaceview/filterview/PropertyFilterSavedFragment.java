@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class PropertyFilterSavedFragment extends BaseFragment {
 
-    public static Fragment newInstance() {
+    public static PropertyFilterSavedFragment newInstance() {
         PropertyFilterSavedFragment fragment = new PropertyFilterSavedFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);

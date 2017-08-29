@@ -3,10 +3,8 @@ package com.soho.sohoapp;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 import com.soho.sohoapp.home.BaseFormModel;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 
@@ -16,7 +14,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFormViewHolder<T extends BaseFormModel> extends RecyclerView.ViewHolder {
 
-    public Map<String, Object> itemMap = new HashMap<>();
+    public OnViewHolderItemValueChangeListener updatedListener;
 
     public BaseFormViewHolder(View itemView) {
         super(itemView);

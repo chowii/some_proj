@@ -5,11 +5,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.soho.sohoapp.BaseFormViewHolder;
-import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
-import com.soho.sohoapp.home.BaseFormModel;
-import com.soho.sohoapp.home.BaseModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +16,6 @@ import butterknife.ButterKnife;
  */
 
 public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelectorItem> {
-
 
     @BindView(R.id.subtract_button)
     Button subtractButton;
@@ -32,9 +28,10 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
 
     private byte radiusValue;
 
-    public FilterValueSelectorViewHolder(View itemView) {
+    public FilterValueSelectorViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        updatedListener = listener;
     }
 
     @Override
@@ -45,12 +42,12 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
 
         addButton.setOnClickListener((v) -> {
             valueTextView.setText(++radiusValue + "km");
-            itemMap.put("value_selector", radiusValue);
+            updatedListener.onChange("by_google_places[distance]", radiusValue * 1_000);
         });
 
         subtractButton.setOnClickListener((v) -> {
             valueTextView.setText(++radiusValue + "km");
-            itemMap.put("value_selector", radiusValue);
+            updatedListener.onChange("by_google_places[distance]", radiusValue * 1_000);
         });
     }
 }

@@ -21,15 +21,17 @@ import butterknife.ButterKnife;
  */
 
 public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupView<String>> {
-    private final Context context;
 
     @BindView(R.id.group)
     RadioGroup radioGroup;
 
-    public FilterRadioGroupViewHolder(View itemView) {
+    private final Context context;
+
+    public FilterRadioGroupViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         context = itemView.getContext();
         ButterKnife.bind(this, itemView);
+        updatedListener = listener;
     }
 
     @Override
@@ -51,8 +53,8 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
         button.setGravity(Gravity.CENTER);
         radioGroup.addView(button, layoutParams);
 
-        button.setOnCheckedChangeListener((view, isChecked) ->{
-            itemMap.put(button.getText().toString(), isChecked);
-        });
+        button.setOnCheckedChangeListener((view, isChecked) ->
+            updatedListener.onChange(button.getText().toString(), isChecked)
+        );
     }
 }

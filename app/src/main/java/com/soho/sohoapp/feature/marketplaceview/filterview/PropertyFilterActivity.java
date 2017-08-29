@@ -3,15 +3,10 @@ package com.soho.sohoapp.feature.marketplaceview.filterview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseFormModel;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +23,7 @@ public class PropertyFilterActivity extends AppCompatActivity
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
-    PropertyFilterPresenter presenter;
+    private boolean isBuySection;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +31,10 @@ public class PropertyFilterActivity extends AppCompatActivity
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
-                .commit();
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
+        isBuySection = getIntent().getExtras().getBoolean("is_buy_section", true);
+        replaceFilterViewFrgament(PropertyFilterViewFragment.newInstance(), isBuySection);
 
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
         tabLayout.addOnTabSelectedListener(this);
 
@@ -49,16 +42,20 @@ public class PropertyFilterActivity extends AppCompatActivity
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getPosition() == 0){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
-                    .commit();
-        }else
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.filter_fragment_container, PropertyFilterSavedFragment.newInstance())
-                    .commit();
+        if(tab.getPosition() == 0) replaceFilterViewFrgament(PropertyFilterViewFragment.newInstance(), isBuySection);
+        else replaceFragment(PropertyFilterSavedFragment.newInstance());
+    }
+
+    private void replaceFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.filter_fragment_container, fragment)
+                .commit();
+    }
+
+    private void replaceFilterViewFrgament(PropertyFilterViewFragment fragment, boolean isBuySection){
+        fragment.isBuySection(isBuySection);
+        replaceFragment(fragment);
     }
 
     @Override

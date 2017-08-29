@@ -7,16 +7,16 @@ import com.soho.sohoapp.home.BaseFormModel;
  * Created by chowii on 20/08/17.
  */
 
-public class CheckboxTitle extends BaseFormModel<Boolean> {
+public class FilterCheckboxItem extends BaseFormModel<Boolean> {
 
     private boolean itemValue = false;
 
     private String key = "";
     private String label = "";
 
-    public CheckboxTitle(String title) { this.label = title; }
+    public FilterCheckboxItem(String title) { this.label = title; }
 
-    public void setTitle(String title){ this.key = title; }
+    public void setTitle(String title){ this.label = title; }
     public String getTitle(){ return label == null ? "" : label; }
 
     @Override
@@ -31,5 +31,7 @@ public class CheckboxTitle extends BaseFormModel<Boolean> {
     @Override
     public int getItemViewType() { return R.layout.item_filter_checkbox; }
 
+    public String getKey() { return key; }
+    public void setKey(String k) { key = k; }
 
 }

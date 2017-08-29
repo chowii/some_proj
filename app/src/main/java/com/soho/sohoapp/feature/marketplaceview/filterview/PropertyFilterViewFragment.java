@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 public class PropertyFilterViewFragment extends BaseFragment implements PropertyFilterContract.ViewInteractable
 {
 
-    public static Fragment newInstance() {
+    public static PropertyFilterViewFragment newInstance() {
         PropertyFilterViewFragment fragment = new PropertyFilterViewFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -38,6 +38,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     RecyclerView recyclerView;
 
     PropertyFilterPresenter presenter;
+    private boolean isBuySection;
 
     @Nullable
     @Override
@@ -52,7 +53,9 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
 
     @Override
     public void configureAdapter(List<? extends BaseFormModel> formModelList) {
-        recyclerView.setAdapter(new PropertyFilterAdapter(formModelList, getActivity()));
+        recyclerView.setAdapter(new PropertyFilterAdapter(formModelList, getActivity(), isBuySection));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
+    public void isBuySection(boolean isBuySection){ this.isBuySection = isBuySection; }
 }

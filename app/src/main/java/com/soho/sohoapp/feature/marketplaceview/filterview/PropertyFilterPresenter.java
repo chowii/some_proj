@@ -73,7 +73,7 @@ public class PropertyFilterPresenter implements PropertyFilterContract.ViewPrese
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
                         list -> {
-                            modelList.add(7, new CheckboxTitle("All"));
+                            modelList.add(7, new FilterCheckboxItem("All"));
                             modelList.addAll(8, list);
 
                             interactable.configureAdapter(modelList);

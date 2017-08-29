@@ -56,6 +56,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     @OnClick(R.id.search_text)
     public void onSearchTextClicked(View view){
         Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
+        filterIntent.putExtra("is_buy_section", isBuySection);
         startActivity(filterIntent);
     }
 
@@ -81,6 +82,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_rent_tab));
         tabLayout.addOnTabSelectedListener(this);
         tabLayout.getTabAt(0).select();
+        isBuySection = true;
     }
 
     @Override

@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by chowii on 18/8/17.
  */
 
-public class FilterCheckboxViewHolder extends BaseFormViewHolder<CheckboxTitle> {
+public class FilterCheckboxViewHolder extends BaseFormViewHolder<FilterCheckboxItem> {
 
     @BindView(R.id.checkbox_title_text_view)
     TextView titleTextBox;
@@ -24,31 +27,32 @@ public class FilterCheckboxViewHolder extends BaseFormViewHolder<CheckboxTitle> 
     CheckBox checkBox;
 
     private OnCheckChangeListener listener;
+    private List<String> propertyTypeList;
 
-    public FilterCheckboxViewHolder(View itemView) {
+    public FilterCheckboxViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-    }
-
-    public FilterCheckboxViewHolder(View itemView, OnCheckChangeListener listener) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-        this.listener = listener;
+        updatedListener = listener;
+        propertyTypeList = new ArrayList<>();
     }
 
     @Override
-    public void onBindViewHolder(CheckboxTitle model) {
+    public void onBindViewHolder(FilterCheckboxItem model) {
         titleTextBox.setText(model.getTitle());
         checkBox.setChecked(model.getValue());
         checkBox.setOnClickListener((view) -> {
             if(listener != null) listener.onCheckChanged(model.getTitle(), checkBox.isChecked());
-            String title = titleTextBox.getText().toString();
-            itemMap.put(title, checkBox.isSelected());
+            propertyTypeList.add(model.getKey());
+            updatedListener.onChange("by_property_types", propertyTypeList);
         });
     }
 
     public void setOnCheckedChangeListener(OnCheckChangeListener listener){
         this.listener = listener;
+    }
+
+    public void setOnViewHolderItemUpdateListener(OnViewHolderItemValueChangeListener listener){
+        updatedListener = listener;
     }
 
     public interface OnCheckChangeListener {

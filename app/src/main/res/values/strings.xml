@@ -42,7 +42,7 @@
 
 
 
-    <string-array name="filter_price_range">
+    <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50k</item>
         <item>$100k</item>
@@ -93,6 +93,48 @@
         <item>$4m</item>
         <item>$5m</item>
         <item>$10m</item>
+    </string-array>
+
+    <string-array name="filter_rent_price_range">
+        <item>Any</item>
+        <item>$50</item>
+        <item>$100</item>
+        <item>$120</item>
+        <item>$150</item>
+        <item>$170</item>
+        <item>$200</item>
+        <item>$250</item>
+        <item>$300</item>
+        <item>$350</item>
+        <item>$400</item>
+        <item>$450</item>
+        <item>$500</item>
+        <item>$550</item>
+        <item>$600</item>
+        <item>$650</item>
+        <item>$700</item>
+        <item>$750</item>
+        <item>$800</item>
+        <item>$850</item>
+        <item>$900</item>
+        <item>$950</item>
+        <item>$1k</item>
+        <item>$1.10m</item>
+        <item>$1.20m</item>
+        <item>$1.30m</item>
+        <item>$1.40m</item>
+        <item>$1.50m</item>
+        <item>$1.60m</item>
+        <item>$1.70m</item>
+        <item>$1.80m</item>
+        <item>$1.90m</item>
+        <item>$2k</item>
+        <item>$2.50k</item>
+        <item>$3k</item>
+        <item>$3.50k</item>
+        <item>$4k</item>
+        <item>$4.50k</item>
+        <item>$5k</item>
     </string-array>
 
 </resources>
