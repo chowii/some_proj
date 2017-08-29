@@ -1,8 +1,8 @@
 package com.soho.sohoapp.home.addproperty.address;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -38,12 +38,14 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     private AutocompleteFilter placeFilter;
     private final Logger logger;
 
-    public PlaceAutocompleteAdapter(FragmentActivity activity, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
-        super(activity, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
+//    private List<String> suburbList;
+
+    public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
+        super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
         logger = Dependencies.INSTANCE.getLogger();
-
+//        suburbList = new ArrayList<>();
     }
 
     @Override
@@ -76,8 +78,10 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+
                 FilterResults results = new FilterResults();
                 ArrayList<AutocompletePrediction> filterData = new ArrayList<>();
+
                 if (constraint != null) {
                     filterData = getAutocomplete(constraint);
                 }

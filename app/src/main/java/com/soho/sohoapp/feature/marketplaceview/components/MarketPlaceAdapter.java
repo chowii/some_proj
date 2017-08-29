@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,11 +14,11 @@ import java.util.List;
  * Created by chowii on 14/8/17.
  */
 
-class MarketPlaceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class MarketPlaceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final List<? extends BaseModel> propertyList;
 
-    MarketPlaceAdapter(List<? extends BaseModel> propertyList) {
+    public MarketPlaceAdapter(List<? extends BaseModel> propertyList) {
         this.propertyList = propertyList;
     }
 

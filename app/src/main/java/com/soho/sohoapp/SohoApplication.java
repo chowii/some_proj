@@ -20,7 +20,7 @@ public class SohoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        Constants.init(this);
+        Constants.Companion.init(this);
         SharedPrefsHelper.Companion.init(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Gibson-Regular.ttf")

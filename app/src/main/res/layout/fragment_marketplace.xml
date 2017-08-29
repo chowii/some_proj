@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/greyLightPrimary"
-                android:orientation="vertical"
-    >
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
-        style="@style/TabLayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/greyLightPrimary">
+    <include layout="@layout/layout_tab"/>
 
     <LinearLayout
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tabs"
         android:background="@drawable/shadow_marketplace_search_bar_layer"
         android:orientation="horizontal"
         >
@@ -39,17 +32,15 @@
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tabs"
         >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="70dp"
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

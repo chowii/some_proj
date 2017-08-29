@@ -1,7 +1,7 @@
 package com.soho.sohoapp.data;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplace.model.Propertyable;
+import com.soho.sohoapp.feature.marketplaceview.model.Propertyable;
 
 import java.util.List;
 import java.util.Map;

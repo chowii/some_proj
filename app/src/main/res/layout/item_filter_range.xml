@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.wefika.horizontalpicker.HorizontalPicker
+        android:id="@+id/picker_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:sideItems="2"
+        android:textStyle="bold"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/filter_padding_left"
+        android:paddingRight="@dimen/filter_padding_right"
+        />
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <TextView
+        android:text="to"
+        style="@style/TextView.SubTitle.Center.Grey"
+        android:padding="20dp"
+        />
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <com.wefika.horizontalpicker.HorizontalPicker
+        android:id="@+id/picker_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:sideItems="2"
+        android:textStyle="bold"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+
+        android:paddingRight="15dp"
+        />
+
+    <include layout="@layout/horizontal_rule"/>
+
+</LinearLayout>

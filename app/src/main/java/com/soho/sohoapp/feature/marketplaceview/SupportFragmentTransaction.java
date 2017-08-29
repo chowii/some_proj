@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace;
+package com.soho.sohoapp.feature.marketplaceview;
 
 import com.soho.sohoapp.landing.BaseFragment;
 

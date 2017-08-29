@@ -39,6 +39,10 @@
             android:name=".home.portfolio.details.PortfolioDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".feature.marketplaceview.filterview.PropertyFilterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -47,6 +51,17 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.soho.sohoapp.dev.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
     </application>
 
 </manifest>
