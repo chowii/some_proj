@@ -52,7 +52,7 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
         radioGroup.addView(button, layoutParams);
 
         button.setOnCheckedChangeListener((view, isChecked) ->{
-            itemMap.putIfAbsent(button.getText().toString(), isChecked);
+            itemMap.put(button.getText().toString(), isChecked);
         });
     }
 }

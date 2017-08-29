@@ -43,6 +43,14 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
             if(radiusValue > 1)valueTextView.setText(--radiusValue + "km");
         });
 
-        addButton.setOnClickListener((v) -> valueTextView.setText(++radiusValue + "km"));
+        addButton.setOnClickListener((v) -> {
+            valueTextView.setText(++radiusValue + "km");
+            itemMap.put("value_selector", radiusValue);
+        });
+
+        subtractButton.setOnClickListener((v) -> {
+            valueTextView.setText(++radiusValue + "km");
+            itemMap.put("value_selector", radiusValue);
+        });
     }
 }

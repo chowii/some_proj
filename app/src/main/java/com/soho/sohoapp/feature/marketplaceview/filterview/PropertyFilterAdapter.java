@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,16 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.Head
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.RecyclerViewViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.TextSearchViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.CheckboxTitle;
+import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.home.BaseFormModel;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chowii on 18/8/17.
@@ -28,11 +36,13 @@ import java.util.List;
 
 class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
 
+    private final Context context;
     List<? extends BaseFormModel> filterItems;
     FilterCheckboxViewHolder view;
 
-    PropertyFilterAdapter(List<? extends BaseFormModel> filterItems) {
+    PropertyFilterAdapter(List<? extends BaseFormModel> filterItems, Context context) {
         this.filterItems = filterItems;
+        this.context = context;
     }
 
     @Override
@@ -82,6 +92,23 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> {
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(filterItems.get(position));
         addCheckboxAction(holder);
+        if(holder instanceof FilterButtonItemViewHolder){
+            FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
+            buttonViewHolder.setOnSaveFilterPreferenceListener(new FilterButtonItemViewHolder.OnSaveFilterPreferenceListener() {
+                @Override
+                public void onSaveClicked() {
+                    Map<String, Object> map = new HashMap<>();
+                    buttonViewHolder.itemMap.put("test", true);
+                    buttonViewHolder.itemMap.put("test1", true);
+                    buttonViewHolder.itemMap.put("test2", true);
+                    map.put("data", buttonViewHolder.itemMap);
+
+                    JSONObject json = new JSONObject(buttonViewHolder.itemMap);
+
+                    FileWriter.createDeviceFile(context, json.toString());
+                }
+            });
+        }
     }
 
     private void addCheckboxAction(BaseFormViewHolder holder) {

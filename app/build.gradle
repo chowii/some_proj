@@ -133,5 +133,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
 
     compile 'com.wefika:horizontal-picker:1.1.1'
+    compile "com.splitwise:tokenautocomplete:2.0.8@aar"
 }
 

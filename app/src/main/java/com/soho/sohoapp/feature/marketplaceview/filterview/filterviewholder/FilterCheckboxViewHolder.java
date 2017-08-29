@@ -43,7 +43,7 @@ public class FilterCheckboxViewHolder extends BaseFormViewHolder<CheckboxTitle> 
         checkBox.setOnClickListener((view) -> {
             if(listener != null) listener.onCheckChanged(model.getTitle(), checkBox.isChecked());
             String title = titleTextBox.getText().toString();
-            itemMap.putIfAbsent(title, checkBox.isSelected());
+            itemMap.put(title, checkBox.isSelected());
         });
     }
 

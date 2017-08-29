@@ -39,10 +39,8 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
         String s [] = context.getResources().getStringArray(R.array.filter_price_range);
         pickerFrom.setValues(s);
         pickerTo.setValues(s);
-        itemMap.putIfAbsent("price_from",
-                s[pickerFrom.getSelectedItem()]);
-        itemMap.putIfAbsent("price_to",
-                s[pickerTo.getSelectedItem()]);
+        pickerTo.setOnItemSelectedListener(index -> itemMap.put("price_to", s[index]));
+        pickerFrom.setOnItemSelectedListener(index -> itemMap.put("price_from", s[index]));
     }
 
     /*

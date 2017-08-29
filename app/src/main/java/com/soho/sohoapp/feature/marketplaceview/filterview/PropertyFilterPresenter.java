@@ -49,9 +49,6 @@ public class PropertyFilterPresenter implements PropertyFilterContract.ViewPrese
 
         modelList.add(new HeaderItem("Property Type"));
 
-        modelList.add((new ButtonItem("Select All")));
-
-
         modelList.add(new HeaderItem("Property Status"));
         List<String> group = new ArrayList<>();
         group.add("All properties");

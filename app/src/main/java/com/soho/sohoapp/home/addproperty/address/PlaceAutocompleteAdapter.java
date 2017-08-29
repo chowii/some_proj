@@ -88,11 +88,9 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
                 FilterResults results = new FilterResults();
                 ArrayList<AutocompletePrediction> filterData = new ArrayList<>();
 
-                if (constraint != null && !suburbList.isEmpty()) {
-                    String[] s = constraint.toString().split(",+");
-                    filterData = getAutocomplete(s[s.length-1]);
-                }else
+                if (constraint != null) {
                     filterData = getAutocomplete(constraint);
+                }
 
                 results.values = filterData;
                 if (filterData != null) {

@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.BaseFormModel;
@@ -42,6 +43,7 @@ public class PropertyFilterActivity extends AppCompatActivity
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
+        tabLayout.addOnTabSelectedListener(this);
 
     }
 
@@ -55,7 +57,7 @@ public class PropertyFilterActivity extends AppCompatActivity
         }else
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.filter_fragment_container, PropertyFilterViewFragment.newInstance())
+                    .replace(R.id.filter_fragment_container, PropertyFilterSavedFragment.newInstance())
                     .commit();
     }
 

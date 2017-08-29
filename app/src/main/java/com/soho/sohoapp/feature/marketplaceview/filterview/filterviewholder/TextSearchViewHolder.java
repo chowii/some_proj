@@ -7,9 +7,11 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,19 +19,19 @@ import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView;
 import com.soho.sohoapp.data.PropertyAddress;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
-import com.soho.sohoapp.home.BaseFormModel;
 import com.soho.sohoapp.home.addproperty.address.AddressContract;
 import com.soho.sohoapp.home.addproperty.address.AddressPresenter;
 import com.soho.sohoapp.home.addproperty.address.PlaceAutocompleteAdapter;
 import com.soho.sohoapp.location.AndroidLocationProvider;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 18/8/17.
@@ -38,7 +40,8 @@ import butterknife.ButterKnife;
 public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         implements AddressContract.View,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks
+        GoogleApiClient.ConnectionCallbacks,
+        TokenCompleteTextView.TokenListener
 {
 
     private final View view;
@@ -49,7 +52,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
     List<String> suburbList;
 
     @BindView(R.id.suburb_auto_complete)
-    AutoCompleteTextView suburbEditText;
+    TokenizedSuburbAutoCompleteTextView suburbEditText;
 
     public TextSearchViewHolder(View itemView) {
         super(itemView);
@@ -57,6 +60,8 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         suburbList = new ArrayList();
         presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(apiClient));
     }
+
+    boolean hasChanged = false;
 
     @Override
     public void onBindViewHolder(FilterSearchItem model) {
@@ -69,6 +74,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         apiClient.connect();
         PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(view.getContext(), apiClient, null);
         suburbEditText.setAdapter(adapter);
+        suburbEditText.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         suburbEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,16 +84,14 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
                     actionsListener.onAddressClicked(item.getPlaceId(), item.getPrimaryText(null).toString());
 
                     String suburbText = item.getPrimaryText(null).toString();
-                    if(!suburbList.contains(suburbText)) suburbList.add(suburbText);
-
+//                    if(!suburbList.contains(suburbText)) suburbList.add(suburbText);
 
                     adapter.addToList(suburbText);
-                    StringBuilder builder = new StringBuilder();
+                    StringBuilder builder = new StringBuilder(suburbEditText.getText());
 
-                    for(String suburb: suburbList)
-                        builder.append(suburb + ", ");
+                    builder.append(suburbText + ", ");
                     suburbEditText.setText(builder.toString());
-                    suburbEditText.setSelection(builder.length());
+                    suburbEditText.setSelection(builder.length()-1);
                 }
 
             }
@@ -95,20 +99,21 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
         suburbEditText.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void afterTextChanged(Editable s) {
-                String string = s.toString();
-                String[] text = string.split(",+");
-                for(int i = 0; i < text.length; i++){
-                    if(suburbList.size() > 0){
-                        if(!suburbList.get(i).equalsIgnoreCase(text[i])){
-                            suburbList.set(i, text[i]);
-                        }
-                    }
-                }
-            }
+            public void afterTextChanged(Editable s) {}
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                actionsListener.onAddressChanged(s.subSequence(start, s.length()).toString());
+                if(count == 0 && !hasChanged){
+                    hasChanged = false;
+                    String[] sArray = s.toString().split(",+");
+                    int length = sArray.length - 1;
+                    if(length > 0)
+                        for(int i = 0; i < length; i++)
+                            suburbEditText.setText(sArray[i]);
+                    else {
+                        hasChanged = true;
+                        suburbEditText.setText("");
+                    }
+                }else  hasChanged = false;
             }
         });
     }
@@ -119,29 +124,19 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
     }
 
     @Override
-    public void showLoadingDialog() {
-
-    }
+    public void showLoadingDialog() { }
 
     @Override
-    public void hideLoadingDialog() {
-
-    }
+    public void hideLoadingDialog() { }
 
     @Override
-    public void showError(Throwable t) {
-
-    }
+    public void showError(Throwable t) { }
 
     @Override
-    public void setAddress(String s) {
-
-    }
+    public void setAddress(String s) { }
 
     @Override
-    public void showEmptyLocationError() {
-
-    }
+    public void showEmptyLocationError() { }
 
     @Override
     public String getAddress() {
@@ -168,4 +163,25 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     @Override
     public void onConnectionSuspended(int i) { }
+
+    private void updateTokenConfirmation() {
+        StringBuilder sb = new StringBuilder("Current tokens:\n");
+        for (Object token: suburbEditText.getObjects()) {
+            sb.append(token.toString());
+            sb.append("\n");
+        }
+        suburbEditText.setText(sb.toString());
+    }
+
+    @Override
+    public void onTokenAdded(Object token) {
+        Log.d("LOG_TAG---", token.toString());
+        updateTokenConfirmation();
+    }
+
+    @Override
+    public void onTokenRemoved(Object token) {
+        Log.d("LOG_TAG---1", token.toString());
+        updateTokenConfirmation();
+    }
 }

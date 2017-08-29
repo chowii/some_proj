@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder;
 
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -31,7 +32,7 @@ public class FilterToggleItemViewHolder extends BaseFormViewHolder<ToggleItem> {
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                itemMap.put("surrounding_suburbs", isChecked);
             }
         });
     }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <AutoCompleteTextView
+    <com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView
         android:id="@+id/suburb_auto_complete"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -14,7 +14,6 @@
 
         android:background="@android:color/transparent"
         android:hint="@string/add_property_autocomplete_hint"
-        android:singleLine="true"
         android:textColor="@color/primaryText"
         android:textColorHint="@color/hintText"
         tools:ignore="RtlHardcoded"
