@@ -23,6 +23,7 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterChe
 import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.home.BaseFormModel;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.AbstractList;
@@ -41,12 +42,14 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     private final boolean mIsBuySection;
     List<? extends BaseFormModel> mFilterItems;
     FilterCheckboxViewHolder view;
+    private OnSearchClickListener mSearchListener;
 
-    PropertyFilterAdapter(List<? extends BaseFormModel> filterItems, Context context, boolean isBuySection) {
+    PropertyFilterAdapter(List<? extends BaseFormModel> filterItems, Context context, OnSearchClickListener listener, boolean isBuySection) {
         this.mFilterItems = filterItems;
         this.context = context;
         mFilterMap = new HashMap<>();
         this.mIsBuySection = isBuySection;
+        mSearchListener = listener;
     }
 
     @Override
@@ -98,10 +101,13 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
         addCheckboxAction(holder);
         if(holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
-            buttonViewHolder.setOnSaveFilterPreferenceListener(() -> {
-                Map<String, Object> map = new HashMap<>();
-                JSONObject json = new JSONObject(mFilterMap);
-                FileWriter.createDeviceFile(context, json.toString());
+            buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
+                if(title.equalsIgnoreCase("Save this search")){
+                    try {
+                        FileWriter.createDeviceFile(context, new JSONObject(mFilterMap.toString()).toString());
+                    } catch (JSONException e) { e.printStackTrace(); }
+                }else if(title.equalsIgnoreCase("search"))
+                    mSearchListener.onSearchClicked(mFilterMap);
             });
         }
     }
@@ -140,7 +146,6 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     public void onChange(CharSequence key, Object value) {
         if(value instanceof AbstractList) addListToFilterMap((List<String>) value);
         else mFilterMap.put(key.toString(), value);
-        Log.d("LOG_TAG---", "onChange: " + mFilterMap.toString());
     }
 
     private void addListToFilterMap(List<String> value) {
@@ -151,5 +156,9 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
             item.addAll(list);
             mFilterMap.put("by_property_type", item);
         }
+    }
+
+    interface OnSearchClickListener {
+        void onSearchClicked(Map<String, Object> searchParams);
     }
 }

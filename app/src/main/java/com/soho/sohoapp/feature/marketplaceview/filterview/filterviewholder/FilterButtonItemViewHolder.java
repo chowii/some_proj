@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,24 +22,20 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
 
     private final Context context;
     OnSaveFilterPreferenceListener listener;
-    private final OnViewHolderItemValueChangeListener updateListener;
 
     public FilterButtonItemViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         context = itemView.getContext();
-        updateListener = listener;
+        updatedListener = listener;
     }
 
     @Override
     public void onBindViewHolder(ButtonItem model) {
         toggleCheckAll.setText(model.getButtonText());
         toggleCheckAll.setOnClickListener(v -> {
-            if(toggleCheckAll.getText().toString().equalsIgnoreCase("Save this search")){
-                Log.d("LOG_TAG---", "onClick: " + toggleCheckAll.getText());
-                if(listener != null) listener.onSaveClicked();
-                updateListener.onChange(toggleCheckAll.getText().toString(), null);
-            }
+            if(listener != null) listener.onSaveClicked(toggleCheckAll.getText().toString());
+            updatedListener.onChange(toggleCheckAll.getText().toString(), null);
         });
     }
 
@@ -48,7 +43,7 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
         this.listener = listener;
     }
 
-   public interface OnSaveFilterPreferenceListener {
-        void onSaveClicked();
+    public interface OnSaveFilterPreferenceListener {
+        void onSaveClicked(String title);
     }
 }

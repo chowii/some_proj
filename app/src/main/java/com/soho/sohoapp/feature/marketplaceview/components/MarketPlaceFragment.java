@@ -19,7 +19,9 @@ import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,12 +58,13 @@ public class MarketPlaceFragment extends BaseFragment implements
     @OnClick(R.id.search_text)
     public void onSearchTextClicked(View view){
         Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
-        filterIntent.putExtra("is_buy_section", isBuySection);
+
+        filterIntent.putExtra("is_buy_section", searchParams.get("by_listing_type") == "sale/auction");
         startActivity(filterIntent);
     }
 
     MarketPlacePresenter presenter;
-    private boolean isBuySection;
+    Map<String, Object> searchParams;
 
     @Nullable
     @Override
@@ -69,10 +72,14 @@ public class MarketPlaceFragment extends BaseFragment implements
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         ButterKnife.bind(this, view);
 
+        searchParams = (Map<String, Object>) getActivity().getIntent().getSerializableExtra("searchParams");
+        if(searchParams == null) searchParams = new HashMap<>();
+        searchParams.put("by_listing_type", "sale/auction");
+
         presenter = new MarketPlacePresenter(this);
         presenter.createPresentation();
-        presenter.startPresenting(true);
-        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(isBuySection));
+        presenter.startPresenting(searchParams);
+        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(searchParams));
         return view;
     }
 
@@ -82,17 +89,16 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_rent_tab));
         tabLayout.addOnTabSelectedListener(this);
         tabLayout.getTabAt(0).select();
-        isBuySection = true;
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         if(tab.getText().toString().equalsIgnoreCase(getString(R.string.marketplace_buy_tab))){
-            isBuySection = true;
-            presenter.startPresenting(isBuySection);
+            searchParams.put("by_listing_type", "sale/auction");
+            presenter.startPresenting(searchParams);
         }else{
-            isBuySection = false;
-            presenter.startPresenting(isBuySection);
+            searchParams.put("by_listing_type", "rent");
+            presenter.startPresenting(searchParams);
         }
     }
 

@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by chowii on 15/8/17.
  */
 
-public class MarketPlacePresenter implements
+class MarketPlacePresenter implements
         MarketPlaceContract.ViewPresentable {
 
     private final CompositeDisposable compositeDisposable;
@@ -37,21 +37,15 @@ public class MarketPlacePresenter implements
     }
 
     @Override
-    public void startPresenting(boolean isBuySection) {
-        loadData(isBuySection);
+    public void startPresenting(Map<String, Object> searchParams) {
+        loadData(searchParams);
     }
 
-    private void loadData(boolean isBuySection) {
+    private void loadData(Map<String, Object> searchParams) {
         interactable.showRefreshing();
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("by_listing_type", isBuySection ? 
-                "sale/auction" :
-                "rent"
-        );
 
         compositeDisposable.add(
-                ApiClient.getService().searchProperties(map)
+                ApiClient.getService().searchProperties(searchParams)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.newThread())
                         .subscribe(
@@ -72,5 +66,6 @@ public class MarketPlacePresenter implements
     }
 
     @Override
-    public void onRefresh(boolean isBuySection){ loadData(isBuySection); }
+    public void onRefresh(Map<String, Object> searchParams){ loadData(searchParams);
+         }
 }

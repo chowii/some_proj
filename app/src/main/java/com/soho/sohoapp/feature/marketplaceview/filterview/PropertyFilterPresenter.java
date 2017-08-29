@@ -3,7 +3,15 @@ package com.soho.sohoapp.feature.marketplaceview.filterview;
 
 import android.util.Log;
 
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.*;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ButtonItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FavouriteButtonItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGroupView;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
 import com.soho.sohoapp.home.BaseFormModel;
 import com.soho.sohoapp.network.ApiClient;
 
@@ -21,11 +29,12 @@ import static com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilter
 
 
 
-public class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable {
+class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable {
 
     private final ViewInteractable interactable;
+    List<BaseFormModel> modelList;
 
-    public PropertyFilterPresenter(ViewInteractable interactable) {
+    PropertyFilterPresenter(ViewInteractable interactable) {
         this.interactable = interactable;
     }
 
@@ -33,7 +42,6 @@ public class PropertyFilterPresenter implements PropertyFilterContract.ViewPrese
     public void startPresenting() {
         initViewList();
     }
-        List<BaseFormModel> modelList;
 
     void initViewList(){
         modelList = new ArrayList<>();
@@ -79,7 +87,7 @@ public class PropertyFilterPresenter implements PropertyFilterContract.ViewPrese
                             interactable.configureAdapter(modelList);
                         },
                         throwable ->
-                            Log.v("LOG_TAG---","throwable" + throwable.getMessage())
+                            Log.v("LOG_TAG---","filterThrowable " + throwable.getMessage())
                 );
     }
 

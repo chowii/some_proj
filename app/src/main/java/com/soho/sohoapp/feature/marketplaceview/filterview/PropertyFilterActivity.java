@@ -32,7 +32,7 @@ public class PropertyFilterActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         isBuySection = getIntent().getExtras().getBoolean("is_buy_section", true);
-        replaceFilterViewFrgament(PropertyFilterViewFragment.newInstance(), isBuySection);
+        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
@@ -42,7 +42,7 @@ public class PropertyFilterActivity extends AppCompatActivity
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getPosition() == 0) replaceFilterViewFrgament(PropertyFilterViewFragment.newInstance(), isBuySection);
+        if(tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
         else replaceFragment(PropertyFilterSavedFragment.newInstance());
     }
 
@@ -53,7 +53,7 @@ public class PropertyFilterActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void replaceFilterViewFrgament(PropertyFilterViewFragment fragment, boolean isBuySection){
+    private void replaceFilterViewFragment(PropertyFilterViewFragment fragment, boolean isBuySection){
         fragment.isBuySection(isBuySection);
         replaceFragment(fragment);
     }
