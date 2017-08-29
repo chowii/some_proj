@@ -11,10 +11,13 @@ import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.AndroidNavigator;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +37,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     private EditPropertyContract.ViewActionsListener actionsListener;
     private EditPropertyPresenter presenter;
     private CameraPicker cameraPicker;
+    private ImageHeaderViewPager pagerAdapter;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
@@ -83,12 +87,15 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void capturePhoto() {
         cameraPicker = new CameraPicker(this);
-        cameraPicker.takePhoto(new CameraPicker.ImageCapturedListener() {
-            @Override
-            public void onImageCaptured(String path) {
-                System.out.println("Photo path: " + path);
-            }
+        cameraPicker.takePhoto(path -> {
+            actionsListener.onPhotoReady(path);
+            System.out.println("Photo path: " + path);
         });
+    }
+
+    @Override
+    public void setPropertyImages(List<PropertyImage> propertyImages) {
+        pagerAdapter.setData(propertyImages);
     }
 
     @Override
@@ -118,7 +125,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
 
-        ImageHeaderViewPager pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
+        pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
     }
 }

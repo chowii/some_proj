@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import com.soho.sohoapp.utils.Preconditions;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 public class ImageLoader {
     private final Context context;
 
@@ -17,15 +19,23 @@ public class ImageLoader {
 
     public void load(@NonNull Params params) {
         Preconditions.checkIfNull(params.imageView, "Params.imageView must not be null.");
-        Picasso.with(context)
-                .load(params.url)
-                .placeholder(params.placeHolder)
-                .into(params.imageView);
+        if (params.file != null) {
+            Picasso.with(context)
+                    .load(params.file)
+                    .placeholder(params.placeHolder)
+                    .into(params.imageView);
+        } else {
+            Picasso.with(context)
+                    .load(params.url)
+                    .placeholder(params.placeHolder)
+                    .into(params.imageView);
+        }
     }
 
     public static class Params {
         ImageView imageView;
         String url;
+        File file;
 
         @DrawableRes
         int placeHolder;
@@ -45,6 +55,11 @@ public class ImageLoader {
 
         public Params view(@NonNull ImageView imageView) {
             this.imageView = imageView;
+            return this;
+        }
+
+        public Params file(@NonNull File file) {
+            this.file = file;
             return this;
         }
 
