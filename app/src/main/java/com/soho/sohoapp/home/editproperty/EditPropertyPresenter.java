@@ -7,19 +7,32 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.RequestCode;
+import com.soho.sohoapp.permission.PermissionManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.subscriptions.CompositeSubscription;
+
 public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract.ViewActionsListener {
     private final EditPropertyContract.View view;
     private final Navigator navigator;
+    private final PermissionManager permissionManager;
     private final List<PropertyImage> propertyImages;
+    private Subscription permissionSubscription;
+    private final CompositeSubscription compositeSubscription;
 
-    public EditPropertyPresenter(EditPropertyContract.View view, Navigator navigator) {
+    public EditPropertyPresenter(EditPropertyContract.View view,
+                                 Navigator navigator,
+                                 PermissionManager permissionManager) {
         this.view = view;
         this.navigator = navigator;
+        this.permissionManager = permissionManager;
         propertyImages = new ArrayList<>();
+        compositeSubscription = new CompositeSubscription();
     }
 
     @Override
@@ -32,7 +45,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void stopPresenting() {
-        //not needed yet
+        compositeSubscription.unsubscribe();
     }
 
     @Override
@@ -47,7 +60,19 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void onTakeNewPhotoClicked() {
-        view.capturePhoto();
+        if (permissionManager.hasStoragePermission()) {
+            view.capturePhoto();
+        } else {
+            permissionSubscription = permissionManager.requestStoragePermission(RequestCode.EDIT_PROPERTY_PRESENTER_STORAGE)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(permissionEvent -> {
+                        if (permissionEvent.isPermissionGranted()) {
+                            view.capturePhoto();
+                        }
+                        permissionSubscription.unsubscribe();
+                    }, Throwable::printStackTrace);
+            compositeSubscription.add(permissionSubscription);
+        }
     }
 
     @Override
