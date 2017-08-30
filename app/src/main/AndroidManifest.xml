@@ -49,6 +49,11 @@
             android:name=".home.editproperty.EditPropertyActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".permission.PermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4"/>
