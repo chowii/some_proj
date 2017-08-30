@@ -74,7 +74,7 @@ class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable 
 
     @Override
     public void retrieveFilterFromApi() {
-        ApiClient.getService().getPropertyTypes()
+        ApiClient.getService().getPropertyTypesForFilter()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(

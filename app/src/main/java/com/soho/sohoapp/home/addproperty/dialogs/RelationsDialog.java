@@ -6,7 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.ArrayAdapter;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyRole;
+import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 
 import java.util.List;
 

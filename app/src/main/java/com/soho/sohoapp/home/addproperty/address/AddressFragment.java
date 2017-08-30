@@ -1,5 +1,6 @@
 package com.soho.sohoapp.home.addproperty.address;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
@@ -17,7 +19,7 @@ import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.location.AndroidLocationProvider;
@@ -57,13 +59,19 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
         super.onViewCreated(view, savedInstanceState);
         initAutocomplete();
 
-        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(googleApiClient));
-        presenter.startPresenting();
+        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(getContext(), googleApiClient));
+        presenter.startPresenting(savedInstanceState != null);
     }
 
     @Override
     public void onDestroyView() {
         presenter.stopPresenting();
+        presenter = null;
+        if (googleApiClient != null) {
+            googleApiClient.stopAutoManage(getActivity());
+            googleApiClient.disconnect();
+            googleApiClient = null;
+        }
         super.onDestroyView();
     }
 
@@ -107,6 +115,26 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     public void sendAddressToActivity(PropertyAddress address) {
         Listener listener = (Listener) getActivity();
         listener.onAddressSelected(address);
+    }
+
+    @Override
+    public void showKeyboard() {
+        autocomplete.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
+    }
+
+    @Override
+    public void hideKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 
     @OnClick(R.id.clearAddress)

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.soho.sohoapp.network.ApiClient;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

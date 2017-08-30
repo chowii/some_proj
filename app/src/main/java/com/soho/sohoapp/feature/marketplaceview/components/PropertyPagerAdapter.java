@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.soho.sohoapp.R;
 
@@ -29,7 +30,8 @@ class PropertyPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
+//        super.destroyItem(container, position, object);
+        container.removeView((LinearLayout) object);
     }
 
     @Override

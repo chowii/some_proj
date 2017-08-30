@@ -12,28 +12,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--windowSoftInputMode is required here to close keyboard after exit from AddProperty screen-->
         <activity
             android:name=".home.HomeActivity"
-            >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:label="@string/title_activity_home">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".feature.landing.LandingActivity" />
         <activity android:name=".feature.landing.signup.SignUpActivity" />
+        <activity android:name=".feature.landing.LoginActivity" />
         <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
 
         <activity
             android:name=".home.addproperty.AddPropertyActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".home.portfolio.details.PortfolioDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".feature.marketplaceview.filterview.PropertyFilterActivity"
             android:screenOrientation="portrait"
@@ -42,6 +47,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -52,6 +61,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package com.soho.sohoapp.abs;
 
 public interface AbsPresenter {
-    void startPresenting();
+    void startPresenting(boolean fromConfigChanges);
 
     void stopPresenting();
 }

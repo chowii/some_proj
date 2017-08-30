@@ -1,7 +1,7 @@
 package com.soho.sohoapp.home.addproperty.address;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.location.LocationProvider;
 
 import rx.Subscription;
@@ -22,19 +22,22 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
     }
 
     @Override
-    public void startPresenting() {
+    public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
+        view.showKeyboard();
     }
 
     @Override
     public void stopPresenting() {
+        view.hideKeyboard();
         compositeSubscription.unsubscribe();
     }
 
     @Override
     public void onAddressClicked(String placeId, String fullAddress) {
         view.showLoadingDialog();
-        Subscription subscription = locationProvider.getLocationAddress(placeId, fullAddress)
+        Subscription subscription = locationProvider.getLatLng(placeId)
+                .flatMap(latLng -> locationProvider.getAddress(latLng, fullAddress))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(propertyAddress -> {
@@ -57,6 +60,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
                 propertyAddress = new PropertyAddress();
             }
             propertyAddress.setFullAddress(address);
+            view.hideKeyboard();
             view.sendAddressToActivity(this.propertyAddress);
         }
     }

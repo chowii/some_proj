@@ -1,6 +1,6 @@
 package com.soho.sohoapp.home.addproperty.address;
 
-import com.soho.sohoapp.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 
 public class AddressContract {
 
@@ -30,5 +30,9 @@ public class AddressContract {
         String getAddress();
 
         void sendAddressToActivity(PropertyAddress address);
+
+        void showKeyboard();
+
+        void hideKeyboard();
     }
 }

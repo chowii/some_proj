@@ -17,7 +17,15 @@
 
     <!--Common strings start-->
     <string name="common_loading">Loading..</string>
+    <string name="common_loading_error">Something went wrong..</string>
     <!--Common strings end-->
+
+    <!--Test strings start-->
+    <string name="test_text_tiny">lorem</string>
+    <string name="test_text_short">Lorem ipsum</string>
+    <string name="test_text_medium">Lorem ipsum dolor sit amet</string>
+    <string name="test_text_long">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <!--Test strings end-->
 
     <!--Add Property screen start-->
     <string name="add_property_toolbar_title">Add Property</string>
@@ -29,6 +37,60 @@
     <string name="add_property_relation_owner">Owner</string>
     <string name="add_property_relation_agent">Agent</string>
     <string name="add_property_relation_other">Other</string>
+    <string name="add_property_what_type_of_property">Oh, that\'s a nice suburb!\nWhat type of property is it?</string>
+    <string name="add_property_owner_home_question">Do you live in this property?</string>
+    <string name="add_property_owner_home_button">Yes - It\'s my home</string>
+    <string name="add_property_owner_investment_button">No - It\'s an investment</string>
+    <string name="add_property_agent_home_question">Is this a home or investment property?</string>
+    <string name="add_property_agent_home_button">It\'s the owner\'s home</string>
+    <string name="add_property_agent_investment_button">It\'s an investment property</string>
+    <string name="add_property_how_many_rooms">How many Bedrooms, Bathrooms and Carspots?</string>
+    <string name="add_property">Add Property</string>
+    <!--Add Property screen end-->
+
+    <!--Rooms number picker screen start-->
+    <string name="rooms_picker_decrease">-</string>
+    <string name="rooms_picker_increase">+</string>
+    <string name="rooms_picker_studio">Studio</string>
+    <string name="your_email">Your Email</string>
+    <string name="reset_password">reset password</string>
+    <string name="login_button">Login</string>
+    <plurals name="rooms_picker_bedrooms">
+        <item quantity="one">%d Bedroom</item>
+        <item quantity="other">%d Bedrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_bathrooms">
+        <item quantity="one">%d Bathroom</item>
+        <item quantity="other">%d Bathrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_carspots">
+        <item quantity="one">%d Carspot</item>
+        <item quantity="other">%d Carspots</item>
+    </plurals>
+    <!--Rooms number picker screen end-->
+
+    <!--Portfolio screen start-->
+    <string name="portfolio_owner">Owner</string>
+    <string name="portfolio_manager">Manager</string>
+    <string name="portfolio_requests">Requests</string>
+    <string name="portfolio_add_property">+ Add a property</string>
+    <plurals name="portfolio_properties_quantity">
+        <item quantity="one">%d Property</item>
+        <item quantity="other">%d Properties</item>
+    </plurals>
+    <string name="portfolio_estimated_value" formatted="true">$%.2f</string>
+    <string name="portfolio_estimated_value_k" formatted="true">$%.2fk</string>
+    <string name="portfolio_estimated_value_m" formatted="true">$%.2fm</string>
+    <string name="portfolio_public_count" formatted="true">%d public</string>
+    <string name="portfolio_yield_null">Yield: --</string>
+    <string name="portfolio_yield" formatted="true">Yield: %.2f%%</string>
+    <string name="portfolio_lvr_null">LVR: --</string>
+    <string name="portfolio_lvr" formatted="true">LVR: $%.2f%%</string>
+    <string name="portfolio_changed_value_null">--</string>
+    <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
+    <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
+    <!--Portfolio screen end-->
+
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>
     <string name="filter_suburb_search_header">ENTER SEARCH LOCATION, i.e. Areas, Suburbs</string>
