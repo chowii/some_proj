@@ -5,6 +5,7 @@ import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -44,6 +45,9 @@ interface SohoService {
     @GET("portfolios")
     fun getPortfolios(@Query("portfolio_type") portfolioType: String,
                       @Query("user_id") userId: Int): Observable<List<PortfolioPropertyResult>>
+
+    @GET("options/property_types")
+    fun getPropertyTypesForFilter(): Observable<List<FilterCheckboxItem>>
 
 }
 

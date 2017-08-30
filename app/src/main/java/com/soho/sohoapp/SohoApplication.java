@@ -1,8 +1,8 @@
 package com.soho.sohoapp;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.soho.sohoapp.helper.SharedPrefsHelper;
@@ -14,13 +14,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by chowii on 25/7/17.
  */
 
-public class SohoApplication extends Application {
+public class SohoApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        Constants.init(this);
+        Constants.Companion.init(this);
         SharedPrefsHelper.Companion.init(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Gibson-Regular.ttf")

@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplace.model;
+package com.soho.sohoapp.feature.marketplaceview.model;
 
 import com.soho.sohoapp.home.BaseModel;
 

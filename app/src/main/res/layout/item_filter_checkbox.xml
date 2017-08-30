@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/checkbox_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/FilterCheckboxItem"
+        android:text="All"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/filter_padding_left"
+        android:paddingRight="@dimen/filter_padding_right"
+        />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tick"
+        android:layout_gravity="center"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:button="@drawable/check_selector"
+        android:tint="@color/blackDarkPrimary"
+        />
+
+    <include layout="@layout/horizontal_rule"
+        />
+
+
+</RelativeLayout>

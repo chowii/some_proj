@@ -10,6 +10,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 
+    <style name="AppTheme.Base.SwitchCompat" parent="AppTheme">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -123,6 +127,16 @@
     <style name="CircleWhiteButton" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/circle_gray_stroke_button</item>
         <item name="android:textColor">@color/green_gray_text</item>
+    </style>
+
+    // MARK: - ================== Button Styles ====================
+
+    <style name="FilterButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/ring_grey</item>
     </style>
 
     // MARK: - ================== TextView Styles ==================
@@ -276,6 +290,20 @@
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
+    // MARK: - ================== Center Dark TextView Styles ======
+
+    <style name="TextView.Header.Center.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
+    <style name="TextView.Title.Center.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
+    <style name="TextView.SubTitle.Center.Grey">
+        <item name="android:textColor">@color/greyLightPrimary</item>
+    </style>
+
     // MARK: - ================== Message TextView Styles ====
 
     <style name="TextView.Message.Large" parent="TextView.SubTitle">
@@ -296,6 +324,11 @@
         <item name="android:gravity">start</item>
     </style>
 
+    <style name="TextView.Message.Small.Start">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:gravity">start</item>
+    </style>
+
     <style name="TextView.Message.Small.Center">
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
@@ -306,6 +339,10 @@
     </style>
 
     <style name="TextView.Message.Large.Center.Dark">
+        <item name="android:textColor">@color/blackLightPrimary</item>
+    </style>
+
+    <style name="TextView.Message.Small.Start.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
@@ -344,6 +381,39 @@
         <item name="android:paddingRight">15dp</item>
         <item name="android:drawablePadding">5dp</item>
     </style>
+
+    // MARK: - ================== Filter TextView Styles ======
+
+    <style name="FilterPropertyHeader" parent="TextView.SubTitle.Bold">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/greyLightPrimary</item>
+        <item name="android:background">@color/whitePrimary</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="FilterPropertyRegular" parent="TextView.SubTitle.Center">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/blackDarkPrimary</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="FilterPropertyRegular.Left">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="FilterCheckboxItem" parent="TextView.Message.Small.Start.Dark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+
 
     // MARK: - ================== CustomView Styles ==================
 
