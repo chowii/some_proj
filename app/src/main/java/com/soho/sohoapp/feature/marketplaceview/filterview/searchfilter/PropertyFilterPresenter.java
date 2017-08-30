@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 
 import android.util.Log;
@@ -21,8 +21,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterContract.ViewInteractable;
-
 /**
  * Created by chowii on 22/8/17.
  */
@@ -31,10 +29,10 @@ import static com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilter
 
 class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable {
 
-    private final ViewInteractable interactable;
+    private final PropertyFilterContract.ViewInteractable interactable;
     List<BaseFormModel> modelList;
 
-    PropertyFilterPresenter(ViewInteractable interactable) {
+    PropertyFilterPresenter(PropertyFilterContract.ViewInteractable interactable) {
         this.interactable = interactable;
     }
 

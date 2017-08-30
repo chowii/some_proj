@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 
 import com.google.gson.JsonParser;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.model.SavedFilterItem;
 import com.soho.sohoapp.helper.FileWriter;
+import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -45,13 +49,13 @@ public class PropertyFilterSavedFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         JSONObject jsonObject = FileWriter.readFileFromDevice(getActivity(), "Device.json");
-        JsonParser parser = new JsonParser();
-        List<String> mapList = new ArrayList<>();
+        List<BaseModel> mapList = new ArrayList<>();
         Iterator<String> iterator = jsonObject.keys();
-        while(iterator.hasNext()){
-            String value = iterator.next();
-            mapList.add(value);
-        }
+        mapList.add(new HeaderItem<String>("Saved Search"));
+        while(iterator.hasNext())
+            mapList.add(new SavedFilterItem());
+
+
         recyclerView.setAdapter(new PropertyFilterSavedAdapter(mapList));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -1,6 +1,7 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +104,8 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
                 if(title.equalsIgnoreCase("Save this search")){
                     try {
-                        FileWriter.createDeviceFile(context, new JSONObject(mFilterMap.toString()).toString());
+                        Uri uri = FileWriter.createDeviceFile(context, new JSONObject(mFilterMap.toString()).toString());
+                        uri.toString();
                     } catch (JSONException e) { e.printStackTrace(); }
                 }else if(title.equalsIgnoreCase("search"))
                     mSearchListener.onSearchClicked(mFilterMap);

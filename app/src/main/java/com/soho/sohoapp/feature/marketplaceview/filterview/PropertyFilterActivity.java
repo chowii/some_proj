@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.PropertyFilterSavedFragment;
+import com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter.PropertyFilterViewFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

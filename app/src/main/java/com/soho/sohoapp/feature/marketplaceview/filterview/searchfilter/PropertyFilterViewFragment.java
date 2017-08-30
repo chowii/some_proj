@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 import android.content.Intent;
 import android.os.Bundle;
