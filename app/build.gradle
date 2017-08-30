@@ -149,5 +149,8 @@ dependencies {
 
     compile 'com.wefika:horizontal-picker:1.1.1'
     compile "com.splitwise:tokenautocomplete:2.0.8@aar"
+
+    //Multidex
+    compile 'com.android.support:multidex:1.0.1'
 }
 
