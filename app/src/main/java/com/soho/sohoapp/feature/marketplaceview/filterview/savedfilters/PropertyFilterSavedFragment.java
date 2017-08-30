@@ -7,11 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonParser;
+import com.google.gson.Gson;
+import com.soho.sohoapp.Constants;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.model.SavedFilterItem;
+import com.soho.sohoapp.feature.marketplaceview.model.EmptyDataSetItem;
 import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.landing.BaseFragment;
@@ -20,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,14 +48,17 @@ public class PropertyFilterSavedFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_filter_saved, container, false);
         ButterKnife.bind(this, view);
 
-        JSONObject jsonObject = FileWriter.readFileFromDevice(getActivity(), "Device.json");
+        JSONObject jsonObject = FileWriter.readFileFromDevice(getActivity(), Constants.getSavedFilter());
         List<BaseModel> mapList = new ArrayList<>();
-        Iterator<String> iterator = jsonObject.keys();
+
         mapList.add(new HeaderItem<String>("Saved Search"));
-        while(iterator.hasNext())
-            mapList.add(new SavedFilterItem());
 
+        Gson gson = new Gson();
+        SavedFilterList l = gson.fromJson(jsonObject.toString(), SavedFilterList.class);
+        List<SavedFilterItem> savedItem = l.getData();
+        mapList.addAll(savedItem);
 
+        if(mapList.size() < 2) mapList.add(new EmptyDataSetItem());
         recyclerView.setAdapter(new PropertyFilterSavedAdapter(mapList));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

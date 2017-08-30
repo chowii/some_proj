@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Header"
+        style="@style/TextView.Message.Large.Center.HyperLink"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:layout_below="@id/header"
+        android:id="@+id/subheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test SubHeader"
+        style="@style/TextView.SubTitle.Center.Grey"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/inner_layout_padding"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Redirect"
+        style="@style/Button.Green"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/inner_layout_padding"
+        />
+
+</RelativeLayout>

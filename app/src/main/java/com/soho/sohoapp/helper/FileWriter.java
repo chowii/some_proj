@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,23 +23,27 @@ import java.io.OutputStreamWriter;
  * Created by chowii on 25/8/17.
  */
 
-public class FileWriter {
+public final class FileWriter {
 
-        public static final Uri createDeviceFile(Context context, String data){
+        public static Uri writeFileToDevice(Context context, Object data, String filename){
             final String DEVICE_INFO_DIR = context.getExternalFilesDir(null) + "/.temp";
-
+            String filenameWithExtension = filename ;
+//            + ".json";
             final File devicePath = new File(DEVICE_INFO_DIR);
 
-            if(!devicePath.exists())
-                devicePath.mkdir();
+            Gson gson = new Gson();
+            gson.toJson(data);
 
-            final File deviceFile = new File(devicePath, "Device.json");
 
+            if(!devicePath.exists()) devicePath.mkdir();
+
+            final File deviceFile = new File(devicePath, filenameWithExtension);
+//            if(deviceFile.exists()) data = appendToExistingFile(context, data, filenameWithExtension);
             try{
-                Log.v("LOG_TAG---","createFile(): " + "Feedback: file created " + deviceFile.createNewFile());
+                Log.v("LOG_TAG---","createFile(): " + "Json: file created " + deviceFile.createNewFile());
                 FileOutputStream fos = new FileOutputStream(deviceFile);
                 OutputStreamWriter osw = new OutputStreamWriter(fos);
-                osw.append(data);
+                osw.append(gson.toJson(data));
                 osw.flush();
                 osw.close();
 
@@ -48,7 +54,15 @@ public class FileWriter {
 
         }
 
-        public static final JSONObject readFileFromDevice(Context context, String filename){
+    private static String appendToExistingFile(Context context, String data, String filenameWithExtension) {
+        String jsonOld = readFileFromDevice(context, filenameWithExtension).toString();
+        StringBuilder builder = new StringBuilder(jsonOld);
+        if(data.equalsIgnoreCase("{}")) return builder.toString();
+        builder.append(data);
+        return builder.toString();
+    }
+
+    public static JSONObject readFileFromDevice(Context context, String filename){
             final String DEVICE_INFO_DIR = context.getExternalFilesDir(null) + "/.temp";
             final File devicePath = new File(DEVICE_INFO_DIR);
 

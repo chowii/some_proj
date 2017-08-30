@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.common.EmptyItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
 import com.soho.sohoapp.home.BaseModel;
@@ -21,20 +22,15 @@ class PropertyFilterSavedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final List<BaseModel> jsonObject;
 
-    public PropertyFilterSavedAdapter(List<BaseModel> jsonObject) {
+    PropertyFilterSavedAdapter(List<BaseModel> jsonObject) {
         this.jsonObject = jsonObject;
     }
 
     @Override
-    public int getItemCount() {
-        return jsonObject.size();
-    }
+    public int getItemCount() { return jsonObject.size(); }
 
     @Override
-    public int getItemViewType(int position) {
-        if(position == 0) return R.layout.item_filter_header;
-        else return R.layout.item_filter_saved;
-    }
+    public int getItemViewType(int position) { return jsonObject.get(position).getItemViewType(); }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,18 +40,16 @@ class PropertyFilterSavedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 return new HeaderViewHolder(itemView);
             case R.layout.item_filter_saved:
                 return new SavedItemViewHolder(itemView);
+            case R.layout.item_empty_dataset:
+                return new EmptyItemViewHolder(itemView);
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.onBindViewHolder(jsonObject.get(holder.getAdapterPosition()));
-//        if(holder instanceof SavedItemViewHolder){
-//            SavedItemViewHolder item = (SavedItemViewHolder) holder;
-//            item.titleTextView.setText("Filter " + position);
-//            item.subtitleTextView.setText(jsonObject.get(position-1));
-//        }
     }
 
 }

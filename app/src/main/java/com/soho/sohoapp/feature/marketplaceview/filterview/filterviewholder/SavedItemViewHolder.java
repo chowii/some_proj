@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
  */
 
 public class SavedItemViewHolder extends BaseViewHolder<SavedFilterItem> {
+
     @BindView(R.id.title_text_view)
     TextView titleTextView;
 
@@ -28,8 +29,7 @@ public class SavedItemViewHolder extends BaseViewHolder<SavedFilterItem> {
 
     @Override
     public void onBindViewHolder(SavedFilterItem model) {
-        int i = 0;
-        titleTextView.setText("Filter " + i);
+        titleTextView.setText(model.getTitle());
         subtitleTextView.setText(model.getSubTitle());
     }
 }

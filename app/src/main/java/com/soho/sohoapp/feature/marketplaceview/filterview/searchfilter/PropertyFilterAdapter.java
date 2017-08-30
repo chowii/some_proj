@@ -1,13 +1,13 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseFormViewHolder;
+import com.soho.sohoapp.Constants;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterButtonItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
@@ -22,9 +22,6 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.Text
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.home.BaseFormModel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,15 +99,19 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
         if(holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
-                if(title.equalsIgnoreCase("Save this search")){
-                    try {
-                        Uri uri = FileWriter.createDeviceFile(context, new JSONObject(mFilterMap.toString()).toString());
-                        uri.toString();
-                    } catch (JSONException e) { e.printStackTrace(); }
-                }else if(title.equalsIgnoreCase("search"))
+                if(title.equalsIgnoreCase("Save this search")) writeFilterToFile();
+                else if(title.equalsIgnoreCase("search"))
                     mSearchListener.onSearchClicked(mFilterMap);
             });
         }
+    }
+
+    private void writeFilterToFile() {
+        List<Map<String, Object>> filterMapList = new ArrayList<>();
+        Map<String, Object> filterDataMap = new HashMap<>();
+        filterMapList.add(mFilterMap);
+        filterDataMap.put("data", filterMapList);
+        FileWriter.writeFileToDevice(context, filterDataMap, Constants.getSavedFilter());
     }
 
     private void addCheckboxAction(BaseFormViewHolder holder) {
