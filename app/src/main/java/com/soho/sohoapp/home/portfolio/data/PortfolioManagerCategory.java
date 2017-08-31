@@ -7,6 +7,16 @@ import com.soho.sohoapp.R;
 public class PortfolioManagerCategory extends PortfolioCategory {
     private int publicPropertiesCount;
 
+    public static PortfolioManagerCategory fromPortfolioCategory(PortfolioCategory portfolioCategory) {
+        PortfolioManagerCategory managerCategory = new PortfolioManagerCategory();
+        managerCategory.setName(portfolioCategory.getName());
+        managerCategory.setFilterForPortfolio(portfolioCategory.getFilterForPortfolio());
+        managerCategory.setUserId(portfolioCategory.getUserId());
+        managerCategory.setPropertyCount(portfolioCategory.getPropertyCount());
+        managerCategory.setEstimatedValue(portfolioCategory.getEstimatedValue());
+        return managerCategory;
+    }
+
     @Override
     public int getItemViewType() {
         return R.layout.item_manager_portfolio;

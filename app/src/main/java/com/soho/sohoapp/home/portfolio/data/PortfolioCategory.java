@@ -7,6 +7,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.BaseModel;
 
 public class PortfolioCategory implements BaseModel, Parcelable {
+    public static final String FILTER_FAVOURITES = "favourited";
     private String name;
     private String filterForPortfolio;
     private int userId;

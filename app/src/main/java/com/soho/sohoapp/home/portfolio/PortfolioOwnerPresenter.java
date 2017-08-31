@@ -4,6 +4,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.common.SohoButton;
 import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.home.portfolio.data.Title;
 import com.soho.sohoapp.navigator.Navigator;
 import com.soho.sohoapp.navigator.RequestCode;
@@ -53,7 +54,11 @@ public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContr
 
     @Override
     public void onPortfolioClicked(PortfolioCategory portfolioCategory) {
-        navigator.openOwnerPortfolioDetails(portfolioCategory);
+        if (PortfolioCategory.FILTER_FAVOURITES.equals(portfolioCategory.getFilterForPortfolio())) {
+            navigator.openManagerPortfolioDetails(PortfolioManagerCategory.fromPortfolioCategory(portfolioCategory));
+        } else {
+            navigator.openOwnerPortfolioDetails(portfolioCategory);
+        }
     }
 
     @Override
