@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.soho.sohoapp.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,8 +46,8 @@ public class FileWriter {
             } catch (Exception ioException){
                Log.d("LOG_TAG---", "Could not create debug file");
             }
-            return FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName().concat(".provider"), deviceFile);
 
+            return FileProvider.getUriForFile(context, context.getString(R.string.provider_authorities), deviceFile);
         }
 
         public static final JSONObject readFileFromDevice(Context context, String filename){

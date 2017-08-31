@@ -8,6 +8,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 
+import com.soho.sohoapp.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -50,7 +52,7 @@ public class CameraPicker {
             }
 
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, "com.soho.sohoapp.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(activity, activity.getString(R.string.provider_authorities), photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }

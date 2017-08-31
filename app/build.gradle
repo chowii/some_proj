@@ -63,12 +63,14 @@ android {
         development {
             resValue "string", "endpoint", "https://sohoapp-uat-2.herokuapp.com/api/"
             resValue "string", "app_name", "Soho Dev"
+            resValue "string", "provider_authorities", "com.soho.sohoapp.dev.fileprovider"
             applicationIdSuffix ".dev"
 
         }
         production {
             resValue "string", "endpoint", ""
             resValue "string", "app_name", "Soho"
+            resValue "string", "provider_authorities", "com.soho.sohoapp.fileprovider"
         }
     }
 
