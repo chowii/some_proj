@@ -1,12 +1,14 @@
 package com.soho.sohoapp.utils;
 
 import android.location.Address;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioFinance;
 import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
@@ -17,15 +19,38 @@ import com.soho.sohoapp.network.results.PortfolioPropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public final class Converter {
+    private static final String IMAGE_TYPE_JPEG = "image/jpeg";
 
     private Converter() {
         //utility class
+    }
+
+    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull PropertyImage propertyImage) {
+        return Observable.fromCallable(() -> {
+            Uri uri;
+            if (propertyImage.getFilePath() != null) {
+                uri = Uri.fromFile(new File(propertyImage.getFilePath()));
+            } else {
+                uri = propertyImage.getUri();
+            }
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+            File file = new File(uri.getPath());
+            builder.addFormDataPart(Keys.Property.IMAGE, file.getName(), imageRequestBody);
+            return builder.build();
+        });
     }
 
     @NonNull

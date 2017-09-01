@@ -98,6 +98,7 @@
     <string name="edit_property_add_photo">Add photo</string>
     <string name="edit_property_take_a_photo">Take a photo</string>
     <string name="edit_property_upload_a_photo">Choose from Gallery</string>
+    <string name="edit_property_image_chooser_title">Select Picture</string>
     <!--Edit property screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
@@ -108,10 +109,6 @@
     <string name="item_filter_value_selector_default_value">1km</string>
     <string name="item_filter_value_selector_add_text">+</string>
     <string name="filter_price_range_header">Price Range</string>
-    <!--Add Property screen end-->
-
-
-
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

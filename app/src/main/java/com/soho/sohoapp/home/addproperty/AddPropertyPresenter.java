@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewActionsListener {
     private final AddPropertyContract.View view;
-    private Navigator navigator;
+    private final Navigator navigator;
     private final CompositeDisposable compositeDisposable;
     private PropertyRole propertyRole;
     private PropertyAddress propertyAddress;
@@ -89,7 +89,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                     view.hideLoadingDialog();
                     navigator.exitWithResultCodeOk();
                 }, throwable -> {
-                    view.showMessage("error during creating new property");
+                    view.showMessage("Error during creating new property");
                     view.hideLoadingDialog();
                     throwable.printStackTrace();
                 });

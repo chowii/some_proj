@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.R;
+
 public class GalleryPicker {
+    private static final String IMAGE_TYPE_ALL = "image/*";
     private static final int REQUEST_PICK_PHOTO = 1;
     private final Activity activity;
     private ImagePickedListener listener;
@@ -17,10 +20,10 @@ public class GalleryPicker {
     public void choosePhoto(ImagePickedListener listener) {
         this.listener = listener;
         Intent intent = new Intent();
-        intent.setType("image/*");
+        intent.setType(IMAGE_TYPE_ALL);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_PICK_PHOTO);
-
+        Intent chooser = Intent.createChooser(intent, activity.getString(R.string.edit_property_image_chooser_title));
+        activity.startActivityForResult(chooser, REQUEST_PICK_PHOTO);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
