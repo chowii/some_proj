@@ -40,7 +40,7 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
         String[] pickerValues;
         if(mIsBuySection) pickerValues = initBuyPickerItem();
         else pickerValues = initRentPickerItem();
-
+        invokeListenerOnInit(mIsBuySection,pickerValues);
         pickerFrom.setValues(pickerValues);
         pickerTo.setValues(pickerValues);
     }
@@ -69,6 +69,16 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
     private void setRentListener(String[] pickerValues) {
         pickerFrom.setOnItemSelectedListener(index -> updatedListener.onChange("by_min_rent_price", pickerValues[index]));
         pickerTo.setOnItemSelectedListener(index -> updatedListener.onChange("by_max_rent_price", pickerValues[index]));
+    }
+
+    private void invokeListenerOnInit(boolean isBuySection, String[] pickerValues){
+        if(isBuySection){
+            updatedListener.onChange("by_min_sell_price", pickerValues[0]);
+            updatedListener.onChange("by_max_sell_price", pickerValues[0]);
+        }else{
+            updatedListener.onChange("by_min_rent_price", pickerValues[0]);
+            updatedListener.onChange("by_max_rent_price", pickerValues[0]);
+        }
     }
 
 }

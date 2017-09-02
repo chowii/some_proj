@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
  * Created by chowii on 22/8/17.
  */
 
-public abstract class BaseFormViewHolder<T extends BaseFormModel> extends RecyclerView.ViewHolder {
+public abstract class BaseFormViewHolder<T extends BaseFormModel> extends BaseViewHolder<T> {
 
     public OnViewHolderItemValueChangeListener updatedListener;
 
@@ -21,5 +21,4 @@ public abstract class BaseFormViewHolder<T extends BaseFormModel> extends Recycl
         ButterKnife.bind(this, itemView);
     }
 
-    public abstract void onBindViewHolder(T model);
 }

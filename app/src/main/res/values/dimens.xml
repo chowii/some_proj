@@ -5,4 +5,5 @@
     <dimen name="filter_padding_left">15dp</dimen>
     <dimen name="filter_padding_right">15dp</dimen>
     <dimen name="default_tabs_height">48dp</dimen>
+    <dimen name="inner_layout_padding">15dp</dimen>
 </resources>

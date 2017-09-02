@@ -51,6 +51,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     @Override
     public void onBindViewHolder(FilterSearchItem model) {
+        updatedListener.onChange("by_google_places[place_ids]", suburbList);
         apiClient = new GoogleApiClient.Builder(view.getContext())
                 .addApi(Places.GEO_DATA_API)
                 .addConnectionCallbacks(this)

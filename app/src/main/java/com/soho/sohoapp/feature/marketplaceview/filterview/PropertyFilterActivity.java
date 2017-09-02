@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.PropertyFilterSavedFragment;
+import com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter.PropertyFilterViewFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +19,8 @@ import butterknife.ButterKnife;
 
 public class PropertyFilterActivity extends AppCompatActivity
         implements
-        TabLayout.OnTabSelectedListener
+        TabLayout.OnTabSelectedListener,
+        PropertyFilterSavedFragment.OnFilterSelectedCallback
 {
 
     @BindView(R.id.tabs)
@@ -43,7 +46,11 @@ public class PropertyFilterActivity extends AppCompatActivity
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         if(tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
-        else replaceFragment(PropertyFilterSavedFragment.newInstance());
+        else {
+            PropertyFilterSavedFragment fragment = PropertyFilterSavedFragment.newInstance();
+            fragment.setOnFilterSelectedCallback(this);
+            replaceFragment(fragment);
+        }
     }
 
     private void replaceFragment(Fragment fragment){
@@ -63,4 +70,10 @@ public class PropertyFilterActivity extends AppCompatActivity
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {}
+
+    @Override
+    public void onFilterSelected() {
+        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
+        tabLayout.getTabAt(0).select();
+    }
 }
