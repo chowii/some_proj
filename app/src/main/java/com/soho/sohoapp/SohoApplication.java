@@ -28,6 +28,10 @@ public class SohoApplication extends MultiDexApplication {
                 .build()
         );
         Dependencies.INSTANCE.init(this);
+        if(!SharedPrefsHelper.Companion.getInstance().getHasInstalled()){
+            SharedPrefsHelper.Companion.getInstance().setHasInstalled(true);
+            createShortCut();
+        }
     }
 
     public void createShortCut() {
