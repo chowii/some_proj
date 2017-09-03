@@ -5,6 +5,8 @@ import android.support.annotation.DrawableRes;
 
 public class PropertyImage {
     @DrawableRes
+    private int holder;
+    @DrawableRes
     private int drawableId;
     private String imageUrl;
     private String filePath;
@@ -40,5 +42,13 @@ public class PropertyImage {
 
     public void setUri(Uri uri) {
         this.uri = uri;
+    }
+
+    public int getHolder() {
+        return holder;
+    }
+
+    public void setHolder(int holder) {
+        this.holder = holder;
     }
 }

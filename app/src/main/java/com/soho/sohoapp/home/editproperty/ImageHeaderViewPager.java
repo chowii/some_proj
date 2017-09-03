@@ -40,18 +40,17 @@ public class ImageHeaderViewPager extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.image);
         PropertyImage image = propertyImages.get(position);
-        if (image.getFilePath() != null) {
-            ImageLoader.Params params = ImageLoader.Params.create()
-                    .file(Uri.fromFile(new File(image.getFilePath())))
-                    .view(imageView)
-                    .placeHolder(R.drawable.semiduplex);
-            imageLoader.load(params);
+
+        ImageLoader.Params params = ImageLoader.Params.create()
+                .view(imageView)
+                .placeHolder(image.getHolder());
+
+        if (image.getImageUrl() != null) {
+            imageLoader.load(params.url(image.getImageUrl()));
+        } else if (image.getFilePath() != null) {
+            imageLoader.load(params.file(Uri.fromFile(new File(image.getFilePath()))));
         } else if (image.getUri() != null) {
-            ImageLoader.Params params = ImageLoader.Params.create()
-                    .file(image.getUri())
-                    .view(imageView)
-                    .placeHolder(R.drawable.semiduplex);
-            imageLoader.load(params);
+            imageLoader.load(params.file(image.getUri()));
         } else {
             imageView.setImageResource(image.getDrawableId());
         }

@@ -1,11 +1,13 @@
 package com.soho.sohoapp.home.editproperty;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
-import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.home.editproperty.data.Property;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
-import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.Navigator;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
@@ -14,6 +16,7 @@ import com.soho.sohoapp.utils.Converter;
 import com.soho.sohoapp.utils.FileHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +35,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private final CompositeSubscription compositeSubscription;
     private final CompositeDisposable compositeDisposable;
     private Subscription permissionSubscription;
-    private PortfolioProperty property;
+    private Property property;
 
     public EditPropertyPresenter(EditPropertyContract.View view,
                                  Navigator navigator,
@@ -50,9 +53,26 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setActionsListener(this);
-        property = view.getProperty();
+        view.showLoadingDialog();
 
-        initPropertyImages(property);
+        Disposable disposable = ApiClient.getService().getProperty(view.getPropertyId())
+                .map(Converter::toProperty)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    property = result;
+                    initPropertyImages();
+                    PropertyAddress address = result.getAddress();
+                    if (address != null) {
+                        view.showAddress1(address.getAddressLine1());
+                        view.showAddress2(address.getAddressLine2());
+                    }
+                    view.hideLoadingDialog();
+                }, throwable -> {
+                    view.hideLoadingDialog();
+                    view.showLoadingError();
+                });
+        compositeDisposable.add(disposable);
     }
 
     @Override
@@ -98,8 +118,9 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         clearImagesListIfNeeded();
         PropertyImage propertyImage = new PropertyImage();
         propertyImage.setFilePath(path);
+        propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
         propertyImages.add(propertyImage);
-        setPropertyImages();
+        setPropertyImages(propertyImages, true);
         sendImageOnServer(propertyImage);
     }
 
@@ -108,19 +129,19 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         clearImagesListIfNeeded();
         PropertyImage propertyImage = new PropertyImage();
         propertyImage.setUri(uri);
+        propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
         propertyImages.add(propertyImage);
-        setPropertyImages();
+        setPropertyImages(propertyImages, true);
         sendImageOnServer(propertyImage);
     }
 
     private void sendImageOnServer(PropertyImage propertyImage) {
-        Disposable disposable = Converter.toImageRequestBody(fileHelper, propertyImage)
+        Converter.toImageRequestBody(fileHelper, propertyImage)
                 .flatMap(requestBody -> ApiClient.getService()
                         .sendPropertyPhoto(property.getId(), requestBody))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
-        compositeDisposable.add(disposable);
     }
 
     private void clearImagesListIfNeeded() {
@@ -129,24 +150,27 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         }
     }
 
-    private void setPropertyImages() {
+    private void setPropertyImages(@NonNull List<PropertyImage> propertyImages, boolean scrollToLast) {
         view.setPropertyImages(propertyImages);
-        int size = propertyImages.size();
-        if (size > 0) {
-            view.setCurrentPropertyImage(size - 1);
+        if (scrollToLast) {
+            int size = propertyImages.size();
+            if (size > 0) {
+                view.setCurrentPropertyImage(size - 1);
+            }
         }
     }
 
-    private void initPropertyImages(PortfolioProperty property) {
+    private void initPropertyImages() {
         List<PropertyImage> propertyImagesFromServer = property.getPropertyImageList();
         if (propertyImagesFromServer.isEmpty()) {
             PropertyImage propertyImage = new PropertyImage();
-            propertyImage.setDrawableId(R.drawable.others);
+            propertyImage.setDrawableId(PropertyType.getDefaultImage(property.getType()));
             propertyImages.add(propertyImage);
         } else {
+            Collections.reverse(propertyImagesFromServer);
             propertyImages.addAll(propertyImagesFromServer);
         }
-        setPropertyImages();
+        setPropertyImages(propertyImages, false);
     }
 }
 

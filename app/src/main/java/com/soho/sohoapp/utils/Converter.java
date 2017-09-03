@@ -8,6 +8,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.home.editproperty.data.Property;
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.home.portfolio.data.PortfolioFinance;
@@ -16,6 +17,7 @@ import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
+import com.soho.sohoapp.network.results.PropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
@@ -35,6 +37,33 @@ public final class Converter {
 
     private Converter() {
         //utility class
+    }
+
+    @NonNull
+    public static Property toProperty(@NonNull PropertyResult result) {
+        Property property = new Property();
+        property.setId(result.id);
+        property.setType(result.type);
+        property.setBedrooms(result.bedrooms);
+        property.setBathrooms(result.bathrooms);
+        property.setCarspots(result.carspots);
+
+        List<PropertyImage> propertyImageList = new ArrayList<>();
+        PropertyImage propertyImage;
+        for (PropertyResult.Photos photo : result.photos) {
+            propertyImage = new PropertyImage();
+            propertyImage.setImageUrl(photo.image.url);
+            propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
+            propertyImageList.add(propertyImage);
+        }
+        property.setPropertyImageList(propertyImageList);
+
+        PropertyAddress address = new PropertyAddress();
+        address.setAddressLine1(result.location.address_1);
+        address.setAddressLine2(result.location.address_2);
+        property.setAddress(address);
+
+        return property;
     }
 
     public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull PropertyImage propertyImage) {

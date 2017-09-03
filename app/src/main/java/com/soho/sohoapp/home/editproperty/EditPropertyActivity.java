@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
@@ -26,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditPropertyActivity extends AbsActivity implements EditPropertyContract.View {
-    private static final String KEY_PORTFOLIO = "KEY_PORTFOLIO";
+    private static final String KEY_PROPERTY_ID = "KEY_PROPERTY_ID";
 
     @BindView(R.id.tabs)
     TabLayout tabs;
@@ -37,16 +40,22 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.addressLine1)
+    TextView addressLine1;
+    @BindView(R.id.addressLine2)
+    TextView addressLine2;
+
     private EditPropertyContract.ViewActionsListener actionsListener;
     private EditPropertyPresenter presenter;
     private CameraPicker cameraPicker;
     private ImageHeaderViewPager pagerAdapter;
     private GalleryPicker galleryPicker;
+    private View loadingView;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
         Intent intent = new Intent(context, EditPropertyActivity.class);
-        intent.putExtra(KEY_PORTFOLIO, property);
+        intent.putExtra(KEY_PROPERTY_ID, property.getId());
         return intent;
     }
 
@@ -115,12 +124,12 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
-    public PortfolioProperty getProperty() {
+    public int getPropertyId() {
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            return null;
+            return 0;
         }
-        return (PortfolioProperty) extras.getParcelable(KEY_PORTFOLIO);
+        return extras.getInt(KEY_PROPERTY_ID);
     }
 
     @Override
@@ -132,6 +141,37 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         if (galleryPicker != null) {
             galleryPicker.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
+        loadingView = getLayoutInflater().inflate(R.layout.view_loading, content, false);
+        content.addView(loadingView);
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        if (loadingView != null) {
+            ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
+            content.removeView(loadingView);
+            loadingView = null;
+        }
+    }
+
+    @Override
+    public void showLoadingError() {
+        showToast(R.string.common_loading_error);
+    }
+
+    @Override
+    public void showAddress1(String address) {
+        addressLine1.setText(address);
+    }
+
+    @Override
+    public void showAddress2(String address) {
+        addressLine2.setText(address);
     }
 
     private void initToolbar() {

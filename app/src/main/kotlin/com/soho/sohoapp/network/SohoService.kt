@@ -3,12 +3,8 @@ package com.soho.sohoapp.network
 import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem
-import com.soho.sohoapp.network.results.PortfolioCategoryResult
-import com.soho.sohoapp.network.results.PortfolioPropertyResult
-import com.soho.sohoapp.network.results.PropertyTypesResult
-import com.soho.sohoapp.network.results.PropertyUserRolesResult
+import com.soho.sohoapp.network.results.*
 import io.reactivex.Observable
-import io.reactivex.Single
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -54,6 +50,9 @@ interface SohoService {
 
     @PUT("properties/{id}/")
     fun sendPropertyPhoto(@Path("id") id: Long, @Body file: RequestBody): Observable<ResponseBody>
+
+    @GET("properties/{id}/")
+    fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
 }
 
 

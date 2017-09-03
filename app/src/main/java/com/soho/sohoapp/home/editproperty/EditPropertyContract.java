@@ -3,7 +3,6 @@ package com.soho.sohoapp.home.editproperty;
 import android.net.Uri;
 
 import com.soho.sohoapp.home.editproperty.data.PropertyImage;
-import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
 
 import java.util.List;
 
@@ -36,6 +35,16 @@ public interface EditPropertyContract {
 
         void pickImageFromGallery();
 
-        PortfolioProperty getProperty();
+        int getPropertyId();
+
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
+
+        void showLoadingError();
+
+        void showAddress1(String address);
+
+        void showAddress2(String address);
     }
 }
