@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.feature.common.RoomsItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterButtonItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRadioGroupViewHolder;
@@ -86,6 +87,8 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
                 return new FilterRadioGroupViewHolder(itemView, this);
             case R.layout.item_filter_toggle:
                 return new FilterToggleItemViewHolder(itemView, this);
+            case R.layout.item_rooms:
+                return new RoomsItemViewHolder(itemView, this);
             case R.layout.item_button:
             case R.layout.item_favourite_button:
                 return new FilterButtonItemViewHolder(itemView, this);

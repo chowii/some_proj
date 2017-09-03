@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/filter_padding_left"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_white_button"
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+            android:id="@+id/bedroom_subtract_button"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_subtract_text"
+            android:paddingLeft="@dimen/filter_padding_left"
+            android:paddingRight="@dimen/filter_padding_right"
+            />
+
+        <TextView
+            android:id="@+id/bedroom_value_text_view"
+            android:layout_width="0dp"
+            style="@style/FilterPropertyRegular.NoBackground"
+            android:layout_weight="1"
+            android:text="Bedrooms"
+            />
+
+        <Button
+            android:id="@+id/bedroom_add_button"
+            android:layout_gravity="end"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_add_text"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_grey_square_button"
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+            android:id="@+id/bathroom_subtract_button"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_subtract_text"
+            android:paddingLeft="@dimen/filter_padding_left"
+            android:paddingRight="@dimen/filter_padding_right"
+            />
+
+        <TextView
+            android:id="@+id/bathroom_value_text_view"
+            android:layout_width="0dp"
+            style="@style/FilterPropertyRegular.NoBackground"
+            android:layout_weight="1"
+            android:text="Bathrooms"
+            />
+
+        <Button
+            android:id="@+id/bathroom_add_button"
+            android:layout_gravity="end"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_add_text"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_grey_square_button"
+        android:layout_marginBottom="10dp"
+        >
+
+        <Button
+            android:id="@+id/carspot_subtract_button"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_subtract_text"
+            android:paddingLeft="@dimen/filter_padding_left"
+            android:paddingRight="@dimen/filter_padding_right"
+            />
+
+        <TextView
+            android:id="@+id/carspot_value_text_view"
+            android:layout_width="0dp"
+            style="@style/FilterPropertyRegular.NoBackground"
+            android:layout_weight="1"
+            android:text="Carspot"
+            />
+
+        <Button
+            android:id="@+id/carspot_add_button"
+            android:layout_gravity="end"
+            style="@style/FilterButton"
+            android:text="@string/item_filter_value_selector_add_text"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

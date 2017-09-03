@@ -109,6 +109,12 @@
     <string name="item_filter_value_selector_default_value">1km</string>
     <string name="item_filter_value_selector_add_text">+</string>
     <string name="filter_price_range_header">Price Range</string>
+    <string name="rooms_item_bedroom_text">Bedroom</string>
+    <string name="rooms_item_bathroom_text">Bathroom</string>
+    <string name="rooms_item_carspot_text">Carspot</string>
+
+
+
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

@@ -8,6 +8,7 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.Favourite
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.PropertyRoomItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGroupView;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
@@ -56,6 +57,10 @@ class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable 
 
 
         modelList.add(new HeaderItem("Property Type"));
+
+        modelList.add(new HeaderItem("Property Type"));
+        modelList.add(new PropertyRoomItem());
+
 
         modelList.add(new HeaderItem("Property Status"));
         List<String> group = new ArrayList<>();
