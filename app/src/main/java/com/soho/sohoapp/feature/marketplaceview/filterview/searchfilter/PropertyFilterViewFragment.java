@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseFormModel;
-import com.soho.sohoapp.home.HomeActivity;
+import com.soho.sohoapp.feature.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;

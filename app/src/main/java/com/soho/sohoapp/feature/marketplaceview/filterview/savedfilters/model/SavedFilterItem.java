@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
 

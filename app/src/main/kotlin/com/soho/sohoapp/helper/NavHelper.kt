@@ -7,7 +7,7 @@ import com.soho.sohoapp.feature.landing.LandingActivity
 import com.soho.sohoapp.feature.landing.LoginActivity
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity
-import com.soho.sohoapp.home.HomeActivity
+import com.soho.sohoapp.feature.home.HomeActivity
 
 /**
  * Created by chowii on 25/7/17.

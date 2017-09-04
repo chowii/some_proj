@@ -8,7 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import com.soho.sohoapp.feature.landing.LandingActivity
 import com.soho.sohoapp.helper.SharedPrefsHelper
-import com.soho.sohoapp.home.HomeActivity
+import com.soho.sohoapp.feature.home.HomeActivity
 
 class SplashActivity : AppCompatActivity() {
 

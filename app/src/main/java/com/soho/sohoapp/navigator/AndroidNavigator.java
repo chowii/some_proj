@@ -5,12 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.soho.sohoapp.home.addproperty.AddPropertyActivity;
-import com.soho.sohoapp.home.editproperty.EditPropertyActivity;
-import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
-import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
-import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.home.portfolio.details.PortfolioDetailsActivity;
+import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
+import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.feature.home.portfolio.details.PortfolioDetailsActivity;
 
 public class AndroidNavigator implements Navigator {
     private Activity activity;

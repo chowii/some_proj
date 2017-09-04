@@ -1,6 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
-import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 
 import java.util.List;
 

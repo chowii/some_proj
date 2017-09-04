@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.BaseViewHolder;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
 

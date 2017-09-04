@@ -6,14 +6,14 @@
        android:orientation="vertical"
        tools:parentTag="android.widget.LinearLayout">
 
-    <com.soho.sohoapp.home.addproperty.views.NumberPickerView
+    <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/bedrooms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"/>
 
-    <com.soho.sohoapp.home.addproperty.views.NumberPickerView
+    <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/bathrooms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:paddingBottom="4dp"
         android:paddingTop="4dp"/>
 
-    <com.soho.sohoapp.home.addproperty.views.NumberPickerView
+    <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/carspots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

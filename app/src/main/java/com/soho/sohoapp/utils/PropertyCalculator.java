@@ -1,7 +1,7 @@
 package com.soho.sohoapp.utils;
 
-import com.soho.sohoapp.home.portfolio.data.PortfolioFinance;
-import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
 public final class PropertyCalculator {
 

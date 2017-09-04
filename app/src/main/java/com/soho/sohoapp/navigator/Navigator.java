@@ -2,9 +2,9 @@ package com.soho.sohoapp.navigator;
 
 import android.support.annotation.NonNull;
 
-import com.soho.sohoapp.home.portfolio.data.PortfolioCategory;
-import com.soho.sohoapp.home.portfolio.data.PortfolioManagerCategory;
-import com.soho.sohoapp.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
+import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
 public interface Navigator {
 

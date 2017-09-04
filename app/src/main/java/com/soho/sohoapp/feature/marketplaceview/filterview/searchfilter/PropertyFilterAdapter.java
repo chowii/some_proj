@@ -22,7 +22,7 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.Recy
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.TextSearchViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 import com.soho.sohoapp.helper.FileWriter;
-import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

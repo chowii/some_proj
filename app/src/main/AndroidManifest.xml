@@ -20,7 +20,7 @@
 
         <!--windowSoftInputMode is required here to close keyboard after exit from AddProperty screen-->
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".feature.home.HomeActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
@@ -37,11 +37,11 @@
         <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
 
         <activity
-            android:name=".home.addproperty.AddPropertyActivity"
+            android:name=".feature.home.addproperty.AddPropertyActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".home.portfolio.details.PortfolioDetailsActivity"
+            android:name=".feature.home.portfolio.details.PortfolioDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
@@ -51,7 +51,7 @@
             android:windowSoftInputMode="stateVisible"/>
 
         <activity
-            android:name=".home.editproperty.EditPropertyActivity"
+            android:name=".feature.home.editproperty.EditPropertyActivity"
             android:screenOrientation="portrait"/>
 
         <activity

@@ -1,7 +1,7 @@
 package com.soho.sohoapp.location;
 
-import com.soho.sohoapp.home.addproperty.data.LatLng;
-import com.soho.sohoapp.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.feature.home.addproperty.data.LatLng;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 
 import rx.Observable;
 

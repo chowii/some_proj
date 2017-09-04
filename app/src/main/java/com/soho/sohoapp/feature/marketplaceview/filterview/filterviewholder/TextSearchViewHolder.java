@@ -15,7 +15,7 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
-import com.soho.sohoapp.home.addproperty.address.PlaceAutocompleteAdapter;
+import com.soho.sohoapp.feature.home.addproperty.address.PlaceAutocompleteAdapter;
 import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.ArrayList;

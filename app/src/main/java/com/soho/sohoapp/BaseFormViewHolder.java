@@ -1,10 +1,9 @@
 package com.soho.sohoapp;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
-import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 
 import butterknife.ButterKnife;
 

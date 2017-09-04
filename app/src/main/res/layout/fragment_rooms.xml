@@ -25,7 +25,7 @@
             android:textColor="@color/primaryText"
             android:textSize="16sp"/>
 
-        <com.soho.sohoapp.home.addproperty.views.RoomsNumberPickerView
+        <com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView
             android:id="@+id/roomsSelector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -13,7 +13,7 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGrou
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
-import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.ArrayList;

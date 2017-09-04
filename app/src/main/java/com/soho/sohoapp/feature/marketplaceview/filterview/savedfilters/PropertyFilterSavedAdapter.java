@@ -10,7 +10,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.common.EmptyItemViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
 

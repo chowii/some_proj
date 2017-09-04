@@ -1,6 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.model;
 
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 /**
  * Created by chowii on 14/8/17.

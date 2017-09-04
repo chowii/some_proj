@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.common;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 public class SohoButton implements BaseModel {
     private String text;

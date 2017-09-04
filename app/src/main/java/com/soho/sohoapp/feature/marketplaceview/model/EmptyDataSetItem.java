@@ -3,7 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.model;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 /**
  * Created by chowii on 30/8/17.

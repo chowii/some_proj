@@ -3,7 +3,7 @@ package com.soho.sohoapp;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 import butterknife.ButterKnife;
 

@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 
 /**
  * Created by chowii on 31/8/17.

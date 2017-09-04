@@ -1,6 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
-import com.soho.sohoapp.home.BaseModel;
+import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
 import java.util.Map;
