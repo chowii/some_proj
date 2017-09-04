@@ -7,7 +7,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
-import com.soho.sohoapp.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.navigator.Navigator;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;

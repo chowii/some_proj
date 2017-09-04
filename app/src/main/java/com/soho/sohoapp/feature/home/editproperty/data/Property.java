@@ -1,9 +1,8 @@
-package com.soho.sohoapp.home.editproperty.data;
+package com.soho.sohoapp.feature.home.editproperty.data;
 
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 
 import java.util.ArrayList;
 import java.util.List;

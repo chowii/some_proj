@@ -13,7 +13,7 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
