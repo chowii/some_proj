@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.marketplaceview.filterview;
+package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 import com.soho.sohoapp.home.BaseFormModel;
 

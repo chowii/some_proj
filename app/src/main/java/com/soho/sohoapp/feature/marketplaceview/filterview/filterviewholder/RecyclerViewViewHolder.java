@@ -8,6 +8,7 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceAdapter;
 import com.soho.sohoapp.home.BaseFormModel;
+import com.soho.sohoapp.home.BaseModel;
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
     }
 
     @Override
-    public void onBindViewHolder(BaseFormModel model) {
+    public void onBindViewHolder(BaseModel model) {
         HashMap<String, Object> s = new HashMap<>();
         s.put("by_listing_type", "sale/auction");
         ApiClient.getService().searchProperties(s)
@@ -44,4 +45,5 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
                         }
                 );
     }
+
 }

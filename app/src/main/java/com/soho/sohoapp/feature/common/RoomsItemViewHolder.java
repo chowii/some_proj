@@ -63,39 +63,39 @@ public class RoomsItemViewHolder extends BaseFormViewHolder<PropertyRoomItem> {
 
         bedroomAddButton.setOnClickListener((v) -> {
             bedroomValueTextView.setText(++bedroomValue + " " + getString(R.string.rooms_item_bedroom_text));
-            updatedListener.onChange("by_google_places[distance]", bedroomValue * 1_000);
+            updatedListener.onChange("by_bedroom_count", bedroomValue);
         });
 
         bedroomSubtractButton.setOnClickListener((v) -> {
             if(bedroomValue > 1)bedroomValueTextView.setText(--bedroomValue +" " +  getString(R.string.rooms_item_bedroom_text));
             else if(bedroomValue <= 1) bedroomValueTextView.setText("Any " + getString(R.string.rooms_item_bedroom_text));
-            updatedListener.onChange("by_google_places[distance]", bedroomValue * 1_000);
+            updatedListener.onChange("by_bedroom_count", bedroomValue);
         });
 
 
         bathroomAddButton.setOnClickListener((v) -> {
             bathroomValueTextView.setText(++bathroomValue  + " " + getString(R.string.rooms_item_bathroom_text));
-            updatedListener.onChange("by_google_places[distance]", bathroomValue * 1_000);
+            updatedListener.onChange("by_bathroom_count", bathroomValue);
         });
 
         bathroomSubtractButton.setOnClickListener((v) -> {
             if(bathroomValue > 1) bathroomValueTextView.setText(--bathroomValue +  " " + getString(R.string.rooms_item_bathroom_text));
             else if(bathroomValue <= 1) bathroomValueTextView.setText("Any " + getString(R.string.rooms_item_bathroom_text));
 
-            updatedListener.onChange("by_google_places[distance]", bathroomValue * 1_000);
+            updatedListener.onChange("by_bathroom_count", bathroomValue);
         });
 
 
         carspotAddButton.setOnClickListener((v) -> {
             carspotValueTextView.setText(++carspotValue  + " " + getString(R.string.rooms_item_carspot_text));
-            updatedListener.onChange("by_google_places[distance]", carspotValue * 1_000);
+            updatedListener.onChange("by_carspot_count", carspotValue);
         });
 
         carspotSubtractButton.setOnClickListener((v) -> {
             if(carspotValue > 1) carspotValueTextView.setText(--carspotValue + " " + getString(R.string.rooms_item_carspot_text));
             else if(carspotValue <= 1) carspotValueTextView.setText("Any "  + getString(R.string.rooms_item_carspot_text));
 
-            updatedListener.onChange("by_google_places[distance]", carspotValue * 1_000);
+            updatedListener.onChange("by_carspot_count", carspotValue);
         });
     }
 

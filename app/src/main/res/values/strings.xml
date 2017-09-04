@@ -110,10 +110,11 @@
     <string name="item_filter_value_selector_add_text">+</string>
     <string name="filter_price_range_header">Price Range</string>
     <string name="rooms_item_bedroom_text">Bedroom</string>
+    <string name="rooms_item_default_bedroom_text">Any Bedroom</string>
     <string name="rooms_item_bathroom_text">Bathroom</string>
+    <string name="rooms_item_default_bathroom_text">Any Bathroom</string>
     <string name="rooms_item_carspot_text">Carspot</string>
-
-
+    <string name="rooms_item_default_carspot_text">Any Carspot</string>
 
 
     <string-array name="filter_buy_price_range">

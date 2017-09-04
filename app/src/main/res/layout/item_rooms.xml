@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             style="@style/FilterPropertyRegular.NoBackground"
             android:layout_weight="1"
-            android:text="Bedrooms"
+            android:text="@string/rooms_item_default_bedroom_text"
             />
 
         <Button
@@ -61,7 +61,7 @@
             android:layout_width="0dp"
             style="@style/FilterPropertyRegular.NoBackground"
             android:layout_weight="1"
-            android:text="Bathrooms"
+            android:text="@string/rooms_item_default_bathroom_text"
             />
 
         <Button
@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             style="@style/FilterPropertyRegular.NoBackground"
             android:layout_weight="1"
-            android:text="Carspot"
+            android:text="@string/rooms_item_default_carspot_text"
             />
 
         <Button

@@ -33,6 +33,11 @@ class SharedPrefsHelper {
         return sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, "") ?: ""
     }
 
+    var hasInstalled: Boolean
+        set(value) {
+            sharedPreference?.edit()?.putBoolean("FirstInstall", value)?.apply()
+        }
+        get() = sharedPreference?.getBoolean("FirstInstall", false) ?: false
 
 
 
