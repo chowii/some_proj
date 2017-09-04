@@ -13,8 +13,10 @@ import com.soho.sohoapp.Constants;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,20 +29,22 @@ public class ApiClient {
 
     private static SohoService service;
 
-//    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private static OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new AddAuthorizationInterceptor())
 //            .addInterceptor(loggingInterceptor)
             .addInterceptor(new StatusCodeInterceptor())
-            .build();
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS);
 
     public static Retrofit retrofit =
             new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(Constants.Companion.getENDPOINT())
                     .addConverterFactory(buildGson())
-                    .client(okHttpClient)
+                    .client(okHttpClient.build())
                     .build();
 
     public static SohoService getService() {
@@ -73,11 +77,11 @@ public class ApiClient {
                     if (jsonElement.isJsonObject()) {
                         JsonObject jsonObject = jsonElement.getAsJsonObject();
                         if (jsonObject.has("data"))
-                        if(jsonObject.get("data").isJsonObject()) {
-                            jsonElement = jsonObject.get("data");
-                        } else if(jsonObject.get("data").isJsonArray() && type.getRawType().isAssignableFrom(List.class)) {
-                            jsonElement = jsonObject.get("data");
-                        }
+                            if (jsonObject.get("data").isJsonObject()) {
+                                jsonElement = jsonObject.get("data");
+                            } else if (jsonObject.get("data").isJsonArray() && type.getRawType().isAssignableFrom(List.class)) {
+                                jsonElement = jsonObject.get("data");
+                            }
                     }
 
                     return delegate.fromJsonTree(jsonElement);

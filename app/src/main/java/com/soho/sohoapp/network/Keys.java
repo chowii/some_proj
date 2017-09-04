@@ -17,5 +17,6 @@ public interface Keys {
         String COUNTRY = "property[location_attributes][country]";
         String LATITUDE = "property[location_attributes][latitude]";
         String LONGITUDE = "property[location_attributes][longitude]";
+        String IMAGE = "property_photos_attributes[0][image]";
     }
 }

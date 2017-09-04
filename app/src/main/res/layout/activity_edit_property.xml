@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
+                    <TextView android:shadowColor = "@color/grayIcon"
                         android:id="@+id/logo"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
@@ -44,7 +45,7 @@
                         android:gravity="center"
                         android:text="LOGO"/>
 
-                    <TextView
+                    <TextView android:shadowColor = "@color/grayIcon"
                         android:id="@+id/addressLine2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -57,9 +58,9 @@
                         android:layout_toStartOf="@id/logo"
                         android:paddingBottom="16dp"
                         android:singleLine="true"
-                        android:text="@string/test_text_long"
                         android:textColor="@color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        tools:text="@string/test_text_long"/>
 
                     <TextView
                         android:id="@+id/addressLine1"
@@ -71,9 +72,9 @@
                         android:layout_marginRight="16dp"
                         android:layout_toStartOf="@id/logo"
                         android:singleLine="true"
-                        android:text="@string/test_text_long"
                         android:textColor="@color/white"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        tools:text="@string/test_text_long"/>
                 </RelativeLayout>
             </FrameLayout>
 

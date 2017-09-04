@@ -1,31 +1,85 @@
 package com.soho.sohoapp.utils;
 
 import android.location.Address;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.home.editproperty.data.Property;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
+import com.soho.sohoapp.network.results.PropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public final class Converter {
+    private static final String IMAGE_TYPE_JPEG = "image/jpeg";
 
     private Converter() {
         //utility class
+    }
+
+    @NonNull
+    public static Property toProperty(@NonNull PropertyResult result) {
+        Property property = new Property();
+        property.setId(result.id);
+        property.setType(result.type);
+        property.setBedrooms(result.bedrooms);
+        property.setBathrooms(result.bathrooms);
+        property.setCarspots(result.carspots);
+
+        List<PropertyImage> propertyImageList = new ArrayList<>();
+        PropertyImage propertyImage;
+        for (PropertyResult.Photos photo : result.photos) {
+            propertyImage = new PropertyImage();
+            propertyImage.setImageUrl(photo.image.url);
+            propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
+            propertyImageList.add(propertyImage);
+        }
+        property.setPropertyImageList(propertyImageList);
+
+        PropertyAddress address = new PropertyAddress();
+        address.setAddressLine1(result.location.address_1);
+        address.setAddressLine2(result.location.address_2);
+        property.setAddress(address);
+
+        return property;
+    }
+
+    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull PropertyImage propertyImage) {
+        return Observable.fromCallable(() -> {
+            Uri uri;
+            if (propertyImage.getFilePath() != null) {
+                uri = Uri.fromFile(new File(propertyImage.getFilePath()));
+            } else {
+                uri = propertyImage.getUri();
+            }
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+            File file = new File(uri.getPath());
+            builder.addFormDataPart(Keys.Property.IMAGE, file.getName(), imageRequestBody);
+            return builder.build();
+        });
     }
 
     @NonNull

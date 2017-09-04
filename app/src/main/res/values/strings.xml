@@ -98,6 +98,7 @@
     <string name="edit_property_add_photo">Add photo</string>
     <string name="edit_property_take_a_photo">Take a photo</string>
     <string name="edit_property_upload_a_photo">Choose from Gallery</string>
+    <string name="edit_property_image_chooser_title">Select Picture</string>
     <!--Edit property screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
@@ -114,9 +115,6 @@
     <string name="rooms_item_default_bathroom_text">Any Bathroom</string>
     <string name="rooms_item_carspot_text">Carspot</string>
     <string name="rooms_item_default_carspot_text">Any Carspot</string>
-    <!--Add Property screen end-->
-
-
 
 
     <string-array name="filter_buy_price_range">

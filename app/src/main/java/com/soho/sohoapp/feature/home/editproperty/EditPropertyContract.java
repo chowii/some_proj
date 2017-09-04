@@ -36,6 +36,16 @@ public interface EditPropertyContract {
 
         void pickImageFromGallery();
 
-        PortfolioProperty getProperty();
+        int getPropertyId();
+
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
+
+        void showLoadingError();
+
+        void showAddress1(String address);
+
+        void showAddress2(String address);
     }
 }
