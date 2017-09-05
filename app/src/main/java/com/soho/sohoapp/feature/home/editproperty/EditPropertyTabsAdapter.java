@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.editproperty.connection.EditConnectionFragment;
 
-public class EditPropertyTabsAdapter extends FragmentPagerAdapter {
+class EditPropertyTabsAdapter extends FragmentPagerAdapter {
 
     private static final int ITEM_ONE = 0;
     private static final int ITEM_TWO = 1;

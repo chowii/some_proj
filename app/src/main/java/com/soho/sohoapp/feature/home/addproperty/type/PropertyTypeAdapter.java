@@ -55,7 +55,7 @@ public class PropertyTypeAdapter extends RecyclerView.Adapter<PropertyTypeAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-            type = (Button) itemView.findViewById(R.id.type);
+            type =  itemView.findViewById(R.id.type);
         }
     }
 

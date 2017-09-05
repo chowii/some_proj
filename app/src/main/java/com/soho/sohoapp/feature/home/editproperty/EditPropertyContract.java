@@ -7,7 +7,7 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
 import java.util.List;
 
-public interface EditPropertyContract {
+interface EditPropertyContract {
 
     interface ViewActionsListener {
         void onBackClicked();

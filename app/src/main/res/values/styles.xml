@@ -424,7 +424,7 @@
 
     // MARK: - ================== CustomView Styles ==================
 
-    <style name="CustomView"></style>
+    <style name="CustomView" />
 
     <style name="CustomView.SocialLoginImageView" parent="CustomView">
         <item name="android:layout_width">wrap_content</item>

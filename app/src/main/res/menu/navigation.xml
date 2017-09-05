@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    //NOTE: Use of 'numberShortcut'! This is used for indexing
-
+    <!--NOTE: Use of 'numberShortcut'! This is used for indexing-->
     <item
         android:numericShortcut="0"
         android:id="@+id/tab_marketplace"
@@ -15,7 +14,7 @@
         android:icon="@drawable/tab_portfolio"
         android:title="@string/tab_manage"/>
 
-    //Empty tab to ignore as add property button will be overlayed here
+    <!--Empty tab to ignore as add property button will be overlayed here-->
     <item
         android:numericShortcut="-1"
         android:title=""/>

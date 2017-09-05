@@ -36,8 +36,8 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     private final View view;
 
-    GoogleApiClient apiClient;
-    List<String> suburbList;
+    private GoogleApiClient apiClient;
+    private List<String> suburbList;
 
     @BindView(R.id.suburb_auto_complete)
     TokenizedSuburbAutoCompleteTextView suburbEditText;

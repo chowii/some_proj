@@ -14,12 +14,12 @@ class SharedPrefsHelper {
     companion object {
         private val TAG: String = "SharedPrefsHelper"
         private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
-        private val INSTANCE : SharedPrefsHelper = SharedPrefsHelper()
+        private val INSTANCE: SharedPrefsHelper = SharedPrefsHelper()
         fun getInstance(): SharedPrefsHelper = INSTANCE
 
         private var sharedPreference: SharedPreferences? = null
-        fun init(context: Context){
-            sharedPreference =  PreferenceManager.getDefaultSharedPreferences(context)
+        fun init(context: Context) {
+            sharedPreference = PreferenceManager.getDefaultSharedPreferences(context)
         }
     }
 
@@ -29,7 +29,7 @@ class SharedPrefsHelper {
         set(value) {
             sharedPreference?.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
             Log.d("LOG_TAG---", sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, ""))
-        }get() {
+        } get() {
         return sharedPreference?.getString(SHARED_PREFS_AUTH_TOKEN, "") ?: ""
     }
 
@@ -38,7 +38,6 @@ class SharedPrefsHelper {
             sharedPreference?.edit()?.putBoolean("FirstInstall", value)?.apply()
         }
         get() = sharedPreference?.getBoolean("FirstInstall", false) ?: false
-
 
 
 }

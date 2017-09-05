@@ -2,8 +2,8 @@ package com.soho.sohoapp.feature.landing
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
@@ -13,7 +13,6 @@ import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.User
-
 import com.soho.sohoapp.helper.NavHelper
 import com.soho.sohoapp.helper.SharedPrefsHelper
 import com.soho.sohoapp.network.ApiClient
@@ -35,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
     var user: User = User()
 
     @OnTextChanged(R.id.login_email_edit_text, R.id.login_password_edit_text)
-    fun onTextChanged(editable: Editable){
-        if(emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
+    fun onTextChanged(editable: Editable) {
+        if (emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
             toggleButtonEnabled(0.4f, !editable.toString().isEmpty())
         else toggleButtonEnabled(1f, !editable.toString().isEmpty())
     }
@@ -48,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
     fun onForgotPasswordClicked(): Unit = NavHelper.showForgotPasswordActivity(this)
 
     @OnClick(R.id.login_button)
-    fun onLoginClicked(){
+    fun onLoginClicked() {
         initProgressDialog()?.show()
         //TODO wait for login api call
 
@@ -73,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
         toggleButtonEnabled(0.4f, false)
         loginButton.setOnClickListener {
             initProgressDialog()?.show()
-           val map = hashMapOf(
+            val map = hashMapOf(
                     "email" to emailEditText.text.toString(),
                     "password" to passwordEditText.text.toString()
             )
@@ -83,12 +82,14 @@ class LoginActivity : AppCompatActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
-                                user -> NavHelper.showHomeActivity(this)
+                                user ->
+                                NavHelper.showHomeActivity(this)
                                 SharedPrefsHelper.getInstance().authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },
                             {
-                                throwable -> registerDialog?.dismiss()
+                                throwable ->
+                                registerDialog?.dismiss()
                                 AlertDialog.Builder(this).setMessage("Error occurred. Please try again later").show()
                             }
                     )

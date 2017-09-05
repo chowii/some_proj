@@ -20,6 +20,34 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://maven.google.com"}//google support repository
+//        google() todo use this after updating the plugin to 3.0.0
+    }
+    ext {
+        // Android config
+        androidBuildTools_version = "26.0.0"
+        androidMinSdk_version = 16
+        androidTargetSdk_version = 26
+        androidCompileSdk_version = 26
+
+        constraintLayout_version ="1.0.2"
+
+        mockitoKotlin_version = "1.5.0"
+        support_version = "26.0.2"
+
+        retrofit_version = "2.3.0"
+        retrofitGsonConverter_version = "2.3.0"
+
+        rxJava_version = "2.1.3"
+        rxJavaAdapter_version = "1.0.0"
+        rxAndroid_version = "2.0.1"
+        rx2bindings_v = "2.0.0"
+
+        assertJcore_version = "3.8.0"
+        robolectricVersion = "3.4.2"
+
+        junit_version = "4.12"
+        okhttp_version = "3.6.0"
     }
 }
 task clean(type: Delete) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.soho.sohoapp.dev.feature.landing.signup.SignUpActivity"
+    tools:context="com.soho.sohoapp.feature.landing.signup.SignUpActivity"
     android:background="@drawable/register_email_account"
     >
 
@@ -28,7 +28,7 @@
         <EditText
             android:id="@+id/register_email_edit_text"
             android:hint="@string/your_email"
-            android:drawableRight="@drawable/email"
+            android:drawableEnd="@drawable/email"
             android:layout_marginBottom="30dp"
             android:inputType="textEmailAddress"
             style="@style/EditText.RegisterStyle"

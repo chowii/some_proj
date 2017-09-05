@@ -4,9 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,21 +18,21 @@ import static java.util.Calendar.YEAR;
 
 public class DateHelper {
 
-    public static final SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
-    public static final SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static final SimpleDateFormat apiDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    private static final SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
+    private static final SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private static final SimpleDateFormat apiDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
     public static final String unixTimeStampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    public static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
-    public static final SimpleDateFormat dMMYYYY = new SimpleDateFormat("d MM yyyy", Locale.getDefault());
+    public static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+    private static final SimpleDateFormat dMMYYYY = new SimpleDateFormat("d MM yyyy", Locale.getDefault());
     public static final SimpleDateFormat ddMMMYYYY = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
     public static final SimpleDateFormat timeDateDisplayFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm:ss a", Locale.getDefault());
     private static final GregorianCalendar calendar = new GregorianCalendar();
-    public static final SimpleDateFormat displayDateTimeFormat = new SimpleDateFormat("dd/MM/yy h:mm a", Locale.US);
+    private static final SimpleDateFormat displayDateTimeFormat = new SimpleDateFormat("dd/MM/yy h:mm a", Locale.US);
     private static final String TAG = "DateHelper";
 
     public static final int TIMELINE_EITHER = 0;
-    public static final int TIMELINE_PAST = 1;
-    public static final int TIMELINE_FUTURE = 2;
+    private static final int TIMELINE_PAST = 1;
+    private static final int TIMELINE_FUTURE = 2;
 
     public static String dateTodMMyyyy(Date d) {
         return dMMYYYY.format(d);
@@ -55,7 +53,7 @@ public class DateHelper {
     }
 
     public static String dateToString(Date date, String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         return formatter.format(date);
     }
 
@@ -78,10 +76,9 @@ public class DateHelper {
         if (dateString == null || formatString == null) {
             return null;
         }
-        SimpleDateFormat format = new SimpleDateFormat(formatString);
+        SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
         try {
-            Date date = format.parse(dateString);
-            return date;
+            return format.parse(dateString);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -90,7 +87,7 @@ public class DateHelper {
     }
 
     public static void showPicker(Context context, final TextView v) {
-        showPicker(context, v);
+//        showPicker(context, v); this cause infinite recursion fix when the method is used
     }
 
     public static void showFuturePicker(Context context, final TextView v) {
@@ -99,12 +96,11 @@ public class DateHelper {
     }
 
     /**
-     * @param context
-     * @param v
+     * @param v            the textView where to show the date
      * @param date         must be of the form dd/mm/yyyy
      * @param pastOrFuture must of the form DateHelper.FUTURE or DateHelper.PAST. can be 0 if does not
      *                     past and future allowed
-     * @return
+     * @return              Date picker dialog
      */
     public static DatePickerDialog getDatePickerDialog(Context context, final TextView v, final Calendar date,
                                                        int pastOrFuture, DatePickerDialog.OnDateSetListener pListener) {
@@ -112,12 +108,9 @@ public class DateHelper {
         DatePickerDialog.OnDateSetListener listener;
 
         if (pListener == null) {
-            listener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    calendar.set(year, monthOfYear, dayOfMonth);
-                    v.setText(displayDateFormat.format(calendar.getTime()));
-                }
+            listener = (view, year, monthOfYear, dayOfMonth) -> {
+                calendar.set(year, monthOfYear, dayOfMonth);
+                v.setText(displayDateFormat.format(calendar.getTime()));
             };
         } else {
             listener = pListener;
@@ -168,34 +161,31 @@ public class DateHelper {
 
         final GregorianCalendar now = new GregorianCalendar();
 
-        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+        TimePickerDialog.OnTimeSetListener listener = (view, hourOfDay, minute) -> {
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                calendar.set(year, month, day, hourOfDay, minute);
-                switch (pastFuture) {
-                    case TIMELINE_FUTURE:
-                        if (!isDateInPast(calendar)) {
-                            v.setText(displayDateTimeFormat.format(calendar.getTime()));
-                        } else {
-
-                            v.setText(displayDateTimeFormat.format(now.getTime()));
-                        }
-                        break;
-                    case TIMELINE_PAST:
-                        if (isDateInPast(calendar)) {
-                            v.setText(displayDateTimeFormat.format(calendar.getTime()));
-                        } else {
-
-                            v.setText(displayDateTimeFormat.format(now.getTime()));
-                        }
-                        break;
-                    default:
+            calendar.set(year, month, day, hourOfDay, minute);
+            switch (pastFuture) {
+                case TIMELINE_FUTURE:
+                    if (!isDateInPast(calendar)) {
                         v.setText(displayDateTimeFormat.format(calendar.getTime()));
-                }
+                    } else {
+
+                        v.setText(displayDateTimeFormat.format(now.getTime()));
+                    }
+                    break;
+                case TIMELINE_PAST:
+                    if (isDateInPast(calendar)) {
+                        v.setText(displayDateTimeFormat.format(calendar.getTime()));
+                    } else {
+
+                        v.setText(displayDateTimeFormat.format(now.getTime()));
+                    }
+                    break;
+                default:
+                    v.setText(displayDateTimeFormat.format(calendar.getTime()));
             }
         };
 
@@ -215,17 +205,14 @@ public class DateHelper {
      * Show a date picker and on callback show a time picker
      *
      * @param context
-     * @param v
+     * @param v            the textView where to show the date
      * @param pastFuture of the Format DateHelper.TIMELINE...
      */
     public static void showDateTimeDialog(final Context context, final TextView v, final int pastFuture) {
 
-        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(year, monthOfYear, dayOfMonth);
-                showTimePikerDialog(context, v, pastFuture);
-            }
+        DatePickerDialog.OnDateSetListener listener = (view, year, monthOfYear, dayOfMonth) -> {
+            calendar.set(year, monthOfYear, dayOfMonth);
+            showTimePikerDialog(context, v, pastFuture);
         };
 
         DatePickerDialog datePickerDialog = getDatePickerDialog(context, v, null, pastFuture, listener);
@@ -237,7 +224,7 @@ public class DateHelper {
      * Takes a text in format d MMM YYYY and return a string formated dd/MM/yyyy
      *
      * @param text must be of the form d MMM YYYY
-     * @return
+     * @return the Api formatted string
      */
     public static String dateForAPICall(String text) {
 
@@ -256,7 +243,7 @@ public class DateHelper {
 
     /**
      * @param text must be of the form dd/mm/yyyy
-     * @return
+     * @return Calendar from date string
      */
     public static Calendar getCalendarFromString(String text) {
         try {
@@ -269,10 +256,9 @@ public class DateHelper {
     }
 
     /**
-     * Creates a date set to yesterday at the same time as now and returns the corresponding String
-     * in the format d MMM YYYY
+     * Creates a date set to yesterday at the same time as now
      *
-     * @return
+     * @return the corresponding String in the format d MMM YYYY
      */
     public static String getYesterdayAsText() {
         Calendar yesterday = Calendar.getInstance();
@@ -284,7 +270,7 @@ public class DateHelper {
 
     /**
      * @param stringDate
-     * @return
+     * @return displayable string for the date returned from the api
      */
     public static String getDisplayableStringFromStringDateReceivedFromAPI(String stringDate) {
         try {
@@ -300,7 +286,6 @@ public class DateHelper {
      * Takes a date in the Format d/MM/yyy (ex 01/02/2016) and returns a string of the format
      * d MMM yyyyy
      *
-     * @param date
      * @return a valid date to display or an empty string if a parse exception occurred.
      */
     public static String getDisplayableDateFromAPIDateFormat(String date) {
@@ -343,7 +328,7 @@ public class DateHelper {
         if (elapsedHours > 0) { string += elapsedHours + " hr" + (elapsedHours == 1 ? "" : "s") + "\n"; }
         if (elapsedMinutes > 0) { string += elapsedMinutes + " min" + (elapsedMinutes == 1 ? "" : "s") + "\n"; }
         if(string.length() >= 2) {
-            string.substring(0, string.length() - 3);
+            string = string.substring(0, string.length() - 3);
         } else {
             string = "NA";
         }
@@ -374,9 +359,7 @@ public class DateHelper {
         String m1 = intToStringMonthLong(d1.get(MONTH));
         String m2 = intToStringMonthLong(d2.get(MONTH));
 
-        String s1 = m1 + " - " + m2 + " " + d2.get(YEAR) + ", " + (l/30) + " months";
-
-        return s1;
+        return m1 + " - " + m2 + " " + d2.get(YEAR) + ", " + (l/30) + " months";
     }
 
     public static String intToStringMonthLong(int month){

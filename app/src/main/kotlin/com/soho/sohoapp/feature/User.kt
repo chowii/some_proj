@@ -2,7 +2,6 @@ package com.soho.sohoapp.feature
 
 import android.util.Log
 import com.google.gson.annotations.SerializedName
-import com.soho.sohoapp.helper.NavHelper
 import com.soho.sohoapp.helper.SharedPrefsHelper
 import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +27,7 @@ class User {
 
     var registrationCallback: RegistrationCallback? = null
 
-    fun registerUser(registerMap: Map<String, String>){
+    fun registerUser(registerMap: Map<String, String>) {
         ApiClient.getService().register(registerMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -36,20 +35,20 @@ class User {
                     Log.v("LOG_TAG---", user.authenticationToken)
                     email = user.email
                     firstName = user.firstName
-                    SharedPrefsHelper.getInstance().authToken = user.authenticationToken?: ""
+                    SharedPrefsHelper.getInstance().authToken = user.authenticationToken ?: ""
                     SharedUser.getInstance().user = user
                     this.registrationCallback?.onRegistrationSuccessful()
-                },{
+                }, {
                     error ->
                     Log.v("LOG_TAG---", error.message)
                 })
     }
 
-    fun updateUserProfile(updateMap: Map<String, String>){
+    fun updateUserProfile(updateMap: Map<String, String>) {
         ApiClient.getService().updateUserProfile(updateMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { user ->
+                .subscribe({ user ->
                     firstName = user.firstName
                     lastName = user.lastName
                     country = user.country
@@ -59,21 +58,24 @@ class User {
                     Log.v("LOG_TAG---", error.message)
                 })
     }
+
     interface RegistrationCallback {
         fun onRegistrationSuccessful()
     }
 }
 
-class SharedUser{
+class SharedUser {
     var user: User? = null
-        set(value) { field = value}
+        set(value) {
+            field = value
+        }
 
 
     companion object {
 
         private var uniqueInstance: SharedUser? = null
         fun getInstance(): SharedUser {
-            if(uniqueInstance == null) {
+            if (uniqueInstance == null) {
                 uniqueInstance = SharedUser()
                 return uniqueInstance as SharedUser
             }

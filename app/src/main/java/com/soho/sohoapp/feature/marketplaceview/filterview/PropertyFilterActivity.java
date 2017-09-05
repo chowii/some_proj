@@ -28,6 +28,7 @@ public class PropertyFilterActivity extends AppCompatActivity
 
     private boolean isBuySection;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class PropertyFilterActivity extends AppCompatActivity
     @Override
     public void onTabReselected(TabLayout.Tab tab) {}
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onFilterSelected() {
         replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);

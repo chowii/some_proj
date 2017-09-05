@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:drawableLeft="@drawable/tab_browse"
+            android:drawableStart="@drawable/tab_browse"
             android:drawablePadding="15dp"
-            android:drawableRight="@drawable/tab_browse"
+            android:drawableEnd="@drawable/tab_browse"
             android:gravity="center_vertical"
             android:text="@string/market_place_search_box_all_suburb"
             />

@@ -31,7 +31,8 @@ public final class FileWriter<T> {
     public static Uri writeFileToDevice(Context context, Map data, String filename){
         final String DEVICE_INFO_DIR = context.getExternalFilesDir(null) + "/.temp";
         final File devicePath = new File(DEVICE_INFO_DIR);
-        if(!devicePath.exists()) devicePath.mkdir();
+        if(!devicePath.exists()) //noinspection ResultOfMethodCallIgnored
+            devicePath.mkdir();
 
         Gson gson = new Gson();
 

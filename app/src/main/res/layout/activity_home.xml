@@ -26,7 +26,7 @@
             android:id="@+id/btn_add_property"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="+"
+            android:text="@string/plus_sign"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@drawable/circle_green"

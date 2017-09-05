@@ -43,7 +43,7 @@
                         android:layout_marginBottom="@dimen/default_tabs_height"
                         android:background="@color/greyLightPrimary"
                         android:gravity="center"
-                        android:text="LOGO"/>
+                        android:text="@string/edit_property_logo"/>
 
                     <TextView android:shadowColor = "@color/grayIcon"
                         android:id="@+id/addressLine2"

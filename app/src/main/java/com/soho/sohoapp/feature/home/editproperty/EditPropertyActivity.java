@@ -145,7 +145,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     @Override
     public void showLoadingDialog() {
-        ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
+        ViewGroup content = findViewById(android.R.id.content);
         loadingView = getLayoutInflater().inflate(R.layout.view_loading, content, false);
         content.addView(loadingView);
     }
@@ -153,7 +153,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void hideLoadingDialog() {
         if (loadingView != null) {
-            ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
+            ViewGroup content = findViewById(android.R.id.content);
             content.removeView(loadingView);
             loadingView = null;
         }

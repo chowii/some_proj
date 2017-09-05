@@ -10,8 +10,8 @@
         android:id="@+id/subtract_button"
         style="@style/FilterButton"
         android:text="@string/item_filter_value_selector_subtract_text"
-        android:paddingLeft="@dimen/filter_padding_left"
-        android:paddingRight="@dimen/filter_padding_right"
+        android:paddingStart="@dimen/filter_padding_left"
+        android:paddingEnd="@dimen/filter_padding_right"
         />
 
     <TextView

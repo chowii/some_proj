@@ -2,7 +2,7 @@ package com.soho.sohoapp.feature.home.addproperty.address;
 
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 
-public class AddressContract {
+class AddressContract {
 
     public interface ViewActionsListener {
         void onAddressClicked(String placeId, String fullAddress);

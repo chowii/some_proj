@@ -63,8 +63,8 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View row = super.getView(position, convertView, parent);
         AutocompletePrediction item = getItem(position);
-        TextView textView1 = (TextView) row.findViewById(android.R.id.text1);
-        TextView textView2 = (TextView) row.findViewById(android.R.id.text2);
+        TextView textView1 = row.findViewById(android.R.id.text1);
+        TextView textView2 = row.findViewById(android.R.id.text2);
         if (item != null) {
             textView1.setText(item.getPrimaryText(STYLE_BOLD));
             textView2.setText(item.getSecondaryText(STYLE_BOLD));

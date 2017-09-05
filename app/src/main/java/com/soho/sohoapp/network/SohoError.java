@@ -11,10 +11,6 @@ import java.io.IOException;
 
 import okhttp3.Response;
 
-/**
- * Created by Jovan on 12/4/17.
- */
-
 public class SohoError {
 
     @SerializedName("error") public String error;

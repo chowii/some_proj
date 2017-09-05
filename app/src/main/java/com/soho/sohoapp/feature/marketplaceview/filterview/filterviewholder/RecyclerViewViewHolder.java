@@ -37,11 +37,8 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
-                        sohoProperties -> {
-                            recyclerView.setAdapter(new MarketPlaceAdapter(sohoProperties));
-                        }, throwable -> {
-                            Log.v("LOG_TAG---","throwable" + throwable.getMessage());
-                        }
+                        sohoProperties -> recyclerView.setAdapter(new MarketPlaceAdapter(sohoProperties)),
+                        throwable -> Log.v("LOG_TAG---", "throwable" + throwable.getMessage())
                 );
     }
 

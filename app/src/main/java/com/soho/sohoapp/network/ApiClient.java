@@ -39,7 +39,8 @@ public class ApiClient {
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS);
 
-    public static Retrofit retrofit =
+    @SuppressWarnings("ConstantConditions")
+    private static Retrofit retrofit =
             new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(Constants.Companion.getENDPOINT())
@@ -54,7 +55,7 @@ public class ApiClient {
         return service;
     }
 
-    public static GsonConverterFactory buildGson() {
+    private static GsonConverterFactory buildGson() {
         return GsonConverterFactory.create(new GsonBuilder().registerTypeAdapterFactory(new DataTypeAdapterFactory()).create());
     }
 

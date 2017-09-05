@@ -34,7 +34,7 @@
         <activity android:name=".feature.landing.LandingActivity" />
         <activity android:name=".feature.landing.signup.SignUpActivity" />
         <activity android:name=".feature.landing.LoginActivity" />
-        <activity android:name=".feature.landing.signup.RegisterUserInfoActivity"></activity>
+        <activity android:name=".feature.landing.signup.RegisterUserInfoActivity" />
 
         <activity
             android:name=".feature.home.addproperty.AddPropertyActivity"
@@ -52,6 +52,9 @@
 
         <activity
             android:name=".feature.home.editproperty.EditPropertyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".feature.landing.ForgotPasswordActivity"
             android:screenOrientation="portrait"/>
 
         <activity

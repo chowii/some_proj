@@ -9,7 +9,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The Property Network For Everyone"
+        android:text="@string/the_property_network_for_everyone"
         style="@style/TextView.SubTitle.Dark"
         android:layout_marginTop="30dp"
         android:textColor="@color/blackDarkPrimary"
@@ -37,7 +37,7 @@
                 />
 
             <TextView
-                android:text="LOGIN WITH FACEBOOK"
+                android:text="@string/login_with_facebook"
                 style="@style/TextView.SocialLoginText"
                 />
 
@@ -57,7 +57,7 @@
                 />
 
             <TextView
-                android:text="LOGIN WITH GOOGLE+"
+                android:text="@string/login_with_google"
                 android:textStyle="bold"
                 style="@style/TextView.SocialLoginText"
                 />
@@ -69,19 +69,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
             >
 
             <Button
                 android:id="@+id/signup"
                 style="@style/Button.UserAuth"
-                android:text="S I G N  U P"
+                android:text="@string/sign_up"
                 />
 
             <Button
                 android:id="@+id/login"
                 style="@style/Button.UserAuth"
-                android:text="L O G  I N"
+                android:text="@string/login"
                 />
 
         </LinearLayout>

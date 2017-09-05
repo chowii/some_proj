@@ -31,8 +31,8 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var registerButton: Button
 
     @OnTextChanged(R.id.register_email_edit_text, R.id.register_password_edit_text)
-    fun onTextChanged(editable: Editable){
-        if(emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
+    fun onTextChanged(editable: Editable) {
+        if (emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
             toggleButtonEnabled(0.4f, !editable.toString().isEmpty())
         else toggleButtonEnabled(1f, !editable.toString().isEmpty())
     }
@@ -46,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
     @OnClick(R.id.register_button)
-    fun onRegisterClicked(){
+    fun onRegisterClicked() {
         val registerMap: Map<String, String> = hashMapOf(
                 "email" to emailEditText.text.toString(),
                 "password" to passwordEditText.text.toString()
@@ -62,24 +62,24 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun registerCall(registerMap: Map<String, String>) {
-        synchronized(this){
+        synchronized(this) {
 
-        ApiClient.getService().register(registerMap)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { user ->
-                            Log.v("LOG_TAG---", user.authenticationToken)
-                            SharedPrefsHelper.getInstance().mUser = user
-                            SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
-                            initProgressDialog()?.dismiss()
-                            NavHelper.showRegisterUserInfoActivity(this)
-                        },
-                        { error ->
-                            Log.v("LOG_TAG---", "error")
-                            initProgressDialog()?.dismiss()
-                        }
-                )
+            ApiClient.getService().register(registerMap)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { user ->
+                                Log.v("LOG_TAG---", user.authenticationToken)
+                                SharedPrefsHelper.getInstance().mUser = user
+                                SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
+                                initProgressDialog()?.dismiss()
+                                NavHelper.showRegisterUserInfoActivity(this)
+                            },
+                            { error ->
+                                Log.v("LOG_TAG---", "error")
+                                initProgressDialog()?.dismiss()
+                            }
+                    )
         }
     }
 

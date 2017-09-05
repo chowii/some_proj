@@ -4,7 +4,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
-public interface AddPropertyContract {
+interface AddPropertyContract {
 
     interface ViewActionsListener {
         void onAddressSelected(PropertyAddress propertyAddress);

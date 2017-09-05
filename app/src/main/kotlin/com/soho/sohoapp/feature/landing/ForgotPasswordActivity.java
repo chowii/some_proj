@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.landing;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.soho.sohoapp.R;
 

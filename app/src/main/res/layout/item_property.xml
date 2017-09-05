@@ -50,21 +50,21 @@
                 android:id="@+id/bedroom_text_view"
                 style="@style/PropertyDetails"
                 tools:text="1"
-                android:drawableRight="@drawable/bed"
+                android:drawableEnd="@drawable/bed"
                 />
 
             <TextView
                 android:id="@+id/bathroom_text_view"
                 style="@style/PropertyDetails"
                 tools:text="1"
-                android:drawableRight="@drawable/shower"
+                android:drawableEnd="@drawable/shower"
                 />
 
             <TextView
                 android:id="@+id/parking_text_view"
                 style="@style/PropertyDetails"
                 tools:text="1"
-                android:drawableRight="@drawable/car"
+                android:drawableEnd="@drawable/car"
                 />
 
         </LinearLayout>

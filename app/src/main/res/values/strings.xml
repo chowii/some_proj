@@ -81,7 +81,7 @@
     <string name="portfolio_estimated_value" formatted="true">$%.2f</string>
     <string name="portfolio_estimated_value_k" formatted="true">$%.2fk</string>
     <string name="portfolio_estimated_value_m" formatted="true">$%.2fm</string>
-    <string name="portfolio_public_count" formatted="true">%d public</string>
+    <string name="portfolio_public_count" formatted="true" tools:ignore="PluralsCandidate">%d public</string>
     <string name="portfolio_yield_null" tools:ignore="TypographyDashes">Yield: --</string>
     <string name="portfolio_yield" formatted="true">Yield: %.2f%%</string>
     <string name="portfolio_lvr_null" tools:ignore="TypographyDashes">LVR: --</string>
@@ -99,6 +99,7 @@
     <string name="edit_property_take_a_photo">Take a photo</string>
     <string name="edit_property_upload_a_photo">Choose from Gallery</string>
     <string name="edit_property_image_chooser_title">Select Picture</string>
+    <string name="edit_property_logo" >LOGO</string>
     <!--Edit property screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
@@ -115,6 +116,30 @@
     <string name="rooms_item_default_bathroom_text">Any Bathroom</string>
     <string name="rooms_item_carspot_text">Carspot</string>
     <string name="rooms_item_default_carspot_text">Any Carspot</string>
+
+    <!--todo-Julia shuffle in the specific section -->
+    <string name="plus_sign" translatable="false">+</string>
+    <string name="the_property_network_for_everyone">The Property Network For Everyone</string>
+    <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
+    <string name="login_with_google">LOGIN WITH GOOGLE+</string>
+    <string name="sign_up">S I G N U P</string>
+    <string name="login">L O G I N</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="new_user_sign_up_instead">New user? Sign up instead</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="country">Country</string>
+    <string name="i_am_interested_in">I AM INTERESTED IN:</string>
+    <string name="buying">Buying</string>
+    <string name="selling">Selling</string>
+    <string name="renting">Renting</string>
+    <string name="i_am_an_agent">I am an agent</string>
+    <string name="done">DONE</string>
+    <string name="password">Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in_here">Sign in here</string>
+    <string name="all">All</string>
+    <string name="to">to</string>
 
 
     <string-array name="filter_buy_price_range">

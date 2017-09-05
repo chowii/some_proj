@@ -13,9 +13,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFormViewHolder<T extends BaseFormModel> extends BaseViewHolder<T> {
 
-    public OnViewHolderItemValueChangeListener updatedListener;
+    protected OnViewHolderItemValueChangeListener updatedListener;
 
-    public BaseFormViewHolder(View itemView) {
+    protected BaseFormViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

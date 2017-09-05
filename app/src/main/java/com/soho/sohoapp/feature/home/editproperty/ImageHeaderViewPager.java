@@ -38,7 +38,7 @@ public class ImageHeaderViewPager extends PagerAdapter {
         logger.d("Position: " + position);
         View itemView = inflater.inflate(R.layout.item_property_image, container, false);
 
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.image);
+        ImageView imageView = itemView.findViewById(R.id.image);
         PropertyImage image = propertyImages.get(position);
 
         ImageLoader.Params params = ImageLoader.Params.create()

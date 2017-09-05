@@ -11,8 +11,8 @@
         android:id="@+id/header_text_view"
         style="@style/FilterPropertyHeader"
         tools:text="Header"
-        android:paddingLeft="@dimen/filter_padding_left"
-        android:paddingRight="@dimen/filter_padding_right"
+        android:paddingStart="@dimen/filter_padding_left"
+        android:paddingEnd="@dimen/filter_padding_right"
         />
 
     <include layout="@layout/horizontal_rule"/>

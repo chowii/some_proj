@@ -42,14 +42,14 @@ class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback 
     var user: User = User()
 
     @OnCheckedChanged(R.id.buying_checkbox, R.id.selling_checkbox, R.id.renting_checkbox)
-    fun onCheckChanged(){
-        if(buyingCheckBox.isChecked) role = "buying"
-        else if(sellingCheckBox.isChecked) role = "selling"
-        else if(rentingCheckBox.isChecked) role = "renting"
+    fun onCheckChanged() {
+        if (buyingCheckBox.isChecked) role = "buying"
+        else if (sellingCheckBox.isChecked) role = "selling"
+        else if (rentingCheckBox.isChecked) role = "renting"
     }
 
     @OnClick(R.id.register_button)
-    fun onRegisterClicked(){
+    fun onRegisterClicked() {
         initProgressDialog()?.show()
         user.updateUserProfile(hashMapOf(
                 "first_name" to nameEditText.text.toString(),

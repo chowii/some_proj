@@ -15,7 +15,7 @@ import com.soho.sohoapp.feature.home.HomeActivity
 class NavHelper {
 
 
-    companion object{
+    companion object {
 
         fun showLandingActivity(activity: Activity, error: String) = activity.startActivity(
                 Intent(activity, LandingActivity::class.java)

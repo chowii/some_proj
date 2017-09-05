@@ -15,7 +15,9 @@ class Constants {
         var savedFilter: String = "soho_filters6.json"
 
         @JvmStatic
-        fun init(context: Context): Unit { ENDPOINT = context.getString(R.string.endpoint) }
+        fun init(context: Context): Unit {
+            ENDPOINT = context.getString(R.string.endpoint)
+        }
     }
 
 }

@@ -27,7 +27,7 @@
 
         <EditText
             android:id="@+id/first_name_edit_text"
-            android:hint="First Name"
+            android:hint="@string/first_name"
             android:layout_marginBottom="20dp"
             android:inputType="textEmailAddress"
             style="@style/EditText.RegisterStyle"
@@ -36,14 +36,14 @@
 
         <EditText
             android:id="@+id/last_name_edit_text"
-            android:hint="Last Name"
+            android:hint="@string/last_name"
             android:layout_marginBottom="20dp"
             style="@style/EditText.RegisterStyle"
             android:theme="@style/EditText.RegisterTheme"
             />
         <EditText
             android:id="@+id/country_edit_text"
-            android:hint="Country"
+            android:hint="@string/country"
             android:layout_marginBottom="30dp"
             style="@style/EditText.RegisterStyle"
             android:theme="@style/EditText.RegisterTheme"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             style="@style/TextView.Message.Large.Start.LightWhite"
-            android:text="I AM INTERESTED IN:"
+            android:text="@string/i_am_interested_in"
             />
 
 
@@ -62,7 +62,7 @@
             android:id="@+id/buying_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buying"
+            android:text="@string/buying"
             android:layout_marginTop="20dp"
             style="@style/Checkbox.Style"
             android:theme="@style/Checkbox.Theme"
@@ -72,7 +72,7 @@
             android:id="@+id/selling_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selling"
+            android:text="@string/selling"
             android:layout_marginTop="5dp"
             style="@style/Checkbox.Style"
             android:theme="@style/Checkbox.Theme"
@@ -82,7 +82,7 @@
             android:id="@+id/renting_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Renting"
+            android:text="@string/renting"
             android:layout_marginTop="5dp"
             style="@style/Checkbox.Style"
             android:theme="@style/Checkbox.Theme"
@@ -100,7 +100,7 @@
                 android:layout_weight="5"
                 android:paddingTop="15dp"
                 style="@style/TextView.Message.Large.Start.LightWhite"
-                android:text="I am an agent"/>
+                android:text="@string/i_am_an_agent"/>
 
             <ToggleButton
                 android:layout_width="0dp"
@@ -116,7 +116,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             style="@style/Button.Green"
-            android:text="DONE"
+            android:text="@string/done"
             />
     </LinearLayout>
 

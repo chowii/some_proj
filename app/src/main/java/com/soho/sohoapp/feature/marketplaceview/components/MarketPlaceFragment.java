@@ -83,6 +83,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         return view;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void configureTabLayout() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_buy_tab));
@@ -91,9 +92,10 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.getTabAt(0).select();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getText().toString().equalsIgnoreCase(getString(R.string.marketplace_buy_tab))){
+        if(getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
             searchParams.put("by_listing_type", "sale/auction");
             presenter.startPresenting(searchParams);
         }else{

@@ -1,6 +1,5 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,13 +19,11 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
     @BindView(R.id.button)
     TextView toggleCheckAll;
 
-    private final Context context;
-    OnSaveFilterPreferenceListener listener;
+    private OnSaveFilterPreferenceListener listener;
 
     public FilterButtonItemViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        context = itemView.getContext();
         updatedListener = listener;
     }
 

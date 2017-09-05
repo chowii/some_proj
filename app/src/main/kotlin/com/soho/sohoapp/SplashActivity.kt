@@ -12,12 +12,12 @@ import com.soho.sohoapp.feature.home.HomeActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    internal var SPLASH_TIME_OUT: Int = 2000;
+    internal var SPLASH_TIME_OUT: Int = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        if (SharedPrefsHelper.getInstance().authToken == ""){
+        if (SharedPrefsHelper.getInstance().authToken == "") {
 
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
             setContentView(R.layout.activity_splash)
@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
                         Intent(this, LandingActivity::class.java))
             },
                     SPLASH_TIME_OUT.toLong())
-        }else
+        } else
             Handler().postDelayed({
                 startActivity(
                         Intent(this, HomeActivity::class.java))

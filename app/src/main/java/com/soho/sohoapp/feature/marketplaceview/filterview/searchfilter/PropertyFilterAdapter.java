@@ -150,13 +150,12 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     }
 
     private void addListToFilterMap(String value) {
-        String list = value;
         List<String> item = (List<String>) mFilterMap.get("by_property_types");
         if(item == null){
             item = new ArrayList<>();
-            item.add(list);
-        }else if(item.contains(list)) item.remove(list);
-        else item.add(list);
+            item.add(value);
+        }else if(item.contains(value)) item.remove(value);
+        else item.add(value);
         mFilterMap.put("by_property_types", item);
     }
 

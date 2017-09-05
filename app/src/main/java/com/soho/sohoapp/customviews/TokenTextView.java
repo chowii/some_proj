@@ -2,8 +2,8 @@ package com.soho.sohoapp.customviews;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.soho.sohoapp.R;
 
@@ -11,7 +11,7 @@ import com.soho.sohoapp.R;
  * Created by chowii on 28/8/17.
  */
 
-public class TokenTextView extends TextView {
+public class TokenTextView extends AppCompatTextView {
     public TokenTextView(Context context) {
         super(context);
     }
