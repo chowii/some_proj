@@ -19,11 +19,11 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RelationFragment extends BaseFragment implements RelationContract.View {
+public class RelationFragment extends BaseFragment implements RelationContract.ViewInteractable {
     public static final String TAG = RelationFragment.class.getSimpleName();
 
     private RelationPresenter presenter;
-    private RelationContract.ViewActionsListener actionsListener;
+    private RelationContract.ViewPresentable presentable;
     private LoadingDialog loadingDialog;
 
     @NonNull
@@ -55,13 +55,13 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
     }
 
     @Override
-    public void setActionsListener(RelationContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(RelationContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
     public void showRelationDialog(List<PropertyRole> relationList) {
-        new RelationsDialog(getContext()).show(relationList, relation -> actionsListener.onOtherTypeSelected(relation));
+        new RelationsDialog(getContext()).show(relationList, relation -> presentable.onOtherTypeSelected(relation));
     }
 
     @Override
@@ -88,17 +88,17 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
 
     @OnClick(R.id.owner)
     void onOwnerSelected() {
-        actionsListener.onOwnerSelected();
+        presentable.onOwnerSelected();
     }
 
     @OnClick(R.id.agent)
     void onAgentSelected() {
-        actionsListener.onAgentSelected();
+        presentable.onAgentSelected();
     }
 
     @OnClick(R.id.other)
     void onOtherClicked() {
-        actionsListener.onOtherClicked();
+        presentable.onOtherClicked();
     }
 
     public interface Listener {

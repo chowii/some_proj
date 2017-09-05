@@ -2,16 +2,16 @@ package com.soho.sohoapp.feature.home.addproperty.investment;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 
-public class InvestmentPresenter implements AbsPresenter, InvestmentContract.ViewActionsListener {
-    private final InvestmentContract.View view;
+public class InvestmentPresenter implements AbsPresenter, InvestmentContract.ViewPresentable {
+    private final InvestmentContract.ViewInteractable view;
 
-    public InvestmentPresenter(InvestmentContract.View view) {
+    public InvestmentPresenter(InvestmentContract.ViewInteractable view) {
         this.view = view;
     }
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         if (view.isForOwner()) {
             view.showOwnerQuestion();
             view.showOwnerHomeButton();

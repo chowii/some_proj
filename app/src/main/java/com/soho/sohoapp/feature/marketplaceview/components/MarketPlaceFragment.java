@@ -36,6 +36,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         MarketPlaceContract.ViewInteractable
 {
 
+    public static final String TAG = "MarketPlaceFragment";
     public static MarketPlaceFragment newInstance() {
         MarketPlaceFragment fragment = new MarketPlaceFragment();
         Bundle args = new Bundle();

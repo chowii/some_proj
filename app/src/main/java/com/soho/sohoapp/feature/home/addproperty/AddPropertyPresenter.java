@@ -4,7 +4,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
-import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
@@ -15,9 +15,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewActionsListener {
-    private final AddPropertyContract.View view;
-    private final Navigator navigator;
+public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewPresentable {
+    private final AddPropertyContract.ViewInteractable view;
+    private final NavigatorInterface navigator;
     private final CompositeDisposable compositeDisposable;
     private PropertyRole propertyRole;
     private PropertyAddress propertyAddress;
@@ -27,7 +27,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     private int bathrooms;
     private int carspots;
 
-    public AddPropertyPresenter(AddPropertyContract.View view, Navigator navigator) {
+    public AddPropertyPresenter(AddPropertyContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
         this.navigator = navigator;
         compositeDisposable = new CompositeDisposable();
@@ -35,7 +35,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         if (!fromConfigChanges) {
             view.showAddressFragment();
         }

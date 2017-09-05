@@ -6,7 +6,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
 interface AddPropertyContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onAddressSelected(PropertyAddress propertyAddress);
 
         void onPropertyRoleSelected(PropertyRole propertyRole);
@@ -18,8 +18,8 @@ interface AddPropertyContract {
         void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void showAddressFragment();
 

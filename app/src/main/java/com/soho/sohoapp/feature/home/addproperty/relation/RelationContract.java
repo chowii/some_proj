@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RelationContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onOwnerSelected();
 
         void onAgentSelected();
@@ -16,8 +16,8 @@ public interface RelationContract {
         void onOtherTypeSelected(PropertyRole propertyRole);
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void showRelationDialog(List<PropertyRole> relationList);
 

@@ -5,7 +5,7 @@ import com.soho.sohoapp.feature.common.SohoButton;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
@@ -19,13 +19,13 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetailsContract.ViewActionsListener {
-    private final PortfolioDetailsContract.View view;
-    private final Navigator navigator;
+public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetailsContract.ViewPresentable {
+    private final PortfolioDetailsContract.ViewInteractable view;
+    private final NavigatorInterface navigator;
     private final CompositeDisposable compositeDisposable;
     private PortfolioCategory portfolio;
 
-    public PortfolioDetailsPresenter(PortfolioDetailsContract.View view, Navigator navigator) {
+    public PortfolioDetailsPresenter(PortfolioDetailsContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
         this.navigator = navigator;
         compositeDisposable = new CompositeDisposable();
@@ -33,7 +33,7 @@ public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetails
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         if (view.isOwnerScreen()) {
             portfolio = view.getOwnerPortfolio();
         } else {

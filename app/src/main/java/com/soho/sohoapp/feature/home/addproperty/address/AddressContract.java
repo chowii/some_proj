@@ -4,7 +4,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 
 class AddressContract {
 
-    public interface ViewActionsListener {
+    public interface ViewPresentable {
         void onAddressClicked(String placeId, String fullAddress);
 
         void onDoneClicked();
@@ -14,8 +14,8 @@ class AddressContract {
         void onAddressChanged(String string);
     }
 
-    public interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    public interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void showLoadingDialog();
 

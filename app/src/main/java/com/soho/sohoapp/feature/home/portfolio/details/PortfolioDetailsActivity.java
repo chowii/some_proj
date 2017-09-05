@@ -18,7 +18,7 @@ import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.navigator.AndroidNavigator;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDetailsContract.View {
+public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDetailsContract.ViewInteractable {
     private static final String KEY_OWNER_PORTFOLIO = "KEY_OWNER_PORTFOLIO";
     private static final String KEY_MANAGER_PORTFOLIO = "KEY_MANAGER_PORTFOLIO";
 
@@ -37,7 +37,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private PortfolioDetailsContract.ViewActionsListener actionsListener;
+    private PortfolioDetailsContract.ViewPresentable presentable;
     private PortfolioDetailsPresenter presenter;
     private PortfolioDetailsAdapter adapter;
 
@@ -63,7 +63,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
         initToolbar();
         initView();
 
-        presenter = new PortfolioDetailsPresenter(this, AndroidNavigator.newInstance(this));
+        presenter = new PortfolioDetailsPresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -74,8 +74,8 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     }
 
     @Override
-    public void setActionsListener(PortfolioDetailsContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(PortfolioDetailsContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -129,22 +129,22 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PORTFOLIO_ADD_PROPERTY_REQUEST_CODE) {
-            actionsListener.onNewPropertyCreated();
+            presentable.onNewPropertyCreated();
         }
     }
 
     private void initView() {
-        swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
+        swipeRefresh.setOnRefreshListener(() -> presentable.onPullToRefresh());
         adapter = new PortfolioDetailsAdapter(this);
         adapter.setOnItemClickListener(new PortfolioDetailsAdapter.OnItemClickListener() {
             @Override
             public void onAddPropertyClicked() {
-                actionsListener.onAddPropertyClicked();
+                presentable.onAddPropertyClicked();
             }
 
             @Override
             public void onOwnerPropertyClicked(PortfolioProperty property) {
-                actionsListener.onOwnerPropertyClicked(property);
+                presentable.onOwnerPropertyClicked(property);
             }
         });
 
@@ -154,7 +154,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     }
 
     private void initToolbar() {
-        toolbar.setNavigationOnClickListener(v -> actionsListener.onBackClicked());
+        toolbar.setNavigationOnClickListener(v -> presentable.onBackClicked());
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {

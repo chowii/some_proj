@@ -3,13 +3,12 @@ package com.soho.sohoapp.feature.home.editproperty;
 import android.net.Uri;
 
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
 import java.util.List;
 
 interface EditPropertyContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onBackClicked();
 
         void onAddPhotoClicked();
@@ -23,8 +22,8 @@ interface EditPropertyContract {
         void onPhotoPicked(Uri uri);
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void showAddPhotoDialog();
 

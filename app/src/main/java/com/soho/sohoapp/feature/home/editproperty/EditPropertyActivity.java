@@ -19,7 +19,7 @@ import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.navigator.AndroidNavigator;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.permission.AndroidPermissionManager;
 import com.soho.sohoapp.utils.FileHelper;
 
@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditPropertyActivity extends AbsActivity implements EditPropertyContract.View {
+public class EditPropertyActivity extends AbsActivity implements EditPropertyContract.ViewInteractable {
     private static final String KEY_PROPERTY_ID = "KEY_PROPERTY_ID";
 
     @BindView(R.id.tabs)
@@ -45,7 +45,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @BindView(R.id.addressLine2)
     TextView addressLine2;
 
-    private EditPropertyContract.ViewActionsListener actionsListener;
+    private EditPropertyContract.ViewPresentable presentable;
     private EditPropertyPresenter presenter;
     private CameraPicker cameraPicker;
     private ImageHeaderViewPager pagerAdapter;
@@ -68,7 +68,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         initView();
 
         presenter = new EditPropertyPresenter(this,
-                AndroidNavigator.newInstance(this),
+                NavigatorImpl.newInstance(this),
                 AndroidPermissionManager.newInstance(this),
                 FileHelper.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
@@ -81,8 +81,8 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
-    public void setActionsListener(EditPropertyContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(EditPropertyContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -91,12 +91,12 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         addPhotoDialog.show(new AddPhotoDialog.OnItemClickedListener() {
             @Override
             public void onTakeNewPhotoClicked() {
-                actionsListener.onTakeNewPhotoClicked();
+                presentable.onTakeNewPhotoClicked();
             }
 
             @Override
             public void onChooseFromGalleryClicked() {
-                actionsListener.onChooseFromGalleryClicked();
+                presentable.onChooseFromGalleryClicked();
             }
         });
     }
@@ -104,7 +104,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void capturePhoto() {
         cameraPicker = new CameraPicker(this);
-        cameraPicker.takePhoto(path -> actionsListener.onPhotoReady(path));
+        cameraPicker.takePhoto(path -> presentable.onPhotoReady(path));
     }
 
     @Override
@@ -120,7 +120,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     @Override
     public void pickImageFromGallery() {
         galleryPicker = new GalleryPicker(this);
-        galleryPicker.choosePhoto(uri -> actionsListener.onPhotoPicked(uri));
+        galleryPicker.choosePhoto(uri -> presentable.onPhotoPicked(uri));
     }
 
     @Override
@@ -176,14 +176,10 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     private void initToolbar() {
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
-        toolbar.setNavigationOnClickListener(view -> actionsListener.onBackClicked());
+        toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
         toolbar.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_add_photo:
-                    actionsListener.onAddPhotoClicked();
-                    break;
-                default:
-                    break;
+            if (R.id.action_add_photo == item.getItemId()) {
+                presentable.onAddPhotoClicked();
             }
             return false;
         });

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PortfolioDetailsContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onBackClicked();
 
         void onAddPropertyClicked();
@@ -21,8 +21,8 @@ public interface PortfolioDetailsContract {
         void onOwnerPropertyClicked(PortfolioProperty property);
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void showPullToRefresh();
 

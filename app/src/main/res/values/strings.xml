@@ -7,10 +7,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tab_more">More</string>
-    <string name="tab_offers">Offers</string>
-    <string name="tab_manage">Manage</string>
-    <string name="tab_marketplace">Marketplace</string>
     <string name="marketplace_buy_tab">Buy</string>
     <string name="marketplace_rent_tab">Rent</string>
     <string name="market_place_search_box_all_suburb">All suburb</string>
@@ -26,6 +22,14 @@
     <string name="test_text_medium">Lorem ipsum dolor sit amet</string>
     <string name="test_text_long">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <!--Test strings end-->
+
+    <!--Home screen start-->
+    <string name="home_add_property">+</string>
+    <string name="home_tab_more">More</string>
+    <string name="home_tab_offers">Offers</string>
+    <string name="home_tab_manage">Manage</string>
+    <string name="home_tab_marketplace">Marketplace</string>
+    <!--Home screen end-->
 
     <!--Add Property screen start-->
     <string name="add_property_toolbar_title">Add Property</string>

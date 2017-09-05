@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PortfolioListContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onPullToRefresh();
 
         void onAddPropertyClicked();
@@ -17,8 +17,8 @@ public interface PortfolioListContract {
         void onNewPropertyCreated();
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void setData(List<BaseModel> dataList);
 

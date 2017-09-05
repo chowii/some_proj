@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface PropertyTypeContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onPropertySelected(PropertyType propertyType);
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         void setTypeList(@NonNull List<PropertyType> typeList);
 

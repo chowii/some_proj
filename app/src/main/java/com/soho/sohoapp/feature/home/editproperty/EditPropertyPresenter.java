@@ -8,7 +8,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.permission.PermissionManager;
@@ -26,9 +26,9 @@ import io.reactivex.schedulers.Schedulers;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract.ViewActionsListener {
-    private final EditPropertyContract.View view;
-    private final Navigator navigator;
+public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract.ViewPresentable {
+    private final EditPropertyContract.ViewInteractable view;
+    private final NavigatorInterface navigator;
     private final PermissionManager permissionManager;
     private final FileHelper fileHelper;
     private final List<PropertyImage> propertyImages;
@@ -37,8 +37,8 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private Subscription permissionSubscription;
     private Property property;
 
-    public EditPropertyPresenter(EditPropertyContract.View view,
-                                 Navigator navigator,
+    public EditPropertyPresenter(EditPropertyContract.ViewInteractable view,
+                                 NavigatorInterface navigator,
                                  PermissionManager permissionManager,
                                  FileHelper fileHelper) {
         this.fileHelper = fileHelper;
@@ -52,7 +52,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         view.showLoadingDialog();
 
         Disposable disposable = ApiClient.getService().getProperty(view.getPropertyId())

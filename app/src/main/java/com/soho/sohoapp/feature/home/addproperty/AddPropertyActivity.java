@@ -21,13 +21,13 @@ import com.soho.sohoapp.feature.home.addproperty.investment.InvestmentFragment;
 import com.soho.sohoapp.feature.home.addproperty.relation.RelationFragment;
 import com.soho.sohoapp.feature.home.addproperty.rooms.RoomsFragment;
 import com.soho.sohoapp.feature.home.addproperty.type.PropertyTypeFragment;
-import com.soho.sohoapp.navigator.AndroidNavigator;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddPropertyActivity extends AbsActivity implements
-        AddPropertyContract.View,
+        AddPropertyContract.ViewInteractable,
         AddressFragment.Listener,
         RelationFragment.Listener,
         PropertyTypeFragment.Listener,
@@ -38,7 +38,7 @@ public class AddPropertyActivity extends AbsActivity implements
     Toolbar toolbar;
 
     private AddPropertyPresenter presenter;
-    private AddPropertyContract.ViewActionsListener actionsListener;
+    private AddPropertyContract.ViewPresentable presentable;
     private LoadingDialog loadingDialog;
 
     @NonNull
@@ -53,7 +53,7 @@ public class AddPropertyActivity extends AbsActivity implements
         ButterKnife.bind(this);
         toolbar.setNavigationOnClickListener(v -> closeCurrentScreen());
 
-        presenter = new AddPropertyPresenter(this, AndroidNavigator.newInstance(this));
+        presenter = new AddPropertyPresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -69,8 +69,8 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void setActionsListener(AddPropertyContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(AddPropertyContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -105,22 +105,22 @@ public class AddPropertyActivity extends AbsActivity implements
 
     @Override
     public void onAddressSelected(PropertyAddress propertyAddress) {
-        actionsListener.onAddressSelected(propertyAddress);
+        presentable.onAddressSelected(propertyAddress);
     }
 
     @Override
     public void onPropertyRoleSelected(PropertyRole propertyRole) {
-        actionsListener.onPropertyRoleSelected(propertyRole);
+        presentable.onPropertyRoleSelected(propertyRole);
     }
 
     @Override
     public void onPropertyTypeSelected(PropertyType propertyType) {
-        actionsListener.onPropertyTypeSelected(propertyType);
+        presentable.onPropertyTypeSelected(propertyType);
     }
 
     @Override
     public void onHomeOrInvestmentSelected(boolean isInvestment) {
-        actionsListener.onHomeOrInvestmentSelected(isInvestment);
+        presentable.onHomeOrInvestmentSelected(isInvestment);
     }
 
     @Override
@@ -166,6 +166,6 @@ public class AddPropertyActivity extends AbsActivity implements
 
     @Override
     public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
-        actionsListener.onRoomsSelected(bedrooms, bathrooms, carspots);
+        presentable.onRoomsSelected(bedrooms, bathrooms, carspots);
     }
 }

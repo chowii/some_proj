@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InvestmentFragment extends BaseFragment implements InvestmentContract.View {
+public class InvestmentFragment extends BaseFragment implements InvestmentContract.ViewInteractable {
     public static final String TAG = InvestmentFragment.class.getSimpleName();
     private static final String KEY_FOR_OWNER = "KEY_FOR_OWNER";
 
@@ -30,7 +30,7 @@ public class InvestmentFragment extends BaseFragment implements InvestmentContra
     @BindView(R.id.investment)
     Button investment;
 
-    private InvestmentContract.ViewActionsListener actionsListener;
+    private InvestmentContract.ViewPresentable presentable;
     private InvestmentPresenter presenter;
 
     @NonNull
@@ -65,8 +65,8 @@ public class InvestmentFragment extends BaseFragment implements InvestmentContra
     }
 
     @Override
-    public void setActionsListener(InvestmentContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(InvestmentContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -112,12 +112,12 @@ public class InvestmentFragment extends BaseFragment implements InvestmentContra
 
     @OnClick(R.id.home)
     void onHomeClicked() {
-        actionsListener.onHomeClicked();
+        presentable.onHomeClicked();
     }
 
     @OnClick(R.id.investment)
     void onInvestmentClicked() {
-        actionsListener.onInvestmentClicked();
+        presentable.onInvestmentClicked();
     }
 
     public interface Listener {

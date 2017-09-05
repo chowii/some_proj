@@ -3,19 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".feature.home.HomeActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_above="@+id/bottom_navigation_view"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -23,10 +21,10 @@
         app:menu="@menu/navigation">
 
         <Button
-            android:id="@+id/btn_add_property"
+            android:id="@+id/addProperty"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="@string/plus_sign"
+            android:text="@string/home_add_property"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@drawable/circle_green"

@@ -11,18 +11,18 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class RelationPresenter implements AbsPresenter, RelationContract.ViewActionsListener {
-    private final RelationContract.View view;
+public class RelationPresenter implements AbsPresenter, RelationContract.ViewPresentable {
+    private final RelationContract.ViewInteractable view;
     private final CompositeDisposable compositeDisposable;
 
-    public RelationPresenter(RelationContract.View view) {
+    public RelationPresenter(RelationContract.ViewInteractable view) {
         this.view = view;
         compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
     }
 
     @Override

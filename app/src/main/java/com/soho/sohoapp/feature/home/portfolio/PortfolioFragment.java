@@ -17,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PortfolioFragment extends BaseFragment {
+    public static final String TAG = "PortfolioFragment";
+
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewPager)

@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.soho.sohoapp.R;
 
 import butterknife.ButterKnife;
 
 public class MoreFragment extends Fragment {
+    public static final String TAG = "MoreFragment";
 
     public MoreFragment() {
         // Required empty public constructor

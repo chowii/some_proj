@@ -28,14 +28,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddressFragment extends BaseFragment implements AddressContract.View {
+public class AddressFragment extends BaseFragment implements AddressContract.ViewInteractable {
     public static final String TAG = AddressFragment.class.getSimpleName();
     private static final int GOOGLE_CLIENT_ID = 100;
 
     @BindView(R.id.autocomplete)
     AutoCompleteTextView autocomplete;
 
-    private AddressContract.ViewActionsListener actionsListener;
+    private AddressContract.ViewPresentable presentable;
     private AddressPresenter presenter;
     private GoogleApiClient googleApiClient;
     private LoadingDialog loadingDialog;
@@ -76,8 +76,8 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     }
 
     @Override
-    public void setActionsListener(AddressContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(AddressContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -139,12 +139,12 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
 
     @OnClick(R.id.clearAddress)
     void clearAddress() {
-        actionsListener.onClearClicked();
+        presentable.onClearClicked();
     }
 
     @OnClick(R.id.done)
     void done() {
-        actionsListener.onDoneClicked();
+        presentable.onDoneClicked();
     }
 
     private void initAutocomplete() {
@@ -156,7 +156,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
         autocomplete.setOnItemClickListener((parent, view, position, id) -> {
             AutocompletePrediction item = adapter.getItem(position);
             if (item != null) {
-                actionsListener.onAddressClicked(item.getPlaceId(), item.getFullText(null).toString());
+                presentable.onAddressClicked(item.getPlaceId(), item.getFullText(null).toString());
             }
         });
         autocomplete.setAdapter(adapter);
@@ -168,7 +168,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                actionsListener.onAddressChanged(s.toString());
+                presentable.onAddressChanged(s.toString());
             }
 
             @Override

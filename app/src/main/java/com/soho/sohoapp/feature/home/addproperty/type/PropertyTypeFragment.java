@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PropertyTypeFragment extends BaseFragment implements PropertyTypeContract.View {
+public class PropertyTypeFragment extends BaseFragment implements PropertyTypeContract.ViewInteractable {
     public static final String TAG = PropertyTypeFragment.class.getSimpleName();
 
     @BindView(R.id.typeList)
@@ -30,7 +30,7 @@ public class PropertyTypeFragment extends BaseFragment implements PropertyTypeCo
     @BindView(R.id.progress)
     ProgressBar progress;
 
-    private PropertyTypeContract.ViewActionsListener actionsListener;
+    private PropertyTypeContract.ViewPresentable presentable;
     private PropertyTypePresenter presenter;
     private PropertyTypeAdapter adapter;
 
@@ -65,8 +65,8 @@ public class PropertyTypeFragment extends BaseFragment implements PropertyTypeCo
     }
 
     @Override
-    public void setActionsListener(PropertyTypeContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(PropertyTypeContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class PropertyTypeFragment extends BaseFragment implements PropertyTypeCo
 
     private void initPropertyTypeList() {
         adapter = new PropertyTypeAdapter();
-        adapter.setListener(propertyType -> actionsListener.onPropertySelected(propertyType));
+        adapter.setListener(propertyType -> presentable.onPropertySelected(propertyType));
         typeList.setAdapter(adapter);
         typeList.setHasFixedSize(true);
         typeList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));

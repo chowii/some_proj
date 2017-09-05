@@ -2,14 +2,14 @@ package com.soho.sohoapp.feature.home.addproperty.investment;
 
 public interface InvestmentContract {
 
-    interface ViewActionsListener {
+    interface ViewPresentable {
         void onHomeClicked();
 
         void onInvestmentClicked();
     }
 
-    interface View {
-        void setActionsListener(ViewActionsListener actionsListener);
+    interface ViewInteractable {
+        void setPresentable(ViewPresentable presentable);
 
         boolean isForOwner();
 

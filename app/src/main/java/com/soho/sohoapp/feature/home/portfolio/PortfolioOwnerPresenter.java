@@ -6,7 +6,7 @@ import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.Title;
-import com.soho.sohoapp.navigator.Navigator;
+import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
@@ -20,12 +20,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContract.ViewActionsListener {
-    private final PortfolioListContract.View view;
-    private Navigator navigator;
+public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContract.ViewPresentable {
+    private final PortfolioListContract.ViewInteractable view;
+    private NavigatorInterface navigator;
     private final CompositeDisposable compositeDisposable;
 
-    public PortfolioOwnerPresenter(PortfolioListContract.View view, Navigator navigator) {
+    public PortfolioOwnerPresenter(PortfolioListContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
         this.navigator = navigator;
         compositeDisposable = new CompositeDisposable();
@@ -33,7 +33,7 @@ public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContr
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         loadPortfolios();
     }
 

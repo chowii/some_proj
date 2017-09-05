@@ -9,13 +9,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class AddressPresenter implements AbsPresenter, AddressContract.ViewActionsListener {
-    private final AddressContract.View view;
+public class AddressPresenter implements AbsPresenter, AddressContract.ViewPresentable {
+    private final AddressContract.ViewInteractable view;
     private final LocationProvider locationProvider;
     private final CompositeSubscription compositeSubscription;
     private PropertyAddress propertyAddress;
 
-    public AddressPresenter(AddressContract.View view, LocationProvider locationProvider) {
+    public AddressPresenter(AddressContract.ViewInteractable view, LocationProvider locationProvider) {
         this.view = view;
         this.locationProvider = locationProvider;
         compositeSubscription = new CompositeSubscription();
@@ -23,7 +23,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewActio
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
-        view.setActionsListener(this);
+        view.setPresentable(this);
         view.showKeyboard();
     }
 

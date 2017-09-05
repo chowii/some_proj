@@ -12,24 +12,24 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.feature.home.portfolio.details.PortfolioDetailsActivity;
 
-public class AndroidNavigator implements Navigator {
+public class NavigatorImpl implements NavigatorInterface {
     private Activity activity;
     private Fragment fragment;
 
-    private AndroidNavigator(@NonNull Activity activity) {
+    private NavigatorImpl(@NonNull Activity activity) {
         this.activity = activity;
     }
 
-    private AndroidNavigator(@NonNull Fragment fragment) {
+    private NavigatorImpl(@NonNull Fragment fragment) {
         this.fragment = fragment;
     }
 
-    public static AndroidNavigator newInstance(@NonNull Activity activity) {
-        return new AndroidNavigator(activity);
+    public static NavigatorImpl newInstance(@NonNull Activity activity) {
+        return new NavigatorImpl(activity);
     }
 
-    public static AndroidNavigator newInstance(@NonNull Fragment fragment) {
-        return new AndroidNavigator(fragment);
+    public static NavigatorImpl newInstance(@NonNull Fragment fragment) {
+        return new NavigatorImpl(fragment);
     }
 
     @Override

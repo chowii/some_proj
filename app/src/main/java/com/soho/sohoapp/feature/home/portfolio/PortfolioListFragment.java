@@ -19,7 +19,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.landing.BaseFragment;
-import com.soho.sohoapp.navigator.AndroidNavigator;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PortfolioListFragment extends BaseFragment implements PortfolioListContract.View {
+public class PortfolioListFragment extends BaseFragment implements PortfolioListContract.ViewInteractable {
     private static final String KEY_MODE = "KEY_MODE";
 
     @BindView(R.id.portfolioList)
@@ -35,7 +35,7 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private PortfolioListContract.ViewActionsListener actionsListener;
+    private PortfolioListContract.ViewPresentable presentable;
     private AbsPresenter presenter;
     private PortfolioListAdapter adapter;
 
@@ -63,10 +63,10 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
         switch (getMode()) {
             case OWNER:
-                presenter = new PortfolioOwnerPresenter(this, AndroidNavigator.newInstance(this));
+                presenter = new PortfolioOwnerPresenter(this, NavigatorImpl.newInstance(this));
                 break;
             case MANAGER:
-                presenter = new PortfolioManagerPresenter(this, AndroidNavigator.newInstance(this));
+                presenter = new PortfolioManagerPresenter(this, NavigatorImpl.newInstance(this));
                 break;
             default:
                 throw new IllegalStateException();
@@ -82,8 +82,8 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
     }
 
     @Override
-    public void setActionsListener(PortfolioListContract.ViewActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
+    public void setPresentable(PortfolioListContract.ViewPresentable presentable) {
+        this.presentable = presentable;
     }
 
     @Override
@@ -116,24 +116,24 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RequestCode.PORTFOLIO_OWNER_LIST_ADD_PROPERTY_REQUEST_CODE
                     || requestCode == RequestCode.PORTFOLIO_MANAGER_LIST_ADD_PROPERTY_REQUEST_CODE) {
-                actionsListener.onNewPropertyCreated();
+                presentable.onNewPropertyCreated();
             }
         }
     }
 
     private void initView() {
-        swipeRefresh.setOnRefreshListener(() -> actionsListener.onPullToRefresh());
+        swipeRefresh.setOnRefreshListener(() -> presentable.onPullToRefresh());
         adapter = new PortfolioListAdapter(getContext());
 
         adapter.setOnItemClickListener(new PortfolioListAdapter.OnItemClickListener() {
             @Override
             public void onAddPropertyClicked() {
-                actionsListener.onAddPropertyClicked();
+                presentable.onAddPropertyClicked();
             }
 
             @Override
             public void onPortfolioClicked(PortfolioCategory portfolioCategory) {
-                actionsListener.onPortfolioClicked(portfolioCategory);
+                presentable.onPortfolioClicked(portfolioCategory);
             }
         });
 
