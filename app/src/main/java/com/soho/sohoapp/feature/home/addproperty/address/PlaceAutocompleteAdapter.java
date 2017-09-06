@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.home.addproperty.address;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -21,8 +22,6 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.logger.Logger;
 
@@ -38,14 +37,11 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     private AutocompleteFilter placeFilter;
     private final Logger logger;
 
-//    private List<String> suburbList;
-
     public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
         logger = Dependencies.INSTANCE.getLogger();
-//        suburbList = new ArrayList<>();
     }
 
     @Override
@@ -96,9 +92,9 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
                 return results;
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-
                 if (results != null && results.count > 0) {
                     resultList = (ArrayList<AutocompletePrediction>) results.values;
                     notifyDataSetChanged();
@@ -119,19 +115,18 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         };
     }
 
+    @Nullable
     private ArrayList<AutocompletePrediction> getAutocomplete(CharSequence constraint) {
         if (googleApiClient.isConnected()) {
             logger.w("Starting autocomplete query for: " + constraint);
 
-            LatLngBounds BOUNDS_AU = new LatLngBounds(
-                    new LatLng(-46.606400, 105.843059), new LatLng(-11.086947, 158.124751));
             PendingResult<AutocompletePredictionBuffer> results =
                     Places.GeoDataApi
                             .getAutocompletePredictions(googleApiClient, constraint.toString(),
-                                    BOUNDS_AU, placeFilter);
+                                    null, placeFilter);
 
             AutocompletePredictionBuffer autocompletePredictions = results
-                    .await(60, TimeUnit.SECONDS);
+                    .await(10, TimeUnit.SECONDS);
 
             final Status status = autocompletePredictions.getStatus();
             if (!status.isSuccess()) {
