@@ -14,7 +14,6 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGrou
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 21/8/17.
@@ -30,7 +29,6 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
     public FilterRadioGroupViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
         context = itemView.getContext();
-        ButterKnife.bind(this, itemView);
         updatedListener = listener;
     }
 

@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 18/8/17.
@@ -21,7 +20,6 @@ public class HeaderViewHolder extends BaseFormViewHolder<HeaderItem> {
 
     public HeaderViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
     }
 
     @Override

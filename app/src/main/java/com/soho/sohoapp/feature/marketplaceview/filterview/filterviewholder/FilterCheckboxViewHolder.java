@@ -9,7 +9,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 18/8/17.
@@ -27,7 +26,6 @@ public class FilterCheckboxViewHolder extends BaseFormViewHolder<FilterCheckboxI
 
     public FilterCheckboxViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         updatedListener = listener;
     }
 

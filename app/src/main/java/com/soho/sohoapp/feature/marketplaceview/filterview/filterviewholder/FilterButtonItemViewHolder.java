@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ButtonItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 23/8/17.
@@ -23,7 +22,6 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
 
     public FilterButtonItemViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         updatedListener = listener;
     }
 

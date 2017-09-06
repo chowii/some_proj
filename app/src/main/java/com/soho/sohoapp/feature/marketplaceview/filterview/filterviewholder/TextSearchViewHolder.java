@@ -46,7 +46,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         super(itemView);
         view = itemView;
         updatedListener = listener;
-        suburbList = new ArrayList();
+        suburbList = new ArrayList<>();
     }
 
     @Override

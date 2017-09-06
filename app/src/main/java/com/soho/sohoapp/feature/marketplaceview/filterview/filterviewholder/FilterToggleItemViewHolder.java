@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 23/8/17.
@@ -21,7 +20,6 @@ public class FilterToggleItemViewHolder extends BaseFormViewHolder<ToggleItem> {
 
     public FilterToggleItemViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         updatedListener = listener;
     }
 

@@ -10,7 +10,6 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem
 import com.wefika.horizontalpicker.HorizontalPicker;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 18/8/17.
@@ -29,7 +28,6 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
 
     public FilterRangeViewHolder(View itemView, OnViewHolderItemValueChangeListener listener, boolean isBuySection) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         context = itemView.getContext();
         updatedListener = listener;
         mIsBuySection = isBuySection;

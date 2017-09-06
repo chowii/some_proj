@@ -9,7 +9,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 18/8/17.
@@ -30,7 +29,6 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
 
     public FilterValueSelectorViewHolder(View itemView, OnViewHolderItemValueChangeListener listener) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         updatedListener = listener;
     }
 
