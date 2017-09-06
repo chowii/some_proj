@@ -9,5 +9,9 @@
             android:src="@drawable/building_facade"
             android:tileMode="mirror"/>
     </item>
-
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/soho_logo"/>
+    </item>
 </layer-list>
