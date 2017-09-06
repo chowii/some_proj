@@ -17,6 +17,7 @@ import com.soho.sohoapp.helper.NavHelper
 import com.soho.sohoapp.helper.SharedPrefsHelper
 import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class SignUpActivity : AppCompatActivity() {
@@ -37,13 +38,10 @@ class SignUpActivity : AppCompatActivity() {
         else toggleButtonEnabled(1f, !editable.toString().isEmpty())
     }
 
-    var registerDialog: ProgressDialog? = null
-
     private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
         registerButton.alpha = alpha
         registerButton.isEnabled = isEnabled
     }
-
 
     @OnClick(R.id.register_button)
     fun onRegisterClicked() {
@@ -55,33 +53,15 @@ class SignUpActivity : AppCompatActivity() {
         initProgressDialog()?.show()
     }
 
+
     private fun initProgressDialog(): ProgressDialog? {
         registerDialog?.setTitle("Registering")
         registerDialog?.setMessage("Please wait while we register you")
         return registerDialog
     }
 
-    private fun registerCall(registerMap: Map<String, String>) {
-        synchronized(this) {
-
-            ApiClient.getService().register(registerMap)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { user ->
-                                Log.v("LOG_TAG---", user.authenticationToken)
-                                SharedPrefsHelper.getInstance().mUser = user
-                                SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
-                                initProgressDialog()?.dismiss()
-                                NavHelper.showRegisterUserInfoActivity(this)
-                            },
-                            { error ->
-                                Log.v("LOG_TAG---", "error")
-                                initProgressDialog()?.dismiss()
-                            }
-                    )
-        }
-    }
+    var registerDialog: ProgressDialog? = null
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,5 +69,30 @@ class SignUpActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         registerDialog = ProgressDialog(this)
         toggleButtonEnabled(0.4f, false)
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
+    }
+
+    private fun registerCall(registerMap: Map<String, String>) {
+
+        disposable = ApiClient.getService().register(registerMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { user ->
+                            Log.v("LOG_TAG---", user.authenticationToken)
+                            SharedPrefsHelper.getInstance().mUser = user
+                            SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
+                            initProgressDialog()?.dismiss()
+                            NavHelper.showRegisterUserInfoActivity(this)
+                        },
+                        {
+                            Log.e("LOG_TAG---", "error")
+                            initProgressDialog()?.dismiss()
+                        }
+                )
     }
 }

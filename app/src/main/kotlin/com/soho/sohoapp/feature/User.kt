@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.soho.sohoapp.helper.SharedPrefsHelper
 import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -27,8 +28,8 @@ class User {
 
     var registrationCallback: RegistrationCallback? = null
 
-    fun registerUser(registerMap: Map<String, String>) {
-        ApiClient.getService().register(registerMap)
+    fun registerUser(registerMap: Map<String, String>): Disposable? {
+        return ApiClient.getService().register(registerMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->
@@ -40,12 +41,12 @@ class User {
                     this.registrationCallback?.onRegistrationSuccessful()
                 }, {
                     error ->
-                    Log.v("LOG_TAG---", error.message)
+                    Log.e("LOG_TAG---", error.message)
                 })
     }
 
-    fun updateUserProfile(updateMap: Map<String, String>) {
-        ApiClient.getService().updateUserProfile(updateMap)
+    fun updateUserProfile(updateMap: Map<String, String>): Disposable? {
+        return ApiClient.getService().updateUserProfile(updateMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->
@@ -55,7 +56,7 @@ class User {
                     this.registrationCallback?.onRegistrationSuccessful()
                 }, {
                     error ->
-                    Log.v("LOG_TAG---", error.message)
+                    Log.e("LOG_TAG---", error.message)
                 })
     }
 

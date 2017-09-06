@@ -12,7 +12,6 @@ import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewPresentable {
@@ -81,8 +80,11 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
 
     private void createPromotion() {
         view.showLoadingDialog();
-        Map<String, Object> map = Converter.toMap(propertyAddress, propertyRole, propertyType, isInvestment, bedrooms, bathrooms, carspots);
-        Disposable disposable = ApiClient.getService().createProperty(map)
+
+        Map<String, Object> map = Converter.toMap(propertyAddress, propertyRole, propertyType,
+                isInvestment, bedrooms, bathrooms, carspots);
+
+        compositeDisposable.add(ApiClient.getService().createProperty(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sohoProperty -> {
@@ -92,7 +94,6 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                     view.showMessage("Error during creating new property");
                     view.hideLoadingDialog();
                     throwable.printStackTrace();
-                });
-        compositeDisposable.add(disposable);
+                }));
     }
 }

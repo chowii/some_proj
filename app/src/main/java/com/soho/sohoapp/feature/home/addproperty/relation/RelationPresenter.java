@@ -7,7 +7,6 @@ import com.soho.sohoapp.utils.Converter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -15,7 +14,7 @@ public class RelationPresenter implements AbsPresenter, RelationContract.ViewPre
     private final RelationContract.ViewInteractable view;
     private final CompositeDisposable compositeDisposable;
 
-    public RelationPresenter(RelationContract.ViewInteractable view) {
+    RelationPresenter(RelationContract.ViewInteractable view) {
         this.view = view;
         compositeDisposable = new CompositeDisposable();
     }
@@ -43,7 +42,7 @@ public class RelationPresenter implements AbsPresenter, RelationContract.ViewPre
     @Override
     public void onOtherClicked() {
         view.showLoadingDialog();
-        Disposable disposable = ApiClient.getService()
+        compositeDisposable.add(ApiClient.getService()
                 .getPropertyUserRoles()
                 .map(Converter::toPropertyRoleList)
                 .subscribeOn(Schedulers.io())
@@ -54,8 +53,8 @@ public class RelationPresenter implements AbsPresenter, RelationContract.ViewPre
                 }, throwable -> {
                     view.hideLoadingDialog();
                     view.showError(throwable);
-                });
-        compositeDisposable.add(disposable);
+                }));
+
     }
 
     @Override

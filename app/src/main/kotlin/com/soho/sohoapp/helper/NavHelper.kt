@@ -1,13 +1,14 @@
 package com.soho.sohoapp.helper
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import com.soho.sohoapp.feature.home.HomeActivity
 import com.soho.sohoapp.feature.landing.ForgotPasswordActivity
 import com.soho.sohoapp.feature.landing.LandingActivity
 import com.soho.sohoapp.feature.landing.LoginActivity
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity
-import com.soho.sohoapp.feature.home.HomeActivity
 
 /**
  * Created by chowii on 25/7/17.
@@ -39,10 +40,10 @@ class NavHelper {
                 Intent(activity, ForgotPasswordActivity::class.java)
         )
 
-        fun showHomeActivity(activity: Activity) = activity.startActivity(
-                Intent(activity, HomeActivity::class.java)
-        )
-
+        fun showHomeActivityAndClearTasks(context: Context) = context
+                .startActivity(
+                        Intent(context, HomeActivity::class.java)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
     }
 
 }

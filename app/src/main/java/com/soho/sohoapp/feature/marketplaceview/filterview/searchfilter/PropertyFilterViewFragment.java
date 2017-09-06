@@ -70,4 +70,10 @@ public class PropertyFilterViewFragment extends BaseFragment
         i.putExtra("searchParams", (Serializable) searchParams);
         startActivity(i);
     }
+
+    @Override
+    public void onDestroy() {
+        presenter.stopPresenting();
+        super.onDestroy();
+    }
 }

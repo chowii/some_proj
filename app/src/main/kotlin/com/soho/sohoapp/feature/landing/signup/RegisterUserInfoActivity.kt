@@ -12,10 +12,11 @@ import butterknife.OnClick
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.helper.NavHelper
+import io.reactivex.disposables.Disposable
 
 class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback {
     override fun onRegistrationSuccessful() {
-        NavHelper.showHomeActivity(this)
+        NavHelper.showHomeActivityAndClearTasks(this.baseContext)
     }
 
     @BindView(R.id.first_name_edit_text)
@@ -48,20 +49,16 @@ class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback 
         else if (rentingCheckBox.isChecked) role = "renting"
     }
 
+    private var disposableUserProfile: Disposable? = null
+
     @OnClick(R.id.register_button)
     fun onRegisterClicked() {
         initProgressDialog()?.show()
-        user.updateUserProfile(hashMapOf(
+        disposableUserProfile = user.updateUserProfile(hashMapOf(
                 "first_name" to nameEditText.text.toString(),
                 "last_name" to lastNameEditText.text.toString(),
                 "country" to countryEditText.text.toString()
         ))
-    }
-
-    private fun initProgressDialog(): ProgressDialog? {
-        registerDialog?.setTitle("Registering")
-        registerDialog?.setMessage("Please wait while we registerUser you")
-        return registerDialog
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,5 +67,16 @@ class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback 
         ButterKnife.bind(this)
         user.registrationCallback = this
     }
+
+    override fun onDestroy() {
+        disposableUserProfile?.dispose()
+        super.onDestroy()
+    }
+    private fun initProgressDialog(): ProgressDialog? {
+        registerDialog?.setTitle("Registering")
+        registerDialog?.setMessage("Please wait while we registerUser you")
+        return registerDialog
+    }
+
 }
 

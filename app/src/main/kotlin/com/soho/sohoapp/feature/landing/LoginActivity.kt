@@ -12,11 +12,11 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.R
-import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.helper.NavHelper
 import com.soho.sohoapp.helper.SharedPrefsHelper
 import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class LoginActivity : AppCompatActivity() {
@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var loginButton: Button
 
     var registerDialog: ProgressDialog? = null
-    var user: User = User()
 
     @OnTextChanged(R.id.login_email_edit_text, R.id.login_password_edit_text)
     fun onTextChanged(editable: Editable) {
@@ -43,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
     @OnClick(R.id.sign_up_redirect_button)
     fun onSignUpRedirectClicked(): Unit = NavHelper.showSignUpActivity(this)
 
+
     @OnClick(R.id.forgot_password_button)
     fun onForgotPasswordClicked(): Unit = NavHelper.showForgotPasswordActivity(this)
 
@@ -53,16 +53,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
-        loginButton.alpha = alpha
-        loginButton.isEnabled = isEnabled
-    }
-
-    private fun initProgressDialog(): ProgressDialog? {
-        registerDialog?.setTitle("Logging in")
-        registerDialog?.setMessage("Please wait while we log you in")
-        return registerDialog
-    }
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,22 +68,37 @@ class LoginActivity : AppCompatActivity() {
                     "password" to passwordEditText.text.toString()
             )
 
-            ApiClient.getService().loginUser(map)
+            disposable = ApiClient.getService().loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
                                 user ->
-                                NavHelper.showHomeActivity(this)
+                                NavHelper.showHomeActivityAndClearTasks(this.baseContext)
                                 SharedPrefsHelper.getInstance().authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },
                             {
-                                throwable ->
                                 registerDialog?.dismiss()
-                                AlertDialog.Builder(this).setMessage("Error occurred. Please try again later").show()
+                                AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
                             }
                     )
         }
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
+    }
+
+    private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
+        loginButton.alpha = alpha
+        loginButton.isEnabled = isEnabled
+    }
+
+    private fun initProgressDialog(): ProgressDialog? {
+        registerDialog?.setTitle("Logging in")
+        registerDialog?.setMessage("Please wait while we log you in")
+        return registerDialog
     }
 }

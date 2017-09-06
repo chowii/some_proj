@@ -7,7 +7,6 @@ import com.soho.sohoapp.utils.Converter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract.ViewPresentable {
@@ -23,7 +22,7 @@ public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
         view.showLoadingIndicator();
-        Disposable disposable = ApiClient.getService().getPropertyTypes()
+        compositeDisposable.add(ApiClient.getService().getPropertyTypes()
                 .map(Converter::toPropertyTypeList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -33,8 +32,7 @@ public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract
                 }, throwable -> {
                     view.showError(throwable);
                     view.hideLoadingIndicator();
-                });
-        compositeDisposable.add(disposable);
+                }));
     }
 
     @Override

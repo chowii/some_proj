@@ -16,7 +16,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -68,7 +67,7 @@ public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContr
 
     private void loadPortfolios() {
         view.showPullToRefresh();
-        Disposable disposable = ApiClient.getService().getOwnedPortfolios()
+        compositeDisposable.add(ApiClient.getService().getOwnedPortfolios()
                 .map(Converter::toPortfolioCategoryList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +81,7 @@ public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContr
                 }, throwable -> {
                     view.showError(throwable);
                     view.hidePullToRefresh();
-                });
-        compositeDisposable.add(disposable);
+                }));
+        ;
     }
 }

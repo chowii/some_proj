@@ -3,6 +3,8 @@ package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 import android.util.Log;
 
+import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.feature.home.BaseFormModel;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ButtonItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FavouriteButtonItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
@@ -13,13 +15,13 @@ import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGrou
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
-import com.soho.sohoapp.feature.home.BaseFormModel;
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -27,14 +29,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 
-
-class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable {
+class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.ViewPresentable {
 
     private final PropertyFilterContract.ViewInteractable interactable;
-    List<BaseFormModel> modelList;
+    private final CompositeDisposable compositeDisposable;
+    private List<BaseFormModel> modelList;
 
     PropertyFilterPresenter(PropertyFilterContract.ViewInteractable interactable) {
         this.interactable = interactable;
+        compositeDisposable = new CompositeDisposable();
+
     }
 
     @Override
@@ -42,7 +46,7 @@ class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable 
         initViewList();
     }
 
-    void initViewList(){
+    void initViewList() {
         modelList = new ArrayList<>();
         modelList.add(new HeaderItem<String>("ENTER SEARCH LOCATION, i.e. Areas, Suburbs"));
         modelList.add(new FilterSearchItem());
@@ -79,7 +83,7 @@ class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable 
 
     @Override
     public void retrieveFilterFromApi() {
-        ApiClient.getService().getPropertyTypesForFilter()
+        compositeDisposable.add(ApiClient.getService().getPropertyTypesForFilter()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
@@ -90,12 +94,16 @@ class PropertyFilterPresenter implements PropertyFilterContract.ViewPresentable 
                             interactable.configureAdapter(modelList);
                         },
                         throwable ->
-                            Log.v("LOG_TAG---","filterThrowable " + throwable.getMessage())
-                );
+                                Log.e("LOG_TAG---", "filterThrowable " + throwable.getMessage())
+                ));
+    }
+
+    @Override
+    public void startPresenting(boolean fromConfigChanges) {
     }
 
     @Override
     public void stopPresenting() {
-
+        compositeDisposable.clear();
     }
 }
