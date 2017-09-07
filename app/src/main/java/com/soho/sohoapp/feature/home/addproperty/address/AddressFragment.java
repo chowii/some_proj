@@ -17,16 +17,17 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Places;
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.dialogs.LoadingDialog;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.location.AndroidLocationProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class AddressFragment extends BaseFragment implements AddressContract.ViewInteractable {
     public static final String TAG = AddressFragment.class.getSimpleName();
@@ -149,7 +150,8 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
 
     private void initAutocomplete() {
         googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), GOOGLE_CLIENT_ID, connectionResult -> Dependencies.INSTANCE.getLogger().w("Connection failed"))
+                .enableAutoManage(getActivity(), GOOGLE_CLIENT_ID, connectionResult ->
+                        DEPENDENCIES.getLogger().w("Connection failed"))
                 .addApi(Places.GEO_DATA_API)
                 .build();
         PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(getActivity(), googleApiClient, null);

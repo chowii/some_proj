@@ -10,7 +10,6 @@ import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.permission.PermissionManager;
 import com.soho.sohoapp.utils.Converter;
 import com.soho.sohoapp.utils.FileHelper;
@@ -24,6 +23,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract.ViewPresentable {
     private final EditPropertyContract.ViewInteractable view;
@@ -54,7 +55,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         view.setPresentable(this);
         view.showLoadingDialog();
 
-        compositeDisposable.add(ApiClient.getService().getProperty(view.getPropertyId())
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getProperty(view.getPropertyId())
                 .map(Converter::toProperty)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,7 +137,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private void sendImageOnServer(PropertyImage propertyImage) {
         compositeDisposable.add(
                 Converter.toImageRequestBody(fileHelper, propertyImage)
-                        .switchMap(requestBody -> ApiClient.getService()
+                        .switchMap(requestBody -> DEPENDENCIES.getSohoService()
                                 .sendPropertyPhoto(property.getId(), requestBody))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

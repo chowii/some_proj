@@ -15,7 +15,6 @@ import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.R
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ToggleItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ValueSelectorItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.PropertyRoomItem;
-import com.soho.sohoapp.network.ApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 22/8/17.
@@ -83,7 +84,7 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
 
     @Override
     public void retrieveFilterFromApi() {
-        compositeDisposable.add(ApiClient.getService().getPropertyTypesForFilter()
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getPropertyTypesForFilter()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(

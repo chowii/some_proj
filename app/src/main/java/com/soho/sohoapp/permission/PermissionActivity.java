@@ -11,10 +11,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.permission.eventbus.PermissionEvent;
 
 import rx.Observable;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class PermissionActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class PermissionActivity extends AppCompatActivity {
         intent.putExtra(Extras.PERMISSION, permission);
         intent.putExtra(Extras.REQUEST_CODE, requestCode);
         context.startActivity(intent);
-        return Dependencies.INSTANCE.getEventBus().observe(PermissionEvent.class)
+        return DEPENDENCIES.getEventBus().observe(PermissionEvent.class)
                 .filter(permissionEvent -> permissionEvent.getRequestCode() == requestCode);
     }
 
@@ -67,7 +68,7 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void sendPermissionEvent(boolean granted) {
-        Dependencies.INSTANCE.getEventBus().post(new PermissionEvent(this.requestCode, granted));
+        DEPENDENCIES.getEventBus().post(new PermissionEvent(this.requestCode, granted));
         finish();
     }
 

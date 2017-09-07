@@ -5,7 +5,6 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
 import java.util.Map;
@@ -13,6 +12,8 @@ import java.util.Map;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.ViewPresentable {
     private final AddPropertyContract.ViewInteractable view;
@@ -84,7 +85,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
         Map<String, Object> map = Converter.toMap(propertyAddress, propertyRole, propertyType,
                 isInvestment, bedrooms, bathrooms, carspots);
 
-        compositeDisposable.add(ApiClient.getService().createProperty(map)
+        compositeDisposable.add(DEPENDENCIES.getSohoService().createProperty(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sohoProperty -> {

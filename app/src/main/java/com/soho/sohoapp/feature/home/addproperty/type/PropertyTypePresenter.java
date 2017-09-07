@@ -2,12 +2,13 @@ package com.soho.sohoapp.feature.home.addproperty.type;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract.ViewPresentable {
     private final PropertyTypeContract.ViewInteractable view;
@@ -22,7 +23,7 @@ public class PropertyTypePresenter implements AbsPresenter, PropertyTypeContract
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
         view.showLoadingIndicator();
-        compositeDisposable.add(ApiClient.getService().getPropertyTypes()
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getPropertyTypes()
                 .map(Converter::toPropertyTypeList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

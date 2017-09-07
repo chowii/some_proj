@@ -12,10 +12,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
-import com.soho.sohoapp.helper.NavHelper
-import com.soho.sohoapp.helper.SharedPrefsHelper
-import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -53,13 +51,6 @@ class SignUpActivity : AppCompatActivity() {
         initProgressDialog()?.show()
     }
 
-
-    private fun initProgressDialog(): ProgressDialog? {
-        registerDialog?.setTitle("Registering")
-        registerDialog?.setMessage("Please wait while we register you")
-        return registerDialog
-    }
-
     var registerDialog: ProgressDialog? = null
     private var disposable: Disposable? = null
 
@@ -78,21 +69,28 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun registerCall(registerMap: Map<String, String>) {
 
-        disposable = ApiClient.getService().register(registerMap)
+        disposable = DEPENDENCIES.sohoService.register(registerMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { user ->
                             Log.v("LOG_TAG---", user.authenticationToken)
-                            SharedPrefsHelper.getInstance().mUser = user
-                            SharedPrefsHelper.getInstance().authToken = user.authenticationToken!!
+                            DEPENDENCIES.preferences.mUser = user
+                            DEPENDENCIES.preferences.authToken = user.authenticationToken!!
                             initProgressDialog()?.dismiss()
-                            NavHelper.showRegisterUserInfoActivity(this)
+
+                            DEPENDENCIES.navHelper.showRegisterUserInfoActivity(this)
                         },
                         {
                             Log.e("LOG_TAG---", "error")
                             initProgressDialog()?.dismiss()
                         }
                 )
+    }
+
+    private fun initProgressDialog(): ProgressDialog? {
+        registerDialog?.setTitle("Registering")
+        registerDialog?.setMessage("Please wait while we register you")
+        return registerDialog
     }
 }

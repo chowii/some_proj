@@ -4,12 +4,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.soho.sohoapp.BaseViewHolder;
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyLocationImageItem;
 import com.soho.sohoapp.imageloader.ImageLoader;
 
 import butterknife.BindView;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 6/9/17.
@@ -32,7 +33,7 @@ public class PropertyLocationImageViewHolder extends BaseViewHolder<PropertyLoca
 
         StringBuilder imageUrlBuilder = new StringBuilder(model.retrieveImageUrl());
         imageUrlBuilder.append("&key=").append(mApiKey);
-        ImageLoader imageLoader = Dependencies.INSTANCE.getImageLoader();
+        ImageLoader imageLoader = DEPENDENCIES.getImageLoader();
         ImageLoader.Params params = ImageLoader.Params.create()
                                         .url(imageUrlBuilder.toString())
                                         .view(imageView)

@@ -8,7 +8,6 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.Title;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
 import java.util.ArrayList;
@@ -17,6 +16,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 
 public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContract.ViewPresentable {
@@ -67,7 +68,7 @@ public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContr
 
     private void loadPortfolios() {
         view.showPullToRefresh();
-        compositeDisposable.add(ApiClient.getService().getOwnedPortfolios()
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getOwnedPortfolios()
                 .map(Converter::toPortfolioCategoryList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

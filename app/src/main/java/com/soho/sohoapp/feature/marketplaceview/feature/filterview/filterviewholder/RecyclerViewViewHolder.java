@@ -6,15 +6,16 @@ import android.view.View;
 
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceAdapter;
 import com.soho.sohoapp.feature.home.BaseModel;
-import com.soho.sohoapp.network.ApiClient;
+import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceAdapter;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 20/08/17.
@@ -33,7 +34,7 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
     public void onBindViewHolder(BaseModel model) {
         HashMap<String, Object> s = new HashMap<>();
         s.put("by_listing_type", "sale/auction");
-        ApiClient.getService().searchProperties(s)
+        DEPENDENCIES.getSohoService().searchProperties(s)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
