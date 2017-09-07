@@ -1,8 +1,9 @@
 package com.soho.sohoapp.network
 
+import com.soho.sohoapp.data.PropertyDetail
 import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.feature.User
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.*
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -53,6 +54,10 @@ interface SohoService {
 
     @GET("properties/{id}/")
     fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
+
+    @GET("properties/{id}")
+    fun getPropertyById(@Path("id") id: Int): Observable<PropertyDetail>
+
 }
 
 

@@ -1,5 +1,6 @@
 package com.soho.sohoapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.multidex.MultiDexApplication;
@@ -16,9 +17,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class SohoApplication extends MultiDexApplication {
 
+    private static SohoApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         Fabric.with(this, new Crashlytics());
         Constants.Companion.init(this);
         SharedPrefsHelper.Companion.init(this);
@@ -33,6 +37,10 @@ public class SohoApplication extends MultiDexApplication {
             createShortCut();
         }
     }
+
+    public static SohoApplication getInstance(){ return instance; }
+
+    public static Context getContext(){ return instance.getApplicationContext(); }
 
     public void createShortCut() {
         Intent shortcutintent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");

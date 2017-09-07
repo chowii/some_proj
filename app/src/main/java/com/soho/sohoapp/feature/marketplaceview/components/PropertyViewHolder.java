@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
@@ -39,10 +40,15 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     @BindView(R.id.parking_text_view)
     TextView parkingTextView;
 
+    @BindView(R.id.rootView)
+    ViewGroup viewView;
 
-    PropertyViewHolder(View itemView) {
+    private final OnMarketplaceItemClickListener listener;
+
+    PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.listener = listener;
     }
 
     PropertyPagerAdapter pagerAdapter;
@@ -52,13 +58,13 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
         if(pagerAdapter == null)
             pagerAdapter = new PropertyPagerAdapter(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
-
+        viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.id()));
         configurePropertyDetails(property);
     }
 
     private void configurePropertyDetails(SohoProperty property) {
         titleTextView.setText(property.title());
-        streetAddressTextView.setText(property.location("address_1").toString());
+        streetAddressTextView.setText(property.location().retrieveAddress1());
 
         suburbAddressTextView.setText(getSuburbString(property));
 
@@ -69,10 +75,15 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
 
     @NonNull
     private String getSuburbString(SohoProperty property) {
-        String suburbAddress = property.location("suburb").toString();
-        suburbAddress = suburbAddress + " " + property.location("postcode").toString();
-        suburbAddress = suburbAddress + ", " + property.location("state").toString();
+        String suburbAddress = property.location().retrieveSuburb();
+        suburbAddress = suburbAddress + " " + property.location().retrievePostcode();
+        suburbAddress = suburbAddress + ", " + property.location().retrieveState();
         return suburbAddress;
+    }
+
+
+    interface OnMarketplaceItemClickListener {
+        void onMarketplaceItemClicked(int id);
     }
 
 }

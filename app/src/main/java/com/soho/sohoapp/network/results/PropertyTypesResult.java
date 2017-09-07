@@ -9,4 +9,7 @@ public class PropertyTypesResult {
 
     @SerializedName("label")
     public String label;
+
+    @SerializedName("text")
+    public String text;
 }

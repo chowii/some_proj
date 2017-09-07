@@ -17,9 +17,11 @@ import java.util.List;
 public class MarketPlaceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final List<? extends BaseModel> propertyList;
+    private final PropertyViewHolder.OnMarketplaceItemClickListener listener;
 
-    public MarketPlaceAdapter(List<? extends BaseModel> propertyList) {
+    public MarketPlaceAdapter(List<? extends BaseModel> propertyList, PropertyViewHolder.OnMarketplaceItemClickListener listener) {
         this.propertyList = propertyList;
+        this.listener = listener;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class MarketPlaceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 .inflate(viewType,
                         parent,
                         false);
-        return new PropertyViewHolder(itemView);
+        return new PropertyViewHolder(itemView, listener);
     }
 
     @Override

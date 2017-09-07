@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.PropertyRoomItem;
 
 import butterknife.BindView;

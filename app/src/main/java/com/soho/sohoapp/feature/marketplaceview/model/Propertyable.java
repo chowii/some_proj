@@ -1,6 +1,10 @@
 package com.soho.sohoapp.feature.marketplaceview.model;
 
+import com.soho.sohoapp.data.PropertyListing;
+import com.soho.sohoapp.data.PropertyLocation;
 import com.soho.sohoapp.feature.home.BaseModel;
+
+import java.util.Date;
 
 /**
  * Created by chowii on 14/8/17.
@@ -20,10 +24,11 @@ public interface Propertyable extends BaseModel {
     boolean isInvestment();
     double rentPrice();
     double sellPrice();
+    Date lastUpdatedAt();
     boolean isFavourite();
 
-    Object propertyListing(String key);
+    PropertyListing propertyListing();
     Object propertyUser(int position, String key);
-    Object location(String key);
+    PropertyLocation location();
 
 }

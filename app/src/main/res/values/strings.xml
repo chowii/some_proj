@@ -121,6 +121,8 @@
     <string name="rooms_item_default_bathroom_text">Any Bathroom</string>
     <string name="rooms_item_carspot_text">Carspot</string>
     <string name="rooms_item_default_carspot_text">Any Carspot</string>
+    <string name="inspection_times">Appointment only</string>
+    <!--Add Property screen end-->
 
     <!--todo-Julia shuffle in the specific section -->
     <string name="plus_sign" translatable="false">+</string>

@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.common.EmptyItemViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
 import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.HeaderViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.SavedItemViewHolder;
 
 import java.util.List;
 

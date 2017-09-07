@@ -13,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +34,8 @@ import butterknife.OnClick;
 
 public class MarketPlaceFragment extends BaseFragment implements
         TabLayout.OnTabSelectedListener,
-        MarketPlaceContract.ViewInteractable
+        MarketPlaceContract.ViewInteractable,
+        PropertyViewHolder.OnMarketplaceItemClickListener
 {
 
     public static final String TAG = "MarketPlaceFragment";
@@ -127,7 +129,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     }
 
     void initAdapter(List<? extends BaseModel> propertyList){
-        recyclerView.setAdapter(new MarketPlaceAdapter(propertyList));
+        recyclerView.setAdapter(new MarketPlaceAdapter(propertyList, this));
         recyclerView.getRecycledViewPool().setMaxRecycledViews(R.id.image_view_pager, 1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -141,4 +143,10 @@ public class MarketPlaceFragment extends BaseFragment implements
         super.onDestroyView();
     }
 
+    @Override
+    public void onMarketplaceItemClicked(int id) {
+        Intent detailIntent = new Intent(getActivity(), PropertyDetailActivity.class);
+        detailIntent.putExtra("property_id", id);
+        getActivity().startActivity(detailIntent);
+    }
 }

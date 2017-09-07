@@ -442,4 +442,24 @@ public class DateHelper {
 
         return new Calendar[]{ todayCalendar, providedCalendar};
     }
+
+    public static String retrieveShortDisplayableTime(Calendar timeCalendar){
+        StringBuilder timeBuilder = new StringBuilder();
+        timeBuilder.append(timeCalendar.get(Calendar.HOUR));
+        timeBuilder.append(":");
+        timeBuilder.append(timeCalendar.get(Calendar.MINUTE) < 9 ? "0" + timeCalendar.get(Calendar.MINUTE) : timeCalendar.get(Calendar.MINUTE));
+        timeBuilder.append(" ");
+        timeBuilder.append(timeCalendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm");
+        return timeBuilder.toString();
+    }
+
+    public static String retrieveShortDisplayableDate(Calendar startCalendar){
+        StringBuilder startString = new StringBuilder();
+        startString.append(startCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()));
+        startString.append(" ");
+        startString.append(startCalendar.get(Calendar.DAY_OF_MONTH));
+        startString.append(" ");
+        startString.append(startCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
+        return startString.toString();
+    }
 }

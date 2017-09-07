@@ -5,16 +5,16 @@ import android.util.Log;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.BaseFormModel;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ButtonItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FavouriteButtonItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterSearchItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ButtonItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FavouriteButtonItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterSearchItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.RadioGroupView;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.RangeItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ToggleItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ValueSelectorItem;
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.PropertyRoomItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RadioGroupView;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.RangeItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ToggleItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.ValueSelectorItem;
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.ArrayList;

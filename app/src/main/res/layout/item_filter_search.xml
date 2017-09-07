@@ -17,8 +17,8 @@
         android:textColor="@color/primaryText"
         android:textColorHint="@color/hintText"
         tools:ignore="RtlHardcoded"
-        android:paddingStart="@dimen/filter_padding_right"
-        android:paddingEnd="@dimen/filter_padding_right"
+        android:paddingStart="@dimen/standard_padding_right"
+        android:paddingEnd="@dimen/standard_padding_right"
         />
 
 </LinearLayout>

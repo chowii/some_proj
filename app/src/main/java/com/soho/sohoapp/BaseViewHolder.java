@@ -7,6 +7,8 @@ import com.soho.sohoapp.feature.home.BaseModel;
 
 import butterknife.ButterKnife;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by chowii on 14/8/17.
  */
