@@ -22,11 +22,12 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
@@ -41,7 +42,7 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
-        logger = Dependencies.INSTANCE.getLogger();
+        logger = DEPENDENCIES.getLogger();
     }
 
     @Override

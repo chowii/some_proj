@@ -2,13 +2,13 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.util.Log;
 
-import com.soho.sohoapp.network.ApiClient;
-
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 15/8/17.
@@ -44,7 +44,7 @@ class MarketPlacePresenter implements
         interactable.showRefreshing();
 
         compositeDisposable.add(
-                ApiClient.getService().searchProperties(searchParams)
+                DEPENDENCIES.getSohoService().searchProperties(searchParams)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.newThread())
                         .subscribe(

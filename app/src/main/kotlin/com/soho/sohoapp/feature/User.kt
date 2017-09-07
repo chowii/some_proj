@@ -2,8 +2,7 @@ package com.soho.sohoapp.feature
 
 import android.util.Log
 import com.google.gson.annotations.SerializedName
-import com.soho.sohoapp.helper.SharedPrefsHelper
-import com.soho.sohoapp.network.ApiClient
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -29,14 +28,14 @@ class User {
     var registrationCallback: RegistrationCallback? = null
 
     fun registerUser(registerMap: Map<String, String>): Disposable? {
-        return ApiClient.getService().register(registerMap)
+        return DEPENDENCIES.sohoService.register(registerMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->
                     Log.v("LOG_TAG---", user.authenticationToken)
                     email = user.email
                     firstName = user.firstName
-                    SharedPrefsHelper.getInstance().authToken = user.authenticationToken ?: ""
+                    DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                     SharedUser.getInstance().user = user
                     this.registrationCallback?.onRegistrationSuccessful()
                 }, {
@@ -46,7 +45,7 @@ class User {
     }
 
     fun updateUserProfile(updateMap: Map<String, String>): Disposable? {
-        return ApiClient.getService().updateUserProfile(updateMap)
+        return DEPENDENCIES.sohoService.updateUserProfile(updateMap)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ user ->

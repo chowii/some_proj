@@ -2,12 +2,13 @@ package com.soho.sohoapp.feature.home.addproperty.relation;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 
 public class RelationPresenter implements AbsPresenter, RelationContract.ViewPresentable {
@@ -42,7 +43,7 @@ public class RelationPresenter implements AbsPresenter, RelationContract.ViewPre
     @Override
     public void onOtherClicked() {
         view.showLoadingDialog();
-        compositeDisposable.add(ApiClient.getService()
+        compositeDisposable.add(DEPENDENCIES.getSohoService()
                 .getPropertyUserRoles()
                 .map(Converter::toPropertyRoleList)
                 .subscribeOn(Schedulers.io())

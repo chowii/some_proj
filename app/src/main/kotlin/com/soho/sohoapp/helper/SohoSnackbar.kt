@@ -10,7 +10,6 @@ import android.widget.FrameLayout
  */
 class SohoSnackbar {
 
-
     fun showSnackbar(view: View?, message: String) {
         view.let {
             val message: Snackbar = Snackbar.make(view!!, message, Snackbar.LENGTH_LONG)

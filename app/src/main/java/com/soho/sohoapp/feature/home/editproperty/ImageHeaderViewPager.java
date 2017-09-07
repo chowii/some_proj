@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.imageloader.ImageLoader;
@@ -18,6 +17,8 @@ import com.soho.sohoapp.logger.Logger;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class ImageHeaderViewPager extends PagerAdapter {
 
@@ -29,8 +30,8 @@ public class ImageHeaderViewPager extends PagerAdapter {
     public ImageHeaderViewPager(@NonNull Context context) {
         propertyImages = new ArrayList<>();
         inflater = LayoutInflater.from(context);
-        imageLoader = Dependencies.INSTANCE.getImageLoader();
-        logger = Dependencies.INSTANCE.getLogger();
+        imageLoader = DEPENDENCIES.getImageLoader();
+        logger = DEPENDENCIES.getLogger();
     }
 
     @Override

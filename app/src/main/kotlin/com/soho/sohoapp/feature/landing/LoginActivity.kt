@@ -11,10 +11,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
-import com.soho.sohoapp.helper.NavHelper
-import com.soho.sohoapp.helper.SharedPrefsHelper
-import com.soho.sohoapp.network.ApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -40,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @OnClick(R.id.sign_up_redirect_button)
-    fun onSignUpRedirectClicked(): Unit = NavHelper.showSignUpActivity(this)
+    fun onSignUpRedirectClicked(): Unit =  DEPENDENCIES.navHelper.showSignUpActivity(this)
 
 
     @OnClick(R.id.forgot_password_button)
-    fun onForgotPasswordClicked(): Unit = NavHelper.showForgotPasswordActivity(this)
+    fun onForgotPasswordClicked(): Unit =  DEPENDENCIES.navHelper.showForgotPasswordActivity(this)
 
     @OnClick(R.id.login_button)
     fun onLoginClicked() {
@@ -68,14 +66,14 @@ class LoginActivity : AppCompatActivity() {
                     "password" to passwordEditText.text.toString()
             )
 
-            disposable = ApiClient.getService().loginUser(map)
+            disposable = DEPENDENCIES.sohoService.loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
                                 user ->
-                                NavHelper.showHomeActivityAndClearTasks(this.baseContext)
-                                SharedPrefsHelper.getInstance().authToken = user.authenticationToken ?: ""
+                                DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this.baseContext)
+                                DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },
                             {

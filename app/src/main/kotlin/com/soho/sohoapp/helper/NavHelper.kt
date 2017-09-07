@@ -15,7 +15,6 @@ import com.soho.sohoapp.feature.landing.signup.SignUpActivity
  */
 class NavHelper {
 
-
     companion object {
 
         fun showLandingActivity(activity: Activity, error: String) = activity.startActivity(

@@ -7,7 +7,6 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
-import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
 import com.soho.sohoapp.utils.Converter;
 
@@ -17,6 +16,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetailsContract.ViewPresentable {
     private final PortfolioDetailsContract.ViewInteractable view;
@@ -73,7 +74,7 @@ public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetails
 
     private void loadData() {
         view.showPullToRefresh();
-        compositeDisposable.add(ApiClient.getService().getPortfolios(portfolio.getFilterForPortfolio(), portfolio.getUserId())
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getPortfolios(portfolio.getFilterForPortfolio(), portfolio.getUserId())
                 .map((List<PortfolioPropertyResult> results) -> Converter.toPortfolioPropertyList(results, !view.isOwnerScreen()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

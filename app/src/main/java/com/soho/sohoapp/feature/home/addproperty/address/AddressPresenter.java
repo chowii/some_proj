@@ -4,7 +4,6 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.location.LocationProvider;
 
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -36,7 +35,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
     @Override
     public void onAddressClicked(String placeId, String fullAddress) {
         view.showLoadingDialog();
-        Subscription subscription = locationProvider.getLatLng(placeId)
+        compositeSubscription.add(locationProvider.getLatLng(placeId)
                 .flatMap(latLng -> locationProvider.getAddress(latLng, fullAddress))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -46,8 +45,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
                 }, throwable -> {
                     view.hideLoadingDialog();
                     view.showError(throwable);
-                });
-        compositeSubscription.add(subscription);
+                }));
     }
 
     @Override

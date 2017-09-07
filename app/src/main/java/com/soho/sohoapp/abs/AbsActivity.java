@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.Toast;
 
-import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.logger.Logger;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public abstract class AbsActivity extends AppCompatActivity {
     protected Logger logger;
@@ -20,7 +21,7 @@ public abstract class AbsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        logger = Dependencies.INSTANCE.getLogger();
+        logger = DEPENDENCIES.getLogger();
     }
 
     protected void showToast(String message) {

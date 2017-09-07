@@ -9,14 +9,14 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
 import butterknife.OnClick
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.User
-import com.soho.sohoapp.helper.NavHelper
 import io.reactivex.disposables.Disposable
 
 class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback {
     override fun onRegistrationSuccessful() {
-        NavHelper.showHomeActivityAndClearTasks(this.baseContext)
+        DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this.baseContext)
     }
 
     @BindView(R.id.first_name_edit_text)
