@@ -23,14 +23,10 @@ class PropertyFilterSavedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final List<String> jsonObject;
 
-    public PropertyFilterSavedAdapter(List<String> jsonObject) {
-        this.jsonObject = jsonObject;
-    }
+    public PropertyFilterSavedAdapter(List<String> jsonObject) { this.jsonObject = jsonObject; }
 
     @Override
-    public int getItemCount() {
-        return jsonObject.size() + 1;
-    }
+    public int getItemCount() { return jsonObject.size() + 1; }
 
     @Override
     public int getItemViewType(int position) {
@@ -73,8 +69,6 @@ class PropertyFilterSavedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void onBindViewHolder(BaseModel model) {
-
-        }
+        public void onBindViewHolder(BaseModel model) { }
     }
 }

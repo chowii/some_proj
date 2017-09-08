@@ -18,9 +18,7 @@ public class PropertyDetailDescriptionViewHolder extends BaseViewHolder<Property
     @BindView(R.id.description_text_view)
     TextView descriptionTextView;
 
-    public PropertyDetailDescriptionViewHolder(View itemView) {
-        super(itemView);
-    }
+    public PropertyDetailDescriptionViewHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(PropertyDetailDescriptionItem model) {

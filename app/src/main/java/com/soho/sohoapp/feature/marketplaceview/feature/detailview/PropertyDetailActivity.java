@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
+import static com.soho.sohoapp.network.Keys.Property.PROPRETY_ID;
 
 /**
  * Created by chowii on 31/8/17.
@@ -49,11 +50,8 @@ public class PropertyDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_detail);
         ButterKnife.bind(this);
-
-        id = getIntent().getIntExtra("property_id", -1);
-
+        id = getIntent().getIntExtra(PROPRETY_ID, -1);
         presenter = new PropertyDetailPresenter(this);
-
         presenter.startPresenting();
         presenter.retrieveProperty(id);
     }
@@ -69,7 +67,7 @@ public class PropertyDetailActivity extends AppCompatActivity
         Intent calendarIntent = new Intent(Intent.ACTION_INSERT);
         calendarIntent.setType("vnd.android.cursor.item/event");
         long startTime;
-            Calendar c = timeItem.propertyAuctionItem.retrieveAuctionDate();
+        Calendar c = timeItem.propertyAuctionItem.retrieveAuctionDate();
         if (state.equalsIgnoreCase("auction")) {
             startTime = c.getTimeInMillis();
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);

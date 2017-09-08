@@ -8,16 +8,12 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.portfolio.data.Title;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class TitleHolder extends BaseViewHolder<Title> {
     @BindView(R.id.title)
     TextView title;
 
-    public TitleHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
+    public TitleHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(Title model) {

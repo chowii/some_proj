@@ -18,9 +18,7 @@ class FilterSavedHeaderViewHolder extends BaseViewHolder {
     @BindView(R.id.header_text_view)
     TextView headerTextView;
 
-    public FilterSavedHeaderViewHolder(View itemView) {
-        super(itemView);
-    }
+    public FilterSavedHeaderViewHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(BaseModel model) {

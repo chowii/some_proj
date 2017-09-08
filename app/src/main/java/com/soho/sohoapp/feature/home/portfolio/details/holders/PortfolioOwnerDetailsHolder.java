@@ -13,7 +13,6 @@ import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioProperty> {
     @BindView(R.id.title)
@@ -35,7 +34,6 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
     public PortfolioOwnerDetailsHolder(@NonNull Context context, View itemView) {
         super(itemView);
         this.context = context;
-        ButterKnife.bind(this, itemView);
     }
 
     @Override

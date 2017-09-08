@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.model.SavedFilterItem;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 30/8/17.
@@ -22,10 +21,7 @@ public class SavedItemViewHolder extends BaseViewHolder<SavedFilterItem> {
     @BindView(R.id.subtitle_text_view)
     TextView subtitleTextView;
 
-    public SavedItemViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
+    public SavedItemViewHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(SavedFilterItem model) {

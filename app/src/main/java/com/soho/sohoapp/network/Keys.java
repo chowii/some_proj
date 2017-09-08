@@ -1,7 +1,10 @@
 package com.soho.sohoapp.network;
 
 public interface Keys {
+
     interface Property {
+
+        String PROPRETY_ID = "property_id";
         String RELATION = "relation";
         String BEDROOMS = "property[bedrooms]";
         String BATHROOMS = "property[bathrooms]";

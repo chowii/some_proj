@@ -33,9 +33,7 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
     @BindView(R.id.property_size_text_view)
     TextView propertySizeTextView;
 
-    public PropertyDetailHeaderViewHolder(View itemView) {
-        super(itemView);
-    }
+    public PropertyDetailHeaderViewHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(PropertyDetailHeaderItem model) {

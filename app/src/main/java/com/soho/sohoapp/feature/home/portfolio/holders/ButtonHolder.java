@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.common.SohoButton;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ButtonHolder extends BaseViewHolder<SohoButton> {
     @BindView(R.id.button)
@@ -18,7 +17,6 @@ public class ButtonHolder extends BaseViewHolder<SohoButton> {
     public ButtonHolder(View itemView, Listener listener) {
         super(itemView);
         this.listener = listener;
-        ButterKnife.bind(this, itemView);
     }
 
     @Override

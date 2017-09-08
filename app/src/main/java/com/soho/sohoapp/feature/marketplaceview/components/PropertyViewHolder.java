@@ -43,13 +43,12 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     ViewGroup viewView;
 
     private final OnMarketplaceItemClickListener listener;
+    PropertyPagerAdapter pagerAdapter;
 
     PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
         super(itemView);
         this.listener = listener;
     }
-
-    PropertyPagerAdapter pagerAdapter;
 
     @Override
     public void onBindViewHolder(SohoProperty property){

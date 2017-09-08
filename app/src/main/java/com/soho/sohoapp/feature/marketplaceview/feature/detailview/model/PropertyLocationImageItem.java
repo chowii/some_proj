@@ -112,10 +112,8 @@ public class PropertyLocationImageItem implements BaseModel {
                     )
                             * 180) / Math.PI;
             latitude = latitude * 180.0 / Math.PI;
-
             path.add(new LatLng(latitude, longitude));
         }
-
         return path;
     }
 
