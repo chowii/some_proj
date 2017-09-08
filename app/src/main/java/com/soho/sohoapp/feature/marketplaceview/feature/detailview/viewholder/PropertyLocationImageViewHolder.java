@@ -30,7 +30,6 @@ public class PropertyLocationImageViewHolder extends BaseViewHolder<PropertyLoca
 
     @Override
     public void onBindViewHolder(PropertyLocationImageItem model) {
-
         StringBuilder imageUrlBuilder = new StringBuilder(model.retrieveImageUrl());
         imageUrlBuilder.append("&key=").append(mApiKey);
         ImageLoader imageLoader = DEPENDENCIES.getImageLoader();
@@ -40,6 +39,5 @@ public class PropertyLocationImageViewHolder extends BaseViewHolder<PropertyLoca
                                         .placeHolder(R.drawable.apartment);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageLoader.load(params);
-        System.gc();
     }
 }

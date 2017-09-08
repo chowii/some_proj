@@ -11,6 +11,11 @@ import com.wefika.horizontalpicker.HorizontalPicker;
 
 import butterknife.BindView;
 
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_MAX_RENT_PRICE;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_MAX_SALE_PRICE;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_MIN_RENT_PRICE;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_MIN_SALE_PRICE;
+
 /**
  * Created by chowii on 18/8/17.
  */
@@ -36,7 +41,7 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
     @Override
     public void onBindViewHolder(RangeItem model) {
         String[] pickerValues;
-        if(mIsBuySection) pickerValues = initBuyPickerItem();
+        if (mIsBuySection) pickerValues = initBuyPickerItem();
         else pickerValues = initRentPickerItem();
         invokeListenerOnInit(mIsBuySection,pickerValues);
         pickerFrom.setValues(pickerValues);
@@ -52,8 +57,8 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
     }
 
     private void setBuyListener(String[] pickerValues) {
-        pickerFrom.setOnItemSelectedListener(index -> updatedListener.onChange("by_min_sell_price", pickerValues[index]));
-        pickerTo.setOnItemSelectedListener(index -> updatedListener.onChange("by_max_sell_price", pickerValues[index]));
+        pickerFrom.setOnItemSelectedListener(index -> updatedListener.onChange(FILTER_MIN_SALE_PRICE, pickerValues[index]));
+        pickerTo.setOnItemSelectedListener(index -> updatedListener.onChange(FILTER_MAX_SALE_PRICE, pickerValues[index]));
     }
 
     @NonNull
@@ -65,17 +70,17 @@ public class FilterRangeViewHolder extends BaseFormViewHolder<RangeItem> {
     }
 
     private void setRentListener(String[] pickerValues) {
-        pickerFrom.setOnItemSelectedListener(index -> updatedListener.onChange("by_min_rent_price", pickerValues[index]));
-        pickerTo.setOnItemSelectedListener(index -> updatedListener.onChange("by_max_rent_price", pickerValues[index]));
+        pickerFrom.setOnItemSelectedListener(index -> updatedListener.onChange(FILTER_MIN_RENT_PRICE, pickerValues[index]));
+        pickerTo.setOnItemSelectedListener(index -> updatedListener.onChange(FILTER_MAX_RENT_PRICE, pickerValues[index]));
     }
 
     private void invokeListenerOnInit(boolean isBuySection, String[] pickerValues){
-        if(isBuySection){
-            updatedListener.onChange("by_min_sell_price", pickerValues[0]);
-            updatedListener.onChange("by_max_sell_price", pickerValues[0]);
+        if (isBuySection){
+            updatedListener.onChange(FILTER_MIN_SALE_PRICE, pickerValues[0]);
+            updatedListener.onChange(FILTER_MAX_SALE_PRICE, pickerValues[0]);
         }else{
-            updatedListener.onChange("by_min_rent_price", pickerValues[0]);
-            updatedListener.onChange("by_max_rent_price", pickerValues[0]);
+            updatedListener.onChange(FILTER_MIN_RENT_PRICE, pickerValues[0]);
+            updatedListener.onChange(FILTER_MAX_RENT_PRICE, pickerValues[0]);
         }
     }
 

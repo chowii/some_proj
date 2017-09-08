@@ -1,8 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 
-import android.util.Log;
-
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.BaseFormModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ButtonItem;
@@ -94,8 +92,7 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
 
                             interactable.configureAdapter(modelList);
                         },
-                        throwable ->
-                                Log.e("LOG_TAG---", "filterThrowable " + throwable.getMessage())
+                        throwable -> DEPENDENCIES.getLogger().d("filterThrowable " + throwable.getMessage())
                 ));
     }
 

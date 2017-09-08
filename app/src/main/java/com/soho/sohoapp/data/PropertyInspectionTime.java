@@ -20,10 +20,8 @@ public class PropertyInspectionTime {
     private String endTime;
 
     public Calendar retrieveStartTime() {
-        if(startTime == null) return Calendar.getInstance();
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(DateHelper.stringToDate(startTime == null ? "" : startTime, "yyyy-MM-dd'T'HH:mm:ss.SSS"));
-        return startCalendar;
+        if (startTime == null) return Calendar.getInstance();
+        return DateHelper.retrieveCalendar(startTime);
     }
 
     public String retrieveDisplayableStartTime(){
@@ -39,10 +37,8 @@ public class PropertyInspectionTime {
     }
 
     public Calendar retrieveEndTime() {
-        if(endTime == null) return Calendar.getInstance();
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(DateHelper.stringToDate(endTime == null ? "" : endTime, "yyyy-MM-dd'T'HH:mm:ss.SSS"));
-        return startCalendar;
+        if (endTime == null) return Calendar.getInstance();
+        return DateHelper.retrieveCalendar(endTime);
     }
 
     public String retrieveDisplayableEndTime(){

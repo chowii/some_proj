@@ -31,7 +31,7 @@ public class PropertyLocationImageItem implements BaseModel {
 
     public PropertyLocationImageItem(LatLng latLng, boolean isMasked) {
         this.latLng = latLng;
-        if(!isMasked) imageUrl.append(location);
+        if (!isMasked) imageUrl.append(location);
         imageUrl.append(latLng.latitude)
                 .append(",")
                 .append(latLng.longitude);
@@ -39,7 +39,7 @@ public class PropertyLocationImageItem implements BaseModel {
     }
     public PropertyLocationImageItem(double lat, double lng, boolean isMasked) {
         latLng = new LatLng(lat, lng);
-        if(!isMasked) imageUrl.append(location);
+        if (!isMasked) imageUrl.append(location);
         imageUrl.append(latLng.latitude)
                 .append(",")
                 .append(latLng.longitude);
@@ -63,7 +63,7 @@ public class PropertyLocationImageItem implements BaseModel {
     }
 
     public String retrieveImageUrl(){
-        if(isMasked) return retrieveImageUrlWithMask(retrieveLatLng());
+        if (isMasked) return retrieveImageUrlWithMask(retrieveLatLng());
         return imageUrl.toString();
     }
 

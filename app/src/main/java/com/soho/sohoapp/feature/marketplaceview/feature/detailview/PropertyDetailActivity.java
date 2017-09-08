@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.BaseModel;
@@ -21,6 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 31/8/17.
@@ -36,14 +38,14 @@ public class PropertyDetailActivity extends AppCompatActivity
 
     @OnClick(R.id.property_detail_camera_button)
     void onPropertyDetailCameraOnClick(){
-        Log.d("LOG_TAG---", "onPropertyDetailCameraOnClick: clicked");
+        DEPENDENCIES.getLogger().d( "onPropertyDetailCameraOnClick: clicked");
     }
 
     PropertyDetailPresenter presenter;
     int id;
 
     @Override
-    protected void onCreate(@android.support.annotation.Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_detail);
         ButterKnife.bind(this);
@@ -68,7 +70,7 @@ public class PropertyDetailActivity extends AppCompatActivity
         calendarIntent.setType("vnd.android.cursor.item/event");
         long startTime;
             Calendar c = timeItem.propertyAuctionItem.retrieveAuctionDate();
-        if(state.equalsIgnoreCase("auction")) {
+        if (state.equalsIgnoreCase("auction")) {
             startTime = c.getTimeInMillis();
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
         } else {

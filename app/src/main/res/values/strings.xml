@@ -147,7 +147,7 @@
     <string name="sign_in_here">Sign in here</string>
     <string name="all">All</string>
     <string name="to">to</string>
-
+    <string name="no_description_available_description_item">No description is available.</string>
 
 
     <string-array name="filter_buy_price_range">

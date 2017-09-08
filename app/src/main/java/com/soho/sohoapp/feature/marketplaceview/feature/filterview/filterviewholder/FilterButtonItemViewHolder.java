@@ -29,7 +29,7 @@ public class FilterButtonItemViewHolder extends BaseFormViewHolder<ButtonItem> {
     public void onBindViewHolder(ButtonItem model) {
         toggleCheckAll.setText(model.getButtonText());
         toggleCheckAll.setOnClickListener(v -> {
-            if(listener != null) listener.onSaveClicked(toggleCheckAll.getText().toString());
+            if (listener != null) listener.onSaveClicked(toggleCheckAll.getText().toString());
             updatedListener.onChange(toggleCheckAll.getText().toString(), null);
         });
     }

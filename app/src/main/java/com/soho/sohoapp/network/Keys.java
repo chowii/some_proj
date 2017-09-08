@@ -19,4 +19,12 @@ public interface Keys {
         String LONGITUDE = "property[location_attributes][longitude]";
         String IMAGE = "property_photos_attributes[0][image]";
     }
+
+    interface Filter {
+        String FILTER_BY_GOOGLE_PLACES = "by_google_places[distance]";
+        String FILTER_MIN_SALE_PRICE = "by_min_sell_price";
+        String FILTER_MAX_SALE_PRICE = "by_max_sell_price";
+        String FILTER_MIN_RENT_PRICE = "by_min_rent_price";
+        String FILTER_MAX_RENT_PRICE = "by_max_rent_price";
+    }
 }

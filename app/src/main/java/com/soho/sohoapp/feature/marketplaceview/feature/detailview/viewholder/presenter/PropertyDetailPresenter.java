@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.soho.sohoapp.R;
@@ -24,7 +23,10 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 1/9/17.
@@ -33,6 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PropertyDetailPresenter implements PropertyDetailContract.ViewPresentable {
 
     private final PropertyDetailContract.ViewInteractable interactable;
+    private Disposable mDisposable;
 
     public PropertyDetailPresenter(PropertyDetailContract.ViewInteractable interactable) {
         this.interactable = interactable;
@@ -45,7 +48,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     @Override
     public void retrieveProperty(int id) {
-        ApiClient.getService().getPropertyById(id)
+        mDisposable = ApiClient.getService().getPropertyById(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
@@ -58,8 +61,8 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                             descriptionList.addAll(addPropertyDescription(new PropertyDetailDescriptionItem(describable.description())));
 
                             descriptionList.add(new HeaderItem<String>("Inspection Times", R.layout.item_header));
-                            if(!describable.propertyListing().isAppointmentOnly())
-                                if(!describable.propertyListing().retrieveInspectionTimes().isEmpty())
+                            if (!describable.propertyListing().isAppointmentOnly())
+                                if (!describable.propertyListing().retrieveInspectionTimes().isEmpty())
                                     descriptionList.addAll(
                                             addInspectionItem(
                                                     describable.propertyListing().retrieveInspectionTimes()
@@ -77,7 +80,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                             descriptionList.add(new HeaderItem<String>(retrieveLastUpdateTime(describable.lastUpdatedAt()), R.layout.item_header));
 
                             interactable.configureAdapter(descriptionList);
-                        }, throwable -> Log.d("LOG_TAG---", "throwable: " + throwable.toString())
+                        }, throwable -> DEPENDENCIES.getLogger().d("throwable: " + throwable.toString())
                 );
 
     }
@@ -104,7 +107,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     private List<BaseModel> addPropertyIfAuctioned(PropertyDescribable describable) {
         List<BaseModel> descriptionList = new ArrayList<>();
-        if(describable.state().equalsIgnoreCase("auction")){
+        if (describable.state().equalsIgnoreCase("auction")){
             descriptionList.add(new HeaderItem<String>("Auction", R.layout.item_header));
             descriptionList.add(new PropertyHostTimeItem(
                             describable.propertyListing().retrieveAuctionDate(),
@@ -149,7 +152,5 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
     }
 
     @Override
-    public void stopPresenting() {
-
-    }
+    public void stopPresenting() { mDisposable.dispose(); }
 }

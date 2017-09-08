@@ -11,10 +11,10 @@ import com.soho.sohoapp.feature.home.BaseFormModel;
 
 public class HeaderItem<T> extends BaseFormModel<T> {
 
-    public HeaderItem(String headerText) {
+    public HeaderItem(T headerText) {
         value = (T) headerText;
     }
-    public HeaderItem(String headerText, @LayoutRes int layout) {
+    public HeaderItem(T headerText, @LayoutRes int layout) {
         value = (T) headerText;
         this.layout = layout;
     }

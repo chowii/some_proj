@@ -76,7 +76,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         ButterKnife.bind(this, view);
 
         searchParams = (Map<String, Object>) getActivity().getIntent().getSerializableExtra("searchParams");
-        if(searchParams == null) searchParams = new HashMap<>();
+        if (searchParams == null) searchParams = new HashMap<>();
         searchParams.put("by_listing_type", "sale/auction");
 
         presenter = new MarketPlacePresenter(this);
@@ -98,7 +98,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
+        if (getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
             searchParams.put("by_listing_type", "sale/auction");
             presenter.startPresenting(searchParams);
         }else{

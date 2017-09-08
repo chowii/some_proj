@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
+
 /**
  * Created by chowii on 25/8/17.
  */
@@ -31,16 +32,16 @@ public final class FileWriter<T> {
     public static Uri writeFileToDevice(Context context, Map data, String filename){
         final String DEVICE_INFO_DIR = context.getExternalFilesDir(null) + "/.temp";
         final File devicePath = new File(DEVICE_INFO_DIR);
-        if(!devicePath.exists()) //noinspection ResultOfMethodCallIgnored
+        if (!devicePath.exists()) //noinspection ResultOfMethodCallIgnored
             devicePath.mkdir();
 
         Gson gson = new Gson();
 
         final File deviceFile = new File(devicePath, filename);
-        if(deviceFile.exists()) data = appendToExistingFile(context, data, filename);
+        if (deviceFile.exists()) data = appendToExistingFile(context, data, filename);
         else data = getMapList(data);
         try{
-            Log.v("LOG_TAG---","createFile(): " + "Json: file created " + deviceFile.createNewFile());
+            DEPENDENCIES.getLogger().d("createFile(): " + "Json: file created " + deviceFile.createNewFile());
             FileOutputStream fos = new FileOutputStream(deviceFile);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             osw.append(gson.toJson(data));
@@ -48,7 +49,7 @@ public final class FileWriter<T> {
             osw.close();
 
         } catch (Exception ioException){
-            Log.d("LOG_TAG---", "Could not create debug file");
+            DEPENDENCIES.getLogger().d("Could not create debug file");
         }
 
         return FileProvider.getUriForFile(context, context.getString(R.string.provider_authorities), deviceFile);

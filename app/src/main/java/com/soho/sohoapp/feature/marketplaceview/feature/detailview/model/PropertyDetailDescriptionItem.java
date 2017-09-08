@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.model;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.feature.home.BaseModel;
 
 /**
@@ -10,11 +11,17 @@ import com.soho.sohoapp.feature.home.BaseModel;
 public class PropertyDetailDescriptionItem implements BaseModel {
 
     private String description;
+    private String noDescriptionText ;
 
-    public PropertyDetailDescriptionItem() {}
+    public PropertyDetailDescriptionItem() {
+        if(noDescriptionText == null)
+            description = SohoApplication.getContext().getString(R.string.no_description_available_description_item);
+    }
 
     public PropertyDetailDescriptionItem(String description) {
         setDescription(description);
+        if(noDescriptionText == null)
+            description = SohoApplication.getContext().getString(R.string.no_description_available_description_item);
     }
 
     @Override
@@ -22,10 +29,10 @@ public class PropertyDetailDescriptionItem implements BaseModel {
         return R.layout.item_description;
     }
 
-    public String getDescription(){ return description == null ? "No description is available." : description; }
+    public String getDescription(){ return description == null ? noDescriptionText : description; }
 
     public void setDescription(String description){
-        if(description == null) this.description = "No description is available.";
+        if (description == null) this.description = noDescriptionText;
         else this.description = description;
     }
 

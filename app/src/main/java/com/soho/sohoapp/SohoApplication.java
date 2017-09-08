@@ -34,7 +34,7 @@ public class SohoApplication extends MultiDexApplication {
         );
         DEPENDENCIES.init(this);
         Prefs prefs = DEPENDENCIES.getPreferences();
-        if(!prefs.getHasInstalled()){
+        if (!prefs.getHasInstalled()) {
             prefs.setHasInstalled(true);
             createShortCut();
         }

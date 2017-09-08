@@ -8,7 +8,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.BaseModel;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 25/8/17.
@@ -21,7 +20,6 @@ class FilterSavedHeaderViewHolder extends BaseViewHolder {
 
     public FilterSavedHeaderViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
     }
 
     @Override

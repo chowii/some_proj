@@ -83,7 +83,7 @@ public class PropertyListing {
     public String retrieveRentTitle() { return rentTitle == null ? "" : rentTitle; }
 
     public void applyRentTitleChange(String rentTitle) {
-        if(rentTitle == null) this.rentTitle = "";
+        if (rentTitle == null) this.rentTitle = "";
         else this.rentTitle = rentTitle;
     }
 

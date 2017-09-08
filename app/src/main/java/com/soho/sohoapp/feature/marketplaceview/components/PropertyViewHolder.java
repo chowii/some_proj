@@ -11,7 +11,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.SohoProperty;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 15/8/17.
@@ -47,7 +46,6 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
 
     PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         this.listener = listener;
     }
 
@@ -55,7 +53,7 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
 
     @Override
     public void onBindViewHolder(SohoProperty property){
-        if(pagerAdapter == null)
+        if (pagerAdapter == null)
             pagerAdapter = new PropertyPagerAdapter(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
         viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.id()));
@@ -65,22 +63,20 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     private void configurePropertyDetails(SohoProperty property) {
         titleTextView.setText(property.title());
         streetAddressTextView.setText(property.location().retrieveAddress1());
-
         suburbAddressTextView.setText(getSuburbString(property));
+        bedroomTextView.setText(String.valueOf(property.numberOfBedrooms()));
+        bathroomTextView.setText(String.valueOf(property.numberOfBathrooms()));
+        parkingTextView.setText(String.valueOf(property.numberOfParking()));
 
-        bedroomTextView.setText(property.numberOfBedrooms() + "");
-        bathroomTextView.setText(property.numberOfBathrooms() + "");
-        parkingTextView.setText(property.numberOfParking() + "");
     }
 
     @NonNull
     private String getSuburbString(SohoProperty property) {
-        String suburbAddress = property.location().retrieveSuburb();
-        suburbAddress = suburbAddress + " " + property.location().retrievePostcode();
-        suburbAddress = suburbAddress + ", " + property.location().retrieveState();
-        return suburbAddress;
+        return String.format("%s %s, %s",
+                                property.location().retrieveSuburb(),
+                                property.location().retrievePostcode(),
+                                property.location().retrieveState());
     }
-
 
     interface OnMarketplaceItemClickListener {
         void onMarketplaceItemClicked(int id);

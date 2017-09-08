@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
                     .subscribe(
                             {
                                 user ->
-                                DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this.baseContext)
+                                DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this)
                                 DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },

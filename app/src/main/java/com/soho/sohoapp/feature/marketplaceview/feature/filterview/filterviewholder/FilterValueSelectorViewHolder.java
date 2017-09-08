@@ -8,7 +8,11 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ValueSelectorItem;
 
+import java.util.Locale;
+
 import butterknife.BindView;
+
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_BY_GOOGLE_PLACES;
 
 /**
  * Created by chowii on 18/8/17.
@@ -34,18 +38,15 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
 
     @Override
     public void onBindViewHolder(ValueSelectorItem model) {
-        subtractButton.setOnClickListener((v) ->{
-            if(radiusValue > 1)valueTextView.setText(--radiusValue + "km");
-        });
-
         addButton.setOnClickListener((v) -> {
-            valueTextView.setText(++radiusValue + "km");
-            updatedListener.onChange("by_google_places[distance]", radiusValue * 1_000);
+            valueTextView.setText(String.format(Locale.getDefault(),"%dkm", ++radiusValue));
+            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES, radiusValue * 1_000);
         });
 
         subtractButton.setOnClickListener((v) -> {
-            valueTextView.setText(++radiusValue + "km");
-            updatedListener.onChange("by_google_places[distance]", radiusValue * 1_000);
+            if(radiusValue > 1)
+                valueTextView.setText(String.format(Locale.getDefault(),"%dkm", --radiusValue));
+            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES, radiusValue * 1_000);
         });
     }
 }

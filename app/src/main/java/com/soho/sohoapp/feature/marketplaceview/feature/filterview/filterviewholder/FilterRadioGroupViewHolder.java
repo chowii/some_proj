@@ -39,7 +39,7 @@ public class FilterRadioGroupViewHolder extends BaseFormViewHolder<RadioGroupVie
                 RadioGroup.LayoutParams.WRAP_CONTENT);
 
         for(String radioText : (List<String>)model.getGroup()){
-            if(radioGroup.getChildCount() <= model.getSize())
+            if (radioGroup.getChildCount() <= model.getSize())
                 addRadioButton(layoutParams, radioText);
         }
 

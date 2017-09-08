@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 18/8/17.
@@ -66,11 +67,11 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        if(connectionResult.hasResolution()){
+        if (connectionResult.hasResolution()){
             new AlertDialog.Builder(view.getContext())
                     .setMessage(connectionResult.getErrorMessage())
                     .show();
-            Log.d("LOG_TAG---", "onConnectionFailed: " + connectionResult.getErrorMessage());
+            DEPENDENCIES.getLogger().d("onConnectionFailed: " + connectionResult.getErrorMessage());
         }
     }
 

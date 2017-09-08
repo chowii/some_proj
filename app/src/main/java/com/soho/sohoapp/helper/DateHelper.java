@@ -20,7 +20,7 @@ public class DateHelper {
 
     private static final SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yy", Locale.US);
     private static final SimpleDateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    private static final SimpleDateFormat apiDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
+    private static final SimpleDateFormat apiDateTimeFormat = new SimpleDateFormat(DateHelper.API_DATE_FORMAT_NO_TIME_ZONE, Locale.getDefault());
     public static final String unixTimeStampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
     private static final SimpleDateFormat dMMYYYY = new SimpleDateFormat("d MM yyyy", Locale.getDefault());
@@ -29,6 +29,8 @@ public class DateHelper {
     private static final GregorianCalendar calendar = new GregorianCalendar();
     private static final SimpleDateFormat displayDateTimeFormat = new SimpleDateFormat("dd/MM/yy h:mm a", Locale.US);
     private static final String TAG = "DateHelper";
+
+    public static final String API_DATE_FORMAT_NO_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
     public static final int TIMELINE_EITHER = 0;
     private static final int TIMELINE_PAST = 1;
@@ -445,9 +447,10 @@ public class DateHelper {
 
     public static String retrieveShortDisplayableTime(Calendar timeCalendar){
         StringBuilder timeBuilder = new StringBuilder();
+        int minute = timeCalendar.get(Calendar.MINUTE);
         timeBuilder.append(timeCalendar.get(Calendar.HOUR));
         timeBuilder.append(":");
-        timeBuilder.append(timeCalendar.get(Calendar.MINUTE) < 9 ? "0" + timeCalendar.get(Calendar.MINUTE) : timeCalendar.get(Calendar.MINUTE));
+        timeBuilder.append(minute < 10 ? "0" + minute : minute);
         timeBuilder.append(" ");
         timeBuilder.append(timeCalendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm");
         return timeBuilder.toString();
@@ -462,4 +465,11 @@ public class DateHelper {
         startString.append(startCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
         return startString.toString();
     }
+
+    public static Calendar retrieveCalendar(String dateTime){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(DateHelper.stringToDate(dateTime, API_DATE_FORMAT_NO_TIME_ZONE));
+        return calendar;
+    }
+
 }

@@ -1,7 +1,5 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
-import android.util.Log;
-
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -53,8 +51,7 @@ class MarketPlacePresenter implements
                                     interactable.hideRefreshing();
                                 }, throwable -> {
                                     interactable.hideRefreshing();
-                                    Log.e("LOG_TAG---","throwable" + throwable.getMessage());
-                                    Log.d("LOG_TAG---", ": ");
+                                    throwable.printStackTrace();
                                 }
                         )
         );

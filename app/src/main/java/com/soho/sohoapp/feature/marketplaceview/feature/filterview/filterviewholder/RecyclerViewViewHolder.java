@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.soho.sohoapp.BaseFormViewHolder;
@@ -39,7 +38,7 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
                         sohoProperties -> recyclerView.setAdapter(new MarketPlaceAdapter(sohoProperties, null)),
-                        throwable -> Log.v("LOG_TAG---", "throwable" + throwable.getMessage())
+                        throwable -> DEPENDENCIES.getLogger().d("throwable" + throwable.getMessage())
                 );
     }
 

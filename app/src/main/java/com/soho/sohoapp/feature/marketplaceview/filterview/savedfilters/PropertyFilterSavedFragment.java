@@ -58,7 +58,7 @@ public class PropertyFilterSavedFragment extends BaseFragment implements Propert
         filterList.add(new HeaderItem<String>("Saved Search"));
         filterList.addAll(list.getData());
 
-        if(filterList.size() < 2) filterList.add(new EmptyDataSetItem());
+        if (filterList.size() < 2) filterList.add(new EmptyDataSetItem());
 
         recyclerView.setAdapter(new PropertyFilterSavedAdapter(filterList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

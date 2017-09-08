@@ -62,7 +62,7 @@ public class SohoProperty implements Propertyable {
 
     @Override
     public String typeOfProperty() {
-        if(type_of_property == null) return "";
+        if (type_of_property == null) return "";
         type_of_property = toSentenceCase(type_of_property.replace("_", " "));
         return type_of_property;
     }
@@ -78,8 +78,8 @@ public class SohoProperty implements Propertyable {
 
     @Override
     public Date lastUpdatedAt() {
-        if(updated_at == null) return new Date(System.currentTimeMillis());
-        return DateHelper.stringToDate(updated_at, "yyyy-MM-dd'T'HH:mm:ss.SSS");
+        if (updated_at == null) return new Date(System.currentTimeMillis());
+        return DateHelper.stringToDate(updated_at, DateHelper.API_DATE_FORMAT_NO_TIME_ZONE);
     }
 
     @Override
@@ -87,13 +87,13 @@ public class SohoProperty implements Propertyable {
 
     @Override
     public PropertyListing propertyListing() {
-        if(property_listing == null) return new PropertyListing();
+        if (property_listing == null) return new PropertyListing();
         return property_listing;
     }
 
     @Override
     public Object propertyUser(int position, String key) {
-        if(key.isEmpty()) return null;
+        if (key.isEmpty()) return null;
         return property_user.get(position).get(key);
     }
 

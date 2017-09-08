@@ -25,7 +25,7 @@ public class PropertyDetail extends SohoProperty implements PropertyDescribable 
     @Override
     public int retrieveLandSize() { return land_size; }
     public void applyLandSizeChange(int landSize){
-        if(landSize > 0) land_size = landSize;
+        if (landSize > 0) land_size = landSize;
         else land_size = 0;
     }
 
@@ -40,12 +40,12 @@ public class PropertyDetail extends SohoProperty implements PropertyDescribable 
     }
 
     private void applyAuctionDateChange(Date date){
-        if(date == null) auctionDate = new Date(System.currentTimeMillis());
+        if (date == null) auctionDate = new Date(System.currentTimeMillis());
         else auctionDate = date;
     }
 
     public String retrieveDisplayableAuctionDate() {
-        if(auctionDate == null) auctionDate = retrieveAuctionDate();
+        if (auctionDate == null) auctionDate = retrieveAuctionDate();
         Calendar c = Calendar.getInstance();
         c.setTime(auctionDate);
         String displayableDate = c.get(Calendar.DAY_OF_MONTH) + " / " + c.get(Calendar.MONTH) + " / " + c.get(Calendar.YEAR);

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewhol
 import java.util.List;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 1/9/17.
@@ -73,7 +73,7 @@ class MarketPlaceDetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
                 return new PropertyLocationImageViewHolder(itemView, apiKey);
             default:
-                Log.d("LOG_TAG---", "onCreateViewHolder: ");
+                DEPENDENCIES.getLogger().e("onCreateViewHolder: ");
                 return null;
         }
 

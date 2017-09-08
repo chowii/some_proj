@@ -20,8 +20,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/colorPrimary"
             android:fitsSystemWindows="true"
-            app:titleEnabled="false"
-            >
+            app:titleEnabled="false">
 
 
             <android.support.v7.widget.Toolbar
@@ -57,8 +56,7 @@
                     android:scaleType="centerCrop"
                     android:background="@null"
                     android:src="@drawable/camera"
-                    android:layout_alignParentRight="true"
-                    />
+                    android:layout_alignParentRight="true"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -71,22 +69,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.Title.Dark"
-                        android:text="IN NETWORK"
-                        />
+                        android:text="IN NETWORK"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.Title.White"
-                        android:text="W150 / 599 Pacific Highway"
-                        />
+                        android:text="W150 / 599 Pacific Highway"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextView.Title.White"
-                        android:text="St Leonards 2065, NSW"
-                        />
+                        android:text="St Leonards 2065, NSW"/>
                 </LinearLayout>
 
             </RelativeLayout>
@@ -102,7 +97,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

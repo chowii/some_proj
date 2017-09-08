@@ -67,8 +67,8 @@ public class RoomsItemViewHolder extends BaseFormViewHolder<PropertyRoomItem> {
         });
 
         bedroomSubtractButton.setOnClickListener((v) -> {
-            if(bedroomValue > 1)bedroomValueTextView.setText(--bedroomValue +" " +  getString(R.string.rooms_item_bedroom_text));
-            else if(bedroomValue <= 1) bedroomValueTextView.setText("Any " + getString(R.string.rooms_item_bedroom_text));
+            if (bedroomValue > 1)bedroomValueTextView.setText(--bedroomValue +" " +  getString(R.string.rooms_item_bedroom_text));
+            else if (bedroomValue <= 1) bedroomValueTextView.setText("Any " + getString(R.string.rooms_item_bedroom_text));
             updatedListener.onChange("by_bedroom_count", bedroomValue);
         });
 
@@ -79,9 +79,8 @@ public class RoomsItemViewHolder extends BaseFormViewHolder<PropertyRoomItem> {
         });
 
         bathroomSubtractButton.setOnClickListener((v) -> {
-            if(bathroomValue > 1) bathroomValueTextView.setText(--bathroomValue +  " " + getString(R.string.rooms_item_bathroom_text));
-            else if(bathroomValue <= 1) bathroomValueTextView.setText("Any " + getString(R.string.rooms_item_bathroom_text));
-
+            if (bathroomValue > 1) bathroomValueTextView.setText(--bathroomValue +  " " + getString(R.string.rooms_item_bathroom_text));
+            else if (bathroomValue <= 1) bathroomValueTextView.setText("Any " + getString(R.string.rooms_item_bathroom_text));
             updatedListener.onChange("by_bathroom_count", bathroomValue);
         });
 
@@ -92,9 +91,8 @@ public class RoomsItemViewHolder extends BaseFormViewHolder<PropertyRoomItem> {
         });
 
         carspotSubtractButton.setOnClickListener((v) -> {
-            if(carspotValue > 1) carspotValueTextView.setText(--carspotValue + " " + getString(R.string.rooms_item_carspot_text));
-            else if(carspotValue <= 1) carspotValueTextView.setText("Any "  + getString(R.string.rooms_item_carspot_text));
-
+            if (carspotValue > 1) carspotValueTextView.setText(--carspotValue + " " + getString(R.string.rooms_item_carspot_text));
+            else if (carspotValue <= 1) carspotValueTextView.setText("Any "  + getString(R.string.rooms_item_carspot_text));
             updatedListener.onChange("by_carspot_count", carspotValue);
         });
     }

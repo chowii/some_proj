@@ -24,7 +24,7 @@ public class PropertyDetailHeaderItem implements BaseModel {
     public String getHeader() { return header == null ? "No title available." : header; }
 
     public void setHeader(String header) {
-        if(header == null) this.header = "No title available.";
+        if (header == null) this.header = "No title available.";
         else this.header = header;
     }
 
@@ -43,14 +43,14 @@ public class PropertyDetailHeaderItem implements BaseModel {
     public int getPropertySize() { return propertySize; }
 
     public void setPropertySize(int propertySize) {
-        if(propertySize < 0) this.propertySize = 0;
+        if (propertySize < 0) this.propertySize = 0;
         else this.propertySize = propertySize;
     }
 
     public String getSizeUnit() { return sizeUnit == null ? " \u33A1" : sizeUnit; }
 
     public void setSizeUnit(String sizeUnit) {
-        if(sizeUnit == null) sizeUnit =
+        if (sizeUnit == null) sizeUnit =
         this.sizeUnit = sizeUnit;
     }
 

@@ -46,7 +46,7 @@ public class PropertyFilterActivity extends AppCompatActivity
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
+        if (tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
         else {
             PropertyFilterSavedFragment fragment = PropertyFilterSavedFragment.newInstance();
             fragment.setOnFilterSelectedCallback(this);

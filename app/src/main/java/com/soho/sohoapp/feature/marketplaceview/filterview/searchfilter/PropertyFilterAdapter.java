@@ -99,11 +99,11 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(mFilterItems.get(position));
         addCheckboxAction(holder);
-        if(holder instanceof FilterButtonItemViewHolder){
+        if (holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
-                if(title.equalsIgnoreCase("Save this search")) writeFilterToFile();
-                else if(title.equalsIgnoreCase("search"))
+                if (title.equalsIgnoreCase("Save this search")) writeFilterToFile();
+                else if (title.equalsIgnoreCase("search"))
                     mSearchListener.onSearchClicked(mFilterMap);
             });
         }
@@ -114,12 +114,12 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     }
 
     private void addCheckboxAction(BaseFormViewHolder holder) {
-        if(holder instanceof FilterCheckboxViewHolder){
+        if (holder instanceof FilterCheckboxViewHolder){
             view = (FilterCheckboxViewHolder) holder;
 
             view.setOnCheckedChangeListener((title, isChecked) -> {
                 for(BaseFormModel modelItem: mFilterItems)
-                    if(modelItem instanceof FilterCheckboxItem)
+                    if (modelItem instanceof FilterCheckboxItem)
                         configureCheckboxAction((FilterCheckboxItem) modelItem, title, isChecked);
                 notifyDataSetChanged();
             });
@@ -127,34 +127,34 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     }
 
     private void configureCheckboxAction(FilterCheckboxItem modelItem, String title, boolean isChecked) {
-        if(title.equalsIgnoreCase("All")) checkedAll(modelItem);
+        if (title.equalsIgnoreCase("All")) checkedAll(modelItem);
         else checkedIndividual(modelItem, title, isChecked);
     }
 
     private void checkedAll(FilterCheckboxItem item) {
         boolean isAll = item.getTitle().equalsIgnoreCase("All");
-        if(!isAll) item.setValue(false);
+        if (!isAll) item.setValue(false);
         else item.setValue(true);
     }
 
     private void checkedIndividual(FilterCheckboxItem item, String title, boolean isChecked) {
         boolean isAll = item.getTitle().equalsIgnoreCase("All");
-        if(isAll) item.setValue(false);
-        else if(item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
+        if (isAll) item.setValue(false);
+        else if (item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
     }
 
     @Override
     public void onChange(CharSequence key, Object value) {
-        if(key.toString().equalsIgnoreCase("by_property_types")) addListToFilterMap((String) value);
+        if (key.toString().equalsIgnoreCase("by_property_types")) addListToFilterMap((String) value);
         else  mFilterMap.put(key.toString(), value);
     }
 
     private void addListToFilterMap(String value) {
         List<String> item = (List<String>) mFilterMap.get("by_property_types");
-        if(item == null){
+        if (item == null){
             item = new ArrayList<>();
             item.add(value);
-        }else if(item.contains(value)) item.remove(value);
+        }else if (item.contains(value)) item.remove(value);
         else item.add(value);
         mFilterMap.put("by_property_types", item);
     }
