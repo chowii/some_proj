@@ -1,6 +1,8 @@
 package com.soho.sohoapp.feature.landing.signup
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.CheckBox
@@ -9,15 +11,18 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
 import butterknife.OnClick
-import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.navigator.NavigatorImpl
 import io.reactivex.disposables.Disposable
 
 class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback {
-    override fun onRegistrationSuccessful() {
-        DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this.baseContext)
+
+    companion object {
+        fun createIntent(context: Context): Intent = Intent(context, RegisterUserInfoActivity::class.java)
     }
+
+    override fun onRegistrationSuccessful() = NavigatorImpl.newInstance(this).openHomeActivity()
 
     @BindView(R.id.first_name_edit_text)
     lateinit var nameEditText: EditText

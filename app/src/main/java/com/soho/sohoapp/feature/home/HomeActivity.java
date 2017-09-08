@@ -1,6 +1,9 @@
 package com.soho.sohoapp.feature.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -29,6 +32,12 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private HomeContract.ViewPresentable presentable;
     private HomePresenter presenter;
     private List<String> addedFragmentsTags;
+
+
+    @NonNull
+    public static Intent createIntent(@NonNull Context context){
+        return new Intent(context, HomeActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

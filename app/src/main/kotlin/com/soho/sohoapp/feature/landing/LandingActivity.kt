@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.landing
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +14,10 @@ import com.soho.sohoapp.feature.landing.signup.SignUpActivity
  * Created by chowii on 25/7/17.
  */
 class LandingActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context: Context): Intent = Intent(context, LandingActivity::class.java)
+    }
 
     @OnClick(R.id.signup)
     fun onSignUpClicked() {

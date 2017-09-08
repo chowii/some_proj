@@ -21,4 +21,14 @@ public interface NavigatorInterface {
     void openOwnerPortfolioDetails(@NonNull PortfolioCategory portfolioCategory);
 
     void openManagerPortfolioDetails(@NonNull PortfolioManagerCategory portfolioCategory);
+
+    void openHomeActivity();
+
+    void openForgetPasswordActivity();
+
+    void openSignUpActivity();
+
+    void showRegisterUserInfoActivity();
+
+    void showLandingActivity();
 }
