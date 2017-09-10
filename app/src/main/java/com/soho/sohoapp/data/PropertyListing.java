@@ -111,6 +111,10 @@ public class PropertyListing {
 
     public void setAuctionDate(String auctionDate) { this.auctionDate = auctionDate == null ? "" : auctionDate; }
 
+    public String retrieveAuctionTime(){ return auctionTime; }
+
+//    public void applyAuctionTimeChange(String auctionTime){ this.auctionTime = auctionTime; }
+
     public String retrieveRentPaymentFrequency() { return rentPaymentFrequency; }
 
     public void applyRentPaymentFrequencyChange(String rentPaymentFrequency) {

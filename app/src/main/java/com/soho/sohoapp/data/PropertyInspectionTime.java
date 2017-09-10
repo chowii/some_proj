@@ -21,7 +21,7 @@ public class PropertyInspectionTime {
 
     public Calendar retrieveStartTime() {
         if (startTime == null) return Calendar.getInstance();
-        return DateHelper.retrieveCalendar(startTime);
+        return DateHelper.retrieveCalendarFromApiDate(startTime);
     }
 
     public String retrieveDisplayableStartTime(){
@@ -38,7 +38,7 @@ public class PropertyInspectionTime {
 
     public Calendar retrieveEndTime() {
         if (endTime == null) return Calendar.getInstance();
-        return DateHelper.retrieveCalendar(endTime);
+        return DateHelper.retrieveCalendarFromApiDate(endTime);
     }
 
     public String retrieveDisplayableEndTime(){

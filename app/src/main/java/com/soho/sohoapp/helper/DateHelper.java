@@ -466,7 +466,7 @@ public class DateHelper {
         return startString.toString();
     }
 
-    public static Calendar retrieveCalendar(String dateTime){
+    public static Calendar retrieveCalendarFromApiDate(String dateTime){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(DateHelper.stringToDate(dateTime, API_DATE_FORMAT_NO_TIME_ZONE));
         return calendar;

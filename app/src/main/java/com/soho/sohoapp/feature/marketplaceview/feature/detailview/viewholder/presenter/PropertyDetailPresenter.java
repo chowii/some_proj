@@ -42,9 +42,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
     }
 
     @Override
-    public void startPresenting() {
-
-    }
+    public void startPresenting() { }
 
     @Override
     public void retrieveProperty(int id) {
@@ -65,13 +63,13 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                                 if (!describable.propertyListing().retrieveInspectionTimes().isEmpty())
                                     descriptionList.addAll(
                                             addInspectionItem(
-                                                    describable.propertyListing().retrieveInspectionTimes()
-                                                    , describable.propertyListing().retrieveState(),
+                                                    describable.propertyListing().retrieveInspectionTimes(),
+                                                    describable.location(),
                                                     describable.propertyListing().isAppointmentOnly()
                                             )
                                     );
                                 else {
-                                    descriptionList.add(new PropertyHostTimeItem(null, "Inspection", true));
+                                    descriptionList.add(new PropertyHostTimeItem(null, describable.location(), "Inspection", true));
                                 }
 
                             descriptionList.addAll(addPropertyIfAuctioned(describable));
@@ -110,7 +108,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         if (describable.state().equalsIgnoreCase("auction")){
             descriptionList.add(new HeaderItem<String>("Auction", R.layout.item_header));
             descriptionList.add(new PropertyHostTimeItem(
-                            describable.propertyListing().retrieveAuctionDate(),
+                            describable.propertyListing().retrieveAuctionTime(),
                             describable.location(),
                             describable.propertyListing().isOnSiteAuction(),
                             describable.state()
@@ -144,10 +142,10 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
     }
 
 
-    private List<BaseModel> addInspectionItem(List<PropertyInspectionTime> inspectionTimeList, String state, boolean isAppoinmentOnly) {
+    private List<BaseModel> addInspectionItem(List<PropertyInspectionTime> inspectionTimeList, PropertyLocation location, boolean isAppoinmentOnly) {
         List<BaseModel> modelList = new ArrayList<>();
         for(PropertyInspectionTime inspectionTime : inspectionTimeList)
-            modelList.add(new PropertyHostTimeItem(inspectionTime, "Inspection", isAppoinmentOnly));
+            modelList.add(new PropertyHostTimeItem(inspectionTime, location, "Inspection", isAppoinmentOnly));
         return modelList;
     }
 

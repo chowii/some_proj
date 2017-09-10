@@ -67,13 +67,16 @@ public class PropertyDetailActivity extends AppCompatActivity
         Intent calendarIntent = new Intent(Intent.ACTION_INSERT);
         calendarIntent.setType("vnd.android.cursor.item/event");
         long startTime;
-        Calendar c = timeItem.propertyAuctionItem.retrieveAuctionDate();
         if (state.equalsIgnoreCase("auction")) {
-            startTime = c.getTimeInMillis();
+            Calendar auctionCalendar;
+            auctionCalendar = timeItem.retrievePropertyAuctionItem().retrieveAuctionDate();
+            startTime = auctionCalendar.getTimeInMillis();
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
         } else {
-            startTime = c.getTimeInMillis();
-            long endTime = c.getTimeInMillis();
+            Calendar startCalendar = timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().retrieveStartTime();
+            Calendar endCalendar = timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().retrieveEndTime();
+            startTime = startCalendar.getTimeInMillis();
+            long endTime = endCalendar.getTimeInMillis();
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
         }
@@ -81,8 +84,8 @@ public class PropertyDetailActivity extends AppCompatActivity
 
         StringBuilder builder = new StringBuilder(state);
         builder.append(": ")
-                .append(timeItem.propertyAuctionItem.getLocation().retrieveAddress1())
-                .append(timeItem.propertyAuctionItem.getLocation().retrieveAddress2());
+                .append(timeItem.retrieveLocation().retrieveAddress1())
+                .append(timeItem.retrieveLocation().retrieveAddress2());
 
         calendarIntent.putExtra(Events.TITLE, builder.toString());
         startActivity(calendarIntent);

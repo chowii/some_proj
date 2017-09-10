@@ -148,6 +148,7 @@
     <string name="all">All</string>
     <string name="to">to</string>
     <string name="no_description_available_description_item">No description is available.</string>
+    <string name="auction_location_string">Auction Location:</string>
 
 
     <string-array name="filter_buy_price_range">
