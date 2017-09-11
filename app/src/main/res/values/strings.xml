@@ -104,7 +104,11 @@
     <string name="edit_property_take_a_photo">Take a photo</string>
     <string name="edit_property_upload_a_photo">Choose from Gallery</string>
     <string name="edit_property_image_chooser_title">Select Picture</string>
-    <string name="edit_property_logo" >LOGO</string>
+    <string name="edit_property_logo">LOGO</string>
+    <string name="edit_property_marketplace_settings">Marketplace settings:</string>
+    <string name="edit_property_public">Public</string>
+    <string name="edit_property_private">Private</string>
+    <string name="edit_property_verification">Verification</string>
     <!--Edit property screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>

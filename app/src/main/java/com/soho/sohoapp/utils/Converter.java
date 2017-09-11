@@ -9,6 +9,8 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
+import com.soho.sohoapp.feature.home.editproperty.data.PropertyVerification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
@@ -47,21 +49,20 @@ public final class Converter {
         property.setBedrooms(result.bedrooms);
         property.setBathrooms(result.bathrooms);
         property.setCarspots(result.carspots);
+        property.setAddress(toPropertyAddress(result));
+        property.setPropertyListing(toPropertyListing(result));
 
         List<PropertyImage> propertyImageList = new ArrayList<>();
-        PropertyImage propertyImage;
-        for (PropertyResult.Photos photo : result.photos) {
-            propertyImage = new PropertyImage();
-            propertyImage.setImageUrl(photo.image.url);
-            propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
-            propertyImageList.add(propertyImage);
+        for (PropertyResult.Photo photo : result.photos) {
+            propertyImageList.add(toPropertyImage(property, photo));
         }
         property.setPropertyImageList(propertyImageList);
 
-        PropertyAddress address = new PropertyAddress();
-        address.setAddressLine1(result.location.address_1);
-        address.setAddressLine2(result.location.address_2);
-        property.setAddress(address);
+        List<PropertyVerification> propertyVerificationList = new ArrayList<>();
+        for (PropertyResult.Verification verification : result.verifications) {
+            propertyVerificationList.add(toPropertyVerification(verification));
+        }
+        property.setPropertyVerificationList(propertyVerificationList);
 
         return property;
     }
@@ -244,4 +245,37 @@ public final class Converter {
         return portfolioCategory;
     }
 
+    @NonNull
+    private static PropertyVerification toPropertyVerification(PropertyResult.Verification verification) {
+        PropertyVerification propertyVerification = new PropertyVerification();
+        propertyVerification.setId(verification.id);
+        propertyVerification.setType(verification.type);
+        propertyVerification.setText(verification.text);
+        propertyVerification.setState(verification.state);
+        return propertyVerification;
+    }
+
+    @NonNull
+    private static PropertyListing toPropertyListing(@NonNull PropertyResult result) {
+        PropertyListing propertyListing = new PropertyListing();
+        propertyListing.setId(result.propertyListing.id);
+        propertyListing.setState(result.propertyListing.state);
+        return propertyListing;
+    }
+
+    @NonNull
+    private static PropertyImage toPropertyImage(Property property, PropertyResult.Photo photo) {
+        PropertyImage propertyImage = new PropertyImage();
+        propertyImage.setImageUrl(photo.image.url);
+        propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
+        return propertyImage;
+    }
+
+    @NonNull
+    private static PropertyAddress toPropertyAddress(@NonNull PropertyResult result) {
+        PropertyAddress address = new PropertyAddress();
+        address.setAddressLine1(result.location.address_1);
+        address.setAddressLine2(result.location.address_2);
+        return address;
+    }
 }

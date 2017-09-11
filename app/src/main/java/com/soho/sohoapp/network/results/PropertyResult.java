@@ -29,10 +29,16 @@ public class PropertyResult {
     @SerializedName("location")
     public Location location;
 
-    @SerializedName("photos")
-    public List<Photos> photos;
+    @SerializedName("property_listing")
+    public PropertyListing propertyListing;
 
-    public static class Photos {
+    @SerializedName("photos")
+    public List<Photo> photos;
+
+    @SerializedName("verifications")
+    public List<Verification> verifications;
+
+    public static class Photo {
         @SerializedName("image")
         public Image image;
     }
@@ -45,8 +51,31 @@ public class PropertyResult {
     public static class Location {
         @SerializedName("address_1")
         public String address_1;
+
         @SerializedName("address_2")
         public String address_2;
+    }
+
+    public static class PropertyListing {
+        @SerializedName("id")
+        public int id;
+
+        @SerializedName("state")
+        public String state;
+    }
+
+    public static class Verification {
+        @SerializedName("id")
+        public int id;
+
+        @SerializedName("type")
+        public String type;
+
+        @SerializedName("text")
+        public String text;
+
+        @SerializedName("state")
+        public String state;
     }
 
 }

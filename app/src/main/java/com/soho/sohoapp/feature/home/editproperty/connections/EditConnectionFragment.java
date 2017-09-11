@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.home.editproperty.connection;
+package com.soho.sohoapp.feature.home.editproperty.connections;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import com.soho.sohoapp.landing.BaseFragment;
 import butterknife.ButterKnife;
 
 public class EditConnectionFragment extends BaseFragment {
+
     @NonNull
     public static Fragment newInstance() {
         return new EditConnectionFragment();

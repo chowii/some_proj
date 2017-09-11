@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
@@ -174,6 +175,14 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         addressLine2.setText(address);
     }
 
+    @Override
+    public void initTabs(Property property) {
+        EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this, getSupportFragmentManager(), property);
+        viewPager.setOffscreenPageLimit(adapter.getCount());
+        viewPager.setAdapter(adapter);
+        tabs.setupWithViewPager(viewPager);
+    }
+
     private void initToolbar() {
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
         toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
@@ -185,16 +194,8 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         });
     }
 
-    private void initTabs() {
-        EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this, getSupportFragmentManager());
-        viewPager.setOffscreenPageLimit(adapter.getCount());
-        viewPager.setAdapter(adapter);
-        tabs.setupWithViewPager(viewPager);
-    }
-
     private void initView() {
         initToolbar();
-        initTabs();
         pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
     }

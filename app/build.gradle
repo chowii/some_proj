@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'me.tatarka.retrolambda'
 
 buildscript {
@@ -38,6 +38,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled = true
     }
 
     signingConfigs {
@@ -162,5 +166,7 @@ dependencies {
 
     //Multidex
     compile 'com.android.support:multidex:1.0.1'
+
+    kapt 'com.android.databinding:compiler:2.3.3'
 }
 

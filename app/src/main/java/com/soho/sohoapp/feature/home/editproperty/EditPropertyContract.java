@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty;
 
 import android.net.Uri;
 
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 
 import java.util.List;
@@ -46,5 +47,7 @@ interface EditPropertyContract {
         void showAddress1(String address);
 
         void showAddress2(String address);
+
+        void initTabs(Property property);
     }
 }

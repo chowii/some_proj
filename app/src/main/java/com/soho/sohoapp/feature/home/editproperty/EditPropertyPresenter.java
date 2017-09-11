@@ -59,8 +59,10 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                 .map(Converter::toProperty)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
+                .subscribe(result ->
+                {
                     property = result;
+                    view.initTabs(property);
                     initPropertyImages();
                     PropertyAddress address = result.getAddress();
                     if (address != null) {
@@ -68,7 +70,8 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                         view.showAddress2(address.getAddressLine2());
                     }
                     view.hideLoadingDialog();
-                }, throwable -> {
+                }, throwable ->
+                {
                     view.hideLoadingDialog();
                     view.showLoadingError();
                 }));

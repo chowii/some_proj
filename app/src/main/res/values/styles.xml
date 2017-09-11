@@ -175,6 +175,13 @@
         <item name="android:layout_marginLeft">50dp</item>
     </style>
 
+    <style name="ListTextHeader">
+        <item name="fontPath">fonts/Gibson-Bold.ttf</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/hintText</item>
+    </style>
+
     // MARK: - ================== Bold TextView Styles =============
 
     <style name="TextView.Header.Bold">

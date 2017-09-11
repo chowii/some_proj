@@ -19,14 +19,18 @@
 
     <color name="whiteLight">#C5C2C2</color>
 
+    <color name="greenButtonSelector">#22a45a</color>
+    <color name="whiteSelector">#d2d2d2</color>
+    <color name="whiteSemitransparent">#80ffffff</color>
+    <color name="lightBackground">#EAEAEA</color>
+
     <color name="primaryText">@color/blackDarkPrimary</color>
     <color name="secondaryText">@color/greyDarkPrimary</color>
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
 
-    <color name="greenButtonSelector">#22a45a</color>
-    <color name="whiteSelector">#d2d2d2</color>
-    <color name="whiteSemitransparent">#80ffffff</color>
-    <color name="lightBackground">#EAEAEA</color>
+    <color name="propertyStateVerified">@color/colorPrimary</color>
+    <color name="propertyStateNotCompleted">@color/orangePrimary</color>
+    <color name="propertyStateNotVerified">@color/redPrimary</color>
 
 </resources>
