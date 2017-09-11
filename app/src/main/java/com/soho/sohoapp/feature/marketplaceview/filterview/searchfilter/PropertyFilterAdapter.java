@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.soho.sohoapp.SohoApplication.getStringFromResource;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_BY_PROPERTY_TYPE;
+
 /**
  * Created by chowii on 18/8/17.
  */
@@ -102,7 +105,7 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
         if (holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
-                if (title.equalsIgnoreCase("Save this search")) {
+                if (title.equalsIgnoreCase(getStringFromResource(R.string.filter_item_save_this_search))) {
                     writeFilterToFile();
                 }else if (title.equalsIgnoreCase("search")){
                     mSearchListener.onSearchClicked(mFilterMap);
@@ -147,18 +150,18 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
 
     @Override
     public void onChange(CharSequence key, Object value) {
-        if (key.toString().equalsIgnoreCase("by_property_types")) addListToFilterMap((String) value);
+        if (key.toString().equalsIgnoreCase(FILTER_BY_PROPERTY_TYPE)) addListToFilterMap((String) value);
         else  mFilterMap.put(key.toString(), value);
     }
 
     private void addListToFilterMap(String value) {
-        List<String> item = (List<String>) mFilterMap.get("by_property_types");
+        List<String> item = (List<String>) mFilterMap.get(FILTER_BY_PROPERTY_TYPE);
         if (item == null){
             item = new ArrayList<>();
             item.add(value);
         }else if (item.contains(value)) item.remove(value);
         else item.add(value);
-        mFilterMap.put("by_property_types", item);
+        mFilterMap.put(FILTER_BY_PROPERTY_TYPE, item);
     }
 
     interface OnSearchClickListener {

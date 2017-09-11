@@ -70,8 +70,7 @@ class LoginActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            {
-                                user ->
+                            { user ->
                                 DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this)
                                 DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
@@ -79,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
                             {
                                 registerDialog?.dismiss()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
+                                DEPENDENCIES.logger.e("Error during login", it)
                             }
                     )
         }

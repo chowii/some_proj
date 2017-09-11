@@ -166,6 +166,7 @@
     <string name="property_detail_property_viewing_time_fromat_string">%1$s - %2$s</string>
     <string name="integer_space_string_format_string">%1$d %2$s</string>
     <string name="property_detail_header_no_header_text">No title available.</string>
+    <string name="filter_item_save_this_search">Save this search</string>
 
 
     <string-array name="filter_buy_price_range">

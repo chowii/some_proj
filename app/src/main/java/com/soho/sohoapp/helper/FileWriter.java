@@ -49,7 +49,7 @@ public final class FileWriter<T> {
             osw.close();
 
         } catch (Exception ioException){
-            DEPENDENCIES.getLogger().d("Could not create debug file");
+            DEPENDENCIES.getLogger().e("Could not create debug file", ioException);
         }
 
         return FileProvider.getUriForFile(context, context.getString(R.string.provider_authorities), deviceFile);

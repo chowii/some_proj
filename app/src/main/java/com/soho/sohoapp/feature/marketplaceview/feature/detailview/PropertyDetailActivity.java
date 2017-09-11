@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
-import static com.soho.sohoapp.network.Keys.Property.PROPRETY_ID;
 
 /**
  * Created by chowii on 31/8/17.
@@ -43,19 +42,29 @@ public class PropertyDetailActivity extends AppCompatActivity
         DEPENDENCIES.getLogger().d( "onPropertyDetailCameraOnClick: clicked");
     }
 
+    public static final String PROPERTY_ID_EXTRA = "property_id";
     PropertyDetailPresenter presenter;
     int id;
 
-    public static Intent createIntent(Context context) { return new Intent(context, PropertyDetailActivity.class); }
+    public static Intent createIntent(Context context, int propertyId) {
+        Intent intent = new Intent(context, PropertyDetailActivity.class);
+        intent.putExtra(PROPERTY_ID_EXTRA, propertyId);
+        return intent;
+    }
 
-    public static Intent createIntent(Context context, int flags) { return new Intent(context, PropertyDetailActivity.class).setFlags(flags); }
+    public static Intent createIntent(Context context, int propertyId, int flags) {
+        Intent intent = new Intent(context, PropertyDetailActivity.class);
+        intent.putExtra(PROPERTY_ID_EXTRA, propertyId);
+        intent.setFlags(flags);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_detail);
         ButterKnife.bind(this);
-        id = getIntent().getIntExtra(PROPRETY_ID, -1);
+        id = getIntent().getIntExtra(PROPERTY_ID_EXTRA, -1);
         presenter = new PropertyDetailPresenter(this);
         presenter.startPresenting();
         presenter.retrieveProperty(id);

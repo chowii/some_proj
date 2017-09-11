@@ -32,5 +32,6 @@ public interface Keys {
         String FILTER_BY_BEDROOM_COUNT = "by_bedroom_count";
         String FILTER_BY_BATHROOM_COUNT = "by_bathroom_count";
         String FILTER_BY_CARSPOT_COUNT = "by_carspot_count";
+        String FILTER_BY_PROPERTY_TYPE = "by_property_types";
     }
 }

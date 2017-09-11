@@ -144,8 +144,7 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @Override
     public void onMarketplaceItemClicked(int id) {
-        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity());
-        detailIntent.putExtra("property_id", id);
+        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity(), id);
         getActivity().startActivity(detailIntent);
     }
 }

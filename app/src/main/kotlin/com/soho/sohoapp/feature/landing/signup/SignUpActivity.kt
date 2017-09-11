@@ -80,8 +80,8 @@ class SignUpActivity : AppCompatActivity() {
 
                             DEPENDENCIES.navHelper.showRegisterUserInfoActivity(this)
                         },
-                        {
-                            DEPENDENCIES.logger.d("error")
+                        { throwable ->
+                            DEPENDENCIES.logger.e("error", throwable)
                             initProgressDialog()?.dismiss()
                         }
                 )
