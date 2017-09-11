@@ -150,6 +150,23 @@
     <string name="no_description_available_description_item">No description is available.</string>
     <string name="auction_location_string">Auction Location:</string>
 
+    <!--  Property Detail  -->
+    <string name="property_state_inspection">Inspection</string>
+    <string name="property_state_auction">Auction</string>
+    <string name="property_detail_header_description">Description</string>
+    <string name="property_detail_header_inspection_times">Inspection Times</string>
+    <string name="property_detail_header_location">Location</string>
+    <string name="time_12hour_string_format">%1$d:%2$s %3$s</string>
+    <string name="date_short_string_format">%1$s %2$s %3$s</string>
+    <string name="date_backslash_format_string">%1$d / %2$d / $3$d</string>
+    <string name="last_updated_format_string">%1$s %2$d %3$s %4$d</string>
+    <string name="property_detail_last_updated_text">Last Updated:</string>
+    <string name="property_criteria_button_format_string">@string/integer_space_string_format_string</string>
+    <string name="property_detail_auction_location_format_string">%1$s %2$s</string>
+    <string name="property_detail_property_viewing_time_fromat_string">%1$s - %2$s</string>
+    <string name="integer_space_string_format_string">%1$d %2$s</string>
+    <string name="property_detail_header_no_header_text">No title available.</string>
+
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

@@ -22,7 +22,7 @@ public class PropertyLocationImageItem implements BaseModel {
     public int getItemViewType() { return R.layout.item_property_image; }
 
     public static final String STATIC_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap?size=1200x600&zoom=16";
-    private final String location = "&markers=color:red%7C";
+    private final String PARAM_MARKERS_COLOR = "&markers=color:red%7C";
 
     private final LatLng latLng;
     private StringBuilder imageUrl = new StringBuilder(STATIC_MAP_URL);
@@ -31,7 +31,7 @@ public class PropertyLocationImageItem implements BaseModel {
 
     public PropertyLocationImageItem(LatLng latLng, boolean isMasked) {
         this.latLng = latLng;
-        if (!isMasked) imageUrl.append(location);
+        if (!isMasked) imageUrl.append(PARAM_MARKERS_COLOR);
         imageUrl.append(latLng.latitude)
                 .append(",")
                 .append(latLng.longitude);
@@ -39,7 +39,7 @@ public class PropertyLocationImageItem implements BaseModel {
     }
     public PropertyLocationImageItem(double lat, double lng, boolean isMasked) {
         latLng = new LatLng(lat, lng);
-        if (!isMasked) imageUrl.append(location);
+        if (!isMasked) imageUrl.append(PARAM_MARKERS_COLOR);
         imageUrl.append(latLng.latitude)
                 .append(",")
                 .append(latLng.longitude);
@@ -77,12 +77,12 @@ public class PropertyLocationImageItem implements BaseModel {
         String darkerPrimary = SohoApplication.getContext().getString(R.color.darkerPrimary).replaceFirst("#ff","");
 
         if (circlePoints.size() > 0)
-            imageUrl.append("&path=color:0x")
-                    .append(darkerPrimary)
-                    .append("%7Cweight:1%7Cfillcolor:0x")
-                    .append(colorPrimary)
-                    .append("%7Cenc:")
-                    .append(PolyUtil.encode(circlePoints));
+            imageUrl.append("&path=color:0x")               // Path Color parameter in hex; prefix `0x` is included
+                    .append(darkerPrimary)                  // Path Color from color res
+                    .append("%7Cweight:1%7Cfillcolor:0x")   // Fill color of the circle in hex; prefix `0x` is included
+                    .append(colorPrimary)                   // Fill Color from color res
+                    .append("%7Cenc:")                      // Path location parameter
+                    .append(PolyUtil.encode(circlePoints)); // Path location value
 
         return imageUrl.toString();
     }
@@ -103,14 +103,10 @@ public class PropertyLocationImageItem implements BaseModel {
             double angleRadians = angle * TO_RADIAN;
 
             double latitude = Math.asin(calcLatPrefix + calcLatSuffix * Math.cos(angleRadians));
-            double longitude = (
-                    (
-                            longitudeRadians + Math.atan2(
+            double longitude = ((longitudeRadians + Math.atan2(
                                     Math.sin(angleRadians) * Math.sin(radiusRadians) * Math.cos(latitudeRadians),
-                                    Math.cos(radiusRadians) - Math.sin(latitudeRadians) * Math.sin(latitude)
-                            )
-                    )
-                            * 180) / Math.PI;
+                                    Math.cos(radiusRadians) - Math.sin(latitudeRadians) * Math.sin(latitude))
+                                ) * 180) / Math.PI;
             latitude = latitude * 180.0 / Math.PI;
             path.add(new LatLng(latitude, longitude));
         }

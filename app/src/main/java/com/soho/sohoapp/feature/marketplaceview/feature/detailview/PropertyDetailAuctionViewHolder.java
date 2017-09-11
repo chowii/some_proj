@@ -5,14 +5,16 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
 import com.soho.sohoapp.helper.DateHelper;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.soho.sohoapp.SohoApplication.getStringFromResource;
 
 /**
  * Created by chowii on 4/9/17.
@@ -29,7 +31,7 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
     @BindView(R.id.add_to_calendar_button)
     TextView addToCalendarButton;
 
-    OnAddToCalenderClickListener listener;
+    private OnAddToCalenderClickListener listener;
 
     PropertyDetailAuctionViewHolder(View itemView, OnAddToCalenderClickListener listener) {
         super(itemView);
@@ -51,7 +53,10 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
             toggleVisibility(GONE, VISIBLE, VISIBLE);
         }
         addToCalendarButton.setOnClickListener(v ->
-                listener.onAddToCalenderClicked(model, model.retrieveState().equalsIgnoreCase("Auction") ? model.retrieveState() : "Inspection"));
+                listener.onAddToCalenderClicked(model,
+                                    model.retrieveState().equalsIgnoreCase(getStringFromResource(R.string.property_state_auction)) ?
+                                            model.retrieveState() :
+                                            getStringFromResource(R.string.property_state_inspection)));
     }
 
     private void configureAuctionTime(PropertyHostTimeItem model) {
@@ -61,17 +66,22 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
         descriptionTextView.setText(auctionDate);
         addToCalendarButton.setText(auctionTime);
 
-        StringBuilder auctionLocationText = new StringBuilder(SohoApplication.getContext().getString(R.string.auction_location_string));
-        auctionLocationText.append(propertyAuctionItem.isOnSite() ? "On site" : model.retrieveLocation().retrieveFullAddress());
-        auctionLocationTextView.setText(auctionLocationText.toString());
+        auctionLocationTextView.setText(String.format(
+                                    Locale.getDefault(),
+                                    getStringFromResource(R.string.property_detail_auction_location_format_string),
+                                    getStringFromResource(R.string.auction_location_string),
+                                    propertyAuctionItem.isOnSite() ?
+                                    "On site" :
+                                    model.retrieveLocation().retrieveFullAddress()));
     }
 
     private void configureInspectionTime(PropertyHostTimeItem.PropertyInspectionItem inspectionTime) {
-        StringBuilder timeBuilder = new StringBuilder();
-        timeBuilder.append(inspectionTime.getPropertyInspectionTime().retrieveDisplayableStartTime());
-        timeBuilder.append(" - ");
-        timeBuilder.append(inspectionTime.getPropertyInspectionTime().retrieveDisplayableEndTime());
-        addToCalendarButton.setText(timeBuilder.toString());
+        addToCalendarButton.setText(String.format(
+                                    Locale.getDefault(),
+                                    getStringFromResource(R.string.property_detail_property_viewing_time_fromat_string),
+                                    inspectionTime.getPropertyInspectionTime().retrieveDisplayableStartTime(),
+                                    inspectionTime.getPropertyInspectionTime().retrieveDisplayableEndTime()
+                                    ));
         descriptionTextView.setText(inspectionTime.getPropertyInspectionTime().retrieveDisplayableStartDate());
     }
 

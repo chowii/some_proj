@@ -18,7 +18,6 @@
         android:textColorHint="@color/hintText"
         tools:ignore="RtlHardcoded"
         android:paddingStart="@dimen/standard_padding_right"
-        android:paddingEnd="@dimen/standard_padding_right"
-        />
+        android:paddingEnd="@dimen/standard_padding_right" />
 
 </LinearLayout>

@@ -2,7 +2,7 @@ package com.soho.sohoapp.feature.marketplaceview.feature.detailview.model;
 
 import com.soho.sohoapp.feature.marketplaceview.model.Propertyable;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -13,7 +13,7 @@ public interface PropertyDescribable extends Propertyable {
 
     int retrieveLandSize();
     String retrieveLandSizeMeasurement();
-    Date retrieveAuctionDate();
+    Calendar retrieveAuctionDate();
     String retrieveDisplayableAuctionDate();
     Object retrieveAuctionLocation();
     List<String> retrieveRenovationDetails();

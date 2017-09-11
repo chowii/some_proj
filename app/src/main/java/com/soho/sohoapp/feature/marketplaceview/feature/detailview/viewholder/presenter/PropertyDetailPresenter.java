@@ -1,9 +1,11 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.data.PropertyInspectionTime;
 import com.soho.sohoapp.data.PropertyLocation;
 import com.soho.sohoapp.feature.home.BaseModel;
@@ -17,10 +19,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.H
 import com.soho.sohoapp.network.ApiClient;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -49,16 +48,12 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         mDisposable = ApiClient.getService().getPropertyById(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(
-                        property -> {
+                .subscribe(property -> {
                             List<BaseModel> descriptionList = new ArrayList<>();
                             PropertyDescribable describable = property;
-
                             descriptionList.add(addPropertyDetailHeaderItem(describable));
-
                             descriptionList.addAll(addPropertyDescription(new PropertyDetailDescriptionItem(describable.description())));
-
-                            descriptionList.add(new HeaderItem<String>("Inspection Times", R.layout.item_header));
+                            descriptionList.add(new HeaderItem<>(getString(R.string.property_detail_header_inspection_times), R.layout.item_header));
                             if (!describable.propertyListing().isAppointmentOnly())
                                 if (!describable.propertyListing().retrieveInspectionTimes().isEmpty())
                                     descriptionList.addAll(
@@ -69,14 +64,16 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                                             )
                                     );
                                 else {
-                                    descriptionList.add(new PropertyHostTimeItem(null, describable.location(), "Inspection", true));
+                                    descriptionList.add(new PropertyHostTimeItem(
+                                            null,
+                                            describable.location(),
+                                            getString(R.string.property_state_inspection),
+                                            true));
                                 }
 
                             descriptionList.addAll(addPropertyIfAuctioned(describable));
-
                             descriptionList.addAll(addPropertyLocationImage(describable.location()));
-                            descriptionList.add(new HeaderItem<String>(retrieveLastUpdateTime(describable.lastUpdatedAt()), R.layout.item_header));
-
+                            descriptionList.add(new HeaderItem<>(describable.retrieveDisplayableLastUpdatedAt(), R.layout.item_header));
                             interactable.configureAdapter(descriptionList);
                         }, throwable -> DEPENDENCIES.getLogger().d("throwable: " + throwable.toString())
                 );
@@ -92,21 +89,21 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         headerItem.setBathroom(describe.numberOfBathrooms());
         headerItem.setCarspot(describe.numberOfParking());
         headerItem.setPropertySize(describe.retrieveLandSize());
-        headerItem.applyPropertyTypeChange(describe.typeOfProperty());
+        headerItem.applyPropertyTypeChange(describe.retrieveDisplayableTypeOfProperty());
         return headerItem;
     }
 
     private List<BaseModel> addPropertyDescription( PropertyDetailDescriptionItem propertyDetailDescriptionItem){
         List<BaseModel> descriptionList = new ArrayList<>();
-        descriptionList.add(new HeaderItem<String>("Description", R.layout.item_header));
+        descriptionList.add(new HeaderItem<>(getString(R.string.property_detail_header_description), R.layout.item_header));
         descriptionList.add(new PropertyDetailDescriptionItem(propertyDetailDescriptionItem.getDescription()));
         return descriptionList;
     }
 
     private List<BaseModel> addPropertyIfAuctioned(PropertyDescribable describable) {
         List<BaseModel> descriptionList = new ArrayList<>();
-        if (describable.state().equalsIgnoreCase("auction")){
-            descriptionList.add(new HeaderItem<String>("Auction", R.layout.item_header));
+        if (describable.state().equalsIgnoreCase(getString(R.string.property_state_auction))){
+            descriptionList.add(new HeaderItem<>(getString(R.string.property_state_auction), R.layout.item_header));
             descriptionList.add(new PropertyHostTimeItem(
                             describable.propertyListing().retrieveAuctionTime(),
                             describable.location(),
@@ -123,31 +120,20 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         LatLng latLng = new LatLng(location.retrieveLatitude(),
                 location.retrieveLongitude());
 
-        locationImageList.add(new HeaderItem<String>("Location", R.layout.item_header));
+        locationImageList.add(new HeaderItem<>(getString(R.string.property_detail_header_location), R.layout.item_header));
         locationImageList.add(new PropertyLocationImageItem(latLng, location.isAddressMasked()));
         return locationImageList;
     }
 
-    private String retrieveLastUpdateTime(Date date) {
-        Calendar updateCalendar = Calendar.getInstance();
-        updateCalendar.setTime(date);
-        StringBuilder lastUpdatedBuilder = new StringBuilder("Last Updated: ");
-        lastUpdatedBuilder.append(updateCalendar.get(Calendar.DAY_OF_MONTH));
-        lastUpdatedBuilder.append(" ");
-        lastUpdatedBuilder.append(updateCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-        lastUpdatedBuilder.append(". ");
-        lastUpdatedBuilder.append(updateCalendar.get(Calendar.YEAR));
-
-        return lastUpdatedBuilder.toString();
-    }
-
-
     private List<BaseModel> addInspectionItem(List<PropertyInspectionTime> inspectionTimeList, PropertyLocation location, boolean isAppoinmentOnly) {
         List<BaseModel> modelList = new ArrayList<>();
         for(PropertyInspectionTime inspectionTime : inspectionTimeList)
-            modelList.add(new PropertyHostTimeItem(inspectionTime, location, "Inspection", isAppoinmentOnly));
+            modelList.add(new PropertyHostTimeItem(inspectionTime, location, getString(R.string.property_state_inspection), isAppoinmentOnly));
         return modelList;
     }
+
+
+    private String getString(@StringRes int stringRes){ return SohoApplication.getContext().getString(stringRes); }
 
     @Override
     public void stopPresenting() { mDisposable.dispose(); }

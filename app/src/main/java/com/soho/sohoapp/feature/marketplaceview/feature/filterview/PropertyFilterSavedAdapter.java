@@ -13,7 +13,6 @@ import com.soho.sohoapp.feature.home.BaseModel;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 25/8/17.
@@ -63,10 +62,7 @@ class PropertyFilterSavedAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView(R.id.subtitle_text_view)
         TextView subtitleTextView;
 
-        SavedItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
+        SavedItemViewHolder(View itemView) { super(itemView); }
 
         @Override
         public void onBindViewHolder(BaseModel model) { }

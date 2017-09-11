@@ -29,5 +29,8 @@ public interface Keys {
         String FILTER_MAX_SALE_PRICE = "by_max_sell_price";
         String FILTER_MIN_RENT_PRICE = "by_min_rent_price";
         String FILTER_MAX_RENT_PRICE = "by_max_rent_price";
+        String FILTER_BY_BEDROOM_COUNT = "by_bedroom_count";
+        String FILTER_BY_BATHROOM_COUNT = "by_bathroom_count";
+        String FILTER_BY_CARSPOT_COUNT = "by_carspot_count";
     }
 }

@@ -4,7 +4,7 @@ import com.soho.sohoapp.data.PropertyListing;
 import com.soho.sohoapp.data.PropertyLocation;
 import com.soho.sohoapp.feature.home.BaseModel;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by chowii on 14/8/17.
@@ -20,15 +20,17 @@ public interface Propertyable extends BaseModel {
     int numberOfParking();
     String description();
     String typeOfProperty();
+    String retrieveDisplayableTypeOfProperty();
 
     boolean isInvestment();
     double rentPrice();
     double sellPrice();
-    Date lastUpdatedAt();
-    boolean isFavourite();
+    Calendar lastUpdatedAt();
+    String retrieveDisplayableLastUpdatedAt();
 
+    boolean isFavourite();
     PropertyListing propertyListing();
     Object propertyUser(int position, String key);
-    PropertyLocation location();
 
+    PropertyLocation location();
 }

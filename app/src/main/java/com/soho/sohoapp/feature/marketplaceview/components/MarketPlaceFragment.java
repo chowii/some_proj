@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,6 @@ import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -145,7 +144,7 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @Override
     public void onMarketplaceItemClicked(int id) {
-        Intent detailIntent = new Intent(getActivity(), PropertyDetailActivity.class);
+        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity());
         detailIntent.putExtra("property_id", id);
         getActivity().startActivity(detailIntent);
     }

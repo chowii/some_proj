@@ -102,9 +102,11 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
         if (holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
-                if (title.equalsIgnoreCase("Save this search")) writeFilterToFile();
-                else if (title.equalsIgnoreCase("search"))
+                if (title.equalsIgnoreCase("Save this search")) {
+                    writeFilterToFile();
+                }else if (title.equalsIgnoreCase("search")){
                     mSearchListener.onSearchClicked(mFilterMap);
+                }
             });
         }
     }

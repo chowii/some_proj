@@ -6,6 +6,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
+import com.soho.sohoapp.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import static com.soho.sohoapp.SohoApplication.getStringFromResource;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
@@ -31,6 +34,7 @@ public class DateHelper {
     private static final String TAG = "DateHelper";
 
     public static final String API_DATE_FORMAT_NO_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    public static final String DATE_FORMAT_ddMMyyyy = "yyyy-MM-dd";
 
     public static final int TIMELINE_EITHER = 0;
     private static final int TIMELINE_PAST = 1;
@@ -81,6 +85,23 @@ public class DateHelper {
         SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
         try {
             return format.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Nullable
+    public static Calendar stringToCalendar(String dateString, String formatString) {
+        if (dateString == null || formatString == null) {
+            return null;
+        }
+        SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
+        try {
+            Calendar c = Calendar.getInstance();
+            c.setTime(format.parse(dateString));
+            return c;
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -446,24 +467,23 @@ public class DateHelper {
     }
 
     public static String retrieveShortDisplayableTime(Calendar timeCalendar){
-        StringBuilder timeBuilder = new StringBuilder();
         int minute = timeCalendar.get(Calendar.MINUTE);
-        timeBuilder.append(timeCalendar.get(Calendar.HOUR));
-        timeBuilder.append(":");
-        timeBuilder.append(minute < 10 ? "0" + minute : minute);
-        timeBuilder.append(" ");
-        timeBuilder.append(timeCalendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm");
-        return timeBuilder.toString();
+        return String.format(
+                Locale.getDefault(),
+                getStringFromResource(R.string.time_12hour_string_format),
+                timeCalendar.get(Calendar.HOUR),
+                minute < 10 ? "0" + minute : String.valueOf(minute),
+                timeCalendar.get(Calendar.AM_PM) == Calendar.AM ? "am" : "pm");
     }
 
     public static String retrieveShortDisplayableDate(Calendar startCalendar){
-        StringBuilder startString = new StringBuilder();
-        startString.append(startCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()));
-        startString.append(" ");
-        startString.append(startCalendar.get(Calendar.DAY_OF_MONTH));
-        startString.append(" ");
-        startString.append(startCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-        return startString.toString();
+        return String.format(
+                Locale.getDefault(),
+                getStringFromResource(R.string.date_short_string_format),
+                startCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()),
+                startCalendar.get(Calendar.DAY_OF_MONTH),
+                        startCalendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault())
+        );
     }
 
     public static Calendar retrieveCalendarFromApiDate(String dateTime){

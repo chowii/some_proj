@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -44,6 +45,10 @@ public class PropertyDetailActivity extends AppCompatActivity
 
     PropertyDetailPresenter presenter;
     int id;
+
+    public static Intent createIntent(Context context) { return new Intent(context, PropertyDetailActivity.class); }
+
+    public static Intent createIntent(Context context, int flags) { return new Intent(context, PropertyDetailActivity.class).setFlags(flags); }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

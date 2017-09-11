@@ -3,6 +3,7 @@ package com.soho.sohoapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
@@ -53,5 +54,7 @@ public class SohoApplication extends MultiDexApplication {
         shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent(getApplicationContext(), SplashActivity.class));
         sendBroadcast(shortcutIntent);
     }
+
+    public static String getStringFromResource(@StringRes int stringRes) { return getContext().getString(stringRes); }
 }
 

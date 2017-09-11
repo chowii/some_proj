@@ -1,12 +1,14 @@
 package com.soho.sohoapp.data;
 
+import com.soho.sohoapp.R;
+import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDescribable;
 import com.soho.sohoapp.helper.DateHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by chowii on 1/9/17.
@@ -20,7 +22,7 @@ public class PropertyDetail extends SohoProperty implements PropertyDescribable 
     private Object auction_location;
     private List<String> renovation_details;
 
-    private Date auctionDate;
+    private Calendar auctionDate;
 
     @Override
     public int retrieveLandSize() { return land_size; }
@@ -33,23 +35,26 @@ public class PropertyDetail extends SohoProperty implements PropertyDescribable 
     public String retrieveLandSizeMeasurement() { return land_size_measurement == null ? "" : land_size_measurement; }
 
     @Override
-    public Date retrieveAuctionDate() {
-        if (auction_date == null) return new Date(System.currentTimeMillis());
-        auctionDate = DateHelper.stringToDate(auction_date, "yyyy-MM-dd");
+    public Calendar retrieveAuctionDate() {
+        if (auction_date == null) return Calendar.getInstance();
+        auctionDate = DateHelper.stringToCalendar(auction_date, DateHelper.DATE_FORMAT_ddMMyyyy);
         return auctionDate;
     }
 
-    private void applyAuctionDateChange(Date date){
-        if (date == null) auctionDate = new Date(System.currentTimeMillis());
+    private void applyAuctionDateChange(Calendar date){
+        if (date == null) auctionDate = Calendar.getInstance();
         else auctionDate = date;
     }
 
     public String retrieveDisplayableAuctionDate() {
         if (auctionDate == null) auctionDate = retrieveAuctionDate();
-        Calendar c = Calendar.getInstance();
-        c.setTime(auctionDate);
-        String displayableDate = c.get(Calendar.DAY_OF_MONTH) + " / " + c.get(Calendar.MONTH) + " / " + c.get(Calendar.YEAR);
-        return  displayableDate;
+        return String.format(
+                Locale.getDefault(),
+                SohoApplication.getStringFromResource(R.string.date_backslash_format_string),
+                auctionDate.get(Calendar.DAY_OF_MONTH),
+                auctionDate.get(Calendar.MONTH),
+                auctionDate.get(Calendar.YEAR)
+        );
     }
 
     @Override
