@@ -52,8 +52,14 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                             List<BaseModel> descriptionList = new ArrayList<>();
                             PropertyDescribable describable = property;
                             descriptionList.add(addPropertyDetailHeaderItem(describable));
-                            descriptionList.addAll(addPropertyDescription(new PropertyDetailDescriptionItem(describable.description())));
-                            descriptionList.add(new HeaderItem<>(getString(R.string.property_detail_header_inspection_times), R.layout.item_header));
+                            descriptionList.addAll(
+                                    addPropertyDescription(
+                                            new PropertyDetailDescriptionItem(describable.description())
+                                    ));
+                            descriptionList.add(new HeaderItem<>(getString(
+                                                            R.string.property_detail_header_inspection_times),
+                                                            R.layout.item_header));
+
                             if (!describable.propertyListing().isAppointmentOnly())
                                 if (!describable.propertyListing().retrieveInspectionTimes().isEmpty())
                                     descriptionList.addAll(
@@ -75,7 +81,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                             descriptionList.addAll(addPropertyLocationImage(describable.location()));
                             descriptionList.add(new HeaderItem<>(describable.retrieveDisplayableLastUpdatedAt(), R.layout.item_header));
                             interactable.configureAdapter(descriptionList);
-                        }, throwable -> DEPENDENCIES.getLogger().d("throwable: " + throwable.toString())
+                        }, throwable -> DEPENDENCIES.getLogger().e("throwable: " + throwable.toString(), throwable)
                 );
 
     }

@@ -68,55 +68,61 @@ public class RoomsItemViewHolder extends BaseFormViewHolder<PropertyRoomItem> {
     public void onBindViewHolder(PropertyRoomItem model) {
         String propertyCrieteriaFormat = getStringFromResource(R.string.property_criteria_button_format_string);
         bedroomAddButton.setOnClickListener((v) -> {
-            bedroomValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    ++bedroomValue,
-                    getStringFromResource(R.string.rooms_item_bedroom_text)));
+            bedroomValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                ++bedroomValue,
+                                                getStringFromResource(R.string.rooms_item_bedroom_text)));
             updatedListener.onChange(FILTER_BY_BEDROOM_COUNT, bedroomValue);
         });
 
         bedroomSubtractButton.setOnClickListener((v) -> {
 
-            if (bedroomValue > 1)bedroomValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    --bedroomValue,
-                    getStringFromResource(R.string.rooms_item_bedroom_text)));
+            if (bedroomValue > 1)bedroomValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                --bedroomValue,
+                                                getStringFromResource(R.string.rooms_item_bedroom_text)));
             else if (bedroomValue <= 1) bedroomValueTextView.setText(getStringFromResource(R.string.rooms_item_default_bedroom_text));
             updatedListener.onChange(FILTER_BY_BEDROOM_COUNT, bedroomValue);
         });
 
 
         bathroomAddButton.setOnClickListener((v) -> {
-            bathroomValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    ++bathroomValue,
-                    getStringFromResource(R.string.rooms_item_bathroom_text)));
+            bathroomValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                ++bathroomValue,
+                                                getStringFromResource(R.string.rooms_item_bathroom_text)));
             updatedListener.onChange(FILTER_BY_BATHROOM_COUNT, bathroomValue);
         });
 
         bathroomSubtractButton.setOnClickListener((v) -> {
-            if (bathroomValue > 1) bathroomValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    --bathroomValue,
-                    getStringFromResource(R.string.rooms_item_bathroom_text)));
+            if (bathroomValue > 1) bathroomValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                --bathroomValue,
+                                                getStringFromResource(R.string.rooms_item_bathroom_text)));
             else if (bathroomValue <= 1) bathroomValueTextView.setText(getStringFromResource(R.string.rooms_item_default_bathroom_text));
             updatedListener.onChange(FILTER_BY_BATHROOM_COUNT, bathroomValue);
         });
 
 
         carspotAddButton.setOnClickListener((v) -> {
-            carspotValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    ++carspotValue,
-                    getStringFromResource(R.string.rooms_item_carspot_text)));
+            carspotValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                ++carspotValue,
+                                                getStringFromResource(R.string.rooms_item_carspot_text)));
             updatedListener.onChange(FILTER_BY_CARSPOT_COUNT, carspotValue);
         });
 
         carspotSubtractButton.setOnClickListener((v) -> {
-            if (carspotValue > 1) carspotValueTextView.setText(String.format(Locale.getDefault(),
-                    propertyCrieteriaFormat,
-                    --carspotValue,
-                    getStringFromResource(R.string.rooms_item_carspot_text)));
+            if (carspotValue > 1) carspotValueTextView.setText(String.format(
+                                                Locale.getDefault(),
+                                                propertyCrieteriaFormat,
+                                                --carspotValue,
+                                                getStringFromResource(R.string.rooms_item_carspot_text)));
             else if (carspotValue <= 1) carspotValueTextView.setText(getStringFromResource(R.string.rooms_item_default_carspot_text));
             updatedListener.onChange(FILTER_BY_CARSPOT_COUNT, carspotValue);
         });

@@ -30,7 +30,7 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
  */
 
 public class PropertyDetailActivity extends AppCompatActivity
-    implements PropertyDetailContract.ViewInteractable,
+        implements PropertyDetailContract.ViewInteractable,
         PropertyDetailAuctionViewHolder.OnAddToCalenderClickListener
 {
 
@@ -42,19 +42,19 @@ public class PropertyDetailActivity extends AppCompatActivity
         DEPENDENCIES.getLogger().d( "onPropertyDetailCameraOnClick: clicked");
     }
 
-    public static final String PROPERTY_ID_EXTRA = "property_id";
+    public static final String EXTRA_PROPERTY_ID = "property_id";
     PropertyDetailPresenter presenter;
     int id;
 
     public static Intent createIntent(Context context, int propertyId) {
         Intent intent = new Intent(context, PropertyDetailActivity.class);
-        intent.putExtra(PROPERTY_ID_EXTRA, propertyId);
+        intent.putExtra(EXTRA_PROPERTY_ID, propertyId);
         return intent;
     }
 
     public static Intent createIntent(Context context, int propertyId, int flags) {
         Intent intent = new Intent(context, PropertyDetailActivity.class);
-        intent.putExtra(PROPERTY_ID_EXTRA, propertyId);
+        intent.putExtra(EXTRA_PROPERTY_ID, propertyId);
         intent.setFlags(flags);
         return intent;
     }
@@ -64,7 +64,7 @@ public class PropertyDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_detail);
         ButterKnife.bind(this);
-        id = getIntent().getIntExtra(PROPERTY_ID_EXTRA, -1);
+        id = getIntent().getIntExtra(EXTRA_PROPERTY_ID, -1);
         presenter = new PropertyDetailPresenter(this);
         presenter.startPresenting();
         presenter.retrieveProperty(id);

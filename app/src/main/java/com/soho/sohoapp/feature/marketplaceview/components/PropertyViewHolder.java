@@ -10,6 +10,8 @@ import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.SohoProperty;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 
 /**
@@ -71,10 +73,12 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
 
     @NonNull
     private String getSuburbString(SohoProperty property) {
-        return String.format("%s %s, %s",
-                                property.location().retrieveSuburb(),
-                                property.location().retrievePostcode(),
-                                property.location().retrieveState());
+        return String.format(
+                            Locale.getDefault(),
+                            "%s %s, %s",
+                            property.location().retrieveSuburb(),
+                            property.location().retrievePostcode(),
+                            property.location().retrieveState());
     }
 
     interface OnMarketplaceItemClickListener {
