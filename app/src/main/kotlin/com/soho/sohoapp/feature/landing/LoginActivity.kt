@@ -13,6 +13,7 @@ import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.navigator.NavigatorImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -38,11 +39,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @OnClick(R.id.sign_up_redirect_button)
-    fun onSignUpRedirectClicked(): Unit =  DEPENDENCIES.navHelper.showSignUpActivity(this)
+    fun onSignUpRedirectClicked(): Unit =  NavigatorImpl.newInstance(this).openSignUpActivity()
 
 
     @OnClick(R.id.forgot_password_button)
-    fun onForgotPasswordClicked(): Unit =  DEPENDENCIES.navHelper.showForgotPasswordActivity(this)
+    fun onForgotPasswordClicked(): Unit =  NavigatorImpl.newInstance(this).openForgetPasswordActivity()
 
     @OnClick(R.id.login_button)
     fun onLoginClicked() {
@@ -69,15 +70,14 @@ class LoginActivity : AppCompatActivity() {
             disposable = DEPENDENCIES.sohoService.loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            {
-                                user ->
-                                DEPENDENCIES.navHelper.showHomeActivityAndClearTasks(this.baseContext)
+                    .subscribe({ user ->
+                                NavigatorImpl.newInstance(this).openHomeActivity()
                                 DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },
-                            {
+                            { throwable ->
                                 registerDialog?.dismiss()
+                                throwable.printStackTrace()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
                             }
                     )

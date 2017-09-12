@@ -29,4 +29,13 @@ public interface NavigatorInterface {
     void openLandingActivity();
 
     void openLandingActivity(int flags);
+
+    void openForgetPasswordActivity();
+
+    void openSignUpActivity();
+
+    void showRegisterUserInfoActivity();
+
+    void showLandingActivity();
+
 }

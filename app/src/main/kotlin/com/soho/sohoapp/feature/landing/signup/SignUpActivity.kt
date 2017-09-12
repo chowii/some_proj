@@ -2,6 +2,8 @@ package com.soho.sohoapp.feature.landing.signup
 
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -14,11 +16,17 @@ import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.navigator.NavigatorInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class SignUpActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context: Context): Intent = Intent(context, SignUpActivity::class.java)
+    }
 
     @BindView(R.id.register_email_edit_text)
     lateinit var emailEditText: EditText
@@ -79,7 +87,7 @@ class SignUpActivity : AppCompatActivity() {
                             DEPENDENCIES.preferences.authToken = user.authenticationToken!!
                             initProgressDialog()?.dismiss()
 
-                            DEPENDENCIES.navHelper.showRegisterUserInfoActivity(this)
+                            NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()
                         },
                         {
                             Log.e("LOG_TAG---", "error")

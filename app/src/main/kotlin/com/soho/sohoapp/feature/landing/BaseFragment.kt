@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.helper.SohoSnackbar
+import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.HttpErrorType.*
 import com.soho.sohoapp.network.HttpStatusException
 
@@ -36,11 +36,11 @@ open class BaseFragment : Fragment() {
                 }
 
                 PasswordReEnterRequired,
-                PasswordResetRequired ->  DEPENDENCIES.navHelper.showLandingActivity(activity, t.error)
+                PasswordResetRequired ->  NavigatorImpl.newInstance(this).showLandingActivity()
 
                 ReloginRequired -> {
 //                    SharedPrefsHelper.getInstance().removeUserCredentials()
-                    DEPENDENCIES.navHelper.showLandingActivity(activity, t.error)
+                    NavigatorImpl.newInstance(this).showLandingActivity()
                 }
             }
         else if (showInternetErrors && coordinatorLayout != null)

@@ -1,7 +1,6 @@
 package com.soho.sohoapp
 
 import android.content.Context
-import com.soho.sohoapp.helper.NavHelper
 import com.soho.sohoapp.imageloader.ImageLoader
 import com.soho.sohoapp.logger.AndroidLogger
 import com.soho.sohoapp.logger.Logger
@@ -24,7 +23,6 @@ enum class Dependencies {
     lateinit var eventBus: AndroidEventBus
         private set
 
-    val navHelper: NavHelper.Companion = NavHelper
     val sohoService: SohoService = ApiClient.getService()
 
     fun init(context: Context) {
