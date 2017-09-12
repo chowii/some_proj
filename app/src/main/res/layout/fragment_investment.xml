@@ -27,7 +27,7 @@
             android:textSize="16sp"/>
 
         <Button
-            android:id="@+id/home"
+            android:id="@+id/yes_home_button"
             style="@style/BorderWhiteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:text="@string/add_property_owner_home_button"/>
 
         <Button
-            android:id="@+id/investment"
+            android:id="@+id/no_investment_button"
             style="@style/BorderWhiteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

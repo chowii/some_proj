@@ -2,6 +2,7 @@ package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.SohoProperty
 import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.feature.home.more.model.AccountVerification
 import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.*
 import io.reactivex.Observable
@@ -53,6 +54,9 @@ interface SohoService {
 
     @GET("properties/{id}/")
     fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
+
+    @GET("verifications")
+    fun retrieveVerificationList(): Observable<List<AccountVerification>>
 }
 
 

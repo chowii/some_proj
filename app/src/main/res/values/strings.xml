@@ -150,6 +150,17 @@
     <string name="all">All</string>
     <string name="to">to</string>
 
+    <!-- More Section -->
+    <string name="place_holder_user_name">J. Seizov</string>
+    <string name="add_property_menu">Add Property</string>
+    <string name="setting_item_text">Setting</string>
+    <string name="help_item_text">Help</string>
+    <string name="log_out_item_text">Log out</string>
+    <string name="settings_account_verification_photo_id_text">Photo Id</string>
+    <string name="settings_account_verification_mobile_number_text">Mobile Number</string>
+    <string name="settings_account_verification_agent_license_text">Agent License</string>
+    <string name="settings_account_verification_text">Account Verification</string>
+    <string name="settings_edit_profile_text">Edit Profile</string>
 
 
     <string-array name="filter_buy_price_range">

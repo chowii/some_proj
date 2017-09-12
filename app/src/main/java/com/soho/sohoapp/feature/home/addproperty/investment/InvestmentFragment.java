@@ -24,10 +24,10 @@ public class InvestmentFragment extends BaseFragment implements InvestmentContra
     @BindView(R.id.question)
     TextView question;
 
-    @BindView(R.id.home)
+    @BindView(R.id.yes_home_button)
     Button home;
 
-    @BindView(R.id.investment)
+    @BindView(R.id.no_investment_button)
     Button investment;
 
     private InvestmentContract.ViewPresentable presentable;
@@ -110,12 +110,12 @@ public class InvestmentFragment extends BaseFragment implements InvestmentContra
         listener.onHomeOrInvestmentSelected(isInvestment);
     }
 
-    @OnClick(R.id.home)
+    @OnClick(R.id.yes_home_button)
     void onHomeClicked() {
         presentable.onHomeClicked();
     }
 
-    @OnClick(R.id.investment)
+    @OnClick(R.id.no_investment_button)
     void onInvestmentClicked() {
         presentable.onInvestmentClicked();
     }

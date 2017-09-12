@@ -6,6 +6,7 @@ import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 /**
  * Created by chowii on 25/7/17.
@@ -20,12 +21,20 @@ class User {
     @SerializedName("last_name")
     var lastName: String? = null
 
+    @SerializedName("dob")
+    lateinit var dateOfBirth: String
+
     var country: String? = null
 
     @SerializedName("authentication_token")
     var authenticationToken: String? = null
 
     var registrationCallback: RegistrationCallback? = null
+
+    fun getFullnameShort() = String.format(Locale.getDefault(), "%s.%s", firstName?.get(0), lastName)
+
+    fun getFullname() = String.format(Locale.getDefault(), "%s %s", firstName, lastName)
+
 
     fun registerUser(registerMap: Map<String, String>): Disposable? {
         return DEPENDENCIES.sohoService.register(registerMap)

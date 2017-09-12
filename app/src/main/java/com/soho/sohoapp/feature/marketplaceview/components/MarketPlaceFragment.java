@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;

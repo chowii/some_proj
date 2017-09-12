@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
+import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
 
 /**
  * Created by Jovan on 11/8/17.
@@ -26,7 +26,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return PortfolioFragment.newInstance();
         }
-        return MoreFragment.newInstance();
+        return MoreFragment.Companion.newInstance();
     }
 
     @Override
