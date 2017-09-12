@@ -70,15 +70,12 @@ class LoginActivity : AppCompatActivity() {
             disposable = DEPENDENCIES.sohoService.loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            {
-                                user ->
+                    .subscribe({ user ->
                                 NavigatorImpl.newInstance(this).openHomeActivity()
                                 DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                                 registerDialog?.dismiss()
                             },
-                            {
-                                throwable ->
+                            { throwable ->
                                 registerDialog?.dismiss()
                                 throwable.printStackTrace()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()

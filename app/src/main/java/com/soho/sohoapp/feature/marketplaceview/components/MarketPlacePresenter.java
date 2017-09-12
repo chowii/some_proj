@@ -47,8 +47,7 @@ class MarketPlacePresenter implements
                 DEPENDENCIES.getSohoService().searchProperties(searchParams)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.newThread())
-                        .subscribe(
-                                sohoProperties -> {
+                        .subscribe(sohoProperties -> {
                                     interactable.configureAdapter(sohoProperties);
                                     interactable.hideRefreshing();
                                 }, throwable -> {
