@@ -1,6 +1,5 @@
 package com.soho.sohoapp.feature.home.editproperty.overview;
 
-import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.databinding.FragmentEditOverviewBinding;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.utils.DrawableUtils;
@@ -52,10 +50,11 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        FragmentEditOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_overview, container, false);
-        View view = binding.getRoot();
+        View view = inflater.inflate(R.layout.fragment_edit_overview, container, false);
+//        FragmentEditOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_overview, container, false);
+//        View view = binding.getRoot();
+//        binding.setProperty(getProperty());
         ButterKnife.bind(this, view);
-        binding.setProperty(getProperty());
 
         marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
         verificationDesc = ButterKnife.findById(verification, R.id.title);

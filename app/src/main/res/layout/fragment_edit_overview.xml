@@ -1,42 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBackground">
 
-    <data>
-        <variable
-            name="property"
-            type="com.soho.sohoapp.feature.home.editproperty.data.Property"/>
-    </data>
-
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/lightBackground">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            style="@style/ListTextHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingBottom="6dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/edit_property_marketplace_settings"/>
 
-            <TextView
-                style="@style/ListTextHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="6dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:text="@string/edit_property_marketplace_settings"/>
+        <include
+            android:id="@+id/marketplaceState"
+            layout="@layout/item_edit_property_title"/>
 
-            <include
-                android:id="@+id/marketplaceState"
-                layout="@layout/item_edit_property_title"/>
+        <include layout="@layout/horizontal_rule"/>
 
-            <include layout="@layout/horizontal_rule"/>
+        <include
+            android:id="@+id/verification"
+            layout="@layout/item_edit_property_title"/>
 
-            <include
-                android:id="@+id/verification"
-                layout="@layout/item_edit_property_title"/>
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</layout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
