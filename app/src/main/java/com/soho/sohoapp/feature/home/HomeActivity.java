@@ -2,8 +2,9 @@ package com.soho.sohoapp.feature.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.elasticode.provider.Elasticode;
+import com.elasticode.provider.callback.ElasticodeResponse;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
@@ -22,11 +26,14 @@ import com.soho.sohoapp.navigator.NavigatorImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.content.pm.PackageManager.GET_META_DATA;
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class HomeActivity extends AppCompatActivity implements HomeContract.ViewInteractable {
@@ -51,12 +58,43 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
+        String apiKey = "";
+        try {
+            ApplicationInfo applicationInfo = SohoApplication.getContext()
+                                            .getPackageManager()
+                                            .getApplicationInfo(this.getPackageName(), GET_META_DATA);
+            apiKey = applicationInfo.metaData.getString("elastico.ApiKey", "");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Elasticode elasticode = Elasticode.getInstance(this, apiKey, elasticodeObserver);
+        elasticode.ready();
         initBottomNavigation();
         initAddedFragmentsTagList();
 
         presenter = new HomePresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
+
+
+    private Observer elasticodeObserver = new Observer() {
+        @Override
+        public void update(Observable observable, Object data) {
+            if (data instanceof ElasticodeResponse) {
+                ElasticodeResponse response = (ElasticodeResponse) data;
+                if (response.getError() != null) {
+                    // In case of error
+                } else {
+                    switch (response.getType()) {
+                        case ON_LAUNCH_DISPLAYED:
+                            Boolean didApeared = ((Boolean) response.getAdditionalData());
+                            break;
+                        // put here all types (ElasticodeResponseType) which you want to handle
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -116,6 +154,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void showOffersTab() {
         //todo: MoreFragment is here temporary. We need to show Offers tab
         showFragment(MoreFragment.TAG);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
     }
 
     @Override

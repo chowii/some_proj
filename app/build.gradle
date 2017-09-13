@@ -17,6 +17,7 @@ buildscript {
 }
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://s3-eu-west-1.amazonaws.com/elasticode-sdk/Android/maven/" }
 }
 
 
@@ -169,5 +170,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
 //    kapt 'com.android.databinding:compiler:2.3.3'
+
+    //Elasticode
+    compile 'com.elasticode.sdk:elasticode-android:2.1.1'
 }
 

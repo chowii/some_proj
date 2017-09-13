@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.soho.sohoapp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+            android:maxSdkVersion="18"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -29,6 +31,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -78,6 +81,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />
+
+        <meta-data
+            android:name="elastico.ApiKey"
+            android:value="35spuf65pdlmtnwq8pfne0uz" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
