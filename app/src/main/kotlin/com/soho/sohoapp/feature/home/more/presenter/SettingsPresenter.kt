@@ -8,7 +8,7 @@ import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.contract.SettingsContract
 import com.soho.sohoapp.feature.home.more.model.SettingItem
 import com.soho.sohoapp.feature.home.more.model.VerificationItem
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
