@@ -79,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
                                 registerDialog?.dismiss()
                                 throwable.printStackTrace()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
+                                DEPENDENCIES.logger.e("Error during login", throwable)
                             }
                     )
         }

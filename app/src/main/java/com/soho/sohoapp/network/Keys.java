@@ -1,7 +1,10 @@
 package com.soho.sohoapp.network;
 
 public interface Keys {
+
     interface Property {
+
+        String PROPRETY_ID = "property_id";
         String RELATION = "relation";
         String BEDROOMS = "property[bedrooms]";
         String BATHROOMS = "property[bathrooms]";
@@ -18,5 +21,17 @@ public interface Keys {
         String LATITUDE = "property[location_attributes][latitude]";
         String LONGITUDE = "property[location_attributes][longitude]";
         String IMAGE = "property_photos_attributes[0][image]";
+    }
+
+    interface Filter {
+        String FILTER_BY_GOOGLE_PLACES = "by_google_places[distance]";
+        String FILTER_MIN_SALE_PRICE = "by_min_sell_price";
+        String FILTER_MAX_SALE_PRICE = "by_max_sell_price";
+        String FILTER_MIN_RENT_PRICE = "by_min_rent_price";
+        String FILTER_MAX_RENT_PRICE = "by_max_rent_price";
+        String FILTER_BY_BEDROOM_COUNT = "by_bedroom_count";
+        String FILTER_BY_BATHROOM_COUNT = "by_bathroom_count";
+        String FILTER_BY_CARSPOT_COUNT = "by_carspot_count";
+        String FILTER_BY_PROPERTY_TYPE = "by_property_types";
     }
 }

@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,9 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.BaseModel;
-import com.soho.sohoapp.feature.marketplaceview.filterview.PropertyFilterActivity;
+import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,8 @@ import butterknife.OnClick;
 
 public class MarketPlaceFragment extends BaseFragment implements
         TabLayout.OnTabSelectedListener,
-        MarketPlaceContract.ViewInteractable
+        MarketPlaceContract.ViewInteractable,
+        PropertyViewHolder.OnMarketplaceItemClickListener
 {
 
     public static final String TAG = "MarketPlaceFragment";
@@ -74,7 +75,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         ButterKnife.bind(this, view);
 
         searchParams = (Map<String, Object>) getActivity().getIntent().getSerializableExtra("searchParams");
-        if(searchParams == null) searchParams = new HashMap<>();
+        if (searchParams == null) searchParams = new HashMap<>();
         searchParams.put("by_listing_type", "sale/auction");
 
         presenter = new MarketPlacePresenter(this);
@@ -96,7 +97,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
+        if (getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
             searchParams.put("by_listing_type", "sale/auction");
             presenter.startPresenting(searchParams);
         }else{
@@ -127,7 +128,7 @@ public class MarketPlaceFragment extends BaseFragment implements
     }
 
     void initAdapter(List<? extends BaseModel> propertyList){
-        recyclerView.setAdapter(new MarketPlaceAdapter(propertyList));
+        recyclerView.setAdapter(new MarketPlaceAdapter(propertyList, this));
         recyclerView.getRecycledViewPool().setMaxRecycledViews(R.id.image_view_pager, 1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -141,4 +142,9 @@ public class MarketPlaceFragment extends BaseFragment implements
         super.onDestroyView();
     }
 
+    @Override
+    public void onMarketplaceItemClicked(int id) {
+        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity(), id);
+        getActivity().startActivity(detailIntent);
+    }
 }

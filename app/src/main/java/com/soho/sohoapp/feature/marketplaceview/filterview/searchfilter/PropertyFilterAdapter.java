@@ -10,24 +10,27 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.Constants;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.common.RoomsItemViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterButtonItemViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterCheckboxViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRadioGroupViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterRangeViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterToggleItemViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.FilterValueSelectorViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.HeaderViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.RecyclerViewViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.TextSearchViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.FilterCheckboxItem;
-import com.soho.sohoapp.helper.FileWriter;
 import com.soho.sohoapp.feature.home.BaseFormModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterButtonItemViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterCheckboxViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterRadioGroupViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterRangeViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterToggleItemViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.FilterValueSelectorViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.HeaderViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.RecyclerViewViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.TextSearchViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem;
+import com.soho.sohoapp.helper.FileWriter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.soho.sohoapp.SohoApplication.getStringFromResource;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_BY_PROPERTY_TYPE;
 
 /**
  * Created by chowii on 18/8/17.
@@ -99,12 +102,14 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     public void onBindViewHolder(BaseFormViewHolder holder, int position) {
         holder.onBindViewHolder(mFilterItems.get(position));
         addCheckboxAction(holder);
-        if(holder instanceof FilterButtonItemViewHolder){
+        if (holder instanceof FilterButtonItemViewHolder){
             FilterButtonItemViewHolder buttonViewHolder = (FilterButtonItemViewHolder) holder;
             buttonViewHolder.setOnSaveFilterPreferenceListener((title) -> {
-                if(title.equalsIgnoreCase("Save this search")) writeFilterToFile();
-                else if(title.equalsIgnoreCase("search"))
+                if (title.equalsIgnoreCase(getStringFromResource(R.string.filter_item_save_this_search))) {
+                    writeFilterToFile();
+                }else if (title.equalsIgnoreCase("search")){
                     mSearchListener.onSearchClicked(mFilterMap);
+                }
             });
         }
     }
@@ -114,12 +119,12 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     }
 
     private void addCheckboxAction(BaseFormViewHolder holder) {
-        if(holder instanceof FilterCheckboxViewHolder){
+        if (holder instanceof FilterCheckboxViewHolder){
             view = (FilterCheckboxViewHolder) holder;
 
             view.setOnCheckedChangeListener((title, isChecked) -> {
                 for(BaseFormModel modelItem: mFilterItems)
-                    if(modelItem instanceof FilterCheckboxItem)
+                    if (modelItem instanceof FilterCheckboxItem)
                         configureCheckboxAction((FilterCheckboxItem) modelItem, title, isChecked);
                 notifyDataSetChanged();
             });
@@ -127,36 +132,36 @@ class PropertyFilterAdapter extends RecyclerView.Adapter<BaseFormViewHolder> imp
     }
 
     private void configureCheckboxAction(FilterCheckboxItem modelItem, String title, boolean isChecked) {
-        if(title.equalsIgnoreCase("All")) checkedAll(modelItem);
+        if (title.equalsIgnoreCase("All")) checkedAll(modelItem);
         else checkedIndividual(modelItem, title, isChecked);
     }
 
     private void checkedAll(FilterCheckboxItem item) {
         boolean isAll = item.getTitle().equalsIgnoreCase("All");
-        if(!isAll) item.setValue(false);
+        if (!isAll) item.setValue(false);
         else item.setValue(true);
     }
 
     private void checkedIndividual(FilterCheckboxItem item, String title, boolean isChecked) {
         boolean isAll = item.getTitle().equalsIgnoreCase("All");
-        if(isAll) item.setValue(false);
-        else if(item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
+        if (isAll) item.setValue(false);
+        else if (item.getTitle().equalsIgnoreCase(title)) item.setValue(isChecked);
     }
 
     @Override
     public void onChange(CharSequence key, Object value) {
-        if(key.toString().equalsIgnoreCase("by_property_types")) addListToFilterMap((String) value);
+        if (key.toString().equalsIgnoreCase(FILTER_BY_PROPERTY_TYPE)) addListToFilterMap((String) value);
         else  mFilterMap.put(key.toString(), value);
     }
 
     private void addListToFilterMap(String value) {
-        List<String> item = (List<String>) mFilterMap.get("by_property_types");
-        if(item == null){
+        List<String> item = (List<String>) mFilterMap.get(FILTER_BY_PROPERTY_TYPE);
+        if (item == null){
             item = new ArrayList<>();
             item.add(value);
-        }else if(item.contains(value)) item.remove(value);
+        }else if (item.contains(value)) item.remove(value);
         else item.add(value);
-        mFilterMap.put("by_property_types", item);
+        mFilterMap.put(FILTER_BY_PROPERTY_TYPE, item);
     }
 
     interface OnSearchClickListener {

@@ -2,8 +2,8 @@ package com.soho.sohoapp;
 
 import android.view.View;
 
-import com.soho.sohoapp.feature.marketplaceview.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 import com.soho.sohoapp.feature.home.BaseFormModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.OnViewHolderItemValueChangeListener;
 
 import butterknife.ButterKnife;
 

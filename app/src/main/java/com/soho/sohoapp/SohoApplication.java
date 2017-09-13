@@ -1,7 +1,9 @@
 package com.soho.sohoapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
@@ -18,9 +20,12 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class SohoApplication extends MultiDexApplication {
 
+    private static SohoApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         Fabric.with(this, new Crashlytics());
         Constants.Companion.init(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -30,11 +35,15 @@ public class SohoApplication extends MultiDexApplication {
         );
         DEPENDENCIES.init(this);
         Prefs prefs = DEPENDENCIES.getPreferences();
-        if(!prefs.getHasInstalled()){
+        if (!prefs.getHasInstalled()) {
             prefs.setHasInstalled(true);
             createShortCut();
         }
     }
+
+    public static SohoApplication getInstance(){ return instance; }
+
+    public static Context getContext(){ return instance.getApplicationContext(); }
 
     public void createShortCut() {
         Intent shortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
@@ -45,5 +54,7 @@ public class SohoApplication extends MultiDexApplication {
         shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent(getApplicationContext(), SplashActivity.class));
         sendBroadcast(shortcutIntent);
     }
+
+    public static String getStringFromResource(@StringRes int stringRes) { return getContext().getString(stringRes); }
 }
 

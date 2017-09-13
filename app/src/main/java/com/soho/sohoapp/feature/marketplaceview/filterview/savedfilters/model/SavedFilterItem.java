@@ -53,7 +53,7 @@ public class SavedFilterItem implements BaseModel {
     }
 
     private void setSubTitle(String subTitle) {
-        if(subTitle == null ) this.subTitle = "";
+        if (subTitle == null ) this.subTitle = "";
         else this.subTitle = subTitle;
     }
 }

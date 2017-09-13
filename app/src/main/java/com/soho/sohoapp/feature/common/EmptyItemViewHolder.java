@@ -21,9 +21,7 @@ public class EmptyItemViewHolder extends BaseViewHolder<EmptyDataSetItem> {
     @BindView(R.id.subheader)
     TextView subHeader;
 
-    public EmptyItemViewHolder(View itemView) {
-        super(itemView);
-    }
+    public EmptyItemViewHolder(View itemView) { super(itemView); }
 
     @Override
     public void onBindViewHolder(EmptyDataSetItem model) {

@@ -2,8 +2,8 @@ package com.soho.sohoapp.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.feature.User
 
 class Prefs(context: Context) {
@@ -13,7 +13,7 @@ class Prefs(context: Context) {
     var authToken: String
         set(value) {
             prefs.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
-            Log.d("LOG_TAG---", prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
+            DEPENDENCIES.logger.d( prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
         } get() {
         return prefs.getString(SHARED_PREFS_AUTH_TOKEN, "")!!
     }

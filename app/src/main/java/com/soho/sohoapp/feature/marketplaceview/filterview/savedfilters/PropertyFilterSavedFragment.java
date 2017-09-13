@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.google.gson.reflect.TypeToken;
 import com.soho.sohoapp.Constants;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem;
 import com.soho.sohoapp.feature.marketplaceview.model.EmptyDataSetItem;
 import com.soho.sohoapp.helper.FileWriter;
-import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.landing.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +58,7 @@ public class PropertyFilterSavedFragment extends BaseFragment implements Propert
         filterList.add(new HeaderItem<String>("Saved Search"));
         filterList.addAll(list.getData());
 
-        if(filterList.size() < 2) filterList.add(new EmptyDataSetItem());
+        if (filterList.size() < 2) filterList.add(new EmptyDataSetItem());
 
         recyclerView.setAdapter(new PropertyFilterSavedAdapter(filterList, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

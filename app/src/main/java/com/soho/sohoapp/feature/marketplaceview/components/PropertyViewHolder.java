@@ -3,14 +3,16 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.SohoProperty;
 
+import java.util.Locale;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by chowii on 15/8/17.
@@ -39,40 +41,48 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     @BindView(R.id.parking_text_view)
     TextView parkingTextView;
 
+    @BindView(R.id.rootView)
+    ViewGroup viewView;
 
-    PropertyViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-    }
-
+    private final OnMarketplaceItemClickListener listener;
     PropertyPagerAdapter pagerAdapter;
+
+    PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
+        super(itemView);
+        this.listener = listener;
+    }
 
     @Override
     public void onBindViewHolder(SohoProperty property){
-        if(pagerAdapter == null)
+        if (pagerAdapter == null)
             pagerAdapter = new PropertyPagerAdapter(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
-
+        viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.id()));
         configurePropertyDetails(property);
     }
 
     private void configurePropertyDetails(SohoProperty property) {
         titleTextView.setText(property.title());
-        streetAddressTextView.setText(property.location("address_1").toString());
-
+        streetAddressTextView.setText(property.location().retrieveAddress1());
         suburbAddressTextView.setText(getSuburbString(property));
+        bedroomTextView.setText(String.valueOf(property.numberOfBedrooms()));
+        bathroomTextView.setText(String.valueOf(property.numberOfBathrooms()));
+        parkingTextView.setText(String.valueOf(property.numberOfParking()));
 
-        bedroomTextView.setText(property.numberOfBedrooms() + "");
-        bathroomTextView.setText(property.numberOfBathrooms() + "");
-        parkingTextView.setText(property.numberOfParking() + "");
     }
 
     @NonNull
     private String getSuburbString(SohoProperty property) {
-        String suburbAddress = property.location("suburb").toString();
-        suburbAddress = suburbAddress + " " + property.location("postcode").toString();
-        suburbAddress = suburbAddress + ", " + property.location("state").toString();
-        return suburbAddress;
+        return String.format(
+                            Locale.getDefault(),
+                            "%s %s, %s",
+                            property.location().retrieveSuburb(),
+                            property.location().retrievePostcode(),
+                            property.location().retrieveState());
+    }
+
+    interface OnMarketplaceItemClickListener {
+        void onMarketplaceItemClicked(int id);
     }
 
 }

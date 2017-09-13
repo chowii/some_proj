@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import butterknife.BindView
@@ -82,15 +81,15 @@ class SignUpActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { user ->
-                            Log.v("LOG_TAG---", user.authenticationToken)
+                            DEPENDENCIES.logger.d( user.authenticationToken)
                             DEPENDENCIES.preferences.mUser = user
                             DEPENDENCIES.preferences.authToken = user.authenticationToken!!
                             initProgressDialog()?.dismiss()
 
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()
                         },
-                        {
-                            Log.e("LOG_TAG---", "error")
+                        { throwable ->
+                            DEPENDENCIES.logger.e("error", throwable)
                             initProgressDialog()?.dismiss()
                         }
                 )
