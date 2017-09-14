@@ -62,6 +62,11 @@ interface SohoService {
     @GET("properties/{id}")
     fun getPropertyById(@Path("id") id: Int): Observable<PropertyDetail>
 
+    @PUT("verifications/mobile")
+    fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<AccountVerification>
+
+    @PUT("verifications/agent_licence")
+    fun verifyAgentLicenseNumber(@Body map: HashMap<String, Any>): Observable<AccountVerification>
 }
 
 

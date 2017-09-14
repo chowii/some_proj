@@ -9,13 +9,14 @@ interface SettingsContract {
 
     interface ViewPresentable {
         fun startPresenting()
-        fun stopPresenting()
         fun retrieveAccount()
+        fun stopPresenting()
+        fun onSettingsItemClicked(item: String)
     }
 
     interface ViewInteractable {
         fun configureToolbar()
-        fun configureAdapter(list: List<BaseModel>)
+        fun updateAdapterDataset(dataset: List<BaseModel>)
     }
 
 }

@@ -7,6 +7,8 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface NavigatorInterface {
 
     void exitCurrentScreen();
@@ -41,4 +43,13 @@ public interface NavigatorInterface {
 
     void showLandingActivity();
 
+    void startCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE);
+
+    void startVerifyPhoneActivity();
+
+    void startVerifyPhoneActivity(int flag);
+
+    void openSettingActivity();
+
+    void startAgentLicenseActivity(int flag);
 }

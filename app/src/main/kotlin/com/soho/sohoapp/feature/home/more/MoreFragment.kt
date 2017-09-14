@@ -66,7 +66,7 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
 
     override fun onSettingsItemClicked(button: String) {
         when(button){
-            getString(R.string.setting_item_text) -> startActivity(Intent(activity, SettingsActivity::class.java))
+            getString(R.string.setting_item_text) -> NavigatorImpl.newInstance(this).openSettingActivity()
             getString(R.string.log_out_item_text) -> logoutUser()
             else -> Dependencies.DEPENDENCIES.logger.d(button)
         }

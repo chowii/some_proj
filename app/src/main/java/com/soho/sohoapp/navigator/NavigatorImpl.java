@@ -1,6 +1,8 @@
 package com.soho.sohoapp.navigator;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,8 +10,14 @@ import android.support.v4.app.FragmentActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
+
+import com.soho.sohoapp.feature.home.more.SettingsActivity;
+import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
+import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
+
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
+
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
@@ -181,6 +189,56 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivity(LandingActivity.Companion.createIntent(fragment.getActivity()));
         } else {
             activity.startActivity(LandingActivity.Companion.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void startCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (activity == null) {
+            if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+                fragment.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
+            }
+        } else {
+            if (intent.resolveActivity(activity.getPackageManager()) != null){
+                activity.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void startVerifyPhoneActivity() {
+        if (fragment != null){
+            fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext()));
+        } else {
+            activity.startActivity(VerifyPhoneActivity.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void startVerifyPhoneActivity(int flag) {
+        if (fragment != null){
+            fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext(), flag));
+        } else {
+            activity.startActivity(VerifyPhoneActivity.createIntent(activity, flag));
+        }
+    }
+
+    @Override
+    public void openSettingActivity() {
+        if (fragment != null){
+            fragment.getActivity().startActivity(SettingsActivity.createIntent(fragment.getContext()));
+        } else {
+            activity.startActivity(SettingsActivity.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void startAgentLicenseActivity(int flag) {
+        if (fragment != null){
+            fragment.getActivity().startActivity(VerifyAgentLicenseActivity.createIntent(fragment.getContext()));
+        } else {
+            activity.startActivity(VerifyAgentLicenseActivity.createIntent(activity));
         }
     }
 }

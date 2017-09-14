@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_simple" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextView.SubTitle.Center.Dark"
+            android:text="@string/verify_agent_message_text"
+            android:paddingBottom="20dp"/>
+
+        <include android:id="@+id/header_license_number" layout="@layout/item_header" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/license_number_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_textColor="@color/colorPrimary"
+            android:inputType="text"
+            android:maxLines="1"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_agent_license_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        style="@style/Button.Green"
+        android:text="@string/save_agent_license_text"
+        android:layout_gravity="bottom"
+        android:layout_margin="15dp"
+        />
+
+</LinearLayout>

@@ -15,7 +15,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewhol
  * Created by chowii on 11/9/17.
  */
 
-class SettingsAdapter(private val list: List<BaseModel>, private val moreListener: OnSettingsItemClickListener): RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
+class SettingsAdapter(private var list: List<BaseModel>, private val moreListener: OnSettingsItemClickListener): RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
 
 
     override fun getItemCount(): Int = list.size
@@ -38,6 +38,10 @@ class SettingsAdapter(private val list: List<BaseModel>, private val moreListene
 
     interface OnSettingsItemClickListener {
         fun onSettingsItemClicked(item: String)
+    }
+
+    fun updateDataset(dataset: List<BaseModel>) {
+        list = dataset
     }
 
 }

@@ -2,6 +2,10 @@ package com.soho.sohoapp.network;
 
 public interface Keys {
 
+    interface More{
+        String TEXT = "text";
+    }
+
     interface Property {
 
         String PROPRETY_ID = "property_id";

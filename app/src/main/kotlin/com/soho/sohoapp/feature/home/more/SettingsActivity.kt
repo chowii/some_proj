@@ -1,11 +1,14 @@
 package com.soho.sohoapp.feature.home.more
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.widget.Toast
+import android.view.MenuItem
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.soho.sohoapp.R
@@ -27,11 +30,22 @@ class SettingsActivity: AppCompatActivity(), SettingsContract.ViewInteractable, 
 
     lateinit var presenter: SettingsPresenter
 
+    private lateinit var adapter: SettingsAdapter
+
+    companion object {
+        val CAMERA_INTENT_REQUEST_CODE: Int = 12312
+
+        @JvmStatic
+        fun createIntent(context: Context): Intent = Intent(context, SettingsActivity::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         ButterKnife.bind(this)
 
+
+        configureAdapter()
         presenter = SettingsPresenter(this, this)
         presenter.startPresenting()
         presenter.retrieveAccount()
@@ -48,33 +62,33 @@ class SettingsActivity: AppCompatActivity(), SettingsContract.ViewInteractable, 
         supportActionBar?.title = "Settings"
     }
 
-    override fun configureAdapter(list: List<BaseModel>) {
-        recyclerView.adapter = SettingsAdapter(list, this)
+    fun configureAdapter() {
+        adapter = SettingsAdapter(listOf(), this)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    override fun onSettingsItemClicked(item: String) {
-        when (item) {
-            getString(R.string.settings_account_verification_photo_id_text) -> openCamera()
-            getString(R.string.settings_account_verification_mobile_number_text) -> verifyPhone()
-            getString(R.string.settings_account_verification_agent_license_text) -> verifyLicense()
-            else -> doElse()
+    override fun updateAdapterDataset(dataset: List<BaseModel>) {
+        adapter.updateDataset(dataset)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onSettingsItemClicked(item: String) = presenter.onSettingsItemClicked(item)
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+        if (requestCode == CAMERA_INTENT_REQUEST_CODE && intent.extras != null) {
+            val photoIdBitmap: Bitmap = retrievePhotoFromIntent(intent.extras)
+            photoIdBitmap.byteCount
         }
     }
 
-    private fun doElse() {
-        Toast.makeText(this, "Do Else", Toast.LENGTH_SHORT).show()
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
-    private fun verifyLicense() {
-        Toast.makeText(this, "Agent License", Toast.LENGTH_SHORT).show()
-    }
+    private fun retrievePhotoFromIntent(extras: Bundle?): Bitmap = extras?.get("data") as Bitmap
 
-    private fun openCamera() {
-        Toast.makeText(this, "Open Camera", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun verifyPhone() {
-        Toast.makeText(this, "Verify Phone", Toast.LENGTH_SHORT).show()
-    }
 }

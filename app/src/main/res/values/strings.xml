@@ -210,6 +210,18 @@
     <string name="property_detail_header_no_header_text">No title available.</string>
     <string name="filter_item_save_this_search">Save this search</string>
 
+    <!-- More / Settings -->
+    <string name="settings_phone_verify_message">Please Verify your mobile number so you can\nbe contacted by an owner or agent if you\nmake an enquiry</string>
+    <string name="settings_phone_verify_title">Verification Required</string>
+    <string name="settings_phone_mobile_number">Mobile Number</string>
+    <string name="settings_phone_send_4_digit_code">SEND 4 DIGIT CODE</string>
+    <string name="settings_phone_toolbar_title">Mobile Verification</string>
+    <string name="verify_agent_message_text">Add your agent license number to be shown\npublicly on any listing you are currently managing</string>
+    <string name="license_number_string">License Number</string>
+    <string name="agent_license_toolbar_title">Agent License</string>
+    <string name="save_agent_license_text">Save</string>
+
+
     <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50k</item>
@@ -303,6 +315,12 @@
         <item>$4k</item>
         <item>$4.50k</item>
         <item>$5k</item>
+    </string-array>
+
+    <string-array name="country_code_options">
+        <item>+61</item>
+        <item>+1</item>
+        <item>+65</item>
     </string-array>
 
 </resources>
