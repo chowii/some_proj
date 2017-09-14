@@ -127,6 +127,16 @@
     <string name="edit_property_lvr_value" formatted="true">%.2f%%</string>
     <!--Edit property screen end-->
 
+    <!--Publish property screens start-->
+    <string name="publish_property_set_status">Set Status</string>
+    <string name="publish_property_update">Update</string>
+    <string name="publish_property_public">Public</string>
+    <string name="publish_property_private">Private</string>
+    <string name="publish_property_public_desc">Publish your property to Soho Marketplace to find buyers or renters or just be open for offers.</string>
+    <string name="publish_property_private_desc">Manage everything about your property privately. Prevents you from receiving potential offers from buyers or renters.</string>
+    <!--Publish property screens end-->
+
+
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>
     <string name="filter_suburb_search_header">ENTER SEARCH LOCATION, i.e. Areas, Suburbs</string>

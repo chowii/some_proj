@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
@@ -104,6 +106,15 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
+    public void openPropertyStatusScreen(@NonNull Property property) {
+        if (fragment != null) {
+            fragment.startActivity(PropertyStatusActivity.createIntent(fragment.getActivity(), property));
+        } else {
+            activity.startActivity(PropertyStatusActivity.createIntent(activity, property));
+        }
+    }
+
+    @Override
     public void openHomeActivity() {
         if (fragment != null) {
             fragment.startActivity(HomeActivity.createIntent(fragment.getActivity()));
@@ -139,25 +150,37 @@ public class NavigatorImpl implements NavigatorInterface {
 
     @Override
     public void openForgetPasswordActivity() {
-        if(activity == null) fragment.startActivity(ForgotPasswordActivity.createIntent(fragment.getActivity()));
-        else activity.startActivity(ForgotPasswordActivity.createIntent(activity));
+        if (fragment != null) {
+            fragment.startActivity(ForgotPasswordActivity.createIntent(fragment.getActivity()));
+        } else {
+            activity.startActivity(ForgotPasswordActivity.createIntent(activity));
+        }
     }
 
     @Override
     public void openSignUpActivity() {
-        if(activity == null) fragment.startActivity(SignUpActivity.Companion.createIntent(fragment.getActivity()));
-        else activity.startActivity(SignUpActivity.Companion.createIntent(activity));
+        if (fragment != null) {
+            fragment.startActivity(SignUpActivity.Companion.createIntent(fragment.getActivity()));
+        } else {
+            activity.startActivity(SignUpActivity.Companion.createIntent(activity));
+        }
     }
 
     @Override
     public void showRegisterUserInfoActivity() {
-        if(activity == null) fragment.startActivity(RegisterUserInfoActivity.Companion.createIntent(fragment.getActivity()));
-        else activity.startActivity(RegisterUserInfoActivity.Companion.createIntent(activity));
+        if (fragment != null) {
+            fragment.startActivity(RegisterUserInfoActivity.Companion.createIntent(fragment.getActivity()));
+        } else {
+            activity.startActivity(RegisterUserInfoActivity.Companion.createIntent(activity));
+        }
     }
 
     @Override
     public void showLandingActivity() {
-        if(activity == null) fragment.startActivity(LandingActivity.Companion.createIntent(fragment.getActivity()));
-        activity.startActivity(LandingActivity.Companion.createIntent(fragment.getActivity()));
+        if (fragment != null) {
+            fragment.startActivity(LandingActivity.Companion.createIntent(fragment.getActivity()));
+        } else {
+            activity.startActivity(LandingActivity.Companion.createIntent(activity));
+        }
     }
 }

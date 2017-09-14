@@ -4,19 +4,23 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyStatus;
+import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.utils.ColorUtils;
 
 public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract.ViewPresentable {
     private final EditOverviewContract.ViewInteractable view;
+    private final NavigatorInterface navigator;
+    private Property property;
 
-    public EditOverviewPresenter(EditOverviewContract.ViewInteractable view) {
+    public EditOverviewPresenter(EditOverviewContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
+        this.navigator = navigator;
     }
 
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
-        Property property = view.getProperty();
+        property = view.getProperty();
         switch (property.getPropertyListing().getState()) {
             case PropertyStatus.PRIVATE:
                 view.showMarketplaceState(R.string.edit_property_private);
@@ -39,7 +43,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
 
     @Override
     public void onMarketplaceStateClicked() {
-        view.showToast("Open state settings");
+        navigator.openPropertyStatusScreen(property);
     }
 
     @Override

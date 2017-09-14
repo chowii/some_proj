@@ -19,6 +19,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.landing.BaseFragment;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.utils.DrawableUtils;
 
 import butterknife.BindView;
@@ -62,15 +63,9 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
         initView();
 
-        presenter = new EditOverviewPresenter(this);
+        presenter = new EditOverviewPresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
         return view;
-    }
-
-    private void initView() {
-        marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
-        verificationDesc = ButterKnife.findById(verification, R.id.title);
-        verificationDesc.setText(R.string.edit_property_verification);
     }
 
     @Override
@@ -130,5 +125,11 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @OnClick(R.id.verification)
     void onVerificationClicked() {
         presentable.onVerificationClicked();
+    }
+
+    private void initView() {
+        marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
+        verificationDesc = ButterKnife.findById(verification, R.id.title);
+        verificationDesc.setText(R.string.edit_property_verification);
     }
 }

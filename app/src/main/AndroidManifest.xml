@@ -71,6 +71,10 @@
             android:theme="@style/AppTheme.Transparent"/>
 
         <activity
+            android:name=".feature.home.editproperty.publish.PropertyStatusActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
 
