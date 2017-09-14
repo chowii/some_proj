@@ -10,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,6 +17,7 @@ import com.elasticode.provider.Elasticode;
 import com.elasticode.provider.callback.ElasticodeResponse;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
+import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
@@ -36,19 +36,20 @@ import butterknife.OnClick;
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.ViewInteractable {
+public class HomeActivity extends AbsActivity implements HomeContract.ViewInteractable {
 
     @BindView(R.id.bottomNavigation)
     BottomNavigationView bottomNavigation;
     private HomeContract.ViewPresentable presentable;
     private HomePresenter presenter;
     private List<String> addedFragmentsTags;
+    private NavigatorImpl navigator;
 
-    public static Intent createIntent(Context context){
+    public static Intent createIntent(Context context) {
         return new Intent(context, HomeActivity.class);
     }
 
-    public static Intent createIntent(Context context, int flags){
+    public static Intent createIntent(Context context, int flags) {
         return new Intent(context, HomeActivity.class).setFlags(flags);
     }
 
@@ -61,14 +62,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         String apiKey = "";
         try {
             ApplicationInfo applicationInfo = SohoApplication.getContext()
-                                            .getPackageManager()
-                                            .getApplicationInfo(this.getPackageName(), GET_META_DATA);
+                    .getPackageManager()
+                    .getApplicationInfo(this.getPackageName(), GET_META_DATA);
             apiKey = applicationInfo.metaData.getString("elastico.ApiKey", "");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         Elasticode elasticode = Elasticode.getInstance(this, apiKey, elasticodeObserver);
         elasticode.ready();
+
+        navigator = NavigatorImpl.newInstance(this);
         initBottomNavigation();
         initAddedFragmentsTagList();
 
@@ -97,9 +100,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         DEPENDENCIES.getLogger().d(item.getItemId() + "");
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.home:
                 DEPENDENCIES.getLogger().d("Profile Image button clicked in settings");
             case R.id.add_property_menu:
@@ -147,13 +150,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @Override
     public void showManageTab() {
-        showFragment(PortfolioFragment.TAG);
+        if (!isUserSignedIn()) {
+            navigator.openLandingActivity();
+        } else {
+            showFragment(PortfolioFragment.TAG);
+        }
     }
 
     @Override
     public void showOffersTab() {
-        //todo: MoreFragment is here temporary. We need to show Offers tab
-        showFragment(MoreFragment.TAG);
+        if (!isUserSignedIn()) {
+            navigator.openLandingActivity();
+        } else {
+            //todo: MoreFragment is here temporary. We need to show Offers tab
+            showFragment(MoreFragment.TAG);
+        }
     }
 
     @Override
@@ -163,10 +174,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @Override
     public void showMoreTab() {
-        if(DEPENDENCIES.getPreferences().getAuthToken().isEmpty() && DEPENDENCIES.getPreferences().getMUser() == null){
-            NavigatorImpl.newInstance(this).openLandingActivity();
-        }else
-        showFragment(MoreFragment.TAG);
+        if (!isUserSignedIn()) {
+            navigator.openLandingActivity();
+        } else {
+            showFragment(MoreFragment.TAG);
+        }
     }
 
     @Override
@@ -177,7 +189,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @OnClick(R.id.addProperty)
     void onAddPropertyClicked() {
-        presentable.onAddPropertyClicked();
+        if (!isUserSignedIn()) {
+            navigator.openLandingActivity();
+        } else {
+            presentable.onAddPropertyClicked();
+        }
     }
 
     private void showFragment(String fragmentTag) {

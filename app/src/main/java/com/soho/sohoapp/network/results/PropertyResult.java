@@ -32,6 +32,9 @@ public class PropertyResult {
     @SerializedName("property_listing")
     public PropertyListing propertyListing;
 
+    @SerializedName("property_finance")
+    public PropertyFinanceResult propertyFinance;
+
     @SerializedName("photos")
     public List<Photo> photos;
 

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Property implements Parcelable {
     private String type;
     private PropertyAddress address;
     private PropertyListing propertyListing;
+    private PropertyFinance propertyFinance;
     private List<PropertyImage> propertyImageList;
     private List<PropertyVerification> propertyVerificationList;
 
@@ -86,6 +88,14 @@ public class Property implements Parcelable {
         this.type = type;
     }
 
+    public PropertyFinance getPropertyFinance() {
+        return propertyFinance;
+    }
+
+    public void setPropertyFinance(PropertyFinance propertyFinance) {
+        this.propertyFinance = propertyFinance;
+    }
+
     @NonNull
     public List<PropertyImage> getPropertyImageList() {
         if (propertyImageList == null) {
@@ -134,6 +144,7 @@ public class Property implements Parcelable {
         dest.writeString(this.type);
         dest.writeParcelable(this.address, flags);
         dest.writeParcelable(this.propertyListing, flags);
+        dest.writeParcelable(this.propertyFinance, flags);
         dest.writeTypedList(this.propertyImageList);
         dest.writeTypedList(this.propertyVerificationList);
     }
@@ -148,6 +159,7 @@ public class Property implements Parcelable {
         this.type = in.readString();
         this.address = in.readParcelable(PropertyAddress.class.getClassLoader());
         this.propertyListing = in.readParcelable(PropertyListing.class.getClassLoader());
+        this.propertyFinance = in.readParcelable(PropertyFinance.class.getClassLoader());
         this.propertyImageList = in.createTypedArrayList(PropertyImage.CREATOR);
         this.propertyVerificationList = in.createTypedArrayList(PropertyVerification.CREATOR);
     }

@@ -29,6 +29,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
                 view.showVerificationSection();
                 break;
         }
+        view.setPropertyFinance(property.getPropertyFinance());
     }
 
     @Override

@@ -24,12 +24,12 @@
             android:id="@+id/addProperty"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="@string/home_add_property"
-            android:textSize="20sp"
-            android:textColor="@color/white"
+            android:layout_gravity="center"
             android:background="@drawable/circle_green"
-            android:layout_gravity="center"/>
+            android:text="@string/home_add_property"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
 
-        </android.support.design.widget.BottomNavigationView>
+    </android.support.design.widget.BottomNavigationView>
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.widget.Toast;
 
 import com.soho.sohoapp.logger.Logger;
+import com.soho.sohoapp.preferences.Prefs;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
@@ -30,6 +31,11 @@ public abstract class AbsActivity extends AppCompatActivity {
 
     protected void showToast(@StringRes int resId) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    }
+
+    protected boolean isUserSignedIn() {
+        Prefs prefs = DEPENDENCIES.getPreferences();
+        return !prefs.getAuthToken().isEmpty();
     }
 
 }

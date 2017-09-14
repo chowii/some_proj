@@ -46,17 +46,17 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
             title.setText(propertyAddress.getAddressLine1());
         }
 
-        double estimatedValue = model.getPortfolioFinance().getEstimatedValue();
+        double estimatedValue = model.getPropertyFinance().getEstimatedValue();
         this.estimatedValue.setText(StringUtils.formatPrice(context, estimatedValue));
 
-        double yield = PropertyCalculator.calculateYield(model);
-        this.yield.setText(StringUtils.formatYield(context, yield));
+        double yield = PropertyCalculator.calculateYield(model.getPropertyFinance());
+        this.yield.setText(StringUtils.longFormatYield(context, yield));
 
 
-        double lvr = PropertyCalculator.calculateLvr(model);
-        this.lvr.setText(StringUtils.formatLvr(context, lvr));
+        double lvr = PropertyCalculator.calculateLvr(model.getPropertyFinance());
+        this.lvr.setText(StringUtils.longFormatLvr(context, lvr));
 
-        double changedValue = PropertyCalculator.calculateValueChange(model);
+        double changedValue = PropertyCalculator.calculateValueChange(model.getPropertyFinance());
         this.changedValue.setText(StringUtils.formatChangedValue(context, changedValue));
     }
 

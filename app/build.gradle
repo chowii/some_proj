@@ -109,7 +109,7 @@ dependencies {
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile ("org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version") {
+    compile("org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version") {
         transitive = false
     }
 
@@ -171,7 +171,14 @@ dependencies {
 
 //    kapt 'com.android.databinding:compiler:2.3.3'
 
+    //Material time picker
+    compile("com.wdullaer:materialdatetimepicker:3.2.2") {
+        exclude module: 'support-v13'
+        exclude module: 'animated-vector-drawable'
+    }
+
     //Elasticode
     compile 'com.elasticode.sdk:elasticode-android:2.1.1'
+
 }
 

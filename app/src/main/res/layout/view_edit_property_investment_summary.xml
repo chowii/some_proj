@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/white"
+       tools:parentTag="android.widget.LinearLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
+
+        <include
+            android:id="@+id/yield"
+            layout="@layout/item_edit_property_investment"/>
+
+        <include
+            android:id="@+id/lvr"
+            layout="@layout/item_edit_property_investment"/>
+
+        <include
+            android:id="@+id/valueChange"
+            layout="@layout/item_edit_property_investment"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/purchasePrice"
+        layout="@layout/item_edit_property_enter_value"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/loanAmount"
+        layout="@layout/item_edit_property_enter_value"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/estimatedValue"
+        layout="@layout/item_edit_property_enter_value"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <RadioGroup
+        android:id="@+id/rentOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingEnd="32dp"
+        android:paddingStart="32dp"
+        android:paddingTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rented"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_property_rented"
+            android:textColor="@color/primaryText"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/notRented"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_property_not_rented"
+            android:textColor="@color/primaryText"/>
+    </RadioGroup>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/weeklyRent"
+        layout="@layout/item_edit_property_enter_value"/>
+
+    <include
+        android:id="@+id/estimatedWeeklyRent"
+        layout="@layout/item_edit_property_enter_value"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <LinearLayout
+        android:id="@+id/endOfRent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_property_end_of_rent"
+            android:textColor="@color/primaryText"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/endDateOfRent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</merge>

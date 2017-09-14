@@ -4,6 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
 
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 
 public interface EditOverviewContract {
 
@@ -27,5 +28,7 @@ public interface EditOverviewContract {
         void showVerificationSection();
 
         void hideVerificationSection();
+
+        void setPropertyFinance(PropertyFinance finance);
     }
 }

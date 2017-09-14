@@ -90,7 +90,7 @@
     <string name="portfolio_yield_null" tools:ignore="TypographyDashes">Yield: --</string>
     <string name="portfolio_yield" formatted="true">Yield: %.2f%%</string>
     <string name="portfolio_lvr_null" tools:ignore="TypographyDashes">LVR: --</string>
-    <string name="portfolio_lvr" formatted="true">LVR: $%.2f%%</string>
+    <string name="portfolio_lvr" formatted="true">LVR: %.2f%%</string>
     <string name="portfolio_changed_value_null">--</string>
     <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
     <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
@@ -109,6 +109,22 @@
     <string name="edit_property_public">Public</string>
     <string name="edit_property_private">Private</string>
     <string name="edit_property_verification">Verification</string>
+    <string name="edit_property_investment_summary">Investment summary</string>
+    <string name="edit_property_yield">Yield</string>
+    <string name="edit_property_lvr">LVR</string>
+    <string name="edit_property_value_change">Value Change</string>
+    <string name="edit_property_no_value">--</string>
+    <string name="edit_property_enter_value">Enter Value</string>
+    <string name="edit_property_purchase_price">Purchase Price</string>
+    <string name="edit_property_loan_amount">Loan Amount</string>
+    <string name="edit_property_estimated_value">Estimated Value</string>
+    <string name="edit_property_rented">Rented</string>
+    <string name="edit_property_not_rented">Not Rented</string>
+    <string name="edit_property_weekly_rent">Weekly Rent</string>
+    <string name="edit_property_estimated_weekly_rent">Estimated Weekly Rent</string>
+    <string name="edit_property_end_of_rent">End of rent</string>
+    <string name="edit_property_yield_value" formatted="true">%.2f%%</string>
+    <string name="edit_property_lvr_value" formatted="true">%.2f%%</string>
     <!--Edit property screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
@@ -183,7 +199,6 @@
     <string name="integer_space_string_format_string">%1$d %2$s</string>
     <string name="property_detail_header_no_header_text">No title available.</string>
     <string name="filter_item_save_this_search">Save this search</string>
-
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

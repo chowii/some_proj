@@ -1,7 +1,6 @@
 package com.soho.sohoapp.utils;
 
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 
 public final class PropertyCalculator {
 
@@ -9,8 +8,7 @@ public final class PropertyCalculator {
         //utility class
     }
 
-    public static double calculateYield(PortfolioProperty property) {
-        PortfolioFinance finance = property.getPortfolioFinance();
+    public static double calculateYield(PropertyFinance finance) {
         double weeklyRent = finance.isRented() ? finance.getActualRent() : finance.getEstimatedRent();
         if (weeklyRent == 0 || finance.getPurchasePrice() == 0) {
             return 0;
@@ -19,8 +17,7 @@ public final class PropertyCalculator {
         return ((weeklyRent * 52) / finance.getPurchasePrice()) * 100;
     }
 
-    public static double calculateLvr(PortfolioProperty property) {
-        PortfolioFinance finance = property.getPortfolioFinance();
+    public static double calculateLvr(PropertyFinance finance) {
         double loanAmount = finance.getLoanAmount();
         double price = finance.getPurchasePrice();
 
@@ -31,8 +28,7 @@ public final class PropertyCalculator {
         return (loanAmount / price) * 100;
     }
 
-    public static double calculateValueChange(PortfolioProperty property) {
-        PortfolioFinance finance = property.getPortfolioFinance();
-        return finance.getEstimatedRent() - finance.getPurchasePrice();
+    public static double calculateValueChange(PropertyFinance finance) {
+        return finance.getEstimatedValue() - finance.getPurchasePrice();
     }
 }

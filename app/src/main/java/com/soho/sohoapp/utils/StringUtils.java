@@ -23,7 +23,17 @@ public final class StringUtils {
         return result;
     }
 
-    public static String formatYield(@NonNull Context context, double yield) {
+    public static String shortFormatYield(@NonNull Context context, double yield) {
+        String result;
+        if (yield == 0) {
+            result = context.getString(R.string.edit_property_no_value);
+        } else {
+            result = context.getString(R.string.edit_property_yield_value, yield);
+        }
+        return result;
+    }
+
+    public static String longFormatYield(@NonNull Context context, double yield) {
         String result;
         if (yield == 0) {
             result = context.getString(R.string.portfolio_yield_null);
@@ -33,7 +43,17 @@ public final class StringUtils {
         return result;
     }
 
-    public static String formatLvr(@NonNull Context context, double lvr) {
+    public static String shortFormatLvr(@NonNull Context context, double lvr) {
+        String result;
+        if (lvr == 0) {
+            result = context.getString(R.string.edit_property_no_value);
+        } else {
+            result = context.getString(R.string.edit_property_lvr_value, lvr);
+        }
+        return result;
+    }
+
+    public static String longFormatLvr(@NonNull Context context, double lvr) {
         String result;
         if (lvr == 0) {
             result = context.getString(R.string.portfolio_lvr_null);

@@ -12,13 +12,14 @@ import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyVerification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioFinance;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
+import com.soho.sohoapp.network.results.PropertyFinanceResult;
 import com.soho.sohoapp.network.results.PropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
@@ -64,6 +65,7 @@ public final class Converter {
         }
         property.setPropertyVerificationList(propertyVerificationList);
 
+        property.setPropertyFinance(toPropertyFinance(result.propertyFinance));
         return property;
     }
 
@@ -191,19 +193,24 @@ public final class Converter {
         }
         property.setPropertyAddress(address);
 
-        PortfolioFinance finance = new PortfolioFinance();
-        if (result.finance != null) {
-            finance.setId(result.finance.id);
-            finance.setPurchasePrice(result.finance.purchasePrice);
-            finance.setLoanAmount(result.finance.loanAmount);
-            finance.setEstimatedValue(result.finance.estimatedValue);
-            finance.setRented(result.finance.isRented);
-            finance.setActualRent(result.finance.actualRent);
-            finance.setEstimatedRent(result.finance.estimatedRent);
-        }
-        property.setPortfolioFinance(finance);
-
+        property.setPropertyFinance(toPropertyFinance(result.finance));
         return property;
+    }
+
+    @NonNull
+    private static PropertyFinance toPropertyFinance(PropertyFinanceResult result) {
+        PropertyFinance finance = new PropertyFinance();
+        if (result != null) {
+            finance.setId(result.id);
+            finance.setPurchasePrice(result.purchasePrice);
+            finance.setLoanAmount(result.loanAmount);
+            finance.setEstimatedValue(result.estimatedValue);
+            finance.setRented(result.isRented);
+            finance.setActualRent(result.actualRent);
+            finance.setEstimatedRent(result.estimatedRent);
+            finance.setLeasedToDate(DateUtils.iso8601TimeToLong(result.leasedTo));
+        }
+        return finance;
     }
 
     @NonNull

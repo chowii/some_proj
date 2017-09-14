@@ -8,7 +8,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 public class PortfolioProperty implements BaseModel {
 
     private PropertyAddress propertyAddress;
-    private PortfolioFinance portfolioFinance;
+    private PropertyFinance propertyFinance;
     private int viewType;
     private int id;
     private String state;
@@ -30,12 +30,12 @@ public class PortfolioProperty implements BaseModel {
         this.propertyAddress = propertyAddress;
     }
 
-    public PortfolioFinance getPortfolioFinance() {
-        return portfolioFinance;
+    public PropertyFinance getPropertyFinance() {
+        return propertyFinance;
     }
 
-    public void setPortfolioFinance(PortfolioFinance portfolioFinance) {
-        this.portfolioFinance = portfolioFinance;
+    public void setPropertyFinance(PropertyFinance propertyFinance) {
+        this.propertyFinance = propertyFinance;
     }
 
     public int getId() {

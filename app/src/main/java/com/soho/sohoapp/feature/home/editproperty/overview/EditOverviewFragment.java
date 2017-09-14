@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.utils.DrawableUtils;
 
@@ -32,6 +33,9 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     @BindView(R.id.verification)
     LinearLayout verification;
+
+    @BindView(R.id.investmentSummary)
+    InvestmentSummaryView investmentSummary;
 
     private EditOverviewContract.ViewPresentable presentable;
     private EditOverviewPresenter presenter;
@@ -56,13 +60,17 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 //        binding.setProperty(getProperty());
         ButterKnife.bind(this, view);
 
-        marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
-        verificationDesc = ButterKnife.findById(verification, R.id.title);
-        verificationDesc.setText(R.string.edit_property_verification);
+        initView();
 
         presenter = new EditOverviewPresenter(this);
         presenter.startPresenting(savedInstanceState != null);
         return view;
+    }
+
+    private void initView() {
+        marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
+        verificationDesc = ButterKnife.findById(verification, R.id.title);
+        verificationDesc.setText(R.string.edit_property_verification);
     }
 
     @Override
@@ -107,6 +115,11 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Override
     public void hideVerificationSection() {
         verification.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setPropertyFinance(PropertyFinance finance) {
+        investmentSummary.setPropertyFinance(finance);
     }
 
     @OnClick(R.id.marketplaceState)

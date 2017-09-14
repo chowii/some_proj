@@ -9,12 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.utils.DateUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class CameraPicker {
     private static final int REQUEST_TAKE_PHOTO = 0;
@@ -32,7 +30,7 @@ public class CameraPicker {
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String timeStamp = DateUtils.getDateFormatForFileName();
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
