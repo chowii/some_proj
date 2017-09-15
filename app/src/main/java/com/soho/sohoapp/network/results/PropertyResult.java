@@ -30,7 +30,7 @@ public class PropertyResult {
     public Location location;
 
     @SerializedName("property_listing")
-    public PropertyListing propertyListing;
+    public PropertyListingResult propertyListing;
 
     @SerializedName("property_finance")
     public PropertyFinanceResult propertyFinance;
@@ -57,14 +57,6 @@ public class PropertyResult {
 
         @SerializedName("address_2")
         public String address_2;
-    }
-
-    public static class PropertyListing {
-        @SerializedName("id")
-        public int id;
-
-        @SerializedName("state")
-        public String state;
     }
 
     public static class Verification {

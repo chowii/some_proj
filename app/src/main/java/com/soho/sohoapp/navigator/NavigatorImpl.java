@@ -11,6 +11,8 @@ import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
 
+import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
+import com.soho.sohoapp.feature.home.editproperty.publish.PrivateStatusSettingsActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
@@ -28,6 +30,7 @@ import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity;
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
 
 public class NavigatorImpl implements NavigatorInterface {
+    public static final String KEY_PROPERTY_LISTING = "KEY_PROPERTY_LISTING";
     private Activity activity;
     private Fragment fragment;
 
@@ -64,6 +67,20 @@ public class NavigatorImpl implements NavigatorInterface {
             fragmentActivity.finish();
         } else {
             activity.setResult(Activity.RESULT_OK);
+            activity.finish();
+        }
+    }
+
+    @Override
+    public void exitWithResultCodeOk(@NonNull PropertyListing propertyListing) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_PROPERTY_LISTING, propertyListing);
+        if (fragment != null) {
+            FragmentActivity fragmentActivity = fragment.getActivity();
+            fragmentActivity.setResult(Activity.RESULT_OK, intent);
+            fragmentActivity.finish();
+        } else {
+            activity.setResult(Activity.RESULT_OK, intent);
             activity.finish();
         }
     }
@@ -114,11 +131,20 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void openPropertyStatusScreen(@NonNull Property property) {
+    public void openPropertyStatusScreen(@NonNull Property property, int requestCode) {
         if (fragment != null) {
-            fragment.startActivity(PropertyStatusActivity.createIntent(fragment.getActivity(), property));
+            fragment.startActivityForResult(PropertyStatusActivity.createIntent(fragment.getActivity(), property), requestCode);
         } else {
-            activity.startActivity(PropertyStatusActivity.createIntent(activity, property));
+            activity.startActivityForResult(PropertyStatusActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openPrivateStatusSettingsScreen(@NonNull Property property, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(PrivateStatusSettingsActivity.createIntent(fragment.getActivity(), property), requestCode);
+        } else {
+            activity.startActivityForResult(PrivateStatusSettingsActivity.createIntent(activity, property), requestCode);
         }
     }
 
@@ -200,7 +226,7 @@ public class NavigatorImpl implements NavigatorInterface {
                 fragment.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
             }
         } else {
-            if (intent.resolveActivity(activity.getPackageManager()) != null){
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
                 activity.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
             }
         }
@@ -208,7 +234,7 @@ public class NavigatorImpl implements NavigatorInterface {
 
     @Override
     public void startVerifyPhoneActivity() {
-        if (fragment != null){
+        if (fragment != null) {
             fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext()));
         } else {
             activity.startActivity(VerifyPhoneActivity.createIntent(activity));
@@ -217,7 +243,7 @@ public class NavigatorImpl implements NavigatorInterface {
 
     @Override
     public void startVerifyPhoneActivity(int flag) {
-        if (fragment != null){
+        if (fragment != null) {
             fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext(), flag));
         } else {
             activity.startActivity(VerifyPhoneActivity.createIntent(activity, flag));
@@ -226,7 +252,7 @@ public class NavigatorImpl implements NavigatorInterface {
 
     @Override
     public void openSettingActivity() {
-        if (fragment != null){
+        if (fragment != null) {
             fragment.getActivity().startActivity(SettingsActivity.createIntent(fragment.getContext()));
         } else {
             activity.startActivity(SettingsActivity.createIntent(activity));
@@ -235,7 +261,7 @@ public class NavigatorImpl implements NavigatorInterface {
 
     @Override
     public void startAgentLicenseActivity(int flag) {
-        if (fragment != null){
+        if (fragment != null) {
             fragment.getActivity().startActivity(VerifyAgentLicenseActivity.createIntent(fragment.getContext()));
         } else {
             activity.startActivity(VerifyAgentLicenseActivity.createIntent(activity));

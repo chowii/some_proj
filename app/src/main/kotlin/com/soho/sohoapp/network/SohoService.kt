@@ -53,6 +53,9 @@ interface SohoService {
     @PUT("properties/{id}/")
     fun sendPropertyPhoto(@Path("id") id: Long, @Body file: RequestBody): Observable<ResponseBody>
 
+    @PUT("properties/{id}/property_listing")
+    fun updatePropertyListing(@Path("id") id: Long, @Body map: java.util.Map<String, Any>): Observable<PropertyListingResult>
+
     @GET("properties/{id}/")
     fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
 

@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.publish;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.navigator.NavigatorImpl;
+import com.soho.sohoapp.navigator.RequestCode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,17 @@ public class PropertyStatusActivity extends AbsActivity implements PropertyStatu
     protected void onDestroy() {
         presenter.stopPresenting();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_PRIVATE_STATUS_UPDATE) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LISTING));
+            }
+        }
     }
 
     @Override
@@ -113,7 +126,6 @@ public class PropertyStatusActivity extends AbsActivity implements PropertyStatu
 
     @OnClick(R.id.privateStatus)
     void onPrivateClicked() {
-        showToast("Go to private settings");
         presentable.onPrivateClicked();
     }
 

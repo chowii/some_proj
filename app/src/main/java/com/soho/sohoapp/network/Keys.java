@@ -2,12 +2,11 @@ package com.soho.sohoapp.network;
 
 public interface Keys {
 
-    interface More{
+    interface More {
         String TEXT = "text";
     }
 
     interface Property {
-
         String PROPRETY_ID = "property_id";
         String RELATION = "relation";
         String BEDROOMS = "property[bedrooms]";
@@ -25,6 +24,23 @@ public interface Keys {
         String LATITUDE = "property[location_attributes][latitude]";
         String LONGITUDE = "property[location_attributes][longitude]";
         String IMAGE = "property_photos_attributes[0][image]";
+    }
+
+    interface PropertyListing {
+        String ID = "id";
+        String STATE = "state";
+        String SALE_OFFERS = "receive_sales_offers";
+        String RENT_OFFERS = "receive_rent_offers";
+        String SALE_TITLE = "sale_title";
+        String RENT_TITLE = "rent_title";
+        String AUCTION_TITLE = "auction_title";
+        String DISCOVERABLE_TITLE = "discoverable_title";
+        String ON_SITE_AUCTION = "on_site_auction";
+        String AUCTION_DATE = "auction_date";
+        String AUCTION_TIME = "auction_time";
+        String RENT_PAYMENT_FREQUENCY = "rent_payment_frequency";
+        String AVAILAVLE_FROM = "available_from";
+        String APOINTMENT_ONLY = "appointment_only";
     }
 
     interface Filter {

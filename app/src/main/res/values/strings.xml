@@ -134,8 +134,10 @@
     <string name="publish_property_private">Private</string>
     <string name="publish_property_public_desc">Publish your property to Soho Marketplace to find buyers or renters or just be open for offers.</string>
     <string name="publish_property_private_desc">Manage everything about your property privately. Prevents you from receiving potential offers from buyers or renters.</string>
+    <string name="publish_property_private_settings">Private Settings</string>
+    <string name="publish_property_private_settings_desc">Use private mode to easily manage your home or investment property with your connections including portfolio tracking and file management.\n\nPlease be aware that properties in private mode will be unable to receive any offers to be purchased or leased as they are not visible in the network. To receive offers from the market make sure you are in public mode.</string>
+    <string name="publish_property_save">Save</string>
     <!--Publish property screens end-->
-
 
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>

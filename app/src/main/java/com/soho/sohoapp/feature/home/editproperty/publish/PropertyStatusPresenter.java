@@ -2,12 +2,15 @@ package com.soho.sohoapp.feature.home.editproperty.publish;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyStatus;
 import com.soho.sohoapp.navigator.NavigatorInterface;
+import com.soho.sohoapp.navigator.RequestCode;
 
 public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusContract.ViewPresentable {
     private final PropertyStatusContract.ViewInteractable view;
     private final NavigatorInterface navigator;
+    private Property property;
 
     public PropertyStatusPresenter(PropertyStatusContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
@@ -18,7 +21,7 @@ public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusCont
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
 
-        Property property = view.getPropertyFromExtras();
+        property = view.getPropertyFromExtras();
         switch (property.getPropertyListing().getState()) {
             case PropertyStatus.PRIVATE:
                 view.hidePublicIndicator();
@@ -48,6 +51,11 @@ public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusCont
 
     @Override
     public void onPrivateClicked() {
-        //todo: go to private settings
+        navigator.openPrivateStatusSettingsScreen(property, RequestCode.PROPERTY_PRIVATE_STATUS_UPDATE);
+    }
+
+    @Override
+    public void onPropertyStatusUpdated(PropertyListing propertyListing) {
+        navigator.exitWithResultCodeOk(propertyListing);
     }
 }

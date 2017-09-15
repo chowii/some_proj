@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.home.editproperty.overview;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -20,6 +22,7 @@ import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
+import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.DrawableUtils;
 
 import butterknife.BindView;
@@ -72,6 +75,17 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     public void onDestroyView() {
         presenter.stopPresenting();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_STATUS_UPDATE) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LISTING));
+            }
+        }
     }
 
     @Override

@@ -8,18 +8,19 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyVerification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
-import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
 import com.soho.sohoapp.network.results.PropertyFinanceResult;
+import com.soho.sohoapp.network.results.PropertyListingResult;
 import com.soho.sohoapp.network.results.PropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
@@ -51,7 +52,7 @@ public final class Converter {
         property.setBathrooms(result.bathrooms);
         property.setCarspots(result.carspots);
         property.setAddress(toPropertyAddress(result));
-        property.setPropertyListing(toPropertyListing(result));
+        property.setPropertyListing(toPropertyListing(result.propertyListing));
 
         List<PropertyImage> propertyImageList = new ArrayList<>();
         for (PropertyResult.Photo photo : result.photos) {
@@ -107,6 +108,16 @@ public final class Converter {
         map.put(Keys.Property.LONGITUDE, propertyAddress.getLng());
         map.put(Keys.Property.ADDRESS1, propertyAddress.getAddressLine1());
         map.put(Keys.Property.ADDRESS2, propertyAddress.getAddressLine2());
+
+        return map;
+    }
+
+    @NonNull
+    public static Map<String, Object> toMap(@NonNull PropertyListing propertyListing) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put(Keys.PropertyListing.ID, propertyListing.getId());
+        map.put(Keys.PropertyListing.STATE, propertyListing.getState());
 
         return map;
     }
@@ -172,6 +183,14 @@ public final class Converter {
             propertyList.add(toPortfolioProperty(result, isManagerPortfolio));
         }
         return propertyList;
+    }
+
+    @NonNull
+    public static PropertyListing toPropertyListing(@NonNull PropertyListingResult result) {
+        PropertyListing propertyListing = new PropertyListing();
+        propertyListing.setId(result.id);
+        propertyListing.setState(result.state);
+        return propertyListing;
     }
 
     @NonNull
@@ -260,14 +279,6 @@ public final class Converter {
         propertyVerification.setText(verification.text);
         propertyVerification.setState(verification.state);
         return propertyVerification;
-    }
-
-    @NonNull
-    private static PropertyListing toPropertyListing(@NonNull PropertyResult result) {
-        PropertyListing propertyListing = new PropertyListing();
-        propertyListing.setId(result.propertyListing.id);
-        propertyListing.setState(result.propertyListing.state);
-        return propertyListing;
     }
 
     @NonNull
