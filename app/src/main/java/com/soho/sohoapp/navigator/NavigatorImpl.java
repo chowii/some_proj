@@ -12,7 +12,8 @@ import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
 
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
-import com.soho.sohoapp.feature.home.editproperty.publish.PrivateStatusSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
@@ -145,6 +146,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(PrivateStatusSettingsActivity.createIntent(fragment.getActivity(), property), requestCode);
         } else {
             activity.startActivityForResult(PrivateStatusSettingsActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openPublicStatusSettingsScreen(@NonNull Property property, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(PublicStatusSettingsActivity.createIntent(fragment.getActivity(), property), requestCode);
+        } else {
+            activity.startActivityForResult(PublicStatusSettingsActivity.createIntent(activity, property), requestCode);
         }
     }
 

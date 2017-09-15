@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightBackground"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="@string/publish_property_public_status"
+        app:titleTextColor="@color/white"/>
+
+    <include
+        android:id="@+id/discoverable"
+        layout="@layout/item_property_status"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/saleAndAuction"
+        layout="@layout/item_property_status"/>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <include
+        android:id="@+id/rent"
+        layout="@layout/item_property_status"/>
+
+</LinearLayout>

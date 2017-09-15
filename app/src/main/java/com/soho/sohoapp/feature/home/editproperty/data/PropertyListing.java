@@ -23,6 +23,22 @@ public class PropertyListing implements Parcelable {
         this.state = state;
     }
 
+    public boolean isPublic() {
+        return PropertyStatus.DISCOVERABLE.equals(state) ||
+                PropertyStatus.SALE.equals(state) ||
+                PropertyStatus.AUCTION.equals(state) ||
+                PropertyStatus.RENT.equals(state);
+    }
+
+    public boolean isPrivate() {
+        return PropertyStatus.PRIVATE.equals(state);
+    }
+
+    public boolean isArchived() {
+        return PropertyStatus.ARCHIVED.equals(state) ||
+                PropertyStatus.SOLD.equals(state);
+    }
+
     @Override
     public int describeContents() {
         return 0;

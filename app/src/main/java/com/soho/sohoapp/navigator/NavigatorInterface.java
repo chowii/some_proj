@@ -30,6 +30,8 @@ public interface NavigatorInterface {
 
     void openPrivateStatusSettingsScreen(@NonNull Property property, int requestCode);
 
+    void openPublicStatusSettingsScreen(@NonNull Property property, int requestCode);
+
     void openHomeActivity();
 
     void openHomeActivity(int flags);

@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.home.editproperty.publish;
+package com.soho.sohoapp.feature.home.editproperty.publish.privatestatus;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;

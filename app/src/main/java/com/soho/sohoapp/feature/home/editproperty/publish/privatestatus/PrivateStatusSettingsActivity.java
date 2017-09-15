@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.home.editproperty.publish;
+package com.soho.sohoapp.feature.home.editproperty.publish.privatestatus;
 
 import android.content.Context;
 import android.content.Intent;

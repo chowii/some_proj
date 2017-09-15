@@ -7,6 +7,7 @@ public final class RequestCode {
     public static final int EDIT_PROPERTY_PRESENTER_STORAGE = 30;
     public static final int PROPERTY_STATUS_UPDATE = 40;
     public static final int PROPERTY_PRIVATE_STATUS_UPDATE = 41;
+    public static final int PROPERTY_PUBLIC_STATUS_UPDATE = 42;
 
     private RequestCode() {
         //utils class to hold constants

@@ -81,7 +81,11 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".feature.home.editproperty.publish.PrivateStatusSettingsActivity"
+            android:name=".feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity"
             android:screenOrientation="portrait"/>
 
         <activity

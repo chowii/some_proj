@@ -26,14 +26,14 @@ import static butterknife.ButterKnife.findById;
 public class PropertyStatusActivity extends AbsActivity implements PropertyStatusContract.ViewInteractable {
     private static final String KEY_PROPERTY = "KEY_PROPERTY";
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @BindView(R.id.publicStatus)
     LinearLayout publicStatus;
 
     @BindView(R.id.privateStatus)
     LinearLayout privateStatus;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     private PropertyStatusContract.ViewPresentable presentable;
     private PropertyStatusPresenter presenter;
@@ -82,31 +82,22 @@ public class PropertyStatusActivity extends AbsActivity implements PropertyStatu
 
     @Override
     public void showPublicIndicator() {
-        findById(publicStatus, R.id.arrow).setVisibility(View.GONE);
-        findById(publicStatus, R.id.indicator).setVisibility(View.VISIBLE);
-        findById(publicStatus, R.id.update).setVisibility(View.VISIBLE);
+        showIndicator(publicStatus);
     }
 
     @Override
     public void hidePublicIndicator() {
-        findById(publicStatus, R.id.indicator).setVisibility(View.INVISIBLE);
-        findById(publicStatus, R.id.update).setVisibility(View.GONE);
-        findById(publicStatus, R.id.arrow).setVisibility(View.VISIBLE);
-
+        hideIndicator(publicStatus);
     }
 
     @Override
     public void showPrivateIndicator() {
-        findById(privateStatus, R.id.indicator).setVisibility(View.VISIBLE);
-        findById(privateStatus, R.id.update).setVisibility(View.VISIBLE);
-        findById(privateStatus, R.id.arrow).setVisibility(View.GONE);
+        showIndicator(privateStatus);
     }
 
     @Override
     public void hidePrivateIndicator() {
-        findById(privateStatus, R.id.indicator).setVisibility(View.INVISIBLE);
-        findById(privateStatus, R.id.update).setVisibility(View.GONE);
-        findById(privateStatus, R.id.arrow).setVisibility(View.VISIBLE);
+        hideIndicator(privateStatus);
     }
 
     @Override
@@ -120,13 +111,24 @@ public class PropertyStatusActivity extends AbsActivity implements PropertyStatu
 
     @OnClick(R.id.publicStatus)
     void onPublicClicked() {
-        showToast("Go to public settings");
         presentable.onPublicClicked();
     }
 
     @OnClick(R.id.privateStatus)
     void onPrivateClicked() {
         presentable.onPrivateClicked();
+    }
+
+    private void showIndicator(LinearLayout layout) {
+        findById(layout, R.id.arrow).setVisibility(View.GONE);
+        findById(layout, R.id.indicator).setVisibility(View.VISIBLE);
+        findById(layout, R.id.update).setVisibility(View.VISIBLE);
+    }
+
+    private void hideIndicator(LinearLayout layout) {
+        findById(layout, R.id.indicator).setVisibility(View.INVISIBLE);
+        findById(layout, R.id.update).setVisibility(View.GONE);
+        findById(layout, R.id.arrow).setVisibility(View.VISIBLE);
     }
 
     private void initView() {

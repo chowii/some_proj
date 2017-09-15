@@ -3,7 +3,6 @@ package com.soho.sohoapp.feature.home.editproperty.publish;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.home.editproperty.data.Property;
 import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyStatus;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 
@@ -22,15 +21,13 @@ public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusCont
         view.setPresentable(this);
 
         property = view.getPropertyFromExtras();
-        switch (property.getPropertyListing().getState()) {
-            case PropertyStatus.PRIVATE:
-                view.hidePublicIndicator();
-                view.showPrivateIndicator();
-                break;
-            case PropertyStatus.PUBLIC:
-                view.hidePrivateIndicator();
-                view.showPublicIndicator();
-                break;
+        PropertyListing propertyListing = property.getPropertyListing();
+        if (propertyListing.isPrivate()) {
+            view.hidePublicIndicator();
+            view.showPrivateIndicator();
+        } else if (propertyListing.isPublic()) {
+            view.hidePrivateIndicator();
+            view.showPublicIndicator();
         }
     }
 
@@ -46,7 +43,7 @@ public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusCont
 
     @Override
     public void onPublicClicked() {
-        //todo: go to public settings
+        navigator.openPublicStatusSettingsScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE);
     }
 
     @Override
