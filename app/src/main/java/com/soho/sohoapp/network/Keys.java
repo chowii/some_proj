@@ -15,6 +15,7 @@ public interface Keys {
         String IS_INVESTMENT = "property[is_investment]";
         String TYPE_OF_PROPERTY = "property[type_of_property]";
 
+        String FULL_ADDRESS = "property[location_attributes][full_address]";
         String ADDRESS1 = "property[location_attributes][address_1]";
         String ADDRESS2 = "property[location_attributes][address_2]";
         String SUBURB = "property[location_attributes][suburb]";

@@ -27,9 +27,7 @@ import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MediaType;
@@ -87,39 +85,33 @@ public final class Converter {
     }
 
     @NonNull
-    public static Map<String, Object> toMap(@NonNull PropertyAddress propertyAddress,
-                                            @NonNull PropertyRole role,
-                                            @NonNull PropertyType propertyType,
-                                            boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put(Keys.Property.RELATION, role.getKey());
-        map.put(Keys.Property.BEDROOMS, bedrooms);
-        map.put(Keys.Property.BATHROOMS, bathrooms);
-        map.put(Keys.Property.CARSPOTS, carspots);
-        map.put(Keys.Property.IS_INVESTMENT, isInvestment);
-        map.put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey());
-
-        map.put(Keys.Property.SUBURB, propertyAddress.getSuburb());
-        map.put(Keys.Property.STATE, propertyAddress.getState());
-        map.put(Keys.Property.POSTCODE, propertyAddress.getPostcode());
-        map.put(Keys.Property.COUNTRY, propertyAddress.getCountry());
-        map.put(Keys.Property.LATITUDE, propertyAddress.getLat());
-        map.put(Keys.Property.LONGITUDE, propertyAddress.getLng());
-        map.put(Keys.Property.ADDRESS1, propertyAddress.getAddressLine1());
-        map.put(Keys.Property.ADDRESS2, propertyAddress.getAddressLine2());
-
-        return map;
+    public static QueryHashMap toMap(@NonNull PropertyAddress propertyAddress,
+                                     @NonNull PropertyRole role,
+                                     @NonNull PropertyType propertyType,
+                                     boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
+        return new QueryHashMap()
+                .put(Keys.Property.RELATION, role.getKey())
+                .put(Keys.Property.BEDROOMS, bedrooms)
+                .put(Keys.Property.BATHROOMS, bathrooms)
+                .put(Keys.Property.CARSPOTS, carspots)
+                .put(Keys.Property.IS_INVESTMENT, isInvestment)
+                .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey())
+                .put(Keys.Property.SUBURB, propertyAddress.getSuburb())
+                .put(Keys.Property.STATE, propertyAddress.getState())
+                .put(Keys.Property.POSTCODE, propertyAddress.getPostcode())
+                .put(Keys.Property.COUNTRY, propertyAddress.getCountry())
+                .put(Keys.Property.LATITUDE, propertyAddress.getLat())
+                .put(Keys.Property.LONGITUDE, propertyAddress.getLng())
+                .put(Keys.Property.FULL_ADDRESS, propertyAddress.getFullAddress())
+                .put(Keys.Property.ADDRESS1, propertyAddress.getAddressLine1())
+                .put(Keys.Property.ADDRESS2, propertyAddress.getAddressLine2());
     }
 
     @NonNull
-    public static Map<String, Object> toMap(@NonNull PropertyListing propertyListing) {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put(Keys.PropertyListing.ID, propertyListing.getId());
-        map.put(Keys.PropertyListing.STATE, propertyListing.getState());
-
-        return map;
+    public static QueryHashMap toMap(@NonNull PropertyListing propertyListing) {
+        return new QueryHashMap()
+                .put(Keys.PropertyListing.ID, propertyListing.getId())
+                .put(Keys.PropertyListing.STATE, propertyListing.getState());
     }
 
     @NonNull

@@ -7,8 +7,7 @@ import com.soho.sohoapp.feature.home.editproperty.data.PropertyStatus;
 import com.soho.sohoapp.logger.Logger;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.utils.Converter;
-
-import java.util.Map;
+import com.soho.sohoapp.utils.QueryHashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -52,7 +51,7 @@ public class PrivateStatusSettingsPresenter implements AbsPresenter, PrivateStat
         Property property = view.getPropertyFromExtras();
         PropertyListing propertyListing = property.getPropertyListing();
         propertyListing.setState(PropertyStatus.PRIVATE);
-        Map<String, Object> map = Converter.toMap(propertyListing);
+        QueryHashMap map = Converter.toMap(propertyListing);
         compositeDisposable.add(DEPENDENCIES.getSohoService().updatePropertyListing(property.getId(), map)
                 .map(Converter::toPropertyListing)
                 .subscribeOn(Schedulers.io())

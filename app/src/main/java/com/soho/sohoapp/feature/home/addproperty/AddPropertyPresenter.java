@@ -6,8 +6,7 @@ import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.utils.Converter;
-
-import java.util.Map;
+import com.soho.sohoapp.utils.QueryHashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -82,7 +81,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     private void createPromotion() {
         view.showLoadingDialog();
 
-        Map<String, Object> map = Converter.toMap(propertyAddress, propertyRole, propertyType,
+        QueryHashMap map = Converter.toMap(propertyAddress, propertyRole, propertyType,
                 isInvestment, bedrooms, bathrooms, carspots);
 
         compositeDisposable.add(DEPENDENCIES.getSohoService().createProperty(map)

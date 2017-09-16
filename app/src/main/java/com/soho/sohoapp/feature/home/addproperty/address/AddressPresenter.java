@@ -56,6 +56,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
         } else {
             if (propertyAddress == null) {
                 propertyAddress = new PropertyAddress();
+                propertyAddress.setAddressLine1(address);
             }
             propertyAddress.setFullAddress(address);
             view.hideKeyboard();

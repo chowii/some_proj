@@ -6,6 +6,7 @@ import com.soho.sohoapp.feature.User
 import com.soho.sohoapp.feature.home.more.model.AccountVerification
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.*
+import com.soho.sohoapp.utils.QueryHashMap
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -35,7 +36,7 @@ interface SohoService {
     fun updateUserProfile(@Body map: Map<String, String>): Observable<User>
 
     @POST("properties")
-    fun createProperty(@QueryMap map: java.util.Map<String, Object>): Observable<SohoProperty>
+    fun createProperty(@QueryMap map: QueryHashMap): Observable<SohoProperty>
 
     @GET("portfolios/owned")
     fun getOwnedPortfolios(): Observable<List<PortfolioCategoryResult>>
@@ -54,7 +55,7 @@ interface SohoService {
     fun sendPropertyPhoto(@Path("id") id: Long, @Body file: RequestBody): Observable<ResponseBody>
 
     @PUT("properties/{id}/property_listing")
-    fun updatePropertyListing(@Path("id") id: Long, @Body map: java.util.Map<String, Any>): Observable<PropertyListingResult>
+    fun updatePropertyListing(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
 
     @GET("properties/{id}/")
     fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
