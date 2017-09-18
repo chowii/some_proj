@@ -21,8 +21,8 @@ public class PropertyLocationImageItem implements BaseModel {
     @Override
     public int getItemViewType() { return R.layout.item_property_image; }
 
-    public static final String STATIC_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap?size=1200x600&zoom=16";
-    private final String PARAM_MARKERS_COLOR = "&markers=color:red%7C";
+    public static final String STATIC_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap?size=1200x600&zoom=14";
+    private final String PARAM_MARKERS_COLOR = "&markers=color:green%7C";
 
     private final LatLng latLng;
     private StringBuilder imageUrl = new StringBuilder(STATIC_MAP_URL);
@@ -72,7 +72,7 @@ public class PropertyLocationImageItem implements BaseModel {
     public boolean isMasked(){ return isMasked; }
 
     public String retrieveImageUrlWithMask(LatLng latLng){
-        ArrayList<LatLng> circlePoints = getCircleAsPolyline(latLng, null);
+        ArrayList<LatLng> circlePoints = getCircleAsPolyline(latLng, 100.0);
         String colorPrimary = SohoApplication.getContext().getString(R.color.colorPrimary).replaceFirst("#ff","");
         String darkerPrimary = SohoApplication.getContext().getString(R.color.darkerPrimary).replaceFirst("#ff","");
 

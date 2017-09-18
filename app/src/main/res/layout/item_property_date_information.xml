@@ -3,20 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp">
 
     <TextView
         android:id="@+id/auction_location_text_view"
         style="@style/TextView.SubTitle.Dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:text="@string/test_text_long" />
+        android:text="@string/test_text_tiny" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
         <TextView
@@ -25,8 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="20dp"
-            android:text="@string/test_text_long" />
+            android:text="@string/test_text_tiny"/>
 
         <TextView
             android:id="@+id/add_to_calendar_button"
@@ -36,10 +37,16 @@
             style="@style/TextView.SubTitle.Dark"
             android:text="@string/test_text_tiny"
             android:paddingBottom="5dp"
-            android:gravity="end"
-            android:drawablePadding="10dp"
-            android:drawableRight="@drawable/ic_calendar_plus"
+            android:gravity="end|center_vertical"
             />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_calendar_plus"
+            android:paddingLeft="10dp"
+            android:clickable="false"
+            android:focusable="false"/>
 
     </LinearLayout>
 

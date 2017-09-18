@@ -11,6 +11,14 @@ public final class StringUtils {
         //utility class
     }
 
+    public static String capitalize(String string) {
+        String capitalizedString = string;
+        if(capitalizedString.length() > 0) {
+            capitalizedString = capitalizedString.substring(0, 1).toUpperCase() + capitalizedString.substring(1).toLowerCase();
+        }
+        return capitalizedString;
+    }
+
     public static String formatPrice(@NonNull Context context, double price) {
         String result;
         if (price >= 1000000) {

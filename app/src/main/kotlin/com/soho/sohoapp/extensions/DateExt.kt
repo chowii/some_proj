@@ -21,10 +21,10 @@ sealed class DateFormat {
 
 fun DateFormat.stringFormat(): String {
     val format = when (this) {
-        is DateFormat.Iso8601DateTime -> "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        is DateFormat.Iso8601DateTime -> "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
         is DateFormat.MonthAbbreviationFormat -> "dd MMM yyyy"
         is DateFormat.DateDisplayFormat -> "dd/MM/yy"
-        is DateFormat.TimeFormat -> "hh:mma"
+        is DateFormat.TimeFormat -> "h:mma"
     }
     return format
 }

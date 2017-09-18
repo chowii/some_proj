@@ -38,5 +38,5 @@ fun Long.toStringWithDisplayFormat(): String {
  * @return returns string representation of long date in 'dd/MM/YY' format
  */
 fun Long.toStringWithTimeFormat(): String {
-    return Date(this).toStringWithFormat(DateFormat.DateDisplayFormat().stringFormat())
+    return Date(this).toStringWithFormat(DateFormat.TimeFormat().stringFormat())
 }

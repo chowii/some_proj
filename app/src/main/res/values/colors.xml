@@ -11,6 +11,7 @@
     <color name="orangePrimary">#F58A18</color>
     <color name="whitePrimary">#ffffff</color>
     <color name="lightGreyBackground">#F8F8F8</color>
+    <color name="text_shadow">#000000</color>
 
     <color name="white">#FFF</color>
     <color name="blackDarkPrimary">#2D2D2D</color>

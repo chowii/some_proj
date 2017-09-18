@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.support.annotation.NonNull
 import android.support.annotation.Nullable
 import com.soho.sohoapp.R
+import com.soho.sohoapp.data.enums.PropertyStatus
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType
@@ -124,6 +125,16 @@ open class BasicProperty() : BaseModel, Parcelable {
         override fun newArray(size: Int): Array<BasicProperty?> {
             return arrayOfNulls(size)
         }
+    }
+
+    fun getDisplayTitle(): String {
+        return if(state.equals(PropertyStatus.DISCOVERABLE, true)) "Within Network" else (title ?: "")
+    }
+
+    fun getDisplayDescription(): String {
+        return if(state.equals(PropertyStatus.DISCOVERABLE, true))
+            "Please contact for further information regarding this property."
+        else (description ?: "")
     }
 
 }

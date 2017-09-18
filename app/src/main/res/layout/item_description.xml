@@ -6,4 +6,6 @@
     android:layout_height="wrap_content"
     style="@style/TextView.Title.Dark"
     android:text="@string/test_text_long"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     />

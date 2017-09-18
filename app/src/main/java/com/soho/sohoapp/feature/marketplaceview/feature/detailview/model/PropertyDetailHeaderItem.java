@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.model;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.models.PropertyUser;
 import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.Locale;
@@ -20,6 +21,8 @@ public class PropertyDetailHeaderItem implements BaseModel {
     private int propertySize;
     private String sizeUnit;
     private String propertyType;
+    private String propertyState;
+    private PropertyUser representingUser;
 
     private static String PROPERTY_DEFAULT_TEXT = getStringFromResource(R.string.property_detail_header_no_header_text);
 
@@ -73,4 +76,20 @@ public class PropertyDetailHeaderItem implements BaseModel {
     }
 
     public String retrievePropertyType() { return propertyType == null ? "Unknown" : propertyType; }
+
+    public String getPropertyState() {
+        return propertyState;
+    }
+
+    public void setPropertyState(String propertyState) {
+        this.propertyState = propertyState;
+    }
+
+    public PropertyUser getRepresentingUser() {
+        return representingUser;
+    }
+
+    public void setRepresentingUser(PropertyUser representingUser) {
+        this.representingUser = representingUser;
+    }
 }

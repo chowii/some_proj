@@ -215,7 +215,6 @@ public final class Converter {
     }
 
     // MARK: - ================== Inspection Times ==================
-
     @Nullable
     public static InspectionTime toInspectionTime(@Nullable InspectionTimeResult result) {
         if (result == null) {

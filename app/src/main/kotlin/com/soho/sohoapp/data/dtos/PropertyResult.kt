@@ -15,13 +15,13 @@ class PropertyResult : BasicPropertyResult() {
     var auctionDate: String? = null
 
     @SerializedName("rennovation_details")
-    var rennovationDetails: List<String>? = null
+    var rennovationDetails: String? = null
 
     @SerializedName("agent_licence_number")
-    var agentLicenseNumber: List<String>? = null
+    var agentLicenseNumber: String? = null
 
     @SerializedName("agent_mobile_number")
-    var agentMobileNumber: List<String>? = null
+    var agentMobileNumber: String? = null
 
     @SerializedName("property_listing")
     var propertyListing: PropertyListingResult? = null

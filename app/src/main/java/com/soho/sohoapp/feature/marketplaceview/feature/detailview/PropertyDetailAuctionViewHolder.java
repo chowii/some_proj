@@ -61,6 +61,7 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
     }
 
     private void configureAuctionTime(PropertyHostTimeItem model) {
+        auctionLocationTextView.setVisibility(VISIBLE);
         PropertyHostTimeItem.PropertyAuctionItem propertyAuctionItem = model.retrievePropertyAuctionItem();
         descriptionTextView.setText(LongExtKt.toStringWithDisplayFormat(propertyAuctionItem.getAuctionDate()));
         addToCalendarButton.setText(LongExtKt.toStringWithTimeFormat(propertyAuctionItem.getAuctionDate()));
@@ -75,11 +76,12 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
     }
 
     private void configureInspectionTime(PropertyHostTimeItem.PropertyInspectionItem inspectionTime) {
+        auctionLocationTextView.setVisibility(GONE);
         addToCalendarButton.setText(String.format(
                                     Locale.getDefault(),
                                     getStringFromResource(R.string.property_detail_property_viewing_time_fromat_string),
-                                    LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getStartTime()),
-                                    LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getEndTime())
+                                    LongExtKt.toStringWithTimeFormat(inspectionTime.getPropertyInspectionTime().getStartTime()),
+                                    LongExtKt.toStringWithTimeFormat(inspectionTime.getPropertyInspectionTime().getEndTime())
                                     ));
         descriptionTextView.setText(LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getStartTime()));
     }

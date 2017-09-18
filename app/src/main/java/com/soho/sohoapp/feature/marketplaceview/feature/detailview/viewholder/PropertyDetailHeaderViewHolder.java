@@ -5,7 +5,9 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.customviews.UserAvatarView;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailHeaderItem;
+import com.soho.sohoapp.utils.StringUtils;
 
 import butterknife.BindView;
 
@@ -33,6 +35,9 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
     @BindView(R.id.property_size_text_view)
     TextView propertySizeTextView;
 
+    @BindView(R.id.user_avatar_view)
+    UserAvatarView userAvatarView;
+
     public PropertyDetailHeaderViewHolder(View itemView) { super(itemView); }
 
     @Override
@@ -43,5 +48,16 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
         bathroomTextView.setText(String.valueOf(model.getBathroom()));
         parkingTextView.setText(String.valueOf(model.getCarspot()));
         propertySizeTextView.setText(model.getPropertySizeWithUnit());
+        if(model.getPropertyState() != null && model.retrievePropertyType() != null) {
+            typeTextView.setText(StringUtils.capitalize(model.retrievePropertyType())
+                    + " | "
+                    + StringUtils.capitalize(model.getPropertyState()));
+        }
+        if(model.getRepresentingUser() != null) {
+            userAvatarView.setVisibility(View.VISIBLE);
+            userAvatarView.populateWithPropertyUser(model.getRepresentingUser());
+        } else {
+            userAvatarView.setVisibility(View.GONE);
+        }
     }
 }

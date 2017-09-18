@@ -9,6 +9,8 @@ import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.extensions.LongExtKt;
+import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailDescriptionItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailHeaderItem;
@@ -37,6 +39,12 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
     private final PropertyDetailContract.ViewInteractable interactable;
     private Disposable mDisposable;
 
+    public Property getProperty() {
+        return property;
+    }
+
+    private Property property;
+
     public PropertyDetailPresenter(PropertyDetailContract.ViewInteractable interactable) {
         this.interactable = interactable;
     }
@@ -46,57 +54,64 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     @Override
     public void retrieveProperty(int id) {
+        interactable.setRefreshing(true);
         mDisposable = ApiClient.getService().getProperty(id)
                 .map(Converter::toProperty)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(property -> {
-                            List<BaseModel> descriptionList = new ArrayList<>();
-                            descriptionList.add(addPropertyDetailHeaderItem(property));
+                    this.property = property;
+                    List<BaseModel> descriptionList = new ArrayList<>();
+                    descriptionList.add(addPropertyDetailHeaderItem(property));
+                    descriptionList.addAll(
+                            addPropertyDescription(
+                                    new PropertyDetailDescriptionItem(property.getDisplayDescription())
+                            ));
+                    descriptionList.add(new HeaderItem<>(getString(
+                            R.string.property_detail_header_inspection_times),
+                            R.layout.item_header));
+
+                    if (!property.getPropertyListing().isAppointmentOnly())
+                        if (!property.getPropertyListing().getInspectionTimes().isEmpty())
                             descriptionList.addAll(
-                                    addPropertyDescription(
-                                            new PropertyDetailDescriptionItem(property.getDescription())
-                                    ));
-                            descriptionList.add(new HeaderItem<>(getString(
-                                                            R.string.property_detail_header_inspection_times),
-                                                            R.layout.item_header));
-
-                            if (!property.getPropertyListing().isAppointmentOnly())
-                                if (!property.getPropertyListing().getInspectionTimes().isEmpty())
-                                    descriptionList.addAll(
-                                            addInspectionItem(
-                                                    property.getPropertyListing().getInspectionTimes(),
-                                                    property.getLocation(),
-                                                    property.getPropertyListing().isAppointmentOnly()
-                                            )
-                                    );
-                                else {
-                                    descriptionList.add(new PropertyHostTimeItem(
-                                            null,
+                                    addInspectionItem(
+                                            property.getPropertyListing().getInspectionTimes(),
                                             property.getLocation(),
-                                            getString(R.string.property_state_inspection),
-                                            true));
-                                }
+                                            property.getPropertyListing().isAppointmentOnly()
+                                    )
+                            );
+                        else {
+                            descriptionList.add(new PropertyHostTimeItem(
+                                    null,
+                                    property.getLocation(),
+                                    getString(R.string.property_state_inspection),
+                                    true));
+                        }
 
-                            descriptionList.addAll(addPropertyIfAuctioned(property));
-                            descriptionList.addAll(addPropertyLocationImage(property.getLocation()));
-                            descriptionList.add(new HeaderItem<>(property.getUpdatedAt(), R.layout.item_header));
-                            interactable.configureAdapter(descriptionList);
-                        }, throwable -> DEPENDENCIES.getLogger().e("throwable: " + throwable.toString(), throwable)
-                );
+                    descriptionList.addAll(addPropertyIfAuctioned(property));
+                    descriptionList.addAll(addPropertyLocationImage(property.getLocation()));
+                    descriptionList.add(new HeaderItem<>("Last Updated: " + LongExtKt.toStringWithDisplayFormat(property.getUpdatedAt()), R.layout.item_header));
+                    interactable.configureAdapter(descriptionList);
+                    interactable.populateView(property);
+                    interactable.setRefreshing(false);
+                }, throwable -> {
+                    DEPENDENCIES.getLogger().e("throwable: " + throwable.toString(), throwable);
+                    interactable.setRefreshing(false);
+                });
 
     }
 
     @NonNull
     private PropertyDetailHeaderItem addPropertyDetailHeaderItem(Property property) {
         PropertyDetailHeaderItem headerItem = new PropertyDetailHeaderItem();
-
-        headerItem.setHeader(property.getTitle());
+        headerItem.setHeader(property.getDisplayTitle());
         headerItem.setBedroom(property.getBedrooms());
         headerItem.setBathroom(property.getBathrooms());
         headerItem.setCarspot(property.getCarspots());
         headerItem.setPropertySize(property.getLandSize());
-        headerItem.applyPropertyTypeChange(property.getLandSizeMeasurement());
+        headerItem.applyPropertyTypeChange(property.getType());
+        headerItem.setPropertyState(property.getState());
+        headerItem.setRepresentingUser(property.getRepresentingUser());
         return headerItem;
     }
 

@@ -8,9 +8,9 @@ class Property : BasicProperty {
     var landSize: Int = 0
     var landSizeMeasurement: String? = null
     var auctionDate: Long = 0
-    var rennovationDetails: List<String>? = null
-    var agentLicenseNumber: List<String>? = null
-    var agentMobileNumber: List<String>? = null
+    var rennovationDetails: String? = null
+    var agentLicenseNumber: String? = null
+    var agentMobileNumber: String? = null
     var propertyListing: PropertyListing? = null
     var propertyFinance: PropertyFinance? = null
     var verifications: List<Verification>? = null
@@ -21,9 +21,9 @@ class Property : BasicProperty {
         landSize = parcel.readInt()
         landSizeMeasurement = parcel.readString()
         auctionDate = parcel.readLong()
-        rennovationDetails = parcel.createStringArrayList()
-        agentLicenseNumber = parcel.createStringArrayList()
-        agentMobileNumber = parcel.createStringArrayList()
+        rennovationDetails = parcel.readString()
+        agentLicenseNumber = parcel.readString()
+        agentMobileNumber = parcel.readString()
         propertyListing = parcel.readParcelable(PropertyListing::class.java.classLoader)
         propertyFinance = parcel.readParcelable(PropertyFinance::class.java.classLoader)
         verifications = parcel.createTypedArrayList(Verification)
@@ -34,9 +34,9 @@ class Property : BasicProperty {
         parcel.writeInt(landSize)
         parcel.writeString(landSizeMeasurement)
         parcel.writeLong(auctionDate)
-        parcel.writeStringList(rennovationDetails)
-        parcel.writeStringList(agentLicenseNumber)
-        parcel.writeStringList(agentMobileNumber)
+        parcel.writeString(rennovationDetails)
+        parcel.writeString(agentLicenseNumber)
+        parcel.writeString(agentMobileNumber)
         parcel.writeParcelable(propertyListing, flags)
         parcel.writeParcelable(propertyFinance, flags)
         parcel.writeTypedList(verifications)

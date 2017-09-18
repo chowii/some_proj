@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract;
 
+import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface PropertyDetailContract {
 
     interface ViewInteractable {
         void configureAdapter(List<BaseModel> model);
+        void populateView(Property property);
+        void setRefreshing(boolean isRefreshing);
     }
 
 }
