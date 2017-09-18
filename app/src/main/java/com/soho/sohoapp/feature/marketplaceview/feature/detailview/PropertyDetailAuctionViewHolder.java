@@ -7,7 +7,6 @@ import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.extensions.LongExtKt;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
-import com.soho.sohoapp.helper.DateHelper;
 
 import java.util.Locale;
 

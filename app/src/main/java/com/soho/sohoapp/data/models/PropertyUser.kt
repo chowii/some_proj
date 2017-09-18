@@ -3,7 +3,6 @@ package com.soho.sohoapp.data.models
 import android.os.Parcel
 import android.os.Parcelable
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by Jovan on 15/9/17.

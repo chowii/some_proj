@@ -4,9 +4,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.BaseModel;
-import com.soho.sohoapp.helper.DateHelper;
-
-import java.util.Calendar;
 
 /**
  * Created by chowii on 4/9/17.

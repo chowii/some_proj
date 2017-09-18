@@ -18,8 +18,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.location.AndroidLocationProvider;
 

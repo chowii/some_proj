@@ -1,22 +1,17 @@
 package com.soho.sohoapp.customviews
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.support.v7.content.res.AppCompatResources
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
-
-import com.soho.sohoapp.R
-import com.soho.sohoapp.data.models.BasicProperty
-import com.soho.sohoapp.data.models.PropertyUser
-import com.squareup.picasso.Picasso
-
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.soho.sohoapp.R
+import com.soho.sohoapp.data.models.PropertyUser
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.view_user_avatar.view.*
 
 /**
  * Created by Jovan on 17/09/2017.

@@ -7,11 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
-
-import com.soho.sohoapp.data.models.PropertyListing;
+import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity;
@@ -19,10 +20,6 @@ import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.forsale.S
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
-
-import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
-
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;

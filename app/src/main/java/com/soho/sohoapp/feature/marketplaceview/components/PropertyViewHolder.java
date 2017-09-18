@@ -1,8 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,17 +9,9 @@ import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.UserAvatarView;
 import com.soho.sohoapp.data.models.BasicProperty;
-import com.soho.sohoapp.data.models.Image;
-import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.data.models.PropertyUser;
-import com.soho.sohoapp.feature.home.editproperty.ImageHeaderOnItemClickListener;
 import com.soho.sohoapp.feature.home.editproperty.ImageHeaderViewPager;
-import com.squareup.picasso.Picasso;
-
-import java.util.Locale;
 
 import butterknife.BindView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by chowii on 15/8/17.

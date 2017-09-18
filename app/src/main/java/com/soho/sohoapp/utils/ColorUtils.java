@@ -4,8 +4,8 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.data.enums.VerificationType;
+import com.soho.sohoapp.data.models.Verification;
 
 import java.util.List;
 

@@ -2,9 +2,6 @@ package com.soho.sohoapp.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.soho.sohoapp.helper.DateHelper
-
-import java.util.Calendar
 
 /**
  * Created by chowii on 5/9/17.

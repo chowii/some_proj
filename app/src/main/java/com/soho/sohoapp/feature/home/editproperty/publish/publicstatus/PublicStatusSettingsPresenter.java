@@ -1,9 +1,9 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyListing;
-import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 

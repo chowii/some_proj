@@ -11,8 +11,8 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.soho.sohoapp.feature.home.addproperty.data.LatLng;
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.feature.home.addproperty.data.LatLng;
 import com.soho.sohoapp.utils.Converter;
 
 import java.util.List;

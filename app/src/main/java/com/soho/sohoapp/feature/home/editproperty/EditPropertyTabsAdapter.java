@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.editproperty.connections.EditConnectionFragment;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.home.editproperty.connections.EditConnectionFragment;
 import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
 
 class EditPropertyTabsAdapter extends FragmentPagerAdapter {

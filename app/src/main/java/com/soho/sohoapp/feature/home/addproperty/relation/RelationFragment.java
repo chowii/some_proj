@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.dialogs.LoadingDialog;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.dialogs.RelationsDialog;
 import com.soho.sohoapp.landing.BaseFragment;
 

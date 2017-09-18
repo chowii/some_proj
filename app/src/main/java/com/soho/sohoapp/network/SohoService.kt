@@ -1,12 +1,15 @@
 package com.soho.sohoapp.network
 
-import com.soho.sohoapp.data.dtos.UserResult
 import com.soho.sohoapp.data.dtos.BasicPropertyResult
 import com.soho.sohoapp.data.dtos.PropertyListingResult
 import com.soho.sohoapp.data.dtos.PropertyResult
+import com.soho.sohoapp.data.dtos.UserResult
 import com.soho.sohoapp.feature.home.more.model.AccountVerification
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem
-import com.soho.sohoapp.network.results.*
+import com.soho.sohoapp.network.results.PortfolioCategoryResult
+import com.soho.sohoapp.network.results.PortfolioPropertyResult
+import com.soho.sohoapp.network.results.PropertyTypesResult
+import com.soho.sohoapp.network.results.PropertyUserRolesResult
 import com.soho.sohoapp.utils.QueryHashMap
 import io.reactivex.Observable
 import okhttp3.RequestBody

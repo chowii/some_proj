@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.extensions.LongExtKt;
-import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.utils.DateUtils;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;

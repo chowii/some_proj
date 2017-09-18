@@ -16,7 +16,6 @@ import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.navigator.NavigatorImpl
-import com.soho.sohoapp.navigator.NavigatorInterface
 import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

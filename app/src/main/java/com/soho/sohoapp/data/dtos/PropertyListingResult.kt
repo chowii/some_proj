@@ -1,7 +1,6 @@
 package com.soho.sohoapp.data.dtos
 
 import com.google.gson.annotations.SerializedName
-import com.soho.sohoapp.data.models.InspectionTime
 
 class PropertyListingResult {
 

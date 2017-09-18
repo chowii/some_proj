@@ -12,9 +12,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.feature.home.addproperty.address.AddressFragment;
-import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.addproperty.investment.InvestmentFragment;
