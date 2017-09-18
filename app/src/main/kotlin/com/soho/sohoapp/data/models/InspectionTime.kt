@@ -16,28 +16,6 @@ class InspectionTime() : Parcelable {
     var startTime: Long = 0
     var endTime: Long = 0
 
-//    fun retrieveStartTime(): Calendar {
-//        if (startTime == null) return Calendar.getInstance()
-//        return DateHelper.retrieveCalendarFromApiDate(startTime)
-//    }
-//
-//    fun retrieveDisplayableStartTime(): String {
-//        return DateHelper.retrieveShortDisplayableTime(retrieveStartTime())
-//    }
-//
-//    fun retrieveDisplayableStartDate(): String {
-//        return DateHelper.retrieveShortDisplayableDate(retrieveStartTime())
-//    }
-//
-//    fun retrieveEndTime(): Calendar {
-//        if (endTime == null) return Calendar.getInstance()
-//        return DateHelper.retrieveCalendarFromApiDate(endTime)
-//    }
-//
-//    fun retrieveDisplayableEndTime(): String {
-//        return DateHelper.retrieveShortDisplayableTime(retrieveEndTime())
-//    }
-
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         startTime = parcel.readLong()

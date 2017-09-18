@@ -64,11 +64,11 @@ public class PropertyHostTimeItem implements BaseModel {
 
         private Long auctionDate;
         private Location location;
-        private boolean mIsOnSite;
+        private boolean isOnSite;
 
-        PropertyAuctionItem(Long inspectionTime, boolean mIsOnSite) {
+        PropertyAuctionItem(Long inspectionTime, boolean isOnSite) {
             this.auctionDate = inspectionTime;
-            this.mIsOnSite = mIsOnSite;
+            this.isOnSite = isOnSite;
         }
 
         public Long getAuctionDate() {
@@ -88,11 +88,11 @@ public class PropertyHostTimeItem implements BaseModel {
         }
 
         public boolean isOnSite() {
-            return mIsOnSite;
+            return isOnSite;
         }
 
-        public void SetisOnSite(boolean mIsOnSite) {
-            this.mIsOnSite = mIsOnSite;
+        public void setisOnSite(boolean mIsOnSite) {
+            this.isOnSite = isOnSite;
         }
     }
 }
