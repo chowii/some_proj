@@ -13,7 +13,9 @@ import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
 
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.forsale.SaleAndAuctionSettingsActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
@@ -155,6 +157,24 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(PublicStatusSettingsActivity.createIntent(fragment.getActivity(), property), requestCode);
         } else {
             activity.startActivityForResult(PublicStatusSettingsActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openSaleAndAuctionSettingsScreen(@NonNull Property property, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(SaleAndAuctionSettingsActivity.createIntent(fragment.getActivity(), property), requestCode);
+        } else {
+            activity.startActivityForResult(SaleAndAuctionSettingsActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openAutocompleteAddressScreen(int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(AutocompleteAddressActivity.createIntent(fragment.getActivity()), requestCode);
+        } else {
+            activity.startActivityForResult(AutocompleteAddressActivity.createIntent(activity), requestCode);
         }
     }
 

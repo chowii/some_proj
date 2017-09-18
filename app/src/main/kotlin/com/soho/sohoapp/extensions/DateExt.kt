@@ -12,18 +12,18 @@ import java.util.*
 
 sealed class DateFormat {
 
-    class Iso8601DateTime: DateFormat()
-    class MonthAbbreviationFormat: DateFormat()
-    class DateDisplayFormat: DateFormat()
-    class TimeFormat: DateFormat()
+    class Iso8601DateTime : DateFormat()
+    class MonthAbbreviationFormat : DateFormat()
+    class DateDisplayFormat : DateFormat()
+    class TimeFormat : DateFormat()
 
 }
 
 fun DateFormat.stringFormat(): String {
     val format = when (this) {
-        is DateFormat.Iso8601DateTime -> "YYYY-MM-dd'T'HH:mm:ss.SSSZ"
-        is DateFormat.MonthAbbreviationFormat -> "dd MMM YYYY"
-        is DateFormat.DateDisplayFormat -> "dd/MM/YY"
+        is DateFormat.Iso8601DateTime -> "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        is DateFormat.MonthAbbreviationFormat -> "dd MMM yyyy"
+        is DateFormat.DateDisplayFormat -> "dd/MM/yy"
         is DateFormat.TimeFormat -> "hh:mma"
     }
     return format
@@ -36,7 +36,7 @@ fun DateFormat.stringFormat(): String {
  * @param stringFormat the expected date format to parse
  * @return string representation of date
  */
-fun Date.toStringWithFormat(stringFormat:String): String {
+fun Date.toStringWithFormat(stringFormat: String): String {
     val format: SimpleDateFormat = SimpleDateFormat(stringFormat)
     try {
         return format.format(this)

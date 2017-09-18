@@ -8,6 +8,8 @@ public final class RequestCode {
     public static final int PROPERTY_STATUS_UPDATE = 40;
     public static final int PROPERTY_PRIVATE_STATUS_UPDATE = 41;
     public static final int PROPERTY_PUBLIC_STATUS_UPDATE = 42;
+    public static final int PROPERTY_SALE_AND_AUCTION_STATUS_UPDATE = 43;
+    public static final int PROPERTY_AUCTION_ADDRESS = 44;
 
     private RequestCode() {
         //utils class to hold constants

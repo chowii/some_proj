@@ -15,14 +15,16 @@ import java.util.*
  * Created by chowii on 25/7/17.
  */
 
-class User() : BasicUser() {
+class User : BasicUser {
 
     var authenticationToken: String? = null
     var country: String? = null
     var registrationCallback: RegistrationCallback? = null
     var verifications: List<Verification>? = null
 
-    constructor(parcel: Parcel) : this() {
+    constructor() : super()
+
+    constructor(parcel: Parcel) : super(parcel) {
         authenticationToken = parcel.readString()
         country = parcel.readString()
     }

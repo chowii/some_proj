@@ -117,7 +117,6 @@ public class PublicStatusSettingsActivity extends AbsActivity implements PublicS
 
     @OnClick(R.id.saleAndAuction)
     public void onSaleAndAuctionClicked() {
-        showToast("Open Sale and Auction screen");
         presentable.onSaleAndAuctionClicked();
     }
 

@@ -51,11 +51,15 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import static android.text.TextUtils.isEmpty;
+
 public final class Converter {
 
     private static final String IMAGE_TYPE_JPEG = "image/jpeg";
 
-    private Converter() {}
+    private Converter() {
+        //utility class
+    }
 
     // MARK: - ================== Property ==================
 
@@ -78,7 +82,7 @@ public final class Converter {
         basicProperty.setPhotos(toPhotos(result.getPhotos(), result));
         basicProperty.setAgentLogo(toImage(result.getAgentLogo(), null));
         basicProperty.setPropertyUsers(toPropertyUsers(result.getPropertyUsers()));
-        if(result.getUpdatedAt() != null) {
+        if (!isEmpty(result.getUpdatedAt())) {
             basicProperty.setUpdatedAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getUpdatedAt()));
         }
         return basicProperty;
@@ -87,7 +91,7 @@ public final class Converter {
     @NonNull
     public static List<BasicProperty> toBasicProperties(@Nullable List<BasicPropertyResult> results) {
         List<BasicProperty> basicProperties = new ArrayList<>();
-        if(results != null) {
+        if (results != null) {
             for (BasicPropertyResult result : results) {
                 basicProperties.add(toBasicProperty(result));
             }
@@ -97,7 +101,9 @@ public final class Converter {
 
     @Nullable
     public static Property toProperty(@Nullable PropertyResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         Property property = new Property();
         //Basic Details
         property.setId(result.getId());
@@ -116,7 +122,7 @@ public final class Converter {
         property.setPhotos(toPhotos(result.getPhotos(), result));
         property.setAgentLogo(toImage(result.getAgentLogo(), null));
         property.setPropertyUsers(toPropertyUsers(result.getPropertyUsers()));
-        if(result.getUpdatedAt() != null) {
+        if (!isEmpty(result.getUpdatedAt())) {
             property.setUpdatedAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getUpdatedAt()));
         }
         //Property Details
@@ -128,7 +134,7 @@ public final class Converter {
         property.setPropertyListing(toPropertyListing(result.getPropertyListing()));
         property.setPropertyFinance(toPropertyFinance(result.getPropertyFinance()));
         property.setVerifications(toVerifications(result.getVerifications()));
-        if(result.getAuctionDate() != null) {
+        if (!isEmpty(result.getAuctionDate())) {
             property.setAuctionDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionDate()));
         }
         return property;
@@ -136,7 +142,9 @@ public final class Converter {
 
     @Nullable
     public static PropertyListing toPropertyListing(@Nullable PropertyListingResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         PropertyListing propertyListing = new PropertyListing();
         propertyListing.setId(result.getId());
         propertyListing.setState(result.getState());
@@ -151,13 +159,13 @@ public final class Converter {
         propertyListing.setAppointmentOnly(result.isAppointmentOnly());
         propertyListing.setOffSiteLocation(toLocation(result.getOffSiteLocation()));
         propertyListing.setInspectionTimes(toInspectionTimes(result.getInspectionTimes()));
-        if(result.getAvailableFrom() != null) {
+        if (!isEmpty(result.getAvailableFrom())) {
             propertyListing.setAvailableFrom(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAvailableFrom()));
         }
-        if(result.getAuctionTime() != null) {
+        if (!isEmpty(result.getAuctionTime())) {
             propertyListing.setAuctionTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionTime()));
         }
-        if(result.getAuctionDate() != null) {
+        if (!isEmpty(result.getAuctionDate())) {
             propertyListing.setAuctionDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionDate()));
         }
         return propertyListing;
@@ -165,7 +173,9 @@ public final class Converter {
 
     @Nullable
     private static PropertyFinance toPropertyFinance(@Nullable PropertyFinanceResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         PropertyFinance finance = new PropertyFinance();
         finance.setId(result.getId());
         finance.setPurchasePrice(result.getPurchasePrice());
@@ -174,15 +184,17 @@ public final class Converter {
         finance.setRented(result.isRented());
         finance.setActualRent(result.getActualRent());
         finance.setEstimatedRent(result.getEstimatedRent());
-        if(result.getLeasedTo() != null) {
+        if (!isEmpty(result.getLeasedTo())) {
             finance.setLeasedToDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getLeasedTo()));
         }
         return finance;
     }
 
     @Nullable
-    private static Verification toVerification(@Nullable  VerificationResult result) {
-        if (result == null) { return null; }
+    private static Verification toVerification(@Nullable VerificationResult result) {
+        if (result == null) {
+            return null;
+        }
         Verification verification = new Verification();
         verification.setId(result.getId());
         verification.setType(result.getType());
@@ -194,7 +206,7 @@ public final class Converter {
     @NonNull
     public static List<Verification> toVerifications(@Nullable List<VerificationResult> results) {
         List<Verification> verifications = new ArrayList<>();
-        if(results != null) {
+        if (results != null) {
             for (VerificationResult result : results) {
                 verifications.add(toVerification(result));
             }
@@ -206,13 +218,15 @@ public final class Converter {
 
     @Nullable
     public static InspectionTime toInspectionTime(@Nullable InspectionTimeResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         InspectionTime inspectionTime = new InspectionTime();
         inspectionTime.setId(result.getId());
-        if(result.getStartTime() != null) {
+        if (!isEmpty(result.getStartTime())) {
             inspectionTime.setStartTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getStartTime()));
         }
-        if(result.getEndTime() != null) {
+        if (!isEmpty(result.getEndTime())) {
             inspectionTime.setEndTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getEndTime()));
         }
         return inspectionTime;
@@ -221,7 +235,7 @@ public final class Converter {
     @NonNull
     public static List<InspectionTime> toInspectionTimes(@Nullable List<InspectionTimeResult> results) {
         List<InspectionTime> inspectionTimes = new ArrayList<>();
-        if(results != null) {
+        if (results != null) {
             for (InspectionTimeResult result : results) {
                 inspectionTimes.add(toInspectionTime(result));
             }
@@ -233,13 +247,15 @@ public final class Converter {
 
     @Nullable
     public static PropertyUser toPropertyUser(@Nullable PropertyUserResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         PropertyUser propertyUser = new PropertyUser();
         propertyUser.setId(result.getId());
         propertyUser.setRole(result.getRole());
         propertyUser.setLastMessage(result.getLastMessage());
         propertyUser.setUserDetails(toBasicUser(result.getUserDetails()));
-        if(result.getLastMessageAt() != null) {
+        if (!isEmpty(result.getLastMessageAt())) {
             propertyUser.setLastMessageAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getLastMessageAt()));
         }
         return propertyUser;
@@ -248,7 +264,7 @@ public final class Converter {
     @NonNull
     public static List<PropertyUser> toPropertyUsers(@Nullable List<PropertyUserResult> results) {
         List<PropertyUser> propertyUsers = new ArrayList<>();
-        if(results != null) {
+        if (results != null) {
             for (PropertyUserResult result : results) {
                 propertyUsers.add(toPropertyUser(result));
             }
@@ -258,13 +274,15 @@ public final class Converter {
 
     @Nullable
     public static BasicUser toBasicUser(@Nullable BasicUserResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         BasicUser basicUser = new BasicUser();
         basicUser.setFirstName(result.getFirstName());
         basicUser.setLastName(result.getLastName());
         basicUser.setEmail(result.getEmail());
         basicUser.setAvatar(toImage(result.getAvatar(), null));
-        if(result.getDateOfBirth() != null) {
+        if (!isEmpty(result.getDateOfBirth())) {
             basicUser.setDateOfBirth(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getDateOfBirth()));
         }
         return basicUser;
@@ -272,7 +290,9 @@ public final class Converter {
 
     @Nullable
     public static User toUser(@Nullable UserResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         User user = new User();
         user.setFirstName(result.getFirstName());
         user.setLastName(result.getLastName());
@@ -281,7 +301,7 @@ public final class Converter {
         user.setAuthenticationToken(result.getAuthenticationToken());
         user.setCountry(result.getCountry());
         user.setVerifications(toVerifications(result.getVerifications()));
-        if(result.getDateOfBirth() != null) {
+        if (!isEmpty(result.getDateOfBirth())) {
             user.setDateOfBirth(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getDateOfBirth()));
         }
         return user;
@@ -291,18 +311,22 @@ public final class Converter {
 
     @Nullable
     private static Photo toPhoto(@NonNull PhotoResult photoResult, @Nullable BasicPropertyResult basicPropertyResult) {
-        if (photoResult == null) { return null; }
+        if (photoResult == null) {
+            return null;
+        }
         Photo photo = new Photo();
         photo.setImage(toImage(photoResult.getImage(), basicPropertyResult));
         return photo;
     }
 
     @Nullable
-    private static Image toImage(@Nullable ImageResult imageResult, @Nullable BasicPropertyResult basicPropertyResult ) {
-        if (imageResult == null) { return null; }
+    private static Image toImage(@Nullable ImageResult imageResult, @Nullable BasicPropertyResult basicPropertyResult) {
+        if (imageResult == null) {
+            return null;
+        }
         Image image = new Image();
         image.setImageUrl(imageResult.getUrl());
-        if(basicPropertyResult != null) {
+        if (basicPropertyResult != null) {
             image.setHolder(PropertyType.getDefaultImage(basicPropertyResult.getType()));
         }
         return image;
@@ -311,7 +335,7 @@ public final class Converter {
     @NonNull
     public static List<Photo> toPhotos(@Nullable List<PhotoResult> photoResults, @Nullable BasicPropertyResult basicPropertyResult) {
         List<Photo> photos = new ArrayList<>();
-        if(photoResults != null) {
+        if (photoResults != null) {
             for (PhotoResult photoResult : photoResults) {
                 photos.add(toPhoto(photoResult, basicPropertyResult));
             }
@@ -323,7 +347,9 @@ public final class Converter {
 
     @Nullable
     private static Location toLocation(@Nullable LocationResult result) {
-        if (result == null) { return null; }
+        if (result == null) {
+            return null;
+        }
         Location location = new Location();
         location.setSuburb(result.getSuburb());
         location.setState(result.getState());

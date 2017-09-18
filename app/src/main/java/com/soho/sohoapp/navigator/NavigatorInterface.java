@@ -32,6 +32,10 @@ public interface NavigatorInterface {
 
     void openPublicStatusSettingsScreen(@NonNull Property property, int requestCode);
 
+    void openSaleAndAuctionSettingsScreen(@NonNull Property property, int requestCode);
+
+    void openAutocompleteAddressScreen(int requestCode);
+
     void openHomeActivity();
 
     void openHomeActivity(int flags);

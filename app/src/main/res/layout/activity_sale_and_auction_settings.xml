@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightBackground"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="@string/publish_property_sale_settings"
+        app:titleTextColor="@color/white"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_selling_settings"/>
+
+            <include
+                android:id="@+id/sellingOptions"
+                layout="@layout/item_sale_settings_radio_group"/>
+
+            <TextView
+                android:id="@+id/saleTitleHeader"
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_sale_title"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/publish_property_sale_title_hint"
+                android:padding="16dp"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:id="@+id/priceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/ListTextHeader"
+                    android:text="@string/publish_property_price_guide_title"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp">
+
+                    <ImageView
+                        android:id="@+id/indicator"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_green_exclaimation"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/publish_property_price_guide"
+                            android:textColor="@color/primaryText"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/publish_property_price_guide_hint"
+                            android:textColor="@color/hintText"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="end"
+                        android:hint="@string/edit_property_enter_value"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/blueText"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:paddingEnd="32dp"
+                    android:paddingStart="32dp"
+                    android:text="@string/publish_property_price_guide_decs"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_details"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/publish_property_description_hint"
+                android:padding="16dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_size"/>
+
+            <LinearLayout
+                android:id="@+id/propertySizeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_selector"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/publish_property_size_desc"
+                    android:textColor="@color/primaryText"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/auctionAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/ListTextHeader"
+                    android:text="@string/publish_property_auction_address"/>
+
+                <include
+                    android:id="@+id/auctionAddressOptions"
+                    layout="@layout/item_sale_settings_radio_group"/>
+
+                <include layout="@layout/horizontal_rule"/>
+
+                <TextView
+                    android:id="@+id/auctionAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_selector"
+                    android:enabled="false"
+                    android:padding="16dp"
+                    android:text="@string/publish_property_auction_address_desc"
+                    android:textColor="@color/hintText"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/auctionDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/ListTextHeader"
+                    android:text="@string/publish_property_auction_date"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_selector"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/publish_property_auction_date"
+                        android:textColor="@color/primaryText"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryText"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="@string/test_text_short"
+                        tools:visibility="visible"/>
+                </LinearLayout>
+
+                <include layout="@layout/horizontal_rule"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_selector"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/publish_property_auction_time"
+                        android:textColor="@color/primaryText"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryText"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="@string/test_text_short"
+                        tools:visibility="visible"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_inspection_time"/>
+
+            <include
+                android:id="@+id/inspectionTimeOptions"
+                layout="@layout/item_sale_settings_radio_group"/>
+
+            <include layout="@layout/horizontal_rule"/>
+
+            <LinearLayout
+                android:id="@+id/inspectionTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_selector"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/inspectionTimeDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/publish_property_inspection_time_decs"
+                    android:textColor="@color/primaryText"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/inspectionTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="@string/test_text_short"
+                    tools:visibility="visible"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:text="@string/publish_property_display_address"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/publish_property_show_full_address"
+                    android:textColor="@color/primaryText"
+                    android:textSize="14sp"/>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save"
+                style="@style/Button.Green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/publish_property_save"
+                android:textAllCaps="true"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

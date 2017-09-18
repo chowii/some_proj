@@ -5,6 +5,7 @@ import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.navigator.NavigatorInterface;
+import com.soho.sohoapp.navigator.RequestCode;
 
 public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatusSettingsContract.ViewPresentable {
     private final PublicStatusSettingsContract.ViewInteractable view;
@@ -65,7 +66,7 @@ public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatus
 
     @Override
     public void onSaleAndAuctionClicked() {
-        //todo: open Sale and Auction screen
+        navigator.openSaleAndAuctionSettingsScreen(property, RequestCode.PROPERTY_SALE_AND_AUCTION_STATUS_UPDATE);
     }
 
     @Override

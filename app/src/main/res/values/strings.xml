@@ -144,7 +144,40 @@
     <string name="publish_property_sale_and_auction_desc">Actively advertise your property For Sale to attract offers and enquiries from prospective buyers.</string>
     <string name="publish_property_rent">For Rent</string>
     <string name="publish_property_rent_decs">Actively advertise your property For Rent to attract offers and enquiries from prospective tenants.</string>
+    <string name="publish_property_sale_settings">Sale Settings</string>
+    <string name="publish_property_selling_settings">Selling property settings</string>
+    <string name="publish_property_sale_title">Sale title</string>
+    <string name="publish_property_auction_title">Auction title</string>
+    <string name="publish_property_sale">Sale</string>
+    <string name="publish_property_auction">Auction</string>
+    <string name="publish_property_sale_title_hint">EG. Offers from $1.2M onwards</string>
+    <string name="publish_property_details">Details</string>
+    <string name="publish_property_description_hint">Add a description of your property</string>
+    <string name="publish_property_price_guide_title">Price guide for search results</string>
+    <string name="publish_property_price_guide">Price Guide</string>
+    <string name="publish_property_price_guide_hint">Set your estimated sale price</string>
+    <string name="publish_property_price_guide_decs">The price will only be used in our search and filter. It will not be displayed to the public.</string>
+    <string name="publish_property_enter_value">Enter value</string>
+    <string name="publish_property_size">Size of property</string>
+    <string name="publish_property_size_desc">Add size of property</string>
+    <string name="publish_property_display_address">Display address</string>
+    <string name="publish_property_show_full_address">Show full address</string>
+    <string name="publish_property_auction_address">Auction address</string>
+    <string name="publish_property_auction_address_desc">Set Auction Address</string>
+    <string name="publish_property_auction_on_site">On Site</string>
+    <string name="publish_property_auction_off_site">Off Site</string>
+    <string name="publish_property_inspection_time">Inspection time</string>
+    <string name="publish_property_inspection_time_decs">Set Inspection Time</string>
+    <string name="publish_property_set_time">Set time</string>
+    <string name="publish_property_appointment_only">Appointment Only</string>
+    <string name="publish_property_auction_date">Auction Date</string>
+    <string name="publish_property_auction_time">Auction Time</string>
     <!--Publish property screens end-->
+
+    <!--Autocomplete address screen start-->
+    <string name="autocomplete_address_toolbar_title">Auction Address</string>
+    <string name="autocomplete_address_done">Done</string>
+    <!--Autocomplete address screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>

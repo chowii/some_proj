@@ -89,6 +89,14 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.forsale.SaleAndAuctionSettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
 
