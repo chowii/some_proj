@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.home.addproperty;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
@@ -19,7 +19,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     private final NavigatorInterface navigator;
     private final CompositeDisposable compositeDisposable;
     private PropertyRole propertyRole;
-    private PropertyAddress propertyAddress;
+    private Location location;
     private PropertyType propertyType;
     private boolean isInvestment;
     private int bedrooms;
@@ -46,8 +46,8 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     }
 
     @Override
-    public void onAddressSelected(PropertyAddress propertyAddress) {
-        this.propertyAddress = propertyAddress;
+    public void onAddressSelected(Location location) {
+        this.location = location;
         view.showRelationFragment();
     }
 
@@ -80,8 +80,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
 
     private void createPromotion() {
         view.showLoadingDialog();
-
-        QueryHashMap map = Converter.toMap(propertyAddress, propertyRole, propertyType,
+        QueryHashMap map = Converter.toMap(location, propertyRole, propertyType,
                 isInvestment, bedrooms, bathrooms, carspots);
 
         compositeDisposable.add(DEPENDENCIES.getSohoService().createProperty(map)

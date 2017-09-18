@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_user_info"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_account_circle_black_48dp"/>
+
+    <TextView
+        android:id="@+id/txt_user_name"
+        style="@style/Text.Thin"
+        android:textSize="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="J. Seizov"/>
+
+    <TextView
+        android:id="@+id/txt_user_role"
+        style="@style/Text"
+        android:textSize="10sp"
+        android:textColor="@color/greyLightPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Admin"/>
+
+</LinearLayout>

@@ -12,7 +12,7 @@ import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
 import butterknife.OnClick
 import com.soho.sohoapp.R
-import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.navigator.NavigatorImpl
 import io.reactivex.disposables.Disposable
 

@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/greyLightPrimary"
+              android:background="@color/lightGreyBackground"
               android:orientation="vertical">
 
     <include layout="@layout/tab_layout"/>
 
-    <LinearLayout
-        android:id="@+id/search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow_marketplace_search_bar_layer"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/search_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:drawableEnd="@drawable/tab_browse"
-            android:drawablePadding="15dp"
-            android:drawableStart="@drawable/tab_browse"
-            android:gravity="center_vertical"
-            android:text="@string/market_place_search_box_all_suburb"/>
-    </LinearLayout>
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs">
 
         <android.support.v7.widget.RecyclerView
+            android:paddingTop="@dimen/marketplace_search_height"
+            android:clipToPadding="false"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/search_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/marketplace_search_height"
+        android:padding="24dp"
+        android:drawablePadding="15dp"
+        android:layout_below="@id/tabs"
+        android:drawableStart="@drawable/tab_browse"
+        android:gravity="center_vertical"
+        android:background="@drawable/shadow_marketplace_search_bar_layer"
+        android:text="@string/market_place_search_box_all_suburbs"/>
+
+</RelativeLayout>

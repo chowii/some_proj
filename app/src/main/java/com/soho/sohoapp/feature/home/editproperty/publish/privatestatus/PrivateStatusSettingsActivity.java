@@ -11,7 +11,7 @@ import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.dialogs.LoadingDialog;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 
 import butterknife.BindView;

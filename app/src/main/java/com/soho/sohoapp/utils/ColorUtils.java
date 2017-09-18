@@ -4,8 +4,8 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyVerification;
-import com.soho.sohoapp.feature.home.editproperty.data.VerificationType;
+import com.soho.sohoapp.data.models.Verification;
+import com.soho.sohoapp.data.enums.VerificationType;
 
 import java.util.List;
 
@@ -21,21 +21,21 @@ public final class ColorUtils {
     }
 
     @ColorRes
-    public static int getPublicPropertyStateColor(List<PropertyVerification> propertyVerifications) {
+    public static int getPublicPropertyStateColor(List<Verification> verifications) {
         int color = R.color.propertyStateVerified;
 
-        if (hasState(propertyVerifications, VerificationType.NOT_VERIFIED)) {
+        if (hasState(verifications, VerificationType.NOT_VERIFIED)) {
             color = R.color.propertyStateNotVerified;
-        } else if (hasState(propertyVerifications, VerificationType.NEW)
-                || hasState(propertyVerifications, VerificationType.PENDING)) {
+        } else if (hasState(verifications, VerificationType.NEW)
+                || hasState(verifications, VerificationType.PENDING)) {
             color = R.color.propertyStateNotCompleted;
         }
 
         return color;
     }
 
-    private static boolean hasState(@NonNull List<PropertyVerification> verifications, @NonNull String state) {
-        for (PropertyVerification verification : verifications) {
+    private static boolean hasState(@NonNull List<Verification> verifications, @NonNull String state) {
+        for (Verification verification : verifications) {
             if (state.equals(verification.getState())) {
                 return true;
             }

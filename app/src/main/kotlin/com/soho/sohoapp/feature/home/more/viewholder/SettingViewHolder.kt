@@ -7,6 +7,8 @@ import android.widget.TextView
 import butterknife.BindView
 import com.soho.sohoapp.BaseViewHolder
 import com.soho.sohoapp.R
+import com.soho.sohoapp.extensions.stringWithFormat
+import com.soho.sohoapp.extensions.toStringWithDisplayFormat
 import com.soho.sohoapp.feature.home.more.adapter.SettingsAdapter
 import com.soho.sohoapp.feature.home.more.model.SettingItem
 
@@ -30,7 +32,7 @@ class SettingViewHolder(var itemView: View, val listener: SettingsAdapter.OnSett
     override fun onBindViewHolder(model: SettingItem?) {
         model.let {
             titleTextView.text = model?.title
-            subtitleTextView.text = model?.dateOfBirth
+            subtitleTextView.text = model?.dateOfBirth?.toStringWithDisplayFormat() ?: ""
             iconItemImageView.setImageResource(model?.iconRes!!)
         }
         settingsRootLayout.setOnClickListener({ _ -> listener.onSettingsItemClicked(model?.title ?: "") })

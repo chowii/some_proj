@@ -20,10 +20,11 @@ public class AddAuthorizationInterceptor implements Interceptor {
 
 
         String authToken = DEPENDENCIES.getPreferences().getAuthToken();
-        Request newRequest = request.newBuilder()
-                .addHeader("Authorization", authToken)
-                .build();
-
+        Request.Builder requestBuilder = request.newBuilder();
+        if(!authToken.equals("")) {
+            requestBuilder.addHeader("Authorization", authToken);
+        }
+        Request newRequest = requestBuilder.build();
         return chain.proceed(newRequest);
     }
 

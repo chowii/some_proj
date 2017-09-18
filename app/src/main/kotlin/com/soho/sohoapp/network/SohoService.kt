@@ -1,8 +1,9 @@
 package com.soho.sohoapp.network
 
-import com.soho.sohoapp.data.PropertyDetail
-import com.soho.sohoapp.data.SohoProperty
-import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.data.dtos.UserResult
+import com.soho.sohoapp.data.dtos.BasicPropertyResult
+import com.soho.sohoapp.data.dtos.PropertyListingResult
+import com.soho.sohoapp.data.dtos.PropertyResult
 import com.soho.sohoapp.feature.home.more.model.AccountVerification
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.*
@@ -17,26 +18,49 @@ import retrofit2.http.*
  */
 interface SohoService {
 
+    // MARK: - ================== User Related ==================
+
     @POST("users")
-    fun register(@Body map: Map<String, String>): Observable<User>
+    fun register(@Body map: Map<String, String>): Observable<UserResult>
+
+    @POST("sessions")
+    fun loginUser(@Body map: Map<String, String>): Observable<UserResult>
+
+    @PUT("profile")
+    fun updateUserProfile(@Body map: Map<String, String>): Observable<UserResult>
+
+    // MARK: - ================== Property Related ==================
 
     @POST("search/properties")
-    fun searchProperties(@QueryMap map: java.util.Map<String, Object>): Observable<java.util.List<SohoProperty>>
+    fun searchProperties(@QueryMap map: java.util.Map<String, Object>): Observable<java.util.List<BasicPropertyResult>>
+
+    @POST("properties")
+    fun createProperty(@QueryMap map: QueryHashMap): Observable<PropertyResult>
+
+    @PUT("properties/{id}/")
+    fun sendPropertyPhoto(@Path("id") id: Long, @Body file: RequestBody): Observable<ResponseBody>
+
+    @GET("properties/{id}/")
+    fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
+
+    @PUT("properties/{id}/property_listing")
+    fun updatePropertyListing(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>
 
+    //TODO: Refactor these two into 1
+    @GET("options/property_types")
+    fun getPropertyTypesForFilter(): Observable<List<FilterCheckboxItem>>
+
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>
 
-    @POST("sessions")
-    fun loginUser(@Body map: Map<String, String>): Observable<User>
+    // MARK: - ================== Portfolio Related ==================
 
-    @PUT("profile")
-    fun updateUserProfile(@Body map: Map<String, String>): Observable<User>
-
-    @POST("properties")
-    fun createProperty(@QueryMap map: QueryHashMap): Observable<SohoProperty>
+    @GET("portfolios")
+    fun getPortfolios(@Query("portfolio_type") portfolioType: String,
+                      @Query("user_id") userId: Int): Observable<List<PortfolioPropertyResult>>
 
     @GET("portfolios/owned")
     fun getOwnedPortfolios(): Observable<List<PortfolioCategoryResult>>
@@ -44,27 +68,10 @@ interface SohoService {
     @GET("portfolios/managed")
     fun getManagedPortfolios(): Observable<List<PortfolioCategoryResult>>
 
-    @GET("portfolios")
-    fun getPortfolios(@Query("portfolio_type") portfolioType: String,
-                      @Query("user_id") userId: Int): Observable<List<PortfolioPropertyResult>>
-
-    @GET("options/property_types")
-    fun getPropertyTypesForFilter(): Observable<List<FilterCheckboxItem>>
-
-    @PUT("properties/{id}/")
-    fun sendPropertyPhoto(@Path("id") id: Long, @Body file: RequestBody): Observable<ResponseBody>
-
-    @PUT("properties/{id}/property_listing")
-    fun updatePropertyListing(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
-
-    @GET("properties/{id}/")
-    fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
+    // MARK: - ================== Verification Related ==================
 
     @GET("verifications")
     fun retrieveVerificationList(): Observable<List<AccountVerification>>
-
-    @GET("properties/{id}")
-    fun getPropertyById(@Path("id") id: Int): Observable<PropertyDetail>
 
     @PUT("verifications/mobile")
     fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<AccountVerification>

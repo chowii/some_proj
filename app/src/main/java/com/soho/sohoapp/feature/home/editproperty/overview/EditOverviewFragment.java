@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;

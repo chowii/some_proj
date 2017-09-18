@@ -2,23 +2,32 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.SohoProperty;
+import com.soho.sohoapp.customviews.UserAvatarView;
+import com.soho.sohoapp.data.models.BasicProperty;
+import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyUser;
+import com.soho.sohoapp.feature.home.editproperty.ImageHeaderOnItemClickListener;
+import com.soho.sohoapp.feature.home.editproperty.ImageHeaderViewPager;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by chowii on 15/8/17.
  */
 
-class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
+class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
 
     @BindView(R.id.image_view_pager)
     ViewPager imageViewPager;
@@ -41,11 +50,14 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     @BindView(R.id.parking_text_view)
     TextView parkingTextView;
 
+    @BindView(R.id.user_avatar_view)
+    UserAvatarView userAvatarView;
+
     @BindView(R.id.rootView)
     ViewGroup viewView;
 
     private final OnMarketplaceItemClickListener listener;
-    PropertyPagerAdapter pagerAdapter;
+    ImageHeaderViewPager pagerAdapter;
 
     PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
         super(itemView);
@@ -53,32 +65,26 @@ class PropertyViewHolder extends BaseViewHolder<SohoProperty> {
     }
 
     @Override
-    public void onBindViewHolder(SohoProperty property){
+    public void onBindViewHolder(BasicProperty property){
         if (pagerAdapter == null)
-            pagerAdapter = new PropertyPagerAdapter(imageViewPager.getContext());
+            pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
-        viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.id()));
+        pagerAdapter.setData(property.getPhotosAsImages());
+        viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.getId()));
+        pagerAdapter.setOnItemClickListener(image -> {
+            listener.onMarketplaceItemClicked(property.getId());
+        });
+        userAvatarView.populateWithPropertyUser(property.getRepresentingUser());
         configurePropertyDetails(property);
     }
 
-    private void configurePropertyDetails(SohoProperty property) {
-        titleTextView.setText(property.title());
-        streetAddressTextView.setText(property.location().retrieveAddress1());
-        suburbAddressTextView.setText(getSuburbString(property));
-        bedroomTextView.setText(String.valueOf(property.numberOfBedrooms()));
-        bathroomTextView.setText(String.valueOf(property.numberOfBathrooms()));
-        parkingTextView.setText(String.valueOf(property.numberOfParking()));
-
-    }
-
-    @NonNull
-    private String getSuburbString(SohoProperty property) {
-        return String.format(
-                            Locale.getDefault(),
-                            "%s %s, %s",
-                            property.location().retrieveSuburb(),
-                            property.location().retrievePostcode(),
-                            property.location().retrieveState());
+    private void configurePropertyDetails(BasicProperty property) {
+        titleTextView.setText(property.getTitle());
+        streetAddressTextView.setText(property.getLocation().getAddressLine1());
+        suburbAddressTextView.setText(property.getLocation().getAddressLine2());
+        bedroomTextView.setText(String.valueOf(property.getBedrooms()));
+        bathroomTextView.setText(String.valueOf(property.getBathrooms()));
+        parkingTextView.setText(String.valueOf(property.getCarspots()));
     }
 
     interface OnMarketplaceItemClickListener {

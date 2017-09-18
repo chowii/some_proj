@@ -14,7 +14,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.feature.home.addproperty.address.AddressFragment;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.addproperty.investment.InvestmentFragment;
@@ -104,8 +104,8 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void onAddressSelected(PropertyAddress propertyAddress) {
-        presentable.onAddressSelected(propertyAddress);
+    public void onAddressSelected(Location location) {
+        presentable.onAddressSelected(location);
     }
 
     @Override

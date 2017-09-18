@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UserAvatarView">
+        <attr name="avatar" format="integer" />
+        <attr name="name" format="string" localization="suggested" />
+        <attr name="role" format="string" localization="suggested" />
+        <attr name="name_visibility" value="visible">
+            <enum name="visible" value="0x0" />
+            <enum name="invisible" value="0x4" />
+            <enum name="gone" value="0x8" />
+        </attr>
+        <attr name="role_visibility" value="visible">
+            <enum name="visible" value="0x0" />
+            <enum name="invisible" value="0x4" />
+            <enum name="gone" value="0x8" />
+        </attr>
+    </declare-styleable>
+</resources>

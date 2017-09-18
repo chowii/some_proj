@@ -12,7 +12,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.feature.home.addproperty.data.LatLng;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.utils.Converter;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class AndroidLocationProvider implements LocationProvider {
     }
 
     @Override
-    public Observable<PropertyAddress> getAddress(LatLng latLng, String fullAddress) {
+    public Observable<Location> getAddress(LatLng latLng, String fullAddress) {
         return Observable.fromCallable(() -> {
             Geocoder geocoder;
             List<Address> addresses;

@@ -1,6 +1,8 @@
 package com.soho.sohoapp.network.results;
 
 import com.google.gson.annotations.SerializedName;
+import com.soho.sohoapp.data.dtos.LocationResult;
+import com.soho.sohoapp.data.dtos.PropertyFinanceResult;
 
 public class PortfolioPropertyResult {
     @SerializedName("id")
@@ -10,13 +12,8 @@ public class PortfolioPropertyResult {
     public String state;
 
     @SerializedName("location")
-    public Location location;
+    public LocationResult location;
 
     @SerializedName("property_finance")
     public PropertyFinanceResult finance;
-
-    public static class Location {
-        @SerializedName("address_1")
-        public String address1;
-    }
 }

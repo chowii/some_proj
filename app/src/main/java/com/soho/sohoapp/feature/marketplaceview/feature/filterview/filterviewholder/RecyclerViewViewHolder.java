@@ -7,6 +7,7 @@ import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceAdapter;
+import com.soho.sohoapp.utils.Converter;
 
 import java.util.HashMap;
 
@@ -34,10 +35,11 @@ public class RecyclerViewViewHolder extends BaseFormViewHolder {
         HashMap<String, Object> s = new HashMap<>();
         s.put("by_listing_type", "sale/auction");
         DEPENDENCIES.getSohoService().searchProperties(s)
+                .map(Converter::toBasicProperties)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(
-                        sohoProperties -> recyclerView.setAdapter(new MarketPlaceAdapter(sohoProperties, null)),
+                        properties -> recyclerView.setAdapter(new MarketPlaceAdapter(properties, null)),
                         throwable -> DEPENDENCIES.getLogger().d("throwable" + throwable.getMessage())
                 );
     }

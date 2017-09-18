@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.extensions.LongExtKt;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
 import com.soho.sohoapp.helper.DateHelper;
 
@@ -61,10 +62,8 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
 
     private void configureAuctionTime(PropertyHostTimeItem model) {
         PropertyHostTimeItem.PropertyAuctionItem propertyAuctionItem = model.retrievePropertyAuctionItem();
-        String auctionDate = DateHelper.retrieveShortDisplayableDate(propertyAuctionItem.retrieveAuctionDate());
-        String auctionTime = DateHelper.retrieveShortDisplayableTime(propertyAuctionItem.retrieveAuctionDate());
-        descriptionTextView.setText(auctionDate);
-        addToCalendarButton.setText(auctionTime);
+        descriptionTextView.setText(LongExtKt.toStringWithDisplayFormat(propertyAuctionItem.getAuctionDate()));
+        addToCalendarButton.setText(LongExtKt.toStringWithTimeFormat(propertyAuctionItem.getAuctionDate()));
 
         auctionLocationTextView.setText(String.format(
                                     Locale.getDefault(),
@@ -72,17 +71,17 @@ class PropertyDetailAuctionViewHolder extends BaseViewHolder<PropertyHostTimeIte
                                     getStringFromResource(R.string.auction_location_string),
                                     propertyAuctionItem.isOnSite() ?
                                     "On site" :
-                                    model.retrieveLocation().retrieveFullAddress()));
+                                    model.retrieveLocation().getFullAddress()));
     }
 
     private void configureInspectionTime(PropertyHostTimeItem.PropertyInspectionItem inspectionTime) {
         addToCalendarButton.setText(String.format(
                                     Locale.getDefault(),
                                     getStringFromResource(R.string.property_detail_property_viewing_time_fromat_string),
-                                    inspectionTime.getPropertyInspectionTime().retrieveDisplayableStartTime(),
-                                    inspectionTime.getPropertyInspectionTime().retrieveDisplayableEndTime()
+                                    LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getStartTime()),
+                                    LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getEndTime())
                                     ));
-        descriptionTextView.setText(inspectionTime.getPropertyInspectionTime().retrieveDisplayableStartDate());
+        descriptionTextView.setText(LongExtKt.toStringWithDisplayFormat(inspectionTime.getPropertyInspectionTime().getStartTime()));
     }
 
     private void toggleVisibility(int auctionLocationVisibility, int addToCalendarVisibility, int descriptionVisibility) {

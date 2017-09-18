@@ -2,8 +2,8 @@ package com.soho.sohoapp.feature.home.editproperty;
 
 import android.net.Uri;
 
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.Property;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ interface EditPropertyContract {
 
         void setCurrentPropertyImage(int position);
 
-        void setPropertyImages(List<PropertyImage> propertyImages);
+        void setPropertyImages(List<Image> propertyImages);
 
         void pickImageFromGallery();
 

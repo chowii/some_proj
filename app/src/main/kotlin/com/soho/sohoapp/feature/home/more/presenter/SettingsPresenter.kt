@@ -7,7 +7,7 @@ import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.SohoApplication.getContext
 import com.soho.sohoapp.SohoApplication.getStringFromResource
-import com.soho.sohoapp.feature.SharedUser
+import com.soho.sohoapp.data.singletons.SharedUser
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.SettingsActivity.Companion.CAMERA_INTENT_REQUEST_CODE
 import com.soho.sohoapp.feature.home.more.contract.SettingsContract
@@ -35,7 +35,6 @@ class SettingsPresenter(var interactable: SettingsContract.ViewInteractable, val
                     val settingsList: MutableList<BaseModel> = ArrayList()
                     settingsList.add(HeaderItem<String>(getStringFromResource(R.string.settings_edit_profile_text)))
                     settingsList.add(createSettingItem())
-
                     settingsList.add(HeaderItem<String>(
                             getStringFromResource(R.string.settings_account_verification_text)))
                     accountList.forEach {
@@ -53,7 +52,7 @@ class SettingsPresenter(var interactable: SettingsContract.ViewInteractable, val
 
     private fun createSettingItem(): SettingItem {
         val user = SharedUser.getInstance().user
-        return SettingItem(user?.getFullnameShort(), user?.dateOfBirth, R.drawable.drivers_card)
+        return SettingItem(user?.getFullnameShort(), user?.dateOfBirth ?: 0, R.drawable.drivers_card)
     }
 
     override fun onSettingsItemClicked(item: String) {

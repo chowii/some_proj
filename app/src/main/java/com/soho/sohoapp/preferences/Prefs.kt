@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
-import com.soho.sohoapp.feature.User
+import com.soho.sohoapp.data.models.User
 
 class Prefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"

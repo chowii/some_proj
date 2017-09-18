@@ -3,27 +3,44 @@ package com.soho.sohoapp.utils;
 import android.location.Address;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.dtos.BasicUserResult;
+import com.soho.sohoapp.data.dtos.ImageResult;
+import com.soho.sohoapp.data.dtos.InspectionTimeResult;
+import com.soho.sohoapp.data.dtos.LocationResult;
+import com.soho.sohoapp.data.dtos.PhotoResult;
+import com.soho.sohoapp.data.dtos.PropertyUserResult;
+import com.soho.sohoapp.data.dtos.UserResult;
+import com.soho.sohoapp.data.models.BasicUser;
+import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.InspectionTime;
+import com.soho.sohoapp.data.models.Photo;
+import com.soho.sohoapp.data.models.PropertyUser;
+import com.soho.sohoapp.data.models.User;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyVerification;
+import com.soho.sohoapp.data.models.BasicProperty;
+import com.soho.sohoapp.data.dtos.BasicPropertyResult;
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyListing;
+import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
-import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.network.Keys;
 import com.soho.sohoapp.network.results.PortfolioCategoryResult;
 import com.soho.sohoapp.network.results.PortfolioPropertyResult;
-import com.soho.sohoapp.network.results.PropertyFinanceResult;
-import com.soho.sohoapp.network.results.PropertyListingResult;
-import com.soho.sohoapp.network.results.PropertyResult;
+import com.soho.sohoapp.data.dtos.PropertyFinanceResult;
+import com.soho.sohoapp.data.dtos.PropertyListingResult;
+import com.soho.sohoapp.data.dtos.PropertyResult;
 import com.soho.sohoapp.network.results.PropertyTypesResult;
 import com.soho.sohoapp.network.results.PropertyUserRolesResult;
+import com.soho.sohoapp.data.dtos.VerificationResult;
+import com.soho.sohoapp.extensions.StringExtKt;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,46 +52,301 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public final class Converter {
+
     private static final String IMAGE_TYPE_JPEG = "image/jpeg";
 
-    private Converter() {
-        //utility class
+    private Converter() {}
+
+    // MARK: - ================== Property ==================
+
+    @NonNull
+    public static BasicProperty toBasicProperty(@NonNull BasicPropertyResult result) {
+        BasicProperty basicProperty = new BasicProperty();
+        basicProperty.setId(result.getId());
+        basicProperty.setState(result.getState());
+        basicProperty.setTitle(result.getTitle());
+        basicProperty.setDescription(result.getDescription());
+        basicProperty.setType(result.getType());
+        basicProperty.setInvestment(result.isInvestment());
+        basicProperty.setFavourite(result.isFavourite());
+        basicProperty.setRentPrice(result.getRentPrice());
+        basicProperty.setSalePrice(result.getSalePrice());
+        basicProperty.setBedrooms(result.getBedrooms());
+        basicProperty.setCarspots(result.getCarspots());
+        basicProperty.setBathrooms(result.getBathrooms());
+        basicProperty.setLocation(toLocation(result.getLocation()));
+        basicProperty.setPhotos(toPhotos(result.getPhotos(), result));
+        basicProperty.setAgentLogo(toImage(result.getAgentLogo(), null));
+        basicProperty.setPropertyUsers(toPropertyUsers(result.getPropertyUsers()));
+        if(result.getUpdatedAt() != null) {
+            basicProperty.setUpdatedAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getUpdatedAt()));
+        }
+        return basicProperty;
     }
 
     @NonNull
-    public static Property toProperty(@NonNull PropertyResult result) {
+    public static List<BasicProperty> toBasicProperties(@Nullable List<BasicPropertyResult> results) {
+        List<BasicProperty> basicProperties = new ArrayList<>();
+        if(results != null) {
+            for (BasicPropertyResult result : results) {
+                basicProperties.add(toBasicProperty(result));
+            }
+        }
+        return basicProperties;
+    }
+
+    @Nullable
+    public static Property toProperty(@Nullable PropertyResult result) {
+        if (result == null) { return null; }
         Property property = new Property();
-        property.setId(result.id);
-        property.setType(result.type);
-        property.setBedrooms(result.bedrooms);
-        property.setBathrooms(result.bathrooms);
-        property.setCarspots(result.carspots);
-        property.setAddress(toPropertyAddress(result));
-        property.setPropertyListing(toPropertyListing(result.propertyListing));
-
-        List<PropertyImage> propertyImageList = new ArrayList<>();
-        for (PropertyResult.Photo photo : result.photos) {
-            propertyImageList.add(toPropertyImage(property, photo));
+        //Basic Details
+        property.setId(result.getId());
+        property.setState(result.getState());
+        property.setTitle(result.getTitle());
+        property.setDescription(result.getDescription());
+        property.setType(result.getType());
+        property.setInvestment(result.isInvestment());
+        property.setFavourite(result.isFavourite());
+        property.setRentPrice(result.getRentPrice());
+        property.setSalePrice(result.getSalePrice());
+        property.setBedrooms(result.getBedrooms());
+        property.setCarspots(result.getCarspots());
+        property.setBathrooms(result.getBathrooms());
+        property.setLocation(toLocation(result.getLocation()));
+        property.setPhotos(toPhotos(result.getPhotos(), result));
+        property.setAgentLogo(toImage(result.getAgentLogo(), null));
+        property.setPropertyUsers(toPropertyUsers(result.getPropertyUsers()));
+        if(result.getUpdatedAt() != null) {
+            property.setUpdatedAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getUpdatedAt()));
         }
-        property.setPropertyImageList(propertyImageList);
-
-        List<PropertyVerification> propertyVerificationList = new ArrayList<>();
-        for (PropertyResult.Verification verification : result.verifications) {
-            propertyVerificationList.add(toPropertyVerification(verification));
+        //Property Details
+        property.setLandSize(result.getLandSize());
+        property.setLandSizeMeasurement(result.getLandSizeMeasurement());
+        property.setRennovationDetails(result.getRennovationDetails());
+        property.setAgentLicenseNumber(result.getAgentLicenseNumber());
+        property.setAgentMobileNumber(result.getAgentMobileNumber());
+        property.setPropertyListing(toPropertyListing(result.getPropertyListing()));
+        property.setPropertyFinance(toPropertyFinance(result.getPropertyFinance()));
+        property.setVerifications(toVerifications(result.getVerifications()));
+        if(result.getAuctionDate() != null) {
+            property.setAuctionDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionDate()));
         }
-        property.setPropertyVerificationList(propertyVerificationList);
-
-        property.setPropertyFinance(toPropertyFinance(result.propertyFinance));
         return property;
     }
 
-    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull PropertyImage propertyImage) {
+    @Nullable
+    public static PropertyListing toPropertyListing(@Nullable PropertyListingResult result) {
+        if (result == null) { return null; }
+        PropertyListing propertyListing = new PropertyListing();
+        propertyListing.setId(result.getId());
+        propertyListing.setState(result.getState());
+        propertyListing.setCanReceiveRentOffers(result.getCanReceiveRentOffers());
+        propertyListing.setCanReceiveSalesOffers(result.getCanReceiveSalesOffers());
+        propertyListing.setSaleTitle(result.getSaleTitle());
+        propertyListing.setRentTitle(result.getRentTitle());
+        propertyListing.setAuctionTitle(result.getAuctionTitle());
+        propertyListing.setDiscoverableTitle(result.getDiscoverableTitle());
+        propertyListing.setOnSiteAuction(result.isOnSiteAuction());
+        propertyListing.setRentPaymentFrequency(result.getRentPaymentFrequency());
+        propertyListing.setAppointmentOnly(result.isAppointmentOnly());
+        propertyListing.setOffSiteLocation(toLocation(result.getOffSiteLocation()));
+        propertyListing.setInspectionTimes(toInspectionTimes(result.getInspectionTimes()));
+        if(result.getAvailableFrom() != null) {
+            propertyListing.setAvailableFrom(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAvailableFrom()));
+        }
+        if(result.getAuctionTime() != null) {
+            propertyListing.setAuctionTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionTime()));
+        }
+        if(result.getAuctionDate() != null) {
+            propertyListing.setAuctionDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionDate()));
+        }
+        return propertyListing;
+    }
+
+    @Nullable
+    private static PropertyFinance toPropertyFinance(@Nullable PropertyFinanceResult result) {
+        if (result == null) { return null; }
+        PropertyFinance finance = new PropertyFinance();
+        finance.setId(result.getId());
+        finance.setPurchasePrice(result.getPurchasePrice());
+        finance.setLoanAmount(result.getLoanAmount());
+        finance.setEstimatedValue(result.getEstimatedValue());
+        finance.setRented(result.isRented());
+        finance.setActualRent(result.getActualRent());
+        finance.setEstimatedRent(result.getEstimatedRent());
+        if(result.getLeasedTo() != null) {
+            finance.setLeasedToDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getLeasedTo()));
+        }
+        return finance;
+    }
+
+    @Nullable
+    private static Verification toVerification(@Nullable  VerificationResult result) {
+        if (result == null) { return null; }
+        Verification verification = new Verification();
+        verification.setId(result.getId());
+        verification.setType(result.getType());
+        verification.setText(result.getText());
+        verification.setState(result.getState());
+        return verification;
+    }
+
+    @NonNull
+    public static List<Verification> toVerifications(@Nullable List<VerificationResult> results) {
+        List<Verification> verifications = new ArrayList<>();
+        if(results != null) {
+            for (VerificationResult result : results) {
+                verifications.add(toVerification(result));
+            }
+        }
+        return verifications;
+    }
+
+    // MARK: - ================== Inspection Times ==================
+
+    @Nullable
+    public static InspectionTime toInspectionTime(@Nullable InspectionTimeResult result) {
+        if (result == null) { return null; }
+        InspectionTime inspectionTime = new InspectionTime();
+        inspectionTime.setId(result.getId());
+        if(result.getStartTime() != null) {
+            inspectionTime.setStartTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getStartTime()));
+        }
+        if(result.getEndTime() != null) {
+            inspectionTime.setEndTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getEndTime()));
+        }
+        return inspectionTime;
+    }
+
+    @NonNull
+    public static List<InspectionTime> toInspectionTimes(@Nullable List<InspectionTimeResult> results) {
+        List<InspectionTime> inspectionTimes = new ArrayList<>();
+        if(results != null) {
+            for (InspectionTimeResult result : results) {
+                inspectionTimes.add(toInspectionTime(result));
+            }
+        }
+        return inspectionTimes;
+    }
+
+    // MARK: - ================== Users ==================
+
+    @Nullable
+    public static PropertyUser toPropertyUser(@Nullable PropertyUserResult result) {
+        if (result == null) { return null; }
+        PropertyUser propertyUser = new PropertyUser();
+        propertyUser.setId(result.getId());
+        propertyUser.setRole(result.getRole());
+        propertyUser.setLastMessage(result.getLastMessage());
+        propertyUser.setUserDetails(toBasicUser(result.getUserDetails()));
+        if(result.getLastMessageAt() != null) {
+            propertyUser.setLastMessageAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getLastMessageAt()));
+        }
+        return propertyUser;
+    }
+
+    @NonNull
+    public static List<PropertyUser> toPropertyUsers(@Nullable List<PropertyUserResult> results) {
+        List<PropertyUser> propertyUsers = new ArrayList<>();
+        if(results != null) {
+            for (PropertyUserResult result : results) {
+                propertyUsers.add(toPropertyUser(result));
+            }
+        }
+        return propertyUsers;
+    }
+
+    @Nullable
+    public static BasicUser toBasicUser(@Nullable BasicUserResult result) {
+        if (result == null) { return null; }
+        BasicUser basicUser = new BasicUser();
+        basicUser.setFirstName(result.getFirstName());
+        basicUser.setLastName(result.getLastName());
+        basicUser.setEmail(result.getEmail());
+        basicUser.setAvatar(toImage(result.getAvatar(), null));
+        if(result.getDateOfBirth() != null) {
+            basicUser.setDateOfBirth(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getDateOfBirth()));
+        }
+        return basicUser;
+    }
+
+    @Nullable
+    public static User toUser(@Nullable UserResult result) {
+        if (result == null) { return null; }
+        User user = new User();
+        user.setFirstName(result.getFirstName());
+        user.setLastName(result.getLastName());
+        user.setEmail(result.getEmail());
+        user.setAvatar(toImage(result.getAvatar(), null));
+        user.setAuthenticationToken(result.getAuthenticationToken());
+        user.setCountry(result.getCountry());
+        user.setVerifications(toVerifications(result.getVerifications()));
+        if(result.getDateOfBirth() != null) {
+            user.setDateOfBirth(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getDateOfBirth()));
+        }
+        return user;
+    }
+
+    // MARK: - ================== Photo ==================
+
+    @Nullable
+    private static Photo toPhoto(@NonNull PhotoResult photoResult, @Nullable BasicPropertyResult basicPropertyResult) {
+        if (photoResult == null) { return null; }
+        Photo photo = new Photo();
+        photo.setImage(toImage(photoResult.getImage(), basicPropertyResult));
+        return photo;
+    }
+
+    @Nullable
+    private static Image toImage(@Nullable ImageResult imageResult, @Nullable BasicPropertyResult basicPropertyResult ) {
+        if (imageResult == null) { return null; }
+        Image image = new Image();
+        image.setImageUrl(imageResult.getUrl());
+        if(basicPropertyResult != null) {
+            image.setHolder(PropertyType.getDefaultImage(basicPropertyResult.getType()));
+        }
+        return image;
+    }
+
+    @NonNull
+    public static List<Photo> toPhotos(@Nullable List<PhotoResult> photoResults, @Nullable BasicPropertyResult basicPropertyResult) {
+        List<Photo> photos = new ArrayList<>();
+        if(photoResults != null) {
+            for (PhotoResult photoResult : photoResults) {
+                photos.add(toPhoto(photoResult, basicPropertyResult));
+            }
+        }
+        return photos;
+    }
+
+    // MARK: - ================== Location ==================
+
+    @Nullable
+    private static Location toLocation(@Nullable LocationResult result) {
+        if (result == null) { return null; }
+        Location location = new Location();
+        location.setSuburb(result.getSuburb());
+        location.setState(result.getState());
+        location.setPostcode(result.getPostcode());
+        location.setCountry(result.getCountry());
+        location.setLatitude(result.getLatitude());
+        location.setLongitude(result.getLongitude());
+        location.setFullAddress(result.getFullAddress());
+        location.setAddressLine1(result.getAddress_1());
+        location.setAddressLine2(result.getAddress_2());
+        location.setMaskAddress(result.getMaskAddress());
+        return location;
+    }
+
+    // MARK: - ================== Params/Body related ==================
+
+    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull Image image) {
         return Observable.fromCallable(() -> {
             Uri uri;
-            if (propertyImage.getFilePath() != null) {
-                uri = Uri.fromFile(new File(propertyImage.getFilePath()));
+            if (image.getFilePath() != null) {
+                uri = Uri.fromFile(new File(image.getFilePath()));
             } else {
-                uri = propertyImage.getUri();
+                uri = image.getUri();
             }
             MultipartBody.Builder builder = new MultipartBody.Builder();
             RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
@@ -85,7 +357,7 @@ public final class Converter {
     }
 
     @NonNull
-    public static QueryHashMap toMap(@NonNull PropertyAddress propertyAddress,
+    public static QueryHashMap toMap(@NonNull Location location,
                                      @NonNull PropertyRole role,
                                      @NonNull PropertyType propertyType,
                                      boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
@@ -96,15 +368,15 @@ public final class Converter {
                 .put(Keys.Property.CARSPOTS, carspots)
                 .put(Keys.Property.IS_INVESTMENT, isInvestment)
                 .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey())
-                .put(Keys.Property.SUBURB, propertyAddress.getSuburb())
-                .put(Keys.Property.STATE, propertyAddress.getState())
-                .put(Keys.Property.POSTCODE, propertyAddress.getPostcode())
-                .put(Keys.Property.COUNTRY, propertyAddress.getCountry())
-                .put(Keys.Property.LATITUDE, propertyAddress.getLat())
-                .put(Keys.Property.LONGITUDE, propertyAddress.getLng())
-                .put(Keys.Property.FULL_ADDRESS, propertyAddress.getFullAddress())
-                .put(Keys.Property.ADDRESS1, propertyAddress.getAddressLine1())
-                .put(Keys.Property.ADDRESS2, propertyAddress.getAddressLine2());
+                .put(Keys.Property.SUBURB, location.getSuburb())
+                .put(Keys.Property.STATE, location.getState())
+                .put(Keys.Property.POSTCODE, location.getPostcode())
+                .put(Keys.Property.COUNTRY, location.getCountry())
+                .put(Keys.Property.LATITUDE, location.getLatitude())
+                .put(Keys.Property.LONGITUDE, location.getLongitude())
+                .put(Keys.Property.FULL_ADDRESS, location.getFullAddress())
+                .put(Keys.Property.ADDRESS1, location.getAddressLine1())
+                .put(Keys.Property.ADDRESS2, location.getAddressLine2());
     }
 
     @NonNull
@@ -133,21 +405,20 @@ public final class Converter {
     }
 
     @NonNull
-    public static PropertyAddress toPropertyAddress(Address address, String fullAddress) {
-        PropertyAddress propertyAddress = new PropertyAddress();
-        propertyAddress.setFullAddress(fullAddress);
+    public static Location toPropertyAddress(Address address, String fullAddress) {
+        Location location = new Location();
+        location.setFullAddress(fullAddress);
         if (address != null) {
-            propertyAddress.setLat(address.getLatitude());
-            propertyAddress.setLng(address.getLongitude());
-            propertyAddress.setCountry(address.getCountryName());
-            propertyAddress.setPostcode(address.getPostalCode());
-            propertyAddress.setState(address.getAdminArea());
-            propertyAddress.setSuburb(address.getLocality());
-
-            propertyAddress.setAddressLine1(AddressUtils.getAddress1(fullAddress, address));
-            propertyAddress.setAddressLine2(AddressUtils.getAddress2(address));
+            location.setLatitude(address.getLatitude());
+            location.setLongitude(address.getLongitude());
+            location.setCountry(address.getCountryName());
+            location.setPostcode(address.getPostalCode());
+            location.setState(address.getAdminArea());
+            location.setSuburb(address.getLocality());
+            location.setAddressLine1(AddressUtils.getAddress1(fullAddress, address));
+            location.setAddressLine2(AddressUtils.getAddress2(address));
         }
-        return propertyAddress;
+        return location;
     }
 
     @NonNull
@@ -178,50 +449,18 @@ public final class Converter {
     }
 
     @NonNull
-    public static PropertyListing toPropertyListing(@NonNull PropertyListingResult result) {
-        PropertyListing propertyListing = new PropertyListing();
-        propertyListing.setId(result.id);
-        propertyListing.setState(result.state);
-        return propertyListing;
-    }
-
-    @NonNull
     private static PortfolioProperty toPortfolioProperty(@NonNull PortfolioPropertyResult result, boolean isManagerPortfolio) {
         PortfolioProperty property = new PortfolioProperty();
-
         if (isManagerPortfolio) {
             property.setItemViewType(R.layout.item_manager_portfolio_details);
         } else {
             property.setItemViewType(R.layout.item_owner_portfolio_details);
         }
-
         property.setId(result.id);
         property.setState(result.state);
-
-        PropertyAddress address = new PropertyAddress();
-        if (result.location != null) {
-            address.setAddressLine1(result.location.address1);
-        }
-        property.setPropertyAddress(address);
-
+        property.setLocation(toLocation(result.location));
         property.setPropertyFinance(toPropertyFinance(result.finance));
         return property;
-    }
-
-    @NonNull
-    private static PropertyFinance toPropertyFinance(PropertyFinanceResult result) {
-        PropertyFinance finance = new PropertyFinance();
-        if (result != null) {
-            finance.setId(result.id);
-            finance.setPurchasePrice(result.purchasePrice);
-            finance.setLoanAmount(result.loanAmount);
-            finance.setEstimatedValue(result.estimatedValue);
-            finance.setRented(result.isRented);
-            finance.setActualRent(result.actualRent);
-            finance.setEstimatedRent(result.estimatedRent);
-            finance.setLeasedToDate(DateUtils.iso8601TimeToLong(result.leasedTo));
-        }
-        return finance;
     }
 
     @NonNull
@@ -261,31 +500,5 @@ public final class Converter {
         portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
         portfolioCategory.setFilterForPortfolio(result.filterForPortfolio);
         return portfolioCategory;
-    }
-
-    @NonNull
-    private static PropertyVerification toPropertyVerification(PropertyResult.Verification verification) {
-        PropertyVerification propertyVerification = new PropertyVerification();
-        propertyVerification.setId(verification.id);
-        propertyVerification.setType(verification.type);
-        propertyVerification.setText(verification.text);
-        propertyVerification.setState(verification.state);
-        return propertyVerification;
-    }
-
-    @NonNull
-    private static PropertyImage toPropertyImage(Property property, PropertyResult.Photo photo) {
-        PropertyImage propertyImage = new PropertyImage();
-        propertyImage.setImageUrl(photo.image.url);
-        propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
-        return propertyImage;
-    }
-
-    @NonNull
-    private static PropertyAddress toPropertyAddress(@NonNull PropertyResult result) {
-        PropertyAddress address = new PropertyAddress();
-        address.setAddressLine1(result.location.address_1);
-        address.setAddressLine2(result.location.address_2);
-        return address;
     }
 }

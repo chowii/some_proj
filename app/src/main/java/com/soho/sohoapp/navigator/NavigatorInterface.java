@@ -2,8 +2,8 @@ package com.soho.sohoapp.navigator;
 
 import android.support.annotation.NonNull;
 
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyListing;
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;

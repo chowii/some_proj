@@ -13,7 +13,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
-import com.soho.sohoapp.feature.SharedUser
+import com.soho.sohoapp.data.singletons.SharedUser
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.HomeActivity
 import com.soho.sohoapp.feature.home.more.adapter.MoreAdapter

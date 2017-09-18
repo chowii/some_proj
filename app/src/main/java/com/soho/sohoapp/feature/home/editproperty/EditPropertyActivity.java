@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker;
@@ -114,8 +114,8 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
-    public void setPropertyImages(List<PropertyImage> propertyImages) {
-        pagerAdapter.setData(propertyImages);
+    public void setPropertyImages(List<Image> images) {
+        pagerAdapter.setData(images);
     }
 
     @Override

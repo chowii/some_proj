@@ -23,7 +23,7 @@ public class HeaderItem<T> extends BaseFormModel<T> {
     private int layout = R.layout.item_filter_header;
 
     public void setValue(String headerText) { setModelValue((T) headerText); }
-    public String getHeaderText() { return (String) getModelValue(); }
+    public String getHeaderText() { return getModelValue().toString(); }
 
     @Override
     protected T getModelValue() { return value == null ? (T) "" : value; }

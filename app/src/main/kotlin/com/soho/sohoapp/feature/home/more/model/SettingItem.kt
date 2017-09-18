@@ -6,6 +6,6 @@ import com.soho.sohoapp.feature.home.BaseModel
 /**
  * Created by chowii on 12/9/17.
  */
-class SettingItem(val title: String?, val dateOfBirth: String?, val iconRes: Int): BaseModel {
+class SettingItem(val title: String?, val dateOfBirth: Long, val iconRes: Int): BaseModel {
     override fun getItemViewType(): Int = R.layout.item_settings
 }

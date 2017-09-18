@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.home.addproperty.address;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.location.LocationProvider;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -12,7 +12,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
     private final AddressContract.ViewInteractable view;
     private final LocationProvider locationProvider;
     private final CompositeSubscription compositeSubscription;
-    private PropertyAddress propertyAddress;
+    private Location location;
 
     public AddressPresenter(AddressContract.ViewInteractable view, LocationProvider locationProvider) {
         this.view = view;
@@ -41,7 +41,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(propertyAddress -> {
                     view.hideLoadingDialog();
-                    AddressPresenter.this.propertyAddress = propertyAddress;
+                    AddressPresenter.this.location = propertyAddress;
                 }, throwable -> {
                     view.hideLoadingDialog();
                     view.showError(throwable);
@@ -54,13 +54,13 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
         if (address.isEmpty()) {
             view.showEmptyLocationError();
         } else {
-            if (propertyAddress == null) {
-                propertyAddress = new PropertyAddress();
-                propertyAddress.setAddressLine1(address);
+            if (location == null) {
+                location = new Location();
+                location.setAddressLine1(address);
             }
-            propertyAddress.setFullAddress(address);
+            location.setFullAddress(address);
             view.hideKeyboard();
-            view.sendAddressToActivity(this.propertyAddress);
+            view.sendAddressToActivity(this.location);
         }
     }
 
@@ -72,7 +72,7 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
     @Override
     public void onAddressChanged(String string) {
         if (string.isEmpty()) {
-            propertyAddress = null;
+            location = null;
         }
     }
 }

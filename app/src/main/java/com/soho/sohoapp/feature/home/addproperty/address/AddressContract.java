@@ -1,6 +1,6 @@
 package com.soho.sohoapp.feature.home.addproperty.address;
 
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 
 class AddressContract {
 
@@ -29,7 +29,7 @@ class AddressContract {
 
         String getAddress();
 
-        void sendAddressToActivity(PropertyAddress address);
+        void sendAddressToActivity(Location address);
 
         void showKeyboard();
 

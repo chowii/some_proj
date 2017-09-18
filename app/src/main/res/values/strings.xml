@@ -9,7 +9,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="marketplace_buy_tab">Buy</string>
     <string name="marketplace_rent_tab">Rent</string>
-    <string name="market_place_search_box_all_suburb">All suburb</string>
+    <string name="market_place_search_box_all_suburbs">All suburbs</string>
 
     <!--Common strings start-->
     <string name="common_loading">Loading..</string>

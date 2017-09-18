@@ -82,24 +82,17 @@ public class PropertyDetailActivity extends AppCompatActivity
         calendarIntent.setType("vnd.android.cursor.item/event");
         long startTime;
         if (state.equalsIgnoreCase("auction")) {
-            Calendar auctionCalendar;
-            auctionCalendar = timeItem.retrievePropertyAuctionItem().retrieveAuctionDate();
-            startTime = auctionCalendar.getTimeInMillis();
-            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime());
         } else {
-            Calendar startCalendar = timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().retrieveStartTime();
-            Calendar endCalendar = timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().retrieveEndTime();
-            startTime = startCalendar.getTimeInMillis();
-            long endTime = endCalendar.getTimeInMillis();
-            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime);
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().getEndTime());
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
         }
-        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime);
+        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().getStartTime());
 
         StringBuilder builder = new StringBuilder(state);
         builder.append(": ")
-                .append(timeItem.retrieveLocation().retrieveAddress1())
-                .append(timeItem.retrieveLocation().retrieveAddress2());
+                .append(timeItem.retrieveLocation().getAddressLine1())
+                .append(timeItem.retrieveLocation().getAddressLine2());
 
         calendarIntent.putExtra(Events.TITLE, builder.toString());
         startActivity(calendarIntent);

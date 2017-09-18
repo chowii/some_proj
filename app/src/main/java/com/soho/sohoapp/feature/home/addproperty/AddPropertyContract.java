@@ -1,13 +1,13 @@
 package com.soho.sohoapp.feature.home.addproperty;
 
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
 interface AddPropertyContract {
 
     interface ViewPresentable {
-        void onAddressSelected(PropertyAddress propertyAddress);
+        void onAddressSelected(Location location);
 
         void onPropertyRoleSelected(PropertyRole propertyRole);
 

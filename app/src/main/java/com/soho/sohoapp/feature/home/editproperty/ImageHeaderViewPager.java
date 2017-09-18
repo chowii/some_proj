@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.imageloader.ImageLoader;
 import com.soho.sohoapp.logger.Logger;
 
@@ -25,7 +25,8 @@ public class ImageHeaderViewPager extends PagerAdapter {
     private final LayoutInflater inflater;
     private final ImageLoader imageLoader;
     private final Logger logger;
-    private List<PropertyImage> propertyImages;
+    private List<Image> propertyImages;
+    private ImageHeaderOnItemClickListener onItemClickListener;
 
     public ImageHeaderViewPager(@NonNull Context context) {
         propertyImages = new ArrayList<>();
@@ -40,7 +41,7 @@ public class ImageHeaderViewPager extends PagerAdapter {
         View itemView = inflater.inflate(R.layout.item_property_image, container, false);
 
         ImageView imageView = itemView.findViewById(R.id.image);
-        PropertyImage image = propertyImages.get(position);
+        Image image = propertyImages.get(position);
 
         ImageLoader.Params params = ImageLoader.Params.create()
                 .view(imageView)
@@ -55,9 +56,21 @@ public class ImageHeaderViewPager extends PagerAdapter {
         } else {
             imageView.setImageResource(image.getDrawableId());
         }
-
+        itemView.setOnClickListener(view -> {
+            if(onItemClickListener != null) {
+                onItemClickListener.imageOnClick(image);
+            }
+        });
         container.addView(itemView);
         return itemView;
+    }
+
+    public ImageHeaderOnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(ImageHeaderOnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -80,7 +93,7 @@ public class ImageHeaderViewPager extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    public void setData(@NonNull List<PropertyImage> newPropertyImageList) {
+    public void setData(@NonNull List<Image> newPropertyImageList) {
         if (propertyImages != null) {
             propertyImages = newPropertyImageList;
         }

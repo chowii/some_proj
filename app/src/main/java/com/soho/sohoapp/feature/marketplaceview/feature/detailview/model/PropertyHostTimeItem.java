@@ -1,8 +1,8 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.model;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.PropertyInspectionTime;
-import com.soho.sohoapp.data.PropertyLocation;
+import com.soho.sohoapp.data.models.InspectionTime;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.helper.DateHelper;
 
@@ -17,13 +17,13 @@ public class PropertyHostTimeItem implements BaseModel {
     @Override
     public int getItemViewType() { return R.layout.item_property_date_information; }
 
-    public PropertyHostTimeItem(PropertyInspectionTime inspectionTime, PropertyLocation location, String state, boolean isAppointmentOnly) {
+    public PropertyHostTimeItem(InspectionTime inspectionTime, Location location, String state, boolean isAppointmentOnly) {
         propertyInspectionItem = new PropertyInspectionItem(inspectionTime, isAppointmentOnly);
         this.location = location;
         this.state = state;
     }
 
-    public PropertyHostTimeItem(String date, PropertyLocation location, boolean isOnSite, String state) {
+    public PropertyHostTimeItem(Long date, Location location, boolean isOnSite, String state) {
         propertyAuctionItem = new PropertyAuctionItem(date, isOnSite);
         this.location = location;
         this.state = state;
@@ -32,13 +32,13 @@ public class PropertyHostTimeItem implements BaseModel {
     private PropertyInspectionItem propertyInspectionItem;
     private PropertyAuctionItem propertyAuctionItem;
     private String state;
-    private PropertyLocation location;
+    private Location location;
 
     public PropertyInspectionItem retrievePropertyInspectionItem(){ return propertyInspectionItem; }
 
     public PropertyAuctionItem retrievePropertyAuctionItem(){ return propertyAuctionItem; }
 
-    public PropertyLocation retrieveLocation() { return location; }
+    public Location retrieveLocation() { return location; }
 
     public String retrieveState() { return state; }
 
@@ -47,14 +47,14 @@ public class PropertyHostTimeItem implements BaseModel {
     public static class PropertyInspectionItem {
 
         private final boolean isAppointmentOnly;
-        private PropertyInspectionTime inspectionTime;
+        private InspectionTime inspectionTime;
 
-        PropertyInspectionItem(PropertyInspectionTime inspectionTime, boolean isAppointmentOnly) {
+        PropertyInspectionItem(InspectionTime inspectionTime, boolean isAppointmentOnly) {
             this.inspectionTime = inspectionTime;
             this.isAppointmentOnly = isAppointmentOnly;
         }
 
-        public PropertyInspectionTime getPropertyInspectionTime() { return inspectionTime; }
+        public InspectionTime getPropertyInspectionTime() { return inspectionTime; }
 
         public boolean isAppointmentOnly() { return isAppointmentOnly; }
     }
@@ -62,23 +62,37 @@ public class PropertyHostTimeItem implements BaseModel {
 
     public static class PropertyAuctionItem {
 
-        private String auctionDate;
-        private PropertyLocation location;
+        private Long auctionDate;
+        private Location location;
         private boolean mIsOnSite;
 
-        PropertyAuctionItem(String inspectionTime, boolean mIsOnSite) {
+        PropertyAuctionItem(Long inspectionTime, boolean mIsOnSite) {
             this.auctionDate = inspectionTime;
-            this.location = location;
             this.mIsOnSite = mIsOnSite;
         }
 
-        public Calendar retrieveAuctionDate() { return DateHelper.retrieveCalendarFromApiDate(auctionDate); }
+        public Long getAuctionDate() {
+            return auctionDate;
+        }
 
-        public void applyDateChange(String date) { this.auctionDate = date; }
+        public void setAuctionDate(Long auctionDate) {
+            this.auctionDate = auctionDate;
+        }
 
-        public boolean isOnSite(){ return mIsOnSite; }
+        public Location getLocation() {
+            return location;
+        }
 
-        public void applyIsOnSiteChange(boolean isOnSite){ mIsOnSite = isOnSite; }
+        public void setLocation(Location location) {
+            this.location = location;
+        }
 
+        public boolean isOnSite() {
+            return mIsOnSite;
+        }
+
+        public void SetisOnSite(boolean mIsOnSite) {
+            this.mIsOnSite = mIsOnSite;
+        }
     }
 }

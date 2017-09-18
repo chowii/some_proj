@@ -73,16 +73,20 @@ public class MarketPlaceFragment extends BaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         ButterKnife.bind(this, view);
-
+        configueSwipeLayout();
         searchParams = (Map<String, Object>) getActivity().getIntent().getSerializableExtra("searchParams");
         if (searchParams == null) searchParams = new HashMap<>();
         searchParams.put("by_listing_type", "sale/auction");
-
         presenter = new MarketPlacePresenter(this);
         presenter.createPresentation();
         presenter.startPresenting(searchParams);
-        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(searchParams));
         return view;
+    }
+
+    private void configueSwipeLayout() {
+        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(searchParams));
+        int swipeProgressViewOffset = ((int) getResources().getDimension(R.dimen.marketplace_search_height));
+        swipeLayout.setProgressViewOffset(false, swipeProgressViewOffset, swipeProgressViewOffset + 72);
     }
 
     @SuppressWarnings("ConstantConditions")

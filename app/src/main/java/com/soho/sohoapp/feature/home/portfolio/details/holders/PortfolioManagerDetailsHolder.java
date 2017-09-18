@@ -23,7 +23,7 @@ public class PortfolioManagerDetailsHolder extends BaseViewHolder<PortfolioPrope
 
     @Override
     public void onBindViewHolder(PortfolioProperty model) {
-        title.setText(model.getPropertyAddress().getAddressLine1());
+        title.setText(model.getLocation().getAddressLine1());
         state.setText(model.getState());
     }
 }

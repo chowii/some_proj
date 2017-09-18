@@ -17,6 +17,7 @@ import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.navigator.NavigatorInterface
+import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -82,8 +83,8 @@ class SignUpActivity : AppCompatActivity() {
                 .subscribe(
                         { user ->
                             DEPENDENCIES.logger.d( user.authenticationToken)
-                            DEPENDENCIES.preferences.mUser = user
-                            DEPENDENCIES.preferences.authToken = user.authenticationToken!!
+                            DEPENDENCIES.preferences.mUser = Converter.toUser(user)
+                            DEPENDENCIES.preferences.authToken = DEPENDENCIES.preferences.mUser?.authenticationToken ?: ""
                             initProgressDialog()?.dismiss()
 
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()

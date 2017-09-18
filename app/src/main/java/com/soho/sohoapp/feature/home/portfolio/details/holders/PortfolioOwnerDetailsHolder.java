@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
@@ -41,9 +41,9 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
         itemView.setOnClickListener(v -> listener.onClick());
         state.setText(model.getState());
 
-        PropertyAddress propertyAddress = model.getPropertyAddress();
-        if (propertyAddress != null) {
-            title.setText(propertyAddress.getAddressLine1());
+        Location location = model.getLocation();
+        if (location != null) {
+            title.setText(location.getAddressLine1());
         }
 
         double estimatedValue = model.getPropertyFinance().getEstimatedValue();

@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
+import com.soho.sohoapp.utils.Converter;
+
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,13 +42,13 @@ class MarketPlacePresenter implements
 
     private void loadData(Map<String, Object> searchParams) {
         interactable.showRefreshing();
-
         compositeDisposable.add(
                 DEPENDENCIES.getSohoService().searchProperties(searchParams)
+                        .map(Converter::toBasicProperties)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.newThread())
-                        .subscribe(sohoProperties -> {
-                                    interactable.configureAdapter(sohoProperties);
+                        .subscribe(properties -> {
+                                    interactable.configureAdapter(properties);
                                     interactable.hideRefreshing();
                                 }, throwable -> {
                                     interactable.hideRefreshing();

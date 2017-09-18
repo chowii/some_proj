@@ -4,10 +4,10 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
+import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
-import com.soho.sohoapp.feature.home.editproperty.data.PropertyImage;
+import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.permission.PermissionManager;
@@ -31,7 +31,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private final NavigatorInterface navigator;
     private final PermissionManager permissionManager;
     private final FileHelper fileHelper;
-    private final List<PropertyImage> propertyImages;
+    private final List<Image> propertyImages;
     private final CompositeSubscription compositeSubscription;
     private final CompositeDisposable compositeDisposable;
     private Subscription permissionSubscription;
@@ -64,7 +64,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                     property = result;
                     view.initTabs(property);
                     initPropertyImages();
-                    PropertyAddress address = result.getAddress();
+                    Location address = result.getLocation();
                     if (address != null) {
                         view.showAddress1(address.getAddressLine1());
                         view.showAddress2(address.getAddressLine2());
@@ -118,7 +118,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onPhotoReady(String path) {
         clearImagesListIfNeeded();
-        PropertyImage propertyImage = new PropertyImage();
+        Image propertyImage = new Image();
         propertyImage.setFilePath(path);
         propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
         propertyImages.add(propertyImage);
@@ -129,7 +129,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onPhotoPicked(Uri uri) {
         clearImagesListIfNeeded();
-        PropertyImage propertyImage = new PropertyImage();
+        Image propertyImage = new Image();
         propertyImage.setUri(uri);
         propertyImage.setHolder(PropertyType.getDefaultImage(property.getType()));
         propertyImages.add(propertyImage);
@@ -137,7 +137,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         sendImageOnServer(propertyImage);
     }
 
-    private void sendImageOnServer(PropertyImage propertyImage) {
+    private void sendImageOnServer(Image propertyImage) {
         compositeDisposable.add(
                 Converter.toImageRequestBody(fileHelper, propertyImage)
                         .switchMap(requestBody -> DEPENDENCIES.getSohoService()
@@ -153,7 +153,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         }
     }
 
-    private void setPropertyImages(@NonNull List<PropertyImage> propertyImages, boolean scrollToLast) {
+    private void setPropertyImages(@NonNull List<Image> propertyImages, boolean scrollToLast) {
         view.setPropertyImages(propertyImages);
         if (scrollToLast) {
             int size = propertyImages.size();
@@ -164,9 +164,9 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     }
 
     private void initPropertyImages() {
-        List<PropertyImage> propertyImagesFromServer = property.getPropertyImageList();
+        List<Image> propertyImagesFromServer = property.getPhotosAsImages();
         if (propertyImagesFromServer.isEmpty()) {
-            PropertyImage propertyImage = new PropertyImage();
+            Image propertyImage = new Image();
             propertyImage.setDrawableId(PropertyType.getDefaultImage(property.getType()));
             propertyImages.add(propertyImage);
         } else {

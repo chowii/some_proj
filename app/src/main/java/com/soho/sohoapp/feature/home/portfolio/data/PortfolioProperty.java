@@ -2,12 +2,13 @@ package com.soho.sohoapp.feature.home.portfolio.data;
 
 import android.support.annotation.LayoutRes;
 
+import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.feature.home.BaseModel;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyAddress;
 
 public class PortfolioProperty implements BaseModel {
 
-    private PropertyAddress propertyAddress;
+    private Location location;
     private PropertyFinance propertyFinance;
     private int viewType;
     private int id;
@@ -22,12 +23,12 @@ public class PortfolioProperty implements BaseModel {
         this.viewType = viewType;
     }
 
-    public PropertyAddress getPropertyAddress() {
-        return propertyAddress;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setPropertyAddress(PropertyAddress propertyAddress) {
-        this.propertyAddress = propertyAddress;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public PropertyFinance getPropertyFinance() {

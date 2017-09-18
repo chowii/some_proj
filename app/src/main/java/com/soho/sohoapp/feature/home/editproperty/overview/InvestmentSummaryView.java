@@ -12,7 +12,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.home.portfolio.data.PropertyFinance;
+import com.soho.sohoapp.data.models.PropertyFinance;
+import com.soho.sohoapp.extensions.LongExtKt;
+import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.utils.DateUtils;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
@@ -91,9 +93,7 @@ public class InvestmentSummaryView extends LinearLayout {
         this.finance = finance;
         rented.setChecked(finance.isRented());
         notRented.setChecked(!finance.isRented());
-        if (finance.getLeasedToDate() != null) {
-            endDateOfRent.setText(DateUtils.timeToDisplayableString(finance.getLeasedToDate()));
-        }
+        endDateOfRent.setText(LongExtKt.toStringWithDisplayFormat(finance.getLeasedToDate()));
         setValue(purchasePriceValue, finance.getPurchasePrice());
         setValue(loanAmountValue, finance.getLoanAmount());
         setValue(estimatedValueValue, finance.getEstimatedValue());
@@ -185,6 +185,7 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedWeeklyRentTitle.setText(R.string.edit_property_estimated_weekly_rent);
     }
 
+    //TODO: Change TextChangeListeners to use Butterknife
     private void initInputFields() {
         purchasePriceValue = ButterKnife.findById(purchasePrice, R.id.value);
         purchasePriceValue.addTextChangedListener(new TextWatcherAdapter() {
@@ -231,14 +232,12 @@ public class InvestmentSummaryView extends LinearLayout {
     private void initEndDateOfRent() {
         endOfRent.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
-            if (finance.getLeasedToDate() != null) {
-                calendar.setTime(new Date(finance.getLeasedToDate()));
-            }
+            calendar.setTime(new Date(finance.getLeasedToDate()));
             DatePickerDialog datePicker = DatePickerDialog.newInstance((view1, year, monthOfYear, dayOfMonth) ->
                     {
                         long endDate = DateUtils.toTimeInMillis(year, monthOfYear, dayOfMonth);
                         finance.setLeasedToDate(endDate);
-                        endDateOfRent.setText(DateUtils.timeToDisplayableString(endDate));
+                        endDateOfRent.setText(LongExtKt.toStringWithDisplayFormat(endDate));
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -249,9 +248,9 @@ public class InvestmentSummaryView extends LinearLayout {
         });
     }
 
-    private double toDouble(CharSequence charSequence) {
+    private Double toDouble(CharSequence charSequence) {
         if (charSequence.length() == 0) {
-            return 0;
+            return 0.0;
         }
         return Double.parseDouble(charSequence.toString().trim());
     }

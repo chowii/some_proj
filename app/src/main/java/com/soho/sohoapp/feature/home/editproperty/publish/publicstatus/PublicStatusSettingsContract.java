@@ -1,6 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
-import com.soho.sohoapp.feature.home.editproperty.data.Property;
+import com.soho.sohoapp.data.models.Property;
 
 public interface PublicStatusSettingsContract {
 
