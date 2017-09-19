@@ -36,15 +36,15 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
-
-//    dataBinding {
-//        enabled = true
-//    }
 
     signingConfigs {
         debug {
@@ -61,6 +61,16 @@ android {
         }
     }
 
+    lintOptions {
+//        lintConfig rootProject.file('gradle/lint.xml') //to check with elasticode support
+        abortOnError false
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+    retrolambda {
+        jvmArgs '-noverify'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -68,14 +78,14 @@ android {
 
     productFlavors {
         development {
-            resValue "string", "endpoint", "https://sohoapp-uat-2.herokuapp.com/api/"
+            resValue "string", "endpoint", "http://app.sohoapp-staging.com.stg.sohoapp.anchor.net.au/api/"
             resValue "string", "app_name", "Soho Dev"
             resValue "string", "provider_authorities", "com.soho.sohoapp.dev.fileprovider"
             applicationIdSuffix ".dev"
 
         }
         production {
-            resValue "string", "endpoint", ""
+            resValue "string", "endpoint", "https://app.sohoapp.com/api/"
             resValue "string", "app_name", "Soho"
             resValue "string", "provider_authorities", "com.soho.sohoapp.fileprovider"
         }
