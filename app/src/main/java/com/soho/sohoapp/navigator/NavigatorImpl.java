@@ -33,11 +33,11 @@ public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY_LISTING = "KEY_PROPERTY_LISTING";
     private Activity activity;
     private Fragment fragment;
-
+    //in case we want the result on the Activity
     private NavigatorImpl(@NonNull Activity activity) {
         this.activity = activity;
     }
-
+    //in case we want the result on the Fragment
     private NavigatorImpl(@NonNull Fragment fragment) {
         this.fragment = fragment;
     }
@@ -178,18 +178,26 @@ public class NavigatorImpl implements NavigatorInterface {
     @Override
     public void openHomeActivity() {
         if (fragment != null) {
-            fragment.startActivity(HomeActivity.createIntent(fragment.getActivity()));
+            Intent intent = HomeActivity.createIntent(fragment.getActivity());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.startActivity(intent);
         } else {
-            activity.startActivity(HomeActivity.createIntent(activity));
+            Intent intent = HomeActivity.createIntent(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
         }
     }
 
     @Override
     public void openHomeActivity(int flags) {
         if (fragment != null) {
-            fragment.startActivity(HomeActivity.createIntent(fragment.getActivity(), flags));
+            Intent intent = HomeActivity.createIntent(fragment.getActivity());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.startActivity(intent);
         } else {
-            activity.startActivity(HomeActivity.createIntent(activity, flags));
+            Intent intent = HomeActivity.createIntent(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
         }
     }
 

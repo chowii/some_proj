@@ -1,78 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.soho.sohoapp.feature.landing.signup.SignUpActivity"
     android:background="@drawable/register_email_account"
-    >
+    tools:context="com.soho.sohoapp.feature.landing.signup.SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        >
+        android:orientation="vertical">
 
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/soho_logo_white"
-            android:layout_marginTop="35dp"
             android:layout_marginBottom="35dp"
-            />
+            android:layout_marginTop="35dp"
+            android:src="@drawable/soho_logo_white" />
 
         <EditText
             android:id="@+id/login_email_edit_text"
-            android:hint="@string/your_email"
-            android:drawableEnd="@drawable/email"
-            android:layout_marginBottom="20dp"
-            android:inputType="textEmailAddress"
             style="@style/EditText.RegisterStyle"
-            android:theme="@style/EditText.RegisterTheme"
-            />
+            android:layout_marginBottom="20dp"
+            android:drawableEnd="@drawable/email"
+            android:hint="@string/your_email"
+            android:inputType="textEmailAddress"
+            android:theme="@style/EditText.RegisterTheme" />
 
         <EditText
             android:id="@+id/login_password_edit_text"
+            style="@style/EditText.RegisterStyle"
             android:drawableEnd="@drawable/password"
             android:hint="@string/password"
             android:inputType="textPassword"
-            style="@style/EditText.RegisterStyle"
-            android:theme="@style/EditText.RegisterTheme"
-            />
+            android:theme="@style/EditText.RegisterTheme" />
 
         <TextView
             android:id="@+id/forgot_password_button"
+            style="@style/TextView.Message.Small.Center.HyperLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="20dp"
-            style="@style/TextView.Message.Small.Center.HyperLink"
-            android:text="@string/forgot_password"
-            />
+            android:layout_marginTop="25dp"
+            android:text="@string/forgot_password" />
 
         <Button
             android:id="@+id/login_button"
+            style="@style/Button.Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            style="@style/Button.Green"
-            android:text="@string/login_button"
-            />
+            android:text="@string/login_button" />
 
         <TextView
             android:id="@+id/sign_up_redirect_button"
+            style="@style/TextView.Message.Small.Center.HyperLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
-            android:text="@string/new_user_sign_up_instead"
-            style="@style/TextView.Message.Small.Center.HyperLink"
-            />
+            android:text="@string/new_user_sign_up_instead" />
 
     </LinearLayout>
 
