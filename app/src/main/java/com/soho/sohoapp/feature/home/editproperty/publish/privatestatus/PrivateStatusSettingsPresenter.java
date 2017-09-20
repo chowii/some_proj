@@ -63,7 +63,7 @@ public class PrivateStatusSettingsPresenter implements AbsPresenter, PrivateStat
                         },
                         throwable -> {
                             view.hideLoadingDialog();
-                            view.showRequestError();
+                            view.showError(throwable);
                             logger.e("Error during saving Property Listing", throwable);
                         }));
     }

@@ -96,6 +96,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                 }, throwable -> {
                     DEPENDENCIES.getLogger().e("throwable: " + throwable.toString(), throwable);
                     interactable.setRefreshing(false);
+                    interactable.showError(throwable);
                 });
 
     }

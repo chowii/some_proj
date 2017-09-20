@@ -75,8 +75,8 @@ public class PrivateStatusSettingsActivity extends AbsActivity implements Privat
     }
 
     @Override
-    public void showRequestError() {
-        showToast(R.string.common_loading_error);
+    public void showError(@NonNull Throwable throwable) {
+        handleError(throwable);
     }
 
     @Override

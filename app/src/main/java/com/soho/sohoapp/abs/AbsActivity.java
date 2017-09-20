@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.widget.Toast;
 
+import com.soho.sohoapp.feature.network.ThrowableHandler;
 import com.soho.sohoapp.logger.Logger;
 import com.soho.sohoapp.preferences.Prefs;
 
@@ -36,6 +37,11 @@ public abstract class AbsActivity extends AppCompatActivity {
     protected boolean isUserSignedIn() {
         Prefs prefs = DEPENDENCIES.getPreferences();
         return !prefs.getAuthToken().isEmpty();
+    }
+
+    protected void handleError(Throwable throwable) {
+        ThrowableHandler.showError(throwable, true, null
+                , findViewById(android.R.id.content), this);
     }
 
 }

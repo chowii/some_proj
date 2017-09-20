@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.portfolio;
 
+import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 
@@ -17,12 +18,10 @@ public interface PortfolioListContract {
         void onNewPropertyCreated();
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         void setData(List<BaseModel> dataList);
-
-        void showError(Throwable throwable);
 
         void showPullToRefresh();
 

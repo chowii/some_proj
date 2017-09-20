@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.BaseViewInteractable;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ interface EditPropertyContract {
         void onPhotoPicked(Uri uri);
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable  extends BaseViewInteractable{
         void setPresentable(ViewPresentable presentable);
 
         void showAddPhotoDialog();
@@ -41,8 +42,6 @@ interface EditPropertyContract {
         void showLoadingDialog();
 
         void hideLoadingDialog();
-
-        void showLoadingError();
 
         void showAddress1(String address);
 

@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.addproperty.type;
 
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
 import java.util.List;
@@ -12,12 +13,10 @@ public interface PropertyTypeContract {
         void onPropertySelected(PropertyType propertyType);
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable extends BaseViewInteractable{
         void setPresentable(ViewPresentable presentable);
 
         void setTypeList(@NonNull List<PropertyType> typeList);
-
-        void showError(Throwable t);
 
         void sendTypeToActivity(PropertyType propertyType);
 

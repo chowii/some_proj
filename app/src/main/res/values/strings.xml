@@ -15,6 +15,7 @@
     <string name="common_loading">Loading..</string>
     <string name="common_loading_error">Something went wrong..</string>
     <string name="error_occurred">Error occurred. Please try again later</string>
+    <string name="something_wrong_error">Something went wrong. Please try again</string>
     <!--Common strings end-->
 
     <!--Test strings start-->
@@ -262,6 +263,7 @@
     <string name="license_number_string">License Number</string>
     <string name="agent_license_toolbar_title">Agent License</string>
     <string name="save_agent_license_text">Save</string>
+    <string name="error_creatin_property">Error during creating new property</string>
 
 
     <string-array name="filter_buy_price_range">

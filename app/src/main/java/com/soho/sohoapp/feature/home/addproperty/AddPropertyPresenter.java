@@ -90,7 +90,8 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                     view.hideLoadingDialog();
                     navigator.exitWithResultCodeOk();
                 }, throwable -> {
-                    view.showMessage("Error during creating new property");
+
+                    view.showError(throwable);
                     view.hideLoadingDialog();
                     throwable.printStackTrace();
                 }));

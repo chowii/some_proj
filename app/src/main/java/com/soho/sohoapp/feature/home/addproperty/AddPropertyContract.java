@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.home.addproperty;
 
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
@@ -18,7 +19,7 @@ interface AddPropertyContract {
         void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         void showAddressFragment();
@@ -30,8 +31,6 @@ interface AddPropertyContract {
         void showInvestmentFragment(boolean forOwner);
 
         void showRoomsFragment();
-
-        void showMessage(String s);
 
         void showLoadingDialog();
 

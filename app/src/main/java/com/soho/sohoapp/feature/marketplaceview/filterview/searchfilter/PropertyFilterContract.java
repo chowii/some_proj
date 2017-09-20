@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
+import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.BaseFormModel;
 
 import java.util.List;
@@ -10,13 +11,15 @@ import java.util.List;
 
 public interface PropertyFilterContract {
 
-    interface ViewPresentable{
+    interface ViewPresentable {
         void startPresenting();
+
         void retrieveFilterFromApi();
+
         void stopPresenting();
     }
 
-    interface ViewInteractable{
+    interface ViewInteractable extends BaseViewInteractable {
         void configureAdapter(List<? extends BaseFormModel> formModelList);
     }
 }

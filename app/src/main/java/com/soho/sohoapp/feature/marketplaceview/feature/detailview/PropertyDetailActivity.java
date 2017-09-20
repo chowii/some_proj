@@ -25,6 +25,8 @@ import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.Propert
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract.PropertyDetailContract;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter.PropertyDetailPresenter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -161,5 +163,10 @@ public class PropertyDetailActivity extends AbsActivity
         toolbar.setNavigationOnClickListener(view -> finish());
         appBarLayout.setExpanded(false, false);
         setTitle("");
+    }
+
+    @Override
+    public void showError(@NotNull Throwable throwable) {
+        handleError(throwable);
     }
 }

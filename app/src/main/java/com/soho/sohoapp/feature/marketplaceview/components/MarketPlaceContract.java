@@ -13,17 +13,25 @@ interface MarketPlaceContract {
 
     interface ViewPresentable {
         void createPresentation();
+
         void startPresenting(Map<String, Object> searchParams);
+
         void stopPresenting();
+
         void destroyPresentation();
+
         void onRefresh(Map<String, Object> searchParams);
     }
 
     interface ViewInteractable {
         void configureTabLayout();
+
         void showRefreshing();
+
         void hideRefreshing();
+
         void configureAdapter(List<? extends BaseModel> model);
+
     }
 
 }

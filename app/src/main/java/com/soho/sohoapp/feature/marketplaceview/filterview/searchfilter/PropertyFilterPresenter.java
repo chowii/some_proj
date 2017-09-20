@@ -92,7 +92,7 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
 
                             interactable.configureAdapter(modelList);
                         },
-                        throwable -> DEPENDENCIES.getLogger().d("filterThrowable " + throwable.getMessage())
+                        interactable::showError
                 ));
     }
 

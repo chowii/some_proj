@@ -13,6 +13,7 @@ import com.soho.sohoapp.feature.home.BaseFormModel;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -75,5 +76,10 @@ public class PropertyFilterViewFragment extends BaseFragment
     public void onDestroy() {
         presenter.stopPresenting();
         super.onDestroy();
+    }
+
+    @Override
+    public void showError(@NotNull Throwable throwable) {
+        handleError(throwable);
     }
 }

@@ -75,7 +75,7 @@ public class PropertyTypeFragment extends BaseFragment implements PropertyTypeCo
     }
 
     @Override
-    public void showError(Throwable t) {
+    public void showError(@NonNull Throwable t) {
         handleError(t);
     }
 

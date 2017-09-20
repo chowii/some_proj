@@ -72,8 +72,9 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                     view.hideLoadingDialog();
                 }, throwable ->
                 {
+
                     view.hideLoadingDialog();
-                    view.showLoadingError();
+                    view.showError(throwable);
                 }));
     }
 

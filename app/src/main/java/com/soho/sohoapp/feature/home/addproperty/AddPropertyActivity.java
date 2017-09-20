@@ -23,6 +23,8 @@ import com.soho.sohoapp.feature.home.addproperty.rooms.RoomsFragment;
 import com.soho.sohoapp.feature.home.addproperty.type.PropertyTypeFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -99,11 +101,6 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void showMessage(String s) {
-        showToast(s);
-    }
-
-    @Override
     public void onAddressSelected(Location location) {
         presentable.onAddressSelected(location);
     }
@@ -167,5 +164,10 @@ public class AddPropertyActivity extends AbsActivity implements
     @Override
     public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
         presentable.onRoomsSelected(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
+    public void showError(@NotNull Throwable throwable) {
+        handleError(throwable);
     }
 }

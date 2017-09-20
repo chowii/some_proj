@@ -161,8 +161,8 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
-    public void showLoadingError() {
-        showToast(R.string.common_loading_error);
+    public void showError(@NonNull Throwable throwable) {
+        handleError(throwable);
     }
 
     @Override

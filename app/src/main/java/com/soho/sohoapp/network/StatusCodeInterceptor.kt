@@ -29,16 +29,23 @@ class StatusCodeInterceptor : Interceptor {
     @Throws(HttpStatusException::class)
     private fun handleErrorResponse(response: Response?) {
         val statusCode = response!!.code()
-        if (statusCode == 401) {
-            throw HttpStatusException("Your session has expired, please relogin.", HttpErrorType.ReloginRequired)
-        } else if (statusCode == 419) {
-            throw HttpStatusException("Pin re-entry required to continue.", HttpErrorType.PasswordReEnterRequired)
-        } else if (statusCode == 480) {
-            throw HttpStatusException("Pin has expired, please request a new one.", HttpErrorType.PasswordResetRequired)
-        } else if (response == null) {
-            throw HttpStatusException(SohoError().error, HttpErrorType.General)
+        when {
+
+            statusCode == 401 -> throw HttpStatusException("Your session has expired, please relogin."
+                    , HttpErrorType.ReloginRequired)
+
+            statusCode == 419 -> throw HttpStatusException("Pin re-entry required to continue."
+                    , HttpErrorType.PasswordReEnterRequired)
+
+            statusCode == 480 -> throw HttpStatusException("Pin has expired, please request a new one."
+                    , HttpErrorType.PasswordResetRequired)
+
+            false -> throw HttpStatusException(SohoError().error, HttpErrorType.General)
+
+            else -> {
+                val error = SohoError.fromResponse(response)
+                throw HttpStatusException(error.message, HttpErrorType.General)
+            }
         }
-        val error = SohoError.fromResponse(response)
-        throw HttpStatusException(error.message, HttpErrorType.General)
     }
 }

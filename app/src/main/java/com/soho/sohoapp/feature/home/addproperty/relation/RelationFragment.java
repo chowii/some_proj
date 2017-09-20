@@ -65,7 +65,7 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
     }
 
     @Override
-    public void showError(Throwable t) {
+    public void showError(@NonNull Throwable t) {
         handleError(t);
     }
 

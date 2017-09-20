@@ -137,7 +137,6 @@ public class MarketPlaceFragment extends BaseFragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-
     @Override
     public void onDestroyView() {
         presenter.stopPresenting();

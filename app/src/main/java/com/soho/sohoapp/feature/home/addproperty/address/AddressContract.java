@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.home.addproperty.address;
 
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.feature.BaseViewInteractable;
 
 class AddressContract {
 
@@ -14,14 +15,12 @@ class AddressContract {
         void onAddressChanged(String string);
     }
 
-    public interface ViewInteractable {
+    public interface ViewInteractable  extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         void showLoadingDialog();
 
         void hideLoadingDialog();
-
-        void showError(Throwable t);
 
         void setAddress(String s);
 
