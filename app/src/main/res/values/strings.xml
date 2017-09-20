@@ -199,7 +199,6 @@
 
     <!--todo-Julia shuffle in the specific section -->
     <string name="plus_sign" translatable="false">+</string>
-    <string name="the_property_network_for_everyone">The Property Network For Everyone</string>
     <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
     <string name="login_with_google">LOGIN WITH GOOGLE+</string>
     <string name="sign_up">S I G N U P</string>

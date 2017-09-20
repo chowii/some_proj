@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:drawable="@color/colorPrimary"/>
+    <item android:drawable="@color/colorPrimary" />
     <item>
         <bitmap
             android:gravity="center"
             android:src="@drawable/building_facade"
-            android:tileMode="mirror"/>
+            android:tileMode="mirror" />
     </item>
-    <item>
+    <item android:top="40dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/soho_logo"/>
+            android:src="@drawable/soho_logo_tagline" />
     </item>
 </layer-list>
