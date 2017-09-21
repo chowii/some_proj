@@ -109,15 +109,20 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4" />
+            android:value="@string/key_google_geo_api" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />
+            android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />  <!--not working as string resource-->
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
 
         <meta-data
             android:name="elastico.ApiKey"
-            android:value="35spuf65pdlmtnwq8pfne0uz" />
+            android:value="@string/key_elasticode_api" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

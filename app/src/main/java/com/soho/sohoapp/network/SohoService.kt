@@ -26,6 +26,9 @@ interface SohoService {
     @POST("users")
     fun register(@Body map: Map<String, String>): Observable<UserResult>
 
+    @POST("facebook")
+    fun loginWithFb(@Query("access_token") fbToken: String): Observable<UserResult>
+
     @POST("sessions")
     fun loginUser(@Body map: Map<String, String>): Observable<UserResult>
 

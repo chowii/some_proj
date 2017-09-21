@@ -10,7 +10,7 @@
     </item>
     <item android:top="40dp">
         <bitmap
-            android:gravity="center"
+            android:gravity="top"
             android:src="@drawable/soho_logo_tagline" />
     </item>
 </layer-list>
