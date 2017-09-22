@@ -29,6 +29,9 @@ interface SohoService {
     @POST("facebook")
     fun loginWithFb(@Query("access_token") fbToken: String): Observable<UserResult>
 
+    @POST("google")
+    fun loginWithGoogle(@Query("access_token") fbToken: String): Observable<UserResult>
+
     @POST("sessions")
     fun loginUser(@Body map: Map<String, String>): Observable<UserResult>
 

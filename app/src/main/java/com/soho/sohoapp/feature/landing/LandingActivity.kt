@@ -5,11 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API
+import com.google.android.gms.auth.api.Auth.GoogleSignInApi
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.SohoApplication
 import com.soho.sohoapp.abs.AbsActivity
+import com.soho.sohoapp.data.dtos.UserResult
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity
 import com.soho.sohoapp.navigator.NavigatorImpl
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -22,9 +29,25 @@ class LandingActivity : AbsActivity() {
 
 
     private val facebookManager by lazy { FacebookManager(this) }
+    private val googleSigninOptions by lazy {
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken(getString(R.string.google_server_client_id))
+                .build()
+    }
+    private val googleApiClient by lazy {
+        GoogleApiClient.Builder(SohoApplication.getContext())
+                .enableAutoManage(this /* FragmentActivity */
+                        /* OnConnectionFailedListener */) {
+                    DEPENDENCIES.logger.e("google api client connection failed")
+                }
+                .addApi(GOOGLE_SIGN_IN_API, googleSigninOptions)
+                .build()
+    }
     private val compositeDisposable by lazy { CompositeDisposable() }
 
-    /*** Facebook login handling end***/
+    private val RC_GOOGLE_PLUS = 123
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
@@ -39,6 +62,10 @@ class LandingActivity : AbsActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         facebookManager.onActivityResult(requestCode, resultCode, data)
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_GOOGLE_PLUS) {
+            loginWithGooglePlus(data)
+        }
     }
 
     @OnClick(R.id.signup)
@@ -51,6 +78,11 @@ class LandingActivity : AbsActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
     }
 
+    @OnClick(R.id.google_plus_login_btn)
+    fun onGooglePlusLoginBtnClicked() {
+        startActivityForResult(GoogleSignInApi.getSignInIntent(googleApiClient), RC_GOOGLE_PLUS)
+    }
+
     @OnClick(R.id.fb_login_btn)
     fun onFbLoginBtnClicked() {
         compositeDisposable.clear()
@@ -59,18 +91,42 @@ class LandingActivity : AbsActivity() {
                 .switchMap {
                     DEPENDENCIES.sohoService.loginWithFb(it.token)
                 }
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { user ->
-                            DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                            NavigatorImpl.newInstance(this).openHomeActivity()
+                            goHomeActivity(user)
                         },
                         { throwable ->
                             handleError(throwable)
                             DEPENDENCIES.logger.e("Error during  fb login", throwable)
                         }))
         facebookManager.login()
+    }
+
+    private fun loginWithGooglePlus(data: Intent?) {
+        val result = GoogleSignInApi.getSignInResultFromIntent(data)
+        if (result.isSuccess) {
+            compositeDisposable.add(Observable.just(result.signInAccount?.idToken)
+                    .switchMap {
+                        DEPENDENCIES.sohoService.loginWithGoogle(it)
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { user ->
+                                goHomeActivity(user)
+                            },
+                            { throwable ->
+                                handleError(throwable)
+                                DEPENDENCIES.logger.e("Error during  google +login", throwable)
+                            }))
+        } else handleError()
+    }
+
+    private fun goHomeActivity(user: UserResult) {
+        DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
+        NavigatorImpl.newInstance(this).openHomeActivity()
     }
 
     companion object {

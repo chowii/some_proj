@@ -25,8 +25,8 @@ class ThrowableHandler {
             if (throwable is HttpStatusException)
                 when (throwable.errorType) {
                     HttpErrorType.General -> {
-                        if (showInternetErrors) coordinatorLayout?.let {
-
+                        if (showInternetErrors) {
+                            SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
                         }
                         else handleCustomError(throwable.error)
                     }
@@ -38,7 +38,7 @@ class ThrowableHandler {
                     HttpErrorType.ReloginRequired ->
                         NavigatorImpl.newInstance(activity).showLandingActivity()
                 }
-            else if (showInternetErrors && coordinatorLayout != null)
+            else if (showInternetErrors && snackbarAnchorView != null)
                 SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
             else handleCustomError("Something went wrong. Please try again")
         }

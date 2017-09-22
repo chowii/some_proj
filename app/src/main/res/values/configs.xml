@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="facebook_app_id">295676500898461</string>
     <string name="fb_login_protocol_scheme">fb295676500898461</string>
@@ -7,5 +7,7 @@
     <string name="fabric_app_id">27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb</string>
     <string name="key_google_geo_api">AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4</string>
     <string name="key_elasticode_api">35spuf65pdlmtnwq8pfne0uz</string>
+    <string name="key_google_services_api">AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4</string>
+    <string name="google_server_client_id" tools:ignore="TypographyDashes">929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com</string>
 
 </resources>
