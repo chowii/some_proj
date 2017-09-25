@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
-import com.soho.sohoapp.data.singletons.SharedUser
 import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -43,7 +42,7 @@ class User : BasicUser {
                     email = user.email
                     firstName = user.firstName
                     DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                    SharedUser.getInstance().user = Converter.toUser(user)
+                    DEPENDENCIES.preferences.mUser = Converter.toUser(user)
                     this.registrationCallback?.onRegistrationSuccessful()
                 }, {
                     error ->

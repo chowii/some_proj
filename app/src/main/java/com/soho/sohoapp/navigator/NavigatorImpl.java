@@ -28,6 +28,7 @@ import com.soho.sohoapp.feature.landing.ForgotPasswordActivity;
 import com.soho.sohoapp.feature.landing.LandingActivity;
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity;
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
+import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
 public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY_LISTING = "KEY_PROPERTY_LISTING";
@@ -300,6 +301,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.getActivity().startActivity(VerifyAgentLicenseActivity.createIntent(fragment.getContext()));
         } else {
             activity.startActivity(VerifyAgentLicenseActivity.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void openHelpActivity() {
+        if (fragment != null) {
+            ContactZendeskActivity.startActivity(fragment.getContext(), null);
+        } else {
+            ContactZendeskActivity.startActivity(activity, null);
         }
     }
 }

@@ -14,6 +14,7 @@ import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -39,11 +40,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @OnClick(R.id.sign_up_redirect_button)
-    fun onSignUpRedirectClicked(): Unit =  NavigatorImpl.newInstance(this).openSignUpActivity()
+    fun onSignUpRedirectClicked(): Unit = NavigatorImpl.newInstance(this).openSignUpActivity()
 
 
     @OnClick(R.id.forgot_password_button)
-    fun onForgotPasswordClicked(): Unit =  NavigatorImpl.newInstance(this).openForgetPasswordActivity()
+    fun onForgotPasswordClicked(): Unit = NavigatorImpl.newInstance(this).openForgetPasswordActivity()
 
     @OnClick(R.id.login_button)
     fun onLoginClicked() {
@@ -71,10 +72,11 @@ class LoginActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ user ->
-                                NavigatorImpl.newInstance(this).openHomeActivity()
-                                DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                                registerDialog?.dismiss()
-                            },
+                        DEPENDENCIES.preferences.mUser = Converter.toUser(user)
+                        DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
+                        NavigatorImpl.newInstance(this).openHomeActivity()
+                        registerDialog?.dismiss()
+                    },
                             { throwable ->
                                 registerDialog?.dismiss()
                                 throwable.printStackTrace()

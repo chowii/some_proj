@@ -83,7 +83,7 @@ class SignUpActivity : AppCompatActivity() {
                         { user ->
                             DEPENDENCIES.logger.d( user.authenticationToken)
                             DEPENDENCIES.preferences.mUser = Converter.toUser(user)
-                            DEPENDENCIES.preferences.authToken = DEPENDENCIES.preferences.mUser?.authenticationToken ?: ""
+                            DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                             initProgressDialog()?.dismiss()
 
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()

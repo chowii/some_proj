@@ -11,9 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.soho.sohoapp.Dependencies
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
-import com.soho.sohoapp.data.singletons.SharedUser
+import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.HomeActivity
 import com.soho.sohoapp.feature.home.more.adapter.MoreAdapter
@@ -22,9 +22,10 @@ import com.soho.sohoapp.feature.home.more.presenter.MorePresenter
 import com.soho.sohoapp.feature.home.more.viewholder.MoreViewHolder
 import com.soho.sohoapp.landing.BaseFragment
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.zendesk.sdk.model.access.AnonymousIdentity
+import com.zendesk.sdk.network.impl.ZendeskConfig
 
 class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHolder.OnMoreItemClickListener {
-
     companion object {
         @JvmField
         val TAG: String = "MoreFragment"
@@ -54,6 +55,11 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
         return view
     }
 
+    override fun onDestroy() {
+        presenter.stopPresenting()
+        super.onDestroy()
+    }
+
     override fun configureToolbar() {
         (activity as HomeActivity).setSupportActionBar(toolbar)
         toolbar.title = ""
@@ -65,19 +71,26 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
     }
 
     override fun onSettingsItemClicked(button: String) {
-        when(button){
-            getString(R.string.setting_item_text) -> NavigatorImpl.newInstance(this).openSettingActivity()
-            getString(R.string.log_out_item_text) -> logoutUser()
-            else -> Dependencies.DEPENDENCIES.logger.d(button)
+        when (button) {
+            getString(R.string.settings_help_item_text) -> presenter.getUser()
+            getString(R.string.settings_item_text) -> NavigatorImpl.newInstance(this).openSettingActivity()
+            getString(R.string.settings_log_out_item_text) -> logoutUser()
+            else -> DEPENDENCIES.logger.d(button)
         }
     }
 
     private fun logoutUser() {
-        Dependencies.DEPENDENCIES.preferences.authToken = ""
+        DEPENDENCIES.preferences.authToken = ""
         //Double check and keep one
-        SharedUser.getInstance().user = null
-        Dependencies.DEPENDENCIES.preferences.mUser = null
+        DEPENDENCIES.preferences.mUser = null
         NavigatorImpl.newInstance(this).openHomeActivity(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
 
+    override fun showSupportActivity(user: User?) {
+        ZendeskConfig.INSTANCE.setIdentity(AnonymousIdentity.Builder()
+                .withNameIdentifier(user?.firstName + user?.lastName)
+                .withEmailIdentifier(user?.email)
+                .build())
+        NavigatorImpl.newInstance(this).openHelpActivity()
+    }
 }

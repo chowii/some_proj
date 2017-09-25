@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.more.contract
 
+import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.feature.home.BaseModel
 
 /**
@@ -10,10 +11,12 @@ interface MoreContract {
     interface ViewPresentable {
         fun startPresenting()
         fun stopPresenting()
+        fun getUser()
     }
 
     interface ViewInteractable {
         fun configureToolbar()
         fun configureAdapter(model: List<BaseModel>)
+        fun showSupportActivity(toUser: User?)
     }
 }

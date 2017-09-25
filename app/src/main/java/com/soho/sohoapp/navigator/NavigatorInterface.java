@@ -61,4 +61,6 @@ public interface NavigatorInterface {
     void openSettingActivity();
 
     void startAgentLicenseActivity(int flag);
+
+    void openHelpActivity();
 }

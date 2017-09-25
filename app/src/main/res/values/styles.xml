@@ -4,6 +4,22 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!--******Zendesk Attributes start******-->
+        <!-- Conversations drawable icon in SupportActivity -->
+        <item name="helpConversationsIcon">@drawable/help_conversations_icon_dark</item>
+
+        <!-- Send and attach icons in ContactZendeskActivity -->
+        <item name="contactAttachmentIcon">@drawable/contact_attachment_icon_dark</item>
+        <item name="contactSendIcon">@drawable/contact_send_icon_selector_dark</item>
+
+        <!-- Send and attach icons in ViewRequestActivity -->
+        <item name="viewRequestSendIcon">@drawable/view_request_send_icon_selector_dark</item>
+        <item name="viewRequestAttachmentIcon">@drawable/view_request_attachment_icon_dark</item>
+
+        <!-- New request icon in RequestActivity -->
+        <item name="requestListAddIcon">@drawable/request_list_add_icon_dark</item>
+        <!--******Zendesk Attributes end******-->
     </style>
 
     <style name="AppTheme.Base" parent="AppTheme">

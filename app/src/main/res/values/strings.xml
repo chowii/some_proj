@@ -225,9 +225,9 @@
     <!-- More Section -->
     <string name="place_holder_user_name">J. Seizov</string>
     <string name="add_property_menu">Add Property</string>
-    <string name="setting_item_text">Setting</string>
-    <string name="help_item_text">Help</string>
-    <string name="log_out_item_text">Log out</string>
+    <string name="settings_item_text">Setting</string>
+    <string name="settings_help_item_text">Help</string>
+    <string name="settings_log_out_item_text">Log out</string>
     <string name="settings_account_verification_photo_id_text">Photo Id</string>
     <string name="settings_account_verification_mobile_number_text">Mobile Number</string>
     <string name="settings_account_verification_agent_license_text">Agent License</string>
@@ -263,7 +263,6 @@
     <string name="agent_license_toolbar_title">Agent License</string>
     <string name="save_agent_license_text">Save</string>
     <string name="error_creatin_property">Error during creating new property</string>
-
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

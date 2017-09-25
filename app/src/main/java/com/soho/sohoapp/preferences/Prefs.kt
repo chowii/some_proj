@@ -1,22 +1,22 @@
 package com.soho.sohoapp.preferences
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.data.models.User
 
 class Prefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
-    val prefs: SharedPreferences
+    private val prefs= context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     var authToken: String
         set(value) {
             prefs.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
-            DEPENDENCIES.logger.d( prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
-        } get() {
-        return prefs.getString(SHARED_PREFS_AUTH_TOKEN, "")!!
-    }
+            DEPENDENCIES.logger.d(prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
+        }
+        get() {
+            return prefs.getString(SHARED_PREFS_AUTH_TOKEN, "")
+        }
     var mUser: User? = null
 
     var hasInstalled: Boolean
@@ -25,10 +25,6 @@ class Prefs(context: Context) {
         }
         get() = prefs.getBoolean("FirstInstall", false)
 
-
-    init {
-        prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-    }
 
     fun putGsonObject(key: String, value: Any) {
 

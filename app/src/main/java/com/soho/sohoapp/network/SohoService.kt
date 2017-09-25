@@ -38,6 +38,9 @@ interface SohoService {
     @PUT("profile")
     fun updateUserProfile(@Body map: Map<String, String>): Observable<UserResult>
 
+    @GET("profile")
+    fun getProfile(): Observable<UserResult>
+
     // MARK: - ================== Property Related ==================
 
     @POST("search/properties")

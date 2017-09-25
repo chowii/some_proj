@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <string name="endpoint">http://app.sohoapp-staging.com.stg.sohoapp.anchor.net.au/api/</string>
+    <string name="provider_authorities">com.soho.sohoapp.dev.fileprovider</string>
+
     <string name="facebook_app_id">295676500898461</string>
     <string name="fb_login_protocol_scheme">fb295676500898461</string>
 
@@ -10,4 +13,7 @@
     <string name="key_google_services_api">AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4</string>
     <string name="google_server_client_id" tools:ignore="TypographyDashes">929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com</string>
 
+    <string name="key_zendesk_app_url">https://sohoapp.zendesk.com</string>
+    <string name="key_zendesk_application_id">7d8347a64a33098aeb5344acec8502a937feafe1219c5732</string>
+    <string name="key_zendesk_mobile_sdk_client">mobile_sdk_client_125ff581d2f34ca9d90d</string>
 </resources>

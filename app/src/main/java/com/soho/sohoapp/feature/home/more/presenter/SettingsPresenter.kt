@@ -7,7 +7,6 @@ import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.SohoApplication.getContext
 import com.soho.sohoapp.SohoApplication.getStringFromResource
-import com.soho.sohoapp.data.singletons.SharedUser
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.SettingsActivity.Companion.CAMERA_INTENT_REQUEST_CODE
 import com.soho.sohoapp.feature.home.more.contract.SettingsContract
@@ -51,7 +50,7 @@ class SettingsPresenter(var interactable: SettingsContract.ViewInteractable, val
 
 
     private fun createSettingItem(): SettingItem {
-        val user = SharedUser.getInstance().user
+        val user = Dependencies.DEPENDENCIES.preferences.mUser
         return SettingItem(user?.getFullnameShort(), user?.dateOfBirth ?: 0, R.drawable.drivers_card)
     }
 
