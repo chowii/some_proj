@@ -44,7 +44,7 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new RelationPresenter(this);
-        presenter.startPresenting(savedInstanceState!=null);
+        presenter.startPresenting(savedInstanceState != null);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class RelationFragment extends BaseFragment implements RelationContract.V
     @Override
     public void showLoadingDialog() {
         loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.show();
+        loadingDialog.show(getString(R.string.common_loading));
     }
 
     @Override

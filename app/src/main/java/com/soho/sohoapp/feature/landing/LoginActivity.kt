@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.landing
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -13,7 +12,9 @@ import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -30,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     @BindView(R.id.login_button)
     lateinit var loginButton: Button
 
-    var registerDialog: ProgressDialog? = null
+    var loadingDialog: LoadingDialog? = null
 
     @OnTextChanged(R.id.login_email_edit_text, R.id.login_password_edit_text)
     fun onTextChanged(editable: Editable) {
@@ -48,9 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
     @OnClick(R.id.login_button)
     fun onLoginClicked() {
-        initProgressDialog()?.show()
         //TODO wait for login api call
-
     }
 
     private var disposable: Disposable? = null
@@ -59,15 +58,14 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
-        registerDialog = ProgressDialog(this)
+        loadingDialog = LoadingDialog(this)
         toggleButtonEnabled(0.4f, false)
         loginButton.setOnClickListener {
-            initProgressDialog()?.show()
+            loadingDialog?.show(getString(R.string.login_loading))
             val map = hashMapOf(
-                    "email" to emailEditText.text.toString(),
-                    "password" to passwordEditText.text.toString()
+                    Keys.User.EMAIL to emailEditText.text.toString(),
+                    Keys.User.PASSWORD to passwordEditText.text.toString()
             )
-
             disposable = DEPENDENCIES.sohoService.loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -75,10 +73,10 @@ class LoginActivity : AppCompatActivity() {
                         DEPENDENCIES.preferences.mUser = Converter.toUser(user)
                         DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
                         NavigatorImpl.newInstance(this).openHomeActivity()
-                        registerDialog?.dismiss()
+                        loadingDialog?.dismiss()
                     },
                             { throwable ->
-                                registerDialog?.dismiss()
+                                loadingDialog?.dismiss()
                                 throwable.printStackTrace()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
                                 DEPENDENCIES.logger.e("Error during login", throwable)
@@ -95,11 +93,5 @@ class LoginActivity : AppCompatActivity() {
     private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
         loginButton.alpha = alpha
         loginButton.isEnabled = isEnabled
-    }
-
-    private fun initProgressDialog(): ProgressDialog? {
-        registerDialog?.setTitle("Logging in")
-        registerDialog?.setMessage("Please wait while we log you in")
-        return registerDialog
     }
 }

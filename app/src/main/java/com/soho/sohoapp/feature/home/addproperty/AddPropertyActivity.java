@@ -123,7 +123,7 @@ public class AddPropertyActivity extends AbsActivity implements
     @Override
     public void showLoadingDialog() {
         loadingDialog = new LoadingDialog(this);
-        loadingDialog.show();
+        loadingDialog.show(getString(R.string.common_loading));
     }
 
     @Override

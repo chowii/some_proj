@@ -30,6 +30,7 @@ import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.data.models.PropertyUser;
 import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.data.models.Verification;
+import com.soho.sohoapp.extensions.LongExtKt;
 import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyRole;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
@@ -382,33 +383,48 @@ public final class Converter {
     }
 
     @NonNull
-    public static QueryHashMap toMap(@NonNull Location location,
+    public static QueryHashMap toMap(@Nullable Location location,
                                      @NonNull PropertyRole role,
                                      @NonNull PropertyType propertyType,
                                      boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
-        return new QueryHashMap()
+        QueryHashMap map = new QueryHashMap()
                 .put(Keys.Property.RELATION, role.getKey())
                 .put(Keys.Property.BEDROOMS, bedrooms)
                 .put(Keys.Property.BATHROOMS, bathrooms)
                 .put(Keys.Property.CARSPOTS, carspots)
                 .put(Keys.Property.IS_INVESTMENT, isInvestment)
-                .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey())
-                .put(Keys.Property.SUBURB, location.getSuburb())
-                .put(Keys.Property.STATE, location.getState())
-                .put(Keys.Property.POSTCODE, location.getPostcode())
-                .put(Keys.Property.COUNTRY, location.getCountry())
-                .put(Keys.Property.LATITUDE, location.getLatitude())
-                .put(Keys.Property.LONGITUDE, location.getLongitude())
-                .put(Keys.Property.FULL_ADDRESS, location.getFullAddress())
-                .put(Keys.Property.ADDRESS1, location.getAddressLine1())
-                .put(Keys.Property.ADDRESS2, location.getAddressLine2());
+                .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey());
+        putLocation(map, location);
+        return map;
     }
 
     @NonNull
     public static QueryHashMap toMap(@NonNull PropertyListing propertyListing) {
-        return new QueryHashMap()
+        QueryHashMap map = new QueryHashMap()
                 .put(Keys.PropertyListing.ID, propertyListing.getId())
-                .put(Keys.PropertyListing.STATE, propertyListing.getState());
+                .put(Keys.PropertyListing.STATE, propertyListing.getState())
+                .put(Keys.PropertyListing.SALE_OFFERS, propertyListing.getCanReceiveSalesOffers())
+                .put(Keys.PropertyListing.RENT_OFFERS, propertyListing.getCanReceiveRentOffers())
+                .put(Keys.PropertyListing.SALE_TITLE, propertyListing.getSaleTitle())
+                .put(Keys.PropertyListing.RENT_TITLE, propertyListing.getRentTitle())
+                .put(Keys.PropertyListing.AUCTION_TITLE, propertyListing.getAuctionTitle())
+                .put(Keys.PropertyListing.DISCOVERABLE_TITLE, propertyListing.getDiscoverableTitle())
+                .put(Keys.PropertyListing.ON_SITE_AUCTION, propertyListing.isOnSiteAuction())
+                .put(Keys.PropertyListing.APPOINTMENT_ONLY, propertyListing.isAppointmentOnly())
+                .put(Keys.PropertyListing.RENT_PAYMENT_FREQUENCY, propertyListing.getRentPaymentFrequency())
+                .put(Keys.PropertyListing.AUCTION_DATE, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAuctionTime()))
+                .put(Keys.PropertyListing.AUCTION_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAuctionTime()))
+                .put(Keys.PropertyListing.AVAILABLE_FROM, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAvailableFrom()));
+        putLocation(map, propertyListing.getOffSiteLocation());
+        return map;
+    }
+
+    @NonNull
+    public static QueryHashMap toMap(@NonNull Property property) {
+        QueryHashMap map = new QueryHashMap();
+        map.put(Keys.Property.DESCRIPTION, property.getDescription());
+        putPropertyFinance(map, property.getPropertyFinance());
+        return map;
     }
 
     @NonNull
@@ -525,5 +541,33 @@ public final class Converter {
         portfolioCategory.setPublicPropertiesCount(result.publicPropertiesCount);
         portfolioCategory.setFilterForPortfolio(result.filterForPortfolio);
         return portfolioCategory;
+    }
+
+    @NonNull
+    private static void putLocation(@NonNull QueryHashMap map, @Nullable Location location) {
+        if (location != null) {
+            map.put(Keys.Location.SUBURB, location.getSuburb())
+                    .put(Keys.Location.STATE, location.getState())
+                    .put(Keys.Location.POSTCODE, location.getPostcode())
+                    .put(Keys.Location.COUNTRY, location.getCountry())
+                    .put(Keys.Location.LATITUDE, location.getLatitude())
+                    .put(Keys.Location.LONGITUDE, location.getLongitude())
+                    .put(Keys.Location.FULL_ADDRESS, location.getFullAddress())
+                    .put(Keys.Location.ADDRESS1, location.getAddressLine1())
+                    .put(Keys.Location.ADDRESS2, location.getAddressLine2());
+        }
+    }
+
+    @NonNull
+    private static void putPropertyFinance(@NonNull QueryHashMap map, @Nullable PropertyFinance finance) {
+        if (finance != null) {
+            map.put(Keys.PropertyFinance.PURCHASE_PRICE, finance.getPurchasePrice())
+                    .put(Keys.PropertyFinance.LOAN_AMOUNT, finance.getLoanAmount())
+                    .put(Keys.PropertyFinance.ESTIMATED_VALUE, finance.getEstimatedValue())
+                    .put(Keys.PropertyFinance.IS_RANTED, finance.isRented())
+                    .put(Keys.PropertyFinance.ESTIMATED_RENT, finance.getEstimatedRent())
+                    .put(Keys.PropertyFinance.ACTUAL_RENT, finance.getActualRent())
+                    .put(Keys.PropertyFinance.LEASED_TO, finance.getLeasedToDate());
+        }
     }
 }

@@ -187,7 +187,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
         toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
         toolbar.setOnMenuItemClickListener(item -> {
-            if (R.id.action_call_agent == item.getItemId()) {
+            if (R.id.action_add_photo == item.getItemId()) {
                 presentable.onAddPhotoClicked();
             }
             return false;

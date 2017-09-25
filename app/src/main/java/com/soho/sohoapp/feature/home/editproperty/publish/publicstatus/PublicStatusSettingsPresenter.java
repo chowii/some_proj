@@ -66,11 +66,16 @@ public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatus
 
     @Override
     public void onSaleAndAuctionClicked() {
-        navigator.openSaleAndAuctionSettingsScreen(property, RequestCode.PROPERTY_SALE_AND_AUCTION_STATUS_UPDATE);
+        navigator.openSaleAndAuctionSettingsScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE);
     }
 
     @Override
     public void onRentClicked() {
         //todo: open Rent screen
+    }
+
+    @Override
+    public void onPropertyStatusUpdated(Property property) {
+        navigator.exitWithResultCodeOk(property);
     }
 }

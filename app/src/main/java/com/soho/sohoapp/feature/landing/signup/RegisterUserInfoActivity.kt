@@ -14,6 +14,7 @@ import butterknife.OnClick
 import com.soho.sohoapp.R
 import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.network.Keys
 import io.reactivex.disposables.Disposable
 
 class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback {
@@ -60,9 +61,9 @@ class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback 
     fun onRegisterClicked() {
         initProgressDialog()?.show()
         disposableUserProfile = user.updateUserProfile(hashMapOf(
-                "first_name" to nameEditText.text.toString(),
-                "last_name" to lastNameEditText.text.toString(),
-                "country" to countryEditText.text.toString()
+                Keys.User.FIRST_NAME to nameEditText.text.toString(),
+                Keys.User.LAST_NAME to lastNameEditText.text.toString(),
+                Keys.User.COUNTRY to countryEditText.text.toString()
         ))
     }
 
@@ -77,6 +78,7 @@ class RegisterUserInfoActivity : AppCompatActivity(), User.RegistrationCallback 
         disposableUserProfile?.dispose()
         super.onDestroy()
     }
+
     private fun initProgressDialog(): ProgressDialog? {
         registerDialog?.setTitle("Registering")
         registerDialog?.setMessage("Please wait while we registerUser you")

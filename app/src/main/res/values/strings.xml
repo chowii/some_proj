@@ -1,9 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name1">Soho</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <!--Login and Registration screens start-->
     <string name="register_agreement_message">By signing up, you agree to Soho’s</string>
     <string name="register_terms_of_condition">Terms of Condition</string>
     <string name="register_button">SIGN UP</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="register_loading">Please wait while we register you</string>
+    <string name="login_loading">Please wait while we log you in</string>
+    <!--Login and Registration screens end-->
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -16,6 +21,7 @@
     <string name="common_loading_error">Something went wrong..</string>
     <string name="error_occurred">Error occurred. Please try again later</string>
     <string name="something_wrong_error">Something went wrong. Please try again</string>
+    <string name="coming_soon">Coming soon..</string>
     <!--Common strings end-->
 
     <!--Test strings start-->
@@ -173,12 +179,24 @@
     <string name="publish_property_appointment_only">Appointment Only</string>
     <string name="publish_property_auction_date">Auction Date</string>
     <string name="publish_property_auction_time">Auction Time</string>
+    <string name="publish_property_not_valid_title">Please provide a title</string>
+    <string name="publish_property_not_valid_price">Please provide a price guide</string>
+    <string name="publish_property_not_valid_off_site_location">Please provide off site location for auction</string>
+    <string name="publish_property_not_valid_auction_date">Please provide auction date</string>
+    <string name="publish_property_not_valid_auction_time">Please provide auction time</string>
     <!--Publish property screens end-->
 
     <!--Autocomplete address screen start-->
     <string name="autocomplete_address_toolbar_title">Auction Address</string>
     <string name="autocomplete_address_done">Done</string>
+    <string name="autocomplete_address_not_selected">Please select address</string>
     <!--Autocomplete address screen end-->
+
+    <!--Property description screen start-->
+    <string name="property_description_toolbar">Description</string>
+    <string name="property_description_enter_description">Add a description of your property..</string>
+    <string name="property_description_done">Done</string>
+    <!--Property description screen end-->
 
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>

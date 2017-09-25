@@ -7,7 +7,7 @@ class Property : BasicProperty {
 
     var landSize: Int = 0
     var landSizeMeasurement: String? = null
-    var auctionDate: Long = 0
+    var auctionDate: Long? = null
     var rennovationDetails: String? = null
     var agentLicenseNumber: String? = null
     var agentMobileNumber: String? = null
@@ -20,7 +20,7 @@ class Property : BasicProperty {
     constructor(parcel: Parcel) : super(parcel) {
         landSize = parcel.readInt()
         landSizeMeasurement = parcel.readString()
-        auctionDate = parcel.readLong()
+        auctionDate = parcel.readValue(Long::class.java.classLoader) as Long?
         rennovationDetails = parcel.readString()
         agentLicenseNumber = parcel.readString()
         agentMobileNumber = parcel.readString()
@@ -29,11 +29,15 @@ class Property : BasicProperty {
         verifications = parcel.createTypedArrayList(Verification)
     }
 
+    fun getPropertyListingSafe() = propertyListing ?: PropertyListing()
+
+    fun getPropertyFinanceSafe() = propertyFinance ?: PropertyFinance()
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         super.writeToParcel(parcel, flags)
         parcel.writeInt(landSize)
         parcel.writeString(landSizeMeasurement)
-        parcel.writeLong(auctionDate)
+        parcel.writeValue(auctionDate)
         parcel.writeString(rennovationDetails)
         parcel.writeString(agentLicenseNumber)
         parcel.writeString(agentMobileNumber)

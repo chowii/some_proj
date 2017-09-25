@@ -80,10 +80,10 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_STATUS_UPDATE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.EDIT_PROPERTY_STATUS_UPDATE) {
             Bundle extras = data.getExtras();
             if (extras != null) {
-                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LISTING));
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
             }
         }
     }

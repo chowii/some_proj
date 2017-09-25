@@ -21,7 +21,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.landing.BaseFragment;
-import com.soho.sohoapp.location.AndroidLocationProvider;
+import com.soho.sohoapp.location.LocationProviderImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +60,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
         super.onViewCreated(view, savedInstanceState);
         initAutocomplete();
 
-        presenter = new AddressPresenter(this, AndroidLocationProvider.newInstance(getContext(), googleApiClient));
+        presenter = new AddressPresenter(this, LocationProviderImpl.newInstance(getContext(), googleApiClient));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -84,7 +84,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     @Override
     public void showLoadingDialog() {
         loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.show();
+        loadingDialog.show(getString(R.string.common_loading));
     }
 
     @Override
@@ -98,8 +98,8 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
     }
 
     @Override
-    public void setAddress(String s) {
-        autocomplete.setText("");
+    public void setAddress(String address) {
+        autocomplete.setText(address);
     }
 
     @Override

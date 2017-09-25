@@ -25,7 +25,7 @@ open class BasicProperty() : BaseModel, Parcelable {
     var isFavourite: Boolean = false
     var rentPrice: Int = 0
     var salePrice: Int = 0
-    var updatedAt: Long = 0
+    var updatedAt: Long? = null
     var bedrooms: Int = 0
     var bathrooms: Int = 0
     var carspots: Int = 0
@@ -50,7 +50,7 @@ open class BasicProperty() : BaseModel, Parcelable {
         isFavourite = parcel.readByte() != 0.toByte()
         rentPrice = parcel.readInt()
         salePrice = parcel.readInt()
-        updatedAt = parcel.readLong()
+        updatedAt = parcel.readValue(Long::class.java.classLoader) as Long?
         bedrooms = parcel.readInt()
         bathrooms = parcel.readInt()
         carspots = parcel.readInt()
@@ -103,7 +103,7 @@ open class BasicProperty() : BaseModel, Parcelable {
         parcel.writeByte(if (isFavourite) 1 else 0)
         parcel.writeInt(rentPrice)
         parcel.writeInt(salePrice)
-        parcel.writeLong(updatedAt)
+        parcel.writeValue(updatedAt)
         parcel.writeInt(bedrooms)
         parcel.writeInt(bathrooms)
         parcel.writeInt(carspots)

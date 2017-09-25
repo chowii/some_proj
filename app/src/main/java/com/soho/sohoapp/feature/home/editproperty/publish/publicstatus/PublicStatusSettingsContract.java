@@ -12,6 +12,8 @@ public interface PublicStatusSettingsContract {
         void onSaleAndAuctionClicked();
 
         void onRentClicked();
+
+        void onPropertyStatusUpdated(Property property);
     }
 
     interface ViewInteractable {

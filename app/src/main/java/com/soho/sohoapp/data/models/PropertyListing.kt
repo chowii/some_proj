@@ -15,10 +15,10 @@ class PropertyListing() : Parcelable {
     var auctionTitle: String? = null
     var discoverableTitle: String? = null
     var isOnSiteAuction: Boolean = false
-    var auctionDate: Long = 0
-    var auctionTime: Long = 0
+    var auctionDate: Long? = null
+    var auctionTime: Long? = null
     var rentPaymentFrequency: String? = null
-    var availableFrom: Long = 0
+    var availableFrom: Long? = null
     var isAppointmentOnly: Boolean = false
     var offSiteLocation: Location? = null
     var inspectionTimes: List<InspectionTime>? = null
@@ -45,10 +45,10 @@ class PropertyListing() : Parcelable {
         auctionTitle = parcel.readString()
         discoverableTitle = parcel.readString()
         isOnSiteAuction = parcel.readByte() != 0.toByte()
-        auctionDate = parcel.readLong()
-        auctionTime = parcel.readLong()
+        auctionDate = parcel.readValue(Long::class.java.classLoader) as Long?
+        auctionTime = parcel.readValue(Long::class.java.classLoader) as Long?
         rentPaymentFrequency = parcel.readString()
-        availableFrom = parcel.readLong()
+        availableFrom = parcel.readValue(Long::class.java.classLoader) as Long?
         isAppointmentOnly = parcel.readByte() != 0.toByte()
         offSiteLocation = parcel.readParcelable(Location::class.java.classLoader)
         inspectionTimes = parcel.createTypedArrayList(InspectionTime)
@@ -64,10 +64,10 @@ class PropertyListing() : Parcelable {
         parcel.writeString(auctionTitle)
         parcel.writeString(discoverableTitle)
         parcel.writeByte(if (isOnSiteAuction) 1 else 0)
-        parcel.writeLong(auctionDate)
-        parcel.writeLong(auctionTime)
+        parcel.writeValue(auctionDate)
+        parcel.writeValue(auctionTime)
         parcel.writeString(rentPaymentFrequency)
-        parcel.writeLong(availableFrom)
+        parcel.writeValue(availableFrom)
         parcel.writeByte(if (isAppointmentOnly) 1 else 0)
         parcel.writeParcelable(offSiteLocation, flags)
         parcel.writeTypedList(inspectionTimes)

@@ -12,7 +12,7 @@ class PropertyFinance() : Parcelable {
     var isRented: Boolean = false
     var actualRent: Double = 0.0
     var estimatedRent: Double = 0.0
-    var leasedToDate: Long = 0
+    var leasedToDate: Long? = null
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -22,7 +22,7 @@ class PropertyFinance() : Parcelable {
         isRented = parcel.readByte() != 0.toByte()
         actualRent = parcel.readDouble()
         estimatedRent = parcel.readDouble()
-        leasedToDate = parcel.readLong()
+        leasedToDate = parcel.readValue(Long::class.java.classLoader) as Long?
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -33,7 +33,7 @@ class PropertyFinance() : Parcelable {
         parcel.writeByte(if (isRented) 1 else 0)
         parcel.writeDouble(actualRent)
         parcel.writeDouble(estimatedRent)
-        parcel.writeLong(leasedToDate)
+        parcel.writeValue(leasedToDate)
     }
 
     override fun describeContents(): Int {

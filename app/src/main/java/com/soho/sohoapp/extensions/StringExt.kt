@@ -27,8 +27,8 @@ fun String.toDate(stringFormat:String): Date? {
  * @param stringFormat the expected date format to parse
  * @return the date object after string has been parsed (Nullable)
  */
-fun String.toDateLong(stringFormat:String): Long {
-    return this.toDate(stringFormat)?.time ?: 0
+fun String.toDateLong(stringFormat:String): Long? {
+    return this.toDate(stringFormat)?.time
 }
 
 // MARK: - ================== Convenience methods for common formats ==================
@@ -45,6 +45,6 @@ fun String.toDateWithIso8601DateTimeFormat(): Date? {
  * Returns a date Long of the string if it matches the 'stringFormat' specified
  * @return returns Long representation of string date
  */
-fun String.toDateLongWithIso8601DateTimeFormat(): Long {
+fun String.toDateLongWithIso8601DateTimeFormat(): Long? {
     return this.toDateLong(DateFormat.Iso8601DateTime().stringFormat())
 }

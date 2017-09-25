@@ -19,19 +19,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public class AndroidLocationProvider implements LocationProvider {
+public class LocationProviderImpl implements LocationProviderInterface {
     private final GoogleApiClient googleApiClient;
     private final Context context;
 
-    private AndroidLocationProvider(@NonNull GoogleApiClient googleApiClient, @NonNull Context context) {
+    private LocationProviderImpl(@NonNull GoogleApiClient googleApiClient, @NonNull Context context) {
         this.googleApiClient = googleApiClient;
         this.context = context;
     }
 
-    public static AndroidLocationProvider newInstance(@NonNull Context context, @NonNull GoogleApiClient googleApiClient) {
-        return new AndroidLocationProvider(googleApiClient, context);
+    public static LocationProviderImpl newInstance(@NonNull Context context, @NonNull GoogleApiClient googleApiClient) {
+        return new LocationProviderImpl(googleApiClient, context);
     }
 
     @Nullable

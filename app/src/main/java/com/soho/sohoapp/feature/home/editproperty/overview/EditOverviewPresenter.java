@@ -33,7 +33,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
 
     @Override
     public void onMarketplaceStateClicked() {
-        navigator.openPropertyStatusScreen(property, RequestCode.PROPERTY_STATUS_UPDATE);
+        navigator.openPropertyStatusScreen(property, RequestCode.EDIT_PROPERTY_STATUS_UPDATE);
     }
 
     @Override
@@ -42,8 +42,10 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     }
 
     @Override
-    public void onPropertyStatusUpdated(PropertyListing propertyListing) {
-        initPropertyListing(propertyListing);
+    public void onPropertyStatusUpdated(Property property) {
+        this.property = property;
+        initPropertyListing(property.getPropertyListing());
+        //todo: update also property description
     }
 
     private void initPropertyListing(PropertyListing propertyListing) {

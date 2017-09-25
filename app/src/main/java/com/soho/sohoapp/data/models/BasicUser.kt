@@ -12,14 +12,14 @@ open class BasicUser() : Parcelable {
     var email: String? = null
     var firstName: String? = null
     var lastName: String? = null
-    var dateOfBirth: Long = 0
+    var dateOfBirth: Long? = null
     var avatar: Image? = null
 
     constructor(parcel: Parcel) : this() {
         email = parcel.readString()
         firstName = parcel.readString()
         lastName = parcel.readString()
-        dateOfBirth = parcel.readLong()
+        dateOfBirth = parcel.readValue(Long::class.java.classLoader) as Long?
         avatar = parcel.readParcelable(Image::class.java.classLoader)
     }
 
@@ -40,7 +40,7 @@ open class BasicUser() : Parcelable {
         parcel.writeString(email)
         parcel.writeString(firstName)
         parcel.writeString(lastName)
-        parcel.writeLong(dateOfBirth)
+        parcel.writeValue(dateOfBirth)
         parcel.writeParcelable(avatar, flags)
     }
 

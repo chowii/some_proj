@@ -11,11 +11,10 @@ public interface PrivateStatusSettingsContract {
         void onSaveClicked();
     }
 
-    interface ViewInteractable extends BaseViewInteractable{
+    interface ViewInteractable extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         Property getPropertyFromExtras();
-
 
         void showLoadingDialog();
 

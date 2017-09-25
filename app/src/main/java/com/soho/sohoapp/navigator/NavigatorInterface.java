@@ -2,8 +2,8 @@ package com.soho.sohoapp.navigator;
 
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
@@ -14,7 +14,11 @@ public interface NavigatorInterface {
 
     void exitWithResultCodeOk();
 
-    void exitWithResultCodeOk(@NonNull PropertyListing propertyListing);
+    void exitWithResultCodeOk(@NonNull Property property);
+
+    void exitWithResultCodeOk(@NonNull Location location);
+
+    void exitWithResultCodeOk(String string);
 
     void openAddPropertyScreen();
 
@@ -35,6 +39,8 @@ public interface NavigatorInterface {
     void openSaleAndAuctionSettingsScreen(@NonNull Property property, int requestCode);
 
     void openAutocompleteAddressScreen(int requestCode);
+
+    void openPropertyDescriptionScreen(String description, int requestCode);
 
     void openHomeActivity();
 

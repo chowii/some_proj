@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.navigator.NavigatorImpl;
+import com.soho.sohoapp.navigator.RequestCode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +65,17 @@ public class PublicStatusSettingsActivity extends AbsActivity implements PublicS
     protected void onDestroy() {
         presenter.stopPresenting();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+            }
+        }
     }
 
     @Override

@@ -14,14 +14,14 @@ class PropertyUser() : Parcelable {
     var role:String? = null
     var userDetails:BasicUser? = null
     var lastMessage:String? = null
-    var lastMessageAt: Long = 0
+    var lastMessageAt: Long? = null
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readValue(Int::class.java.classLoader) as? Int
         role = parcel.readString()
         userDetails = parcel.readParcelable(BasicUser::class.java.classLoader)
         lastMessage = parcel.readString()
-        lastMessageAt = parcel.readLong()
+        lastMessageAt = parcel.readValue(Long::class.java.classLoader) as Long?
     }
 
     fun representingUserFullName(): String {
@@ -33,7 +33,7 @@ class PropertyUser() : Parcelable {
         parcel.writeString(role)
         parcel.writeParcelable(userDetails, flags)
         parcel.writeString(lastMessage)
-        parcel.writeLong(lastMessageAt)
+        parcel.writeValue(lastMessageAt)
     }
 
     override fun describeContents(): Int {

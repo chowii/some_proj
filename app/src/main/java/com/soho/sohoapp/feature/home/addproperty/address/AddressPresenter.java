@@ -2,22 +2,22 @@ package com.soho.sohoapp.feature.home.addproperty.address;
 
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Location;
-import com.soho.sohoapp.location.LocationProvider;
+import com.soho.sohoapp.location.LocationProviderInterface;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AddressPresenter implements AbsPresenter, AddressContract.ViewPresentable {
     private final AddressContract.ViewInteractable view;
-    private final LocationProvider locationProvider;
-    private final CompositeSubscription compositeSubscription;
+    private final LocationProviderInterface locationProvider;
+    private final CompositeDisposable compositeDisposable;
     private Location location;
 
-    public AddressPresenter(AddressContract.ViewInteractable view, LocationProvider locationProvider) {
+    public AddressPresenter(AddressContract.ViewInteractable view, LocationProviderInterface locationProvider) {
         this.view = view;
         this.locationProvider = locationProvider;
-        compositeSubscription = new CompositeSubscription();
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -29,13 +29,13 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
     @Override
     public void stopPresenting() {
         view.hideKeyboard();
-        compositeSubscription.unsubscribe();
+        compositeDisposable.clear();
     }
 
     @Override
     public void onAddressClicked(String placeId, String fullAddress) {
         view.showLoadingDialog();
-        compositeSubscription.add(locationProvider.getLatLng(placeId)
+        compositeDisposable.add(locationProvider.getLatLng(placeId)
                 .flatMap(latLng -> locationProvider.getAddress(latLng, fullAddress))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,8 +70,8 @@ public class AddressPresenter implements AbsPresenter, AddressContract.ViewPrese
     }
 
     @Override
-    public void onAddressChanged(String string) {
-        if (string.isEmpty()) {
+    public void onAddressChanged(String newAddress) {
+        if (newAddress.isEmpty()) {
             location = null;
         }
     }

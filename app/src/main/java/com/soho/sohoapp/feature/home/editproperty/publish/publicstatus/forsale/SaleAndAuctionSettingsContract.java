@@ -1,7 +1,15 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.forsale;
 
 
+import android.support.annotation.StringRes;
+
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.BaseViewInteractable;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.util.Calendar;
 
 public interface SaleAndAuctionSettingsContract {
 
@@ -25,9 +33,23 @@ public interface SaleAndAuctionSettingsContract {
         void onInspectionTimeClicked();
 
         void onPropertySizeClicked();
+
+        void onAuctionAddressSelected(Location location);
+
+        void onAuctionDateClicked();
+
+        void onAuctionTimeClicked();
+
+        void onSaveClicked();
+
+        void onPriceChanged(String text);
+
+        void onDescriptionClicked();
+
+        void onDescriptionChanged(String description);
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         Property getPropertyFromExtras();
@@ -40,8 +62,42 @@ public interface SaleAndAuctionSettingsContract {
 
         void enableInspectionTime(boolean enable);
 
-        void showToast(String message);
+        void showToastMessage(@StringRes int resId);
 
         void showAuctionAddress(String address);
+
+        void showAuctionDate(String date);
+
+        void showAuctionTime(String time);
+
+        void showDefaultAuctionAddressDesc();
+
+        void showTimePicker(Calendar calendar, TimePickerDialog.OnTimeSetListener listener);
+
+        void showDatePicker(Calendar calendar, DatePickerDialog.OnDateSetListener listener);
+
+        String getListingTitle();
+
+        String getPriceValue();
+
+        boolean isForSaleChecked();
+
+        boolean isOffSiteLocationChecked();
+
+        void selectAuctionOption();
+
+        void showTitle(String title);
+
+        void changePriceValidationIndicator(boolean priceIsValid);
+
+        void showPriceGuide(double value);
+
+        void showDescription(String description);
+
+        void selectOffSiteAuctionOption();
+
+        void showLoadingDialog();
+
+        void hideLoadingDialog();
     }
 }

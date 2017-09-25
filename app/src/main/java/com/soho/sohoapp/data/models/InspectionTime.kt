@@ -10,19 +10,19 @@ import android.os.Parcelable
 class InspectionTime() : Parcelable {
 
     var id: Int = 0
-    var startTime: Long = 0
-    var endTime: Long = 0
+    var startTime: Long? = null
+    var endTime: Long? = null
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
-        startTime = parcel.readLong()
-        endTime = parcel.readLong()
+        startTime = parcel.readValue(Long::class.java.classLoader) as Long?
+        endTime = parcel.readValue(Long::class.java.classLoader) as Long?
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
-        parcel.writeLong(startTime)
-        parcel.writeLong(endTime)
+        parcel.writeValue(startTime)
+        parcel.writeValue(endTime)
     }
 
     override fun describeContents(): Int {

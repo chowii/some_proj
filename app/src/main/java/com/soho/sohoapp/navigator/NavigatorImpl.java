@@ -7,11 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.PropertyDescriptionActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity;
@@ -31,13 +32,17 @@ import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
 public class NavigatorImpl implements NavigatorInterface {
-    public static final String KEY_PROPERTY_LISTING = "KEY_PROPERTY_LISTING";
+    public static final String KEY_PROPERTY = "KEY_PROPERTY";
+    public static final String KEY_PROPERTY_LOCATION = "KEY_PROPERTY_LOCATION";
+    public static final String KEY_STRING = "KEY_STRING";
     private Activity activity;
     private Fragment fragment;
+
     //in case we want the result on the Activity
     private NavigatorImpl(@NonNull Activity activity) {
         this.activity = activity;
     }
+
     //in case we want the result on the Fragment
     private NavigatorImpl(@NonNull Fragment fragment) {
         this.fragment = fragment;
@@ -73,17 +78,24 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void exitWithResultCodeOk(@NonNull PropertyListing propertyListing) {
+    public void exitWithResultCodeOk(@NonNull Property property) {
         Intent intent = new Intent();
-        intent.putExtra(KEY_PROPERTY_LISTING, propertyListing);
-        if (fragment != null) {
-            FragmentActivity fragmentActivity = fragment.getActivity();
-            fragmentActivity.setResult(Activity.RESULT_OK, intent);
-            fragmentActivity.finish();
-        } else {
-            activity.setResult(Activity.RESULT_OK, intent);
-            activity.finish();
-        }
+        intent.putExtra(KEY_PROPERTY, property);
+        setResultAndExit(intent);
+    }
+
+    @Override
+    public void exitWithResultCodeOk(@NonNull Location location) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_PROPERTY_LOCATION, location);
+        setResultAndExit(intent);
+    }
+
+    @Override
+    public void exitWithResultCodeOk(String string) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_STRING, string);
+        setResultAndExit(intent);
     }
 
     @Override
@@ -173,6 +185,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(AutocompleteAddressActivity.createIntent(fragment.getActivity()), requestCode);
         } else {
             activity.startActivityForResult(AutocompleteAddressActivity.createIntent(activity), requestCode);
+        }
+    }
+
+    @Override
+    public void openPropertyDescriptionScreen(String description, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(PropertyDescriptionActivity.createIntent(fragment.getActivity(), description), requestCode);
+        } else {
+            activity.startActivityForResult(PropertyDescriptionActivity.createIntent(activity, description), requestCode);
         }
     }
 
@@ -310,6 +331,17 @@ public class NavigatorImpl implements NavigatorInterface {
             ContactZendeskActivity.startActivity(fragment.getContext(), null);
         } else {
             ContactZendeskActivity.startActivity(activity, null);
+        }
+    }
+
+    private void setResultAndExit(Intent intent) {
+        if (fragment != null) {
+            FragmentActivity fragmentActivity = fragment.getActivity();
+            fragmentActivity.setResult(Activity.RESULT_OK, intent);
+            fragmentActivity.finish();
+        } else {
+            activity.setResult(Activity.RESULT_OK, intent);
+            activity.finish();
         }
     }
 }

@@ -3,8 +3,7 @@ package com.soho.sohoapp.dialogs;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import com.soho.sohoapp.R;
-
+@Deprecated
 public class LoadingDialog {
     private final Context context;
     private ProgressDialog dialog;
@@ -13,9 +12,9 @@ public class LoadingDialog {
         this.context = context;
     }
 
-    public void show() {
+    public void show(String message) {
         if (dialog == null) {
-            dialog = ProgressDialog.show(context, null, context.getString(R.string.common_loading));
+            dialog = ProgressDialog.show(context, null, message);
             dialog.setCancelable(false);
         }
     }

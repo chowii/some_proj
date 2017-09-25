@@ -12,17 +12,17 @@ class AddressContract {
 
         void onClearClicked();
 
-        void onAddressChanged(String string);
+        void onAddressChanged(String newAddress);
     }
 
-    public interface ViewInteractable  extends BaseViewInteractable {
+    public interface ViewInteractable extends BaseViewInteractable {
         void setPresentable(ViewPresentable presentable);
 
         void showLoadingDialog();
 
         void hideLoadingDialog();
 
-        void setAddress(String s);
+        void setAddress(String address);
 
         void showEmptyLocationError();
 

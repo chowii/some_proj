@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.landing.signup
 
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +14,9 @@ import butterknife.OnClick
 import butterknife.OnTextChanged
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -51,21 +52,21 @@ class SignUpActivity : AppCompatActivity() {
     @OnClick(R.id.register_button)
     fun onRegisterClicked() {
         val registerMap: Map<String, String> = hashMapOf(
-                "email" to emailEditText.text.toString(),
-                "password" to passwordEditText.text.toString()
+                Keys.User.EMAIL to emailEditText.text.toString(),
+                Keys.User.PASSWORD to passwordEditText.text.toString()
         )
+        loadingDialog?.show(getString(R.string.register_loading))
         registerCall(registerMap)
-        initProgressDialog()?.show()
     }
 
-    var registerDialog: ProgressDialog? = null
+    var loadingDialog: LoadingDialog? = null
     private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         ButterKnife.bind(this)
-        registerDialog = ProgressDialog(this)
+        loadingDialog = LoadingDialog(this)
         toggleButtonEnabled(0.4f, false)
     }
 
@@ -75,29 +76,23 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun registerCall(registerMap: Map<String, String>) {
-
         disposable = DEPENDENCIES.sohoService.register(registerMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { user ->
-                            DEPENDENCIES.logger.d( user.authenticationToken)
+                            DEPENDENCIES.logger.d(user.authenticationToken)
                             DEPENDENCIES.preferences.mUser = Converter.toUser(user)
                             DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                            initProgressDialog()?.dismiss()
+                            loadingDialog?.dismiss()
 
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()
                         },
                         { throwable ->
                             DEPENDENCIES.logger.e("error", throwable)
-                            initProgressDialog()?.dismiss()
+                            loadingDialog?.dismiss()
                         }
                 )
     }
 
-    private fun initProgressDialog(): ProgressDialog? {
-        registerDialog?.setTitle("Registering")
-        registerDialog?.setMessage("Please wait while we register you")
-        return registerDialog
-    }
 }

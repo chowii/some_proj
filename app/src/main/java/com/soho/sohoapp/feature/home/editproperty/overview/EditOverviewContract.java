@@ -5,7 +5,6 @@ import android.support.annotation.StringRes;
 
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
-import com.soho.sohoapp.data.models.PropertyListing;
 
 public interface EditOverviewContract {
 
@@ -14,7 +13,7 @@ public interface EditOverviewContract {
 
         void onVerificationClicked();
 
-        void onPropertyStatusUpdated(PropertyListing propertyListing);
+        void onPropertyStatusUpdated(Property property);
     }
 
     interface ViewInteractable {

@@ -55,8 +55,11 @@ interface SohoService {
     @GET("properties/{id}/")
     fun getProperty(@Path("id") id: Long): Observable<PropertyResult>
 
+    @PUT("properties/{id}/")
+    fun updateProperty(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyResult>
+
     @PUT("properties/{id}/property_listing")
-    fun updatePropertyListing(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
+    fun updatePropertyListing(@Path("id") propertyId: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>

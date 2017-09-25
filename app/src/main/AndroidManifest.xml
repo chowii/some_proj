@@ -96,6 +96,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".feature.home.editproperty.publish.PropertyDescriptionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+
+        <activity
             android:name=".feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity"
             android:screenOrientation="portrait" />
 
@@ -118,7 +123,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
 
         <meta-data
             android:name="elastico.ApiKey"

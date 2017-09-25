@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-
                 android:background="@android:color/transparent"
                 android:hint="@string/add_property_autocomplete_hint"
                 android:singleLine="true"

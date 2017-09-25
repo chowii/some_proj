@@ -43,16 +43,16 @@ public class PropertyStatusPresenter implements AbsPresenter, PropertyStatusCont
 
     @Override
     public void onPublicClicked() {
-        navigator.openPublicStatusSettingsScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE);
+        navigator.openPublicStatusSettingsScreen(property, RequestCode.PROPERTY_STATUS_UPDATE);
     }
 
     @Override
     public void onPrivateClicked() {
-        navigator.openPrivateStatusSettingsScreen(property, RequestCode.PROPERTY_PRIVATE_STATUS_UPDATE);
+        navigator.openPrivateStatusSettingsScreen(property, RequestCode.PROPERTY_STATUS_UPDATE);
     }
 
     @Override
-    public void onPropertyStatusUpdated(PropertyListing propertyListing) {
-        navigator.exitWithResultCodeOk(propertyListing);
+    public void onPropertyStatusUpdated(Property property) {
+        navigator.exitWithResultCodeOk(property);
     }
 }

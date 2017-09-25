@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.publish;
 
 import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.data.models.PropertyListing;
 
 public interface PropertyStatusContract {
 
@@ -12,7 +11,7 @@ public interface PropertyStatusContract {
 
         void onPrivateClicked();
 
-        void onPropertyStatusUpdated(PropertyListing propertyListing);
+        void onPropertyStatusUpdated(Property property);
     }
 
     interface ViewInteractable {

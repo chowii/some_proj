@@ -28,7 +28,7 @@ class ThrowableHandler {
                         if (showInternetErrors) {
                             SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
                         }
-                        else handleCustomError(throwable.error)
+                        else handleCustomError(throwable, throwable.error)
                     }
 
                     HttpErrorType.PasswordReEnterRequired,
@@ -40,11 +40,11 @@ class ThrowableHandler {
                 }
             else if (showInternetErrors && snackbarAnchorView != null)
                 SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
-            else handleCustomError("Something went wrong. Please try again")
+            else handleCustomError(throwable, "Something went wrong. Please try again")
         }
 
-        private fun handleCustomError(error: String) {
-            Dependencies.DEPENDENCIES.logger.e(error)
+        private fun handleCustomError(throwable: Throwable, errorMessage: String) {
+            Dependencies.DEPENDENCIES.logger.e(errorMessage, throwable)
         }
     }
 }
