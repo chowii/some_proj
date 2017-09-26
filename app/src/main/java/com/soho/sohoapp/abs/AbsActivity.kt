@@ -25,7 +25,7 @@ abstract class AbsActivity : AppCompatActivity() {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
     }
 
-    protected val isUserSignedIn: Boolean
+    val isUserSignedIn: Boolean
         get() {
             val prefs = DEPENDENCIES.preferences
             return !prefs.authToken.isEmpty()

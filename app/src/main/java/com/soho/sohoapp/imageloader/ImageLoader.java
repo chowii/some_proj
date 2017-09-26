@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v7.content.res.AppCompatResources;
 import android.widget.ImageView;
 
 import com.soho.sohoapp.utils.Preconditions;
@@ -21,12 +22,14 @@ public class ImageLoader {
         if (params.uri != null) {
             Picasso.with(context)
                     .load(params.uri)
-                    .placeholder(params.placeHolder)
+                    .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
+                    .error(params.placeHolder)
                     .into(params.imageView);
         } else {
             Picasso.with(context)
                     .load(params.url)
-                    .placeholder(params.placeHolder)
+                    .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
+                    .error(params.placeHolder)
                     .into(params.imageView);
         }
     }

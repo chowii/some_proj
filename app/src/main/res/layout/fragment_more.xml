@@ -2,35 +2,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/lightBackground"
     android:orientation="vertical"
     tools:context=".feature.home.more.MoreFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:title=""
-        android:elevation="4dp"
-        app:theme="@style/ThemeOverlay.AppCompat.Light">
+        android:layout_height="90dp"
+        android:background="@color/lightBackground">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_avatar_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ph_more_profile" /><!--for the CircleImageView the placeholder
+                                                            won't work, we need to set it as background-->
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/camera"/>
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/user_avatar_iv"
+            android:layout_toStartOf="@+id/btn_add_property"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.43"
+                android:lines="1"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp"
+                tools:text="@string/test_text_medium" />
+
+            <TextView
+                android:id="@+id/user_properties_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lineSpacingMultiplier="1.43"
+                android:lines="1"
+                android:textColor="@color/greyDarkPrimary"
+                android:textSize="14sp"
+                tools:text="@string/test_text_medium" />
+        </LinearLayout>
 
         <TextView
-            android:layout_marginStart="30dp"
+            android:id="@+id/btn_add_property"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/place_holder_user_name"/>
-
-    </android.support.v7.widget.Toolbar>
+            android:layout_alignBottom="@id/linearLayout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/bg_primary_color"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/settings_more_add_property"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
 </LinearLayout>

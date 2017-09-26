@@ -11,12 +11,13 @@ interface MoreContract {
     interface ViewPresentable {
         fun startPresenting()
         fun stopPresenting()
-        fun getUser()
+        fun getUser(forHelpActivity  : Boolean = false)
+        fun addPropertyClicked()
     }
 
     interface ViewInteractable {
-        fun configureToolbar()
         fun configureAdapter(model: List<BaseModel>)
-        fun showSupportActivity(toUser: User?)
+        fun showSupportActivity(user: User)
+        fun showUserProfileInfo(user: User)
     }
 }

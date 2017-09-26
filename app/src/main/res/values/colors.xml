@@ -24,7 +24,7 @@
     <color name="greenButtonSelector">#22a45a</color>
     <color name="whiteSelector">#d2d2d2</color>
     <color name="whiteSemitransparent">#80ffffff</color>
-    <color name="lightBackground">#EAEAEA</color>
+    <color name="lightBackground">#F6F6F6</color>
 
     <color name="primaryText">@color/blackDarkPrimary</color>
     <color name="secondaryText">@color/greyDarkPrimary</color>

@@ -12,9 +12,9 @@ import com.soho.sohoapp.feature.home.more.viewholder.MoreViewHolder
 /**
  * Created by chowii on 10/09/17.
  */
-class MoreAdapter (moreList: List<BaseModel>, private val moreListener: MoreViewHolder.OnMoreItemClickListener): RecyclerView.Adapter<BaseViewHolder<BaseModel>>(){
+class MoreAdapter(private val moreList: List<BaseModel>, private val moreListener: MoreViewHolder.OnMoreItemClickListener)
+    : RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
 
-    val moreList: List<BaseModel> = moreList
 
     override fun getItemCount(): Int = moreList.size
 
@@ -24,7 +24,7 @@ class MoreAdapter (moreList: List<BaseModel>, private val moreListener: MoreView
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<BaseModel> {
         val itemView: View = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
-        when(viewType){
+        when (viewType) {
             R.layout.item_more -> return MoreViewHolder(itemView, moreListener) as BaseViewHolder<BaseModel>
         }
         return MoreViewHolder(itemView, moreListener) as BaseViewHolder<BaseModel>

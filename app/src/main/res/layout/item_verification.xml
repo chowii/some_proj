@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -23,41 +24,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/icon_item">
+            android:layout_toEndOf="@id/icon_item"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_text_view"
                 style="@style/TextView.Header.Dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingTop="10dp"
-                android:text="@string/place_holder_user_name"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                tools:text="@string/test_text_long" />
 
             <TextView
                 android:id="@+id/subtitle_text_view"
                 style="@style/TextView.SubTitle.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingBottom="10dp"
-                android:text="@string/place_holder_user_name"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                tools:text="@string/test_text_long" />
 
         </LinearLayout>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
+            android:layout_gravity="center|end"
             android:layout_marginEnd="10dp"
             android:src="@drawable/ic_chevron_left" />
-
     </RelativeLayout>
 
-    <include
-        layout="@layout/horizontal_rule" />
+    <include layout="@layout/horizontal_rule" />
 
 </LinearLayout>
