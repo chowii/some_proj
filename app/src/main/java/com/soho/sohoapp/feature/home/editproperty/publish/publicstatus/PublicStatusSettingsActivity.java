@@ -135,7 +135,6 @@ public class PublicStatusSettingsActivity extends AbsActivity implements PublicS
 
     @OnClick(R.id.rent)
     public void onRentClicked() {
-        showToast("Open Rent screen");
         presentable.onRentClicked();
     }
 

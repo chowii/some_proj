@@ -18,5 +18,7 @@ public interface PropertyDescriptionContract {
         String getDescriptionFromExtras();
 
         String getDescription();
+
+        void hideKeyboard();
     }
 }

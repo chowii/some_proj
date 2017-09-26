@@ -71,7 +71,7 @@ public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatus
 
     @Override
     public void onRentClicked() {
-        //todo: open Rent screen
+        navigator.openRentSettingsScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE);
     }
 
     @Override

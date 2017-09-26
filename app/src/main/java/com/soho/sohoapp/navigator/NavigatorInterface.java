@@ -38,6 +38,8 @@ public interface NavigatorInterface {
 
     void openSaleAndAuctionSettingsScreen(@NonNull Property property, int requestCode);
 
+    void openRentSettingsScreen(@NonNull Property property, int requestCode);
+
     void openAutocompleteAddressScreen(int requestCode);
 
     void openPropertyDescriptionScreen(String description, int requestCode);

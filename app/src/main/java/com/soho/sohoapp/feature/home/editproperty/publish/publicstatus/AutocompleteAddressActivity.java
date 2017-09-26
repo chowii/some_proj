@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 
@@ -16,6 +15,7 @@ import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.dialogs.LoadingDialog;
+import com.soho.sohoapp.extensions.ActivityExtKt;
 import com.soho.sohoapp.feature.home.addproperty.address.PlaceAutocompleteAdapter;
 import com.soho.sohoapp.location.LocationProviderImpl;
 import com.soho.sohoapp.navigator.NavigatorImpl;
@@ -108,13 +108,7 @@ public class AutocompleteAddressActivity extends AbsActivity implements Autocomp
 
     @Override
     public void hideKeyboard() {
-        View view = getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-        }
+        ActivityExtKt.hideKeyboard(this);
     }
 
     @Override

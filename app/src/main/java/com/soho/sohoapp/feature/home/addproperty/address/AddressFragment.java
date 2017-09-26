@@ -20,6 +20,7 @@ import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.dialogs.LoadingDialog;
+import com.soho.sohoapp.extensions.ActivityExtKt;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.location.LocationProviderImpl;
 
@@ -129,13 +130,7 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
 
     @Override
     public void hideKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-        }
+        ActivityExtKt.hideKeyboard(getActivity());
     }
 
     @OnClick(R.id.clearAddress)

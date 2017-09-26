@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.extensions.ActivityExtKt;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 
 import org.jetbrains.annotations.NotNull;
@@ -81,6 +82,11 @@ public class PropertyDescriptionActivity extends AbsActivity implements Property
     @Override
     public String getDescription() {
         return description.getText().toString();
+    }
+
+    @Override
+    public void hideKeyboard() {
+        ActivityExtKt.hideKeyboard(this);
     }
 
     private void initToolbar() {

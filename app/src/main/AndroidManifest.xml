@@ -105,7 +105,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.home.editproperty.publish.publicstatus.forsale.SaleAndAuctionSettingsActivity"
+            android:name=".feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.rent.RentSettingsActivity"
             android:screenOrientation="portrait" />
 
         <activity

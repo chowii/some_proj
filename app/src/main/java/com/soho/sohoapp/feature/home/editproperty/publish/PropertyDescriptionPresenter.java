@@ -25,11 +25,13 @@ public class PropertyDescriptionPresenter implements AbsPresenter, PropertyDescr
 
     @Override
     public void onBackClicked() {
+        view.hideKeyboard();
         navigator.exitCurrentScreen();
     }
 
     @Override
     public void onDoneClicked() {
+        view.hideKeyboard();
         navigator.exitWithResultCodeOk(view.getDescription());
     }
 }

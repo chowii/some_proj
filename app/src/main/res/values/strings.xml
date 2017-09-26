@@ -157,7 +157,7 @@
     <string name="publish_property_auction_title">Auction title</string>
     <string name="publish_property_sale">Sale</string>
     <string name="publish_property_auction">Auction</string>
-    <string name="publish_property_sale_title_hint">EG. Offers from $1.2M onwards</string>
+    <string name="publish_property_sale_title_hint">e.g Offers from $1.2M onwards</string>
     <string name="publish_property_details">Details</string>
     <string name="publish_property_description_hint">Add a description of your property</string>
     <string name="publish_property_price_guide_title">Price guide for search results</string>
@@ -184,6 +184,16 @@
     <string name="publish_property_not_valid_off_site_location">Please provide off site location for auction</string>
     <string name="publish_property_not_valid_auction_date">Please provide auction date</string>
     <string name="publish_property_not_valid_auction_time">Please provide auction time</string>
+    <string name="publish_property_rent_settings">Rent Settings</string>
+    <string name="publish_property_rent_property_settings">Rent Property Settings</string>
+    <string name="publish_property_rent_weekly">Weekly</string>
+    <string name="publish_property_rent_monthly">Monthly</string>
+    <string name="publish_property_rental_price">Rental Price</string>
+    <string name="publish_property_rental_price_desc">Expected rent for selected period</string>
+    <string name="publish_property_rent_title">Rent title</string>
+    <string name="publish_property_rent_title_hint">e.g. $1000 per week</string>
+    <string name="publish_property_rent_availability">Availability</string>
+    <string name="publish_property_rent_available_from">Available From</string>
     <!--Publish property screens end-->
 
     <!--Autocomplete address screen start-->
