@@ -166,9 +166,6 @@ public final class Converter {
         if (!isEmpty(result.getAuctionTime())) {
             propertyListing.setAuctionTime(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionTime()));
         }
-        if (!isEmpty(result.getAuctionDate())) {
-            propertyListing.setAuctionDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getAuctionDate()));
-        }
         return propertyListing;
     }
 

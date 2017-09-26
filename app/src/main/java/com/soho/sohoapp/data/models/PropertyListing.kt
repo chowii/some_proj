@@ -15,7 +15,6 @@ class PropertyListing() : Parcelable {
     var auctionTitle: String? = null
     var discoverableTitle: String? = null
     var isOnSiteAuction: Boolean = false
-    var auctionDate: Long? = null
     var auctionTime: Long? = null
     var rentPaymentFrequency: String? = null
     var availableFrom: Long? = null
@@ -45,7 +44,6 @@ class PropertyListing() : Parcelable {
         auctionTitle = parcel.readString()
         discoverableTitle = parcel.readString()
         isOnSiteAuction = parcel.readByte() != 0.toByte()
-        auctionDate = parcel.readValue(Long::class.java.classLoader) as Long?
         auctionTime = parcel.readValue(Long::class.java.classLoader) as Long?
         rentPaymentFrequency = parcel.readString()
         availableFrom = parcel.readValue(Long::class.java.classLoader) as Long?
@@ -64,7 +62,6 @@ class PropertyListing() : Parcelable {
         parcel.writeString(auctionTitle)
         parcel.writeString(discoverableTitle)
         parcel.writeByte(if (isOnSiteAuction) 1 else 0)
-        parcel.writeValue(auctionDate)
         parcel.writeValue(auctionTime)
         parcel.writeString(rentPaymentFrequency)
         parcel.writeValue(availableFrom)

@@ -31,10 +31,7 @@ class PropertyListingResult {
     @SerializedName("on_site_auction")
     var isOnSiteAuction: Boolean = false
 
-    @SerializedName("auction_date")
-    var auctionDate: String? = null
-
-    @SerializedName("auction_time")
+    @SerializedName("auction_datetime")
     var auctionTime: String? = null
 
     @SerializedName("rent_payment_frequency")

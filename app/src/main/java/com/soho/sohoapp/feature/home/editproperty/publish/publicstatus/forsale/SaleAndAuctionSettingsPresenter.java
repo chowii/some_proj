@@ -51,6 +51,11 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
         propertyListing = property.getPropertyListingSafe();
         propertyFinance = property.getPropertyFinanceSafe();
 
+        Location location = property.getLocation();
+        if (location != null) {
+            view.showAuctionAddress(location.getFullAddress());
+        }
+
         //init view
         if (PropertyStatus.AUCTION.equals(propertyListing.getState())) {
             view.showTitle(propertyListing.getAuctionTitle());
@@ -173,7 +178,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
 
     @Override
     public void onPriceChanged(String text) {
-        view.changePriceValidationIndicator(!text.isEmpty());
+        view.changePriceValidationIndicator(toDouble(text) > 0);
     }
 
     @Override
@@ -196,13 +201,13 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             } else {
                 propertyListing.setState(PropertyStatus.AUCTION);
                 propertyListing.setAuctionTitle(view.getListingTitle());
-                auctionDateCalendar.set(Calendar.HOUR, auctionTimeCalendar.get(Calendar.HOUR));
+                auctionDateCalendar.set(Calendar.HOUR_OF_DAY, auctionTimeCalendar.get(Calendar.HOUR_OF_DAY));
                 auctionDateCalendar.set(Calendar.MINUTE, auctionTimeCalendar.get(Calendar.MINUTE));
                 auctionDateCalendar.set(Calendar.SECOND, auctionTimeCalendar.get(Calendar.SECOND));
                 propertyListing.setAuctionTime(auctionDateCalendar.getTimeInMillis());
             }
 
-            propertyFinance.setEstimatedValue(Double.parseDouble(view.getPriceValue().trim()));
+            propertyFinance.setEstimatedValue(toDouble(view.getPriceValue()));
             property.setPropertyFinance(propertyFinance);
             property.setPropertyListing(propertyListing);
 
@@ -215,7 +220,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
         if (view.getListingTitle().isEmpty()) {
             view.showToastMessage(R.string.publish_property_not_valid_title);
             dataIsValid = false;
-        } else if (view.getPriceValue().isEmpty()) {
+        } else if (toDouble(view.getPriceValue()) <= 0) {
             view.showToastMessage(R.string.publish_property_not_valid_price);
             dataIsValid = false;
         } else if (!view.isForSaleChecked() && view.isOffSiteLocationChecked() && propertyListing.getOffSiteLocation() == null) {
@@ -271,19 +276,21 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     }
 
     private void initAuctionDate() {
-        //todo: find a bug with date because existing date is displayed incorrect
         Long auctionTime = propertyListing.getAuctionTime();
-        Long auctionDate = propertyListing.getAuctionDate();
         if (auctionTime != null) {
             auctionTimeCalendar = Calendar.getInstance();
-            auctionTimeCalendar.setTime(new Date(auctionTime));
-            view.showAuctionTime(LongExtKt.toStringWithTimeFormat(auctionTime));
-        }
-        if (auctionDate != null) {
             auctionDateCalendar = Calendar.getInstance();
-            auctionDateCalendar.setTime(new Date(auctionDate));
-            view.showAuctionDate(LongExtKt.toStringWithDisplayFormat(auctionDate));
+            auctionTimeCalendar.setTime(new Date(auctionTime));
+            auctionDateCalendar.setTime(new Date(auctionTime));
+            view.showAuctionTime(LongExtKt.toStringWithTimeFormat(auctionTime));
+            view.showAuctionDate(LongExtKt.toStringWithDisplayFormat(auctionTime));
         }
+    }
 
+    private double toDouble(String string) {
+        if (string.trim().isEmpty()) {
+            return 0.0;
+        }
+        return Double.parseDouble(string.trim());
     }
 }

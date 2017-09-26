@@ -219,7 +219,7 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @Override
     public void showTimePicker(Calendar calendar, TimePickerDialog.OnTimeSetListener listener) {
         TimePickerDialog timePicker = TimePickerDialog.newInstance(listener,
-                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE), false);
         timePicker.show(getFragmentManager(), TAG_TIME_PICKER_DIALOG);
     }

@@ -1,5 +1,6 @@
 package com.soho.sohoapp.extensions
 
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,7 +22,7 @@ sealed class DateFormat {
 
 fun DateFormat.stringFormat(): String {
     val format = when (this) {
-        is DateFormat.Iso8601DateTime -> "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        is DateFormat.Iso8601DateTime -> "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         is DateFormat.MonthAbbreviationFormat -> "dd MMM yyyy"
         is DateFormat.DateDisplayFormat -> "dd/MM/yy"
         is DateFormat.TimeFormat -> "h:mma"
@@ -37,10 +38,14 @@ fun DateFormat.stringFormat(): String {
  * @return string representation of date
  */
 fun Date.toStringWithFormat(stringFormat: String): String {
-    val format: SimpleDateFormat = SimpleDateFormat(stringFormat)
+    val format: SimpleDateFormat = SimpleDateFormat(stringFormat, Locale.getDefault())
+    if (stringFormat == DateFormat.Iso8601DateTime().stringFormat()) {
+        format.timeZone = TimeZone.getTimeZone("UTC")
+    }
     try {
         return format.format(this)
     } catch (e: ParseException) {
+        DEPENDENCIES.logger.e("Exception during parsing date to string", e)
         return ""
     }
 }
