@@ -22,6 +22,7 @@
     <string name="error_occurred">Error occurred. Please try again later</string>
     <string name="something_wrong_error">Something went wrong. Please try again</string>
     <string name="coming_soon">Coming soon..</string>
+    <string name="dollar_format">$%1$s</string>
     <!--Common strings end-->
 
     <!--Test strings start-->
@@ -78,6 +79,10 @@
     <plurals name="rooms_picker_carspots">
         <item quantity="one">%d Carspot</item>
         <item quantity="other">%d Carspots</item>
+    </plurals>
+    <plurals name="number_picker_kilometers">
+        <item quantity="one">%d Km</item>
+        <item quantity="other">%d Kms</item>
     </plurals>
     <!--Rooms number picker screen end-->
 
@@ -293,53 +298,59 @@
     <string name="settings_more_add_property">add property</string>
     <string name="settings_name_last_name_format">%1$s %2$s</string>
 
+    <!--Marketplace Filters start-->
+    <string name="filter_property_status_active_sale">Only properties actively for Sale/Auction</string>
+    <string name="filter_property_status_active_rent">Only properties actively for Rent</string>
+    <string name="filter_button_search">SEARCH</string>
+    <string name="filter_button_save_this_search">Save this search</string>
+    <string name="filters_all_properties">All Properties</string>
+    <string name="filters_heading_price_range_sale">PRICE RANGE</string>
+    <string name="filters_heading_price_range_rent">PRICE RANGE PER WEEK</string>
+    <string name="filters_heading_property_status">PROPERTY STATUS</string>
+    <string name="filters_heading_preferences">PREFERENCES</string>
+    <string name="filters_heading_select_property_type">SELECT PROPERTY TYPE</string>
+    <string name="filters_heading_search_radius">SEARCH RADIUS</string>
+    <string name="filters_heading_suburbs">ENTER SEARCH LOCATIONS, i.e. Areas, Suburbs</string>
+    <string name="filters_search_bar_display_format">%1$s - %2$s</string>
+    <string name="filters_price_any">Any</string>
+    <string name="filters_all_suburbs">All Suburbs</string>
+    <string name="filters_multiple_suburbs_format">%1$s &amp; %2$d more</string>
+    <!--Marketplace Filters end-->
+
+    <!--IntExt start-->
+    <string name="int_ext_shorthand_format">0.##</string>
+    <string name="int_ext_shorthand_billion">B</string>
+    <string name="int_ext_shorthand_million">M</string>
+    <string name="int_ext_shorthand_thousand">K</string>
+    <!--IntExt end-->
+
     <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50k</item>
         <item>$100k</item>
-        <item>$120k</item>
         <item>$150k</item>
-        <item>$170k</item>
         <item>$200k</item>
-        <item>$225k</item>
         <item>$250k</item>
-        <item>$270k</item>
         <item>$300k</item>
-        <item>$325k</item>
         <item>$350k</item>
-        <item>$375k</item>
         <item>$400k</item>
-        <item>$425k</item>
         <item>$450k</item>
-        <item>$475k</item>
         <item>$500k</item>
-        <item>$525k</item>
         <item>$550k</item>
-        <item>$575k</item>
         <item>$600k</item>
-        <item>$625k</item>
         <item>$650k</item>
-        <item>$675k</item>
         <item>$700k</item>
-        <item>$725k</item>
         <item>$750k</item>
-        <item>$775k</item>
         <item>$800k</item>
-        <item>$825k</item>
         <item>$850k</item>
-        <item>$875k</item>
         <item>$900k</item>
-        <item>$925k</item>
         <item>$950k</item>
-        <item>$975k</item>
         <item>$1m</item>
         <item>$1.25m</item>
         <item>$1.50m</item>
         <item>$1.75m</item>
         <item>$2m</item>
-        <item>$2.25m</item>
         <item>$2.50m</item>
-        <item>$2.75m</item>
         <item>$3m</item>
         <item>$4m</item>
         <item>$5m</item>
@@ -350,9 +361,7 @@
         <item>Any</item>
         <item>$50</item>
         <item>$100</item>
-        <item>$120</item>
         <item>$150</item>
-        <item>$170</item>
         <item>$200</item>
         <item>$250</item>
         <item>$300</item>
@@ -370,21 +379,21 @@
         <item>$900</item>
         <item>$950</item>
         <item>$1k</item>
-        <item>$1.10m</item>
-        <item>$1.20m</item>
-        <item>$1.30m</item>
-        <item>$1.40m</item>
-        <item>$1.50m</item>
-        <item>$1.60m</item>
-        <item>$1.70m</item>
-        <item>$1.80m</item>
-        <item>$1.90m</item>
+        <item>$1.1k</item>
+        <item>$1.2k</item>
+        <item>$1.3k</item>
+        <item>$1.4k</item>
+        <item>$1.5k</item>
+        <item>$1.6k</item>
+        <item>$1.7k</item>
+        <item>$1.8k</item>
+        <item>$1.9k</item>
         <item>$2k</item>
-        <item>$2.50k</item>
+        <item>$2.5k</item>
         <item>$3k</item>
-        <item>$3.50k</item>
+        <item>$3.5k</item>
         <item>$4k</item>
-        <item>$4.50k</item>
+        <item>$4.5k</item>
         <item>$5k</item>
     </string-array>
 

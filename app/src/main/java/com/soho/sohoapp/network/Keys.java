@@ -6,6 +6,10 @@ public interface Keys {
         String TEXT = "text";
     }
 
+    interface Database {
+        String DB_NAME = "soho_db";
+    }
+
     interface User {
         String EMAIL = "email";
         String PASSWORD = "password";
@@ -66,7 +70,8 @@ public interface Keys {
     }
 
     interface Filter {
-        String FILTER_BY_GOOGLE_PLACES = "by_google_places[distance]";
+        String FILTER_BY_GOOGLE_PLACES_DISTANCE = "by_google_places[distance]";
+        String FILTER_BY_GOOGLE_PLACES_IDS = "by_google_places[place_ids]";
         String FILTER_MIN_SALE_PRICE = "by_min_sell_price";
         String FILTER_MAX_SALE_PRICE = "by_max_sell_price";
         String FILTER_MIN_RENT_PRICE = "by_min_rent_price";
@@ -75,5 +80,7 @@ public interface Keys {
         String FILTER_BY_BATHROOM_COUNT = "by_bathroom_count";
         String FILTER_BY_CARSPOT_COUNT = "by_carspot_count";
         String FILTER_BY_PROPERTY_TYPE = "by_property_types";
+        String FILTER_BY_LISTING_TYPE = "by_listing_type";
+        String FILTER_ALL_PROPERTIES = "all_properties";
     }
 }

@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 
-import static com.soho.sohoapp.network.Keys.Filter.FILTER_BY_GOOGLE_PLACES;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_BY_GOOGLE_PLACES_DISTANCE;
 
 /**
  * Created by chowii on 18/8/17.
@@ -40,13 +40,13 @@ public class FilterValueSelectorViewHolder extends BaseFormViewHolder<ValueSelec
     public void onBindViewHolder(ValueSelectorItem model) {
         addButton.setOnClickListener((v) -> {
             valueTextView.setText(String.format(Locale.getDefault(),"%dkm", ++radiusValue));
-            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES, radiusValue * 1_000);
+            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES_DISTANCE, radiusValue * 1_000);
         });
 
         subtractButton.setOnClickListener((v) -> {
             if(radiusValue > 1)
                 valueTextView.setText(String.format(Locale.getDefault(),"%dkm", --radiusValue));
-            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES, radiusValue * 1_000);
+            updatedListener.onChange(FILTER_BY_GOOGLE_PLACES_DISTANCE, radiusValue * 1_000);
         });
     }
 }

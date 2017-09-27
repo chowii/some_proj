@@ -36,6 +36,9 @@ public class RoomsNumberPickerView extends LinearLayout {
     private int bathroomsCount = BATHROOMS_DEFAULT_VALUE;
     private int carspotsCount = CARSPOTS_DEFAULT_VALUE;
 
+    @Nullable
+    private OnRoomsNumberChangedListener pickerValueChangedListener;
+
     public RoomsNumberPickerView(Context context) {
         super(context);
         initView();
@@ -58,6 +61,30 @@ public class RoomsNumberPickerView extends LinearLayout {
         return carspotsCount;
     }
 
+    public void setPickerValueChangedListener(@Nullable OnRoomsNumberChangedListener pickerValueChangedListener) {
+        this.pickerValueChangedListener = pickerValueChangedListener;
+    }
+
+    public void setValues(int bedroomsCount, int bathroomsCount, int carspotsCount) {
+        if(bedroomsCount >= BEDROOMS_MIN && bedroomsCount <= BEDROOMS_MAX) {
+            this.bedroomsCount = bedroomsCount;
+            bedrooms.setCurrentValue(bedroomsCount);
+            showBedroomText(bedroomsCount);
+        }
+        if(bathroomsCount >= BATHROOMS_MIN && bedroomsCount <= BATHROOMS_MAX) {
+            this.bathroomsCount = bathroomsCount;
+            bathrooms.setCurrentValue(bathroomsCount);
+            bathrooms.setText(getResources()
+                    .getQuantityString(R.plurals.rooms_picker_bathrooms, bathroomsCount, bathroomsCount));
+        }
+        if(carspotsCount >= CARSPOTS_MIN && bedroomsCount <= CARSPOTS_MAX) {
+            this.carspotsCount = carspotsCount;
+            carspots.setCurrentValue(carspotsCount);
+            carspots.setText(getResources()
+                    .getQuantityString(R.plurals.rooms_picker_carspots, carspotsCount, carspotsCount));
+        }
+    }
+
     private void initView() {
         inflate(getContext(), R.layout.rooms_number_picker_view, this);
         ButterKnife.bind(this);
@@ -75,8 +102,10 @@ public class RoomsNumberPickerView extends LinearLayout {
         carspots.setCurrentValue(CARSPOTS_DEFAULT_VALUE);
         carspots.setText(getResources()
                 .getQuantityString(R.plurals.rooms_picker_carspots, CARSPOTS_DEFAULT_VALUE, CARSPOTS_DEFAULT_VALUE));
-        carspots.setListener(currentValue -> {
+        carspots.setListener(currentValue ->
+        {
             carspotsCount = currentValue;
+            notifyListenerOfUpdates();
             carspots.setText(getResources().getQuantityString(R.plurals.rooms_picker_carspots, currentValue, currentValue));
         });
     }
@@ -88,8 +117,10 @@ public class RoomsNumberPickerView extends LinearLayout {
         bathrooms.setCurrentValue(BATHROOMS_DEFAULT_VALUE);
         bathrooms.setText(getResources()
                 .getQuantityString(R.plurals.rooms_picker_bathrooms, BATHROOMS_DEFAULT_VALUE, BATHROOMS_DEFAULT_VALUE));
-        bathrooms.setListener(currentValue -> {
+        bathrooms.setListener(currentValue ->
+        {
             bathroomsCount = currentValue;
+            notifyListenerOfUpdates();
             bathrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bathrooms, currentValue, currentValue));
         });
     }
@@ -100,9 +131,10 @@ public class RoomsNumberPickerView extends LinearLayout {
         bedrooms.setStep(STEP);
         bedrooms.setCurrentValue(BEDROOMS_DEFAULT_VALUE);
         showBedroomText(BEDROOMS_DEFAULT_VALUE);
-
-        bedrooms.setListener(currentValue -> {
+        bedrooms.setListener(currentValue ->
+        {
             bedroomsCount = currentValue;
+            notifyListenerOfUpdates();
             showBedroomText(currentValue);
         });
     }
@@ -113,5 +145,14 @@ public class RoomsNumberPickerView extends LinearLayout {
         } else {
             bedrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bedrooms, rooms, rooms));
         }
+    }
+
+    private void notifyListenerOfUpdates() {
+        if(pickerValueChangedListener != null)
+            pickerValueChangedListener.pickerValuesUpdated(bedroomsCount, bathroomsCount, carspotsCount);
+    }
+
+    public interface OnRoomsNumberChangedListener {
+        void pickerValuesUpdated(int bedrooms, int bathrooms, int carspots);
     }
 }

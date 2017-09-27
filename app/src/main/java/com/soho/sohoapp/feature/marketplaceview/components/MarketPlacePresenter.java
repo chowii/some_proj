@@ -1,7 +1,13 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
+import com.soho.sohoapp.database.SohoDatabaseKt;
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
+import com.soho.sohoapp.database.entities.Suburb;
 import com.soho.sohoapp.utils.Converter;
+import com.soho.sohoapp.utils.QueryHashMap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -9,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
+import static com.soho.sohoapp.network.Keys.Filter.*;
 
 /**
  * Created by chowii on 15/8/17.
@@ -19,11 +26,14 @@ class MarketPlacePresenter implements
 
     private final CompositeDisposable compositeDisposable;
     private MarketPlaceContract.ViewInteractable interactable;
+    private MarketplaceFilterWithSuburbs currentFilter;
 
     MarketPlacePresenter(MarketPlaceContract.ViewInteractable intractable){
         this.interactable = intractable;
         compositeDisposable = new CompositeDisposable();
     }
+
+    // MARK: - ================== MarketPlaceContract.ViewPresentable ==================
 
     @Override
     public void createPresentation() {
@@ -36,25 +46,27 @@ class MarketPlacePresenter implements
     }
 
     @Override
-    public void startPresenting(Map<String, Object> searchParams) {
-        loadData(searchParams);
-    }
-
-    private void loadData(Map<String, Object> searchParams) {
-        interactable.showRefreshing();
+    public void startPresenting() {
         compositeDisposable.add(
-                DEPENDENCIES.getSohoService().searchProperties(searchParams)
-                        .map(Converter::toBasicProperties)
+                DEPENDENCIES.getDatabase().marketplaceFilterDao().getCurrentMarketplaceFilter()
+                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.newThread())
-                        .subscribe(properties -> {
-                                    interactable.configureAdapter(properties);
-                                    interactable.hideRefreshing();
-                                }, throwable -> {
-                                    interactable.hideRefreshing();
-                                    throwable.printStackTrace();
-                                }
-                        )
+                        .subscribe(currentFilter ->
+                                {
+                                    this.currentFilter = currentFilter;
+                                    loadData();
+                                    interactable.configureViewForFilter(this.currentFilter);
+                                },
+                                error -> interactable.showError(error),
+                                () ->
+                                {
+                                    if(this.currentFilter == null) {
+                                        this.currentFilter = new MarketplaceFilterWithSuburbs();
+                                        updateCurrentFilter();
+                                        loadData();
+                                        interactable.configureViewForFilter(this.currentFilter);
+                                    }
+                                })
         );
     }
 
@@ -64,6 +76,72 @@ class MarketPlacePresenter implements
     }
 
     @Override
-    public void onRefresh(Map<String, Object> searchParams){ loadData(searchParams);
-         }
+    public void onRefresh(){
+        loadData();
+    }
+
+    @Override
+    public void saleTypeChanged(String saleType) {
+        currentFilter.getFilter().setSaleType(saleType);
+        interactable.configureViewForFilter(currentFilter);
+        updateCurrentFilter();
+    }
+
+    // MARK: - ================== General methods ==================
+
+    private void loadData() {
+        interactable.showRefreshing();
+        compositeDisposable.add(
+                DEPENDENCIES.getSohoService().searchProperties(createFilterParams())
+                        .map(Converter::toBasicProperties)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(properties ->
+                                {
+                                    interactable.configureAdapter(properties);
+                                    interactable.hideRefreshing();
+                                }, throwable -> {
+                                    interactable.hideRefreshing();
+                                    interactable.showError(throwable);
+                                }
+                        )
+        );
+    }
+
+    private void updateCurrentFilter() {
+        compositeDisposable.add(
+                SohoDatabaseKt.insertReactive(DEPENDENCIES.getDatabase(), currentFilter)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                insertedRowId -> loadData(),
+                                error -> interactable.showError(error))
+        );
+    }
+
+    private Map<String, Object> createFilterParams() {
+        Map<String, Object> params = new QueryHashMap();
+        params.put(FILTER_BY_GOOGLE_PLACES_DISTANCE, currentFilter.getFilter().getRadius() * 1_000);
+        params.put(FILTER_BY_LISTING_TYPE, currentFilter.getFilter().getSaleType());
+        params.put(FILTER_BY_BEDROOM_COUNT, currentFilter.getFilter().getBedrooms());
+        params.put(FILTER_BY_BATHROOM_COUNT, currentFilter.getFilter().getBathrooms());
+        params.put(FILTER_BY_CARSPOT_COUNT, currentFilter.getFilter().getCarspots());
+        params.put(FILTER_ALL_PROPERTIES, currentFilter.getFilter().getAllProperties());
+        List<String> placeIds = new ArrayList<>();
+        for(Suburb suburb: currentFilter.getSuburbs()) {
+            placeIds.add(suburb.getPlaceId());
+        }
+        params.put(FILTER_BY_GOOGLE_PLACES_IDS, placeIds);
+        if(currentFilter.getFilter().getPriceFromBuy() != 0)
+            params.put(FILTER_MIN_SALE_PRICE, currentFilter.getFilter().getPriceFromBuy());
+        if(currentFilter.getFilter().getPriceToBuy() != 0)
+            params.put(FILTER_MAX_SALE_PRICE, currentFilter.getFilter().getPriceToBuy());
+        if(currentFilter.getFilter().getPriceFromRent() != 0)
+            params.put(FILTER_MIN_RENT_PRICE, currentFilter.getFilter().getPriceFromRent());
+        if(currentFilter.getFilter().getPriceToRent() != 0)
+            params.put(FILTER_MAX_RENT_PRICE, currentFilter.getFilter().getPriceToRent());
+        if(currentFilter.getFilter().getPropertyTypes() != null && currentFilter.getFilter().getPropertyTypes().size() != 0)
+            params.put(FILTER_BY_PROPERTY_TYPE, currentFilter.getFilter().getPropertyTypes());
+        return params;
+    }
 }

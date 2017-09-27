@@ -7,17 +7,25 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.database.entities.MarketplaceFilter;
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.marketplaceview.filterview.savedfilters.PropertyFilterSavedFragment;
 import com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter.PropertyFilterViewFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 /**
  * Created by chowii on 17/8/17.
  */
 
-public class PropertyFilterActivity extends AppCompatActivity
+public class PropertyFilterActivity extends AbsActivity
         implements
         TabLayout.OnTabSelectedListener,
         PropertyFilterSavedFragment.OnFilterSelectedCallback
@@ -26,7 +34,8 @@ public class PropertyFilterActivity extends AppCompatActivity
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
-    private boolean isBuySection;
+    MarketplaceFilterWithSuburbs currentFilter;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -34,19 +43,42 @@ public class PropertyFilterActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
-
-        isBuySection = getIntent().getExtras().getBoolean("is_buy_section", true);
-        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
-
+        retrieveCurrentFilter();
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_filter_filter_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.property_saved_filter_tab));
         tabLayout.addOnTabSelectedListener(this);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
+
+    private void retrieveCurrentFilter() {
+        compositeDisposable.add(
+                DEPENDENCIES.getDatabase().marketplaceFilterDao().getCurrentMarketplaceFilter()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(currentFilter ->
+                                {
+                                    this.currentFilter = currentFilter;
+                                    replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(this.currentFilter));
+                                },
+                                error -> handleError(error),
+                                () ->
+                                {
+                                    if(this.currentFilter == null) {
+                                        this.currentFilter = new MarketplaceFilterWithSuburbs();
+                                        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(this.currentFilter));
+                                    }
+                                })
+        );
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
+        if (tab.getPosition() == 0) replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(currentFilter));
         else {
             PropertyFilterSavedFragment fragment = PropertyFilterSavedFragment.newInstance();
             fragment.setOnFilterSelectedCallback(this);
@@ -61,8 +93,7 @@ public class PropertyFilterActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void replaceFilterViewFragment(PropertyFilterViewFragment fragment, boolean isBuySection){
-        fragment.isBuySection(isBuySection);
+    private void replaceFilterViewFragment(PropertyFilterViewFragment fragment){
         replaceFragment(fragment);
     }
 
@@ -75,7 +106,7 @@ public class PropertyFilterActivity extends AppCompatActivity
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onFilterSelected() {
-        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(), isBuySection);
+        replaceFilterViewFragment(PropertyFilterViewFragment.newInstance(currentFilter));
         tabLayout.getTabAt(0).select();
     }
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/lightGreyBackground"
-              android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/lightGreyBackground"
+                android:orientation="vertical">
 
     <include layout="@layout/tab_layout"/>
 
@@ -21,16 +23,38 @@
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/search_text"
+    <LinearLayout
+        android:id="@+id/ll_search_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/marketplace_search_height"
-        android:padding="24dp"
-        android:drawablePadding="15dp"
-        android:layout_below="@id/tabs"
-        android:drawableStart="@drawable/tab_browse"
         android:gravity="center_vertical"
         android:background="@drawable/shadow_marketplace_search_bar_layer"
-        android:text="@string/market_place_search_box_all_suburbs"/>
+        android:clickable="true"
+        android:layout_below="@id/tabs"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_browse"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"/>
+
+        <TextView
+            android:id="@+id/text_suburbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="All Suburbs"/>
+
+        <TextView
+            android:id="@+id/text_price_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            tools:text="Any - Any"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -44,7 +44,7 @@ interface SohoService {
     // MARK: - ================== Property Related ==================
 
     @POST("search/properties")
-    fun searchProperties(@QueryMap map: java.util.Map<String, Object>): Observable<java.util.List<BasicPropertyResult>>
+    fun searchProperties(@Body map: java.util.Map<String, Object>): Observable<java.util.List<BasicPropertyResult>>
 
     @POST("properties")
     fun createProperty(@QueryMap map: QueryHashMap): Observable<PropertyResult>
@@ -63,10 +63,6 @@ interface SohoService {
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>
-
-    //TODO: Refactor these two into 1
-    @GET("options/property_types")
-    fun getPropertyTypesForFilter(): Observable<List<FilterCheckboxItem>>
 
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>

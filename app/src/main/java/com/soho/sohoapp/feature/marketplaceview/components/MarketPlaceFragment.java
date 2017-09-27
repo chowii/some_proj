@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.PropertyFilterActivity;
@@ -27,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by chowii on 14/8/17.
  */
@@ -37,6 +40,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         PropertyViewHolder.OnMarketplaceItemClickListener
 {
 
+    private static final int FILTER_ACTIVITY_REQUEST_CODE = 18;
     public static final String TAG = "MarketPlaceFragment";
     public static MarketPlaceFragment newInstance() {
         MarketPlaceFragment fragment = new MarketPlaceFragment();
@@ -54,19 +58,19 @@ public class MarketPlaceFragment extends BaseFragment implements
     @BindView(R.id.swipeLayout)
     SwipeRefreshLayout swipeLayout;
 
-    @BindView(R.id.search_text)
-    TextView tv;
+    @BindView(R.id.text_suburbs)
+    TextView suburbsTextView;
 
-    @OnClick(R.id.search_text)
+    @BindView(R.id.text_price_range)
+    TextView priceRangeTextView;
+
+    @OnClick(R.id.ll_search_bar)
     public void onSearchTextClicked(View view){
         Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
-
-        filterIntent.putExtra("is_buy_section", searchParams.get("by_listing_type") == "sale/auction");
-        startActivity(filterIntent);
+        startActivityForResult(filterIntent, FILTER_ACTIVITY_REQUEST_CODE);
     }
 
     MarketPlacePresenter presenter;
-    Map<String, Object> searchParams;
 
     @Nullable
     @Override
@@ -74,17 +78,14 @@ public class MarketPlaceFragment extends BaseFragment implements
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         ButterKnife.bind(this, view);
         configueSwipeLayout();
-        searchParams = (Map<String, Object>) getActivity().getIntent().getSerializableExtra("searchParams");
-        if (searchParams == null) searchParams = new HashMap<>();
-        searchParams.put("by_listing_type", "sale/auction");
         presenter = new MarketPlacePresenter(this);
         presenter.createPresentation();
-        presenter.startPresenting(searchParams);
+        presenter.startPresenting();
         return view;
     }
 
     private void configueSwipeLayout() {
-        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh(searchParams));
+        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh());
         int swipeProgressViewOffset = ((int) getResources().getDimension(R.dimen.marketplace_search_height));
         swipeLayout.setProgressViewOffset(false, swipeProgressViewOffset, swipeProgressViewOffset + 72);
     }
@@ -95,19 +96,12 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_buy_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_rent_tab));
         tabLayout.addOnTabSelectedListener(this);
-        tabLayout.getTabAt(0).select();
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString())){
-            searchParams.put("by_listing_type", "sale/auction");
-            presenter.startPresenting(searchParams);
-        }else{
-            searchParams.put("by_listing_type", "rent");
-            presenter.startPresenting(searchParams);
-        }
+        presenter.saleTypeChanged(getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString()) ? "sale/auction" : "rent");
     }
 
     @Override
@@ -127,8 +121,27 @@ public class MarketPlaceFragment extends BaseFragment implements
     }
 
     @Override
+    public void showError(Throwable error) {
+        handleError(error);
+    }
+
+    @Override
     public void configureAdapter(List<? extends BaseModel> model) {
         initAdapter(model);
+    }
+
+    @Override
+    public void configureViewForFilter(MarketplaceFilterWithSuburbs currentFilter) {
+        tabLayout.getTabAt(currentFilter.getFilter().isSaleFilter() ? 0 : 1).select();
+        priceRangeTextView.setText(
+                currentFilter.getFilter().priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
+                getString(R.string.dollar_format),
+                getString(R.string.filters_price_any))
+        );
+        suburbsTextView.setText(currentFilter.suburbsDisplayString(
+                getString(R.string.filters_multiple_suburbs_format),
+                getString(R.string.filters_all_suburbs))
+        );
     }
 
     void initAdapter(List<? extends BaseModel> propertyList){
@@ -149,5 +162,12 @@ public class MarketPlaceFragment extends BaseFragment implements
     public void onMarketplaceItemClicked(int id) {
         Intent detailIntent = PropertyDetailActivity.createIntent(getActivity(), id);
         getActivity().startActivity(detailIntent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == FILTER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            presenter.startPresenting();
+        }
     }
 }

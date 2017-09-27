@@ -1,7 +1,8 @@
 package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.BaseViewInteractable;
-import com.soho.sohoapp.feature.home.BaseFormModel;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface PropertyFilterContract {
     }
 
     interface ViewInteractable extends BaseViewInteractable {
-        void configureAdapter(List<? extends BaseFormModel> formModelList);
+        void toggleLoadingIndicator(boolean loading);
+        void populateForm(MarketplaceFilterWithSuburbs filter, List<PropertyType> propertyTypes);
+        void finishApplyingFilters();
     }
 }

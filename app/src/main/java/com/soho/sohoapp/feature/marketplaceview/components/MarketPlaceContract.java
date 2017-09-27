@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.components;
 
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
@@ -12,25 +13,24 @@ import java.util.Map;
 interface MarketPlaceContract {
 
     interface ViewPresentable {
+
         void createPresentation();
-
-        void startPresenting(Map<String, Object> searchParams);
-
+        void startPresenting();
         void stopPresenting();
-
         void destroyPresentation();
+        void onRefresh();
+        void saleTypeChanged(String saleType);
 
-        void onRefresh(Map<String, Object> searchParams);
     }
 
     interface ViewInteractable {
+
         void configureTabLayout();
-
         void showRefreshing();
-
         void hideRefreshing();
-
+        void showError(Throwable error);
         void configureAdapter(List<? extends BaseModel> model);
+        void configureViewForFilter(MarketplaceFilterWithSuburbs currentFilter);
 
     }
 

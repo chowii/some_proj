@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.BaseFormViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView;
+import com.soho.sohoapp.database.entities.Suburb;
 import com.soho.sohoapp.feature.home.addproperty.address.PlaceAutocompleteAdapter;
 import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterSearchItem;
 import com.tokenautocomplete.TokenCompleteTextView;
@@ -32,7 +33,7 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
         implements
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks,
-        TokenCompleteTextView.TokenListener<AutocompletePrediction>
+        TokenCompleteTextView.TokenListener<Suburb>
 {
 
     private final View view;
@@ -82,13 +83,13 @@ public class TextSearchViewHolder extends BaseFormViewHolder<FilterSearchItem>
     public void onConnectionSuspended(int i) { }
 
     @Override
-    public void onTokenAdded(AutocompletePrediction token) {
+    public void onTokenAdded(Suburb token) {
         suburbList.add(token.getPlaceId());
         updatedListener.onChange("by_google_places[place_ids]", suburbList);
     }
 
     @Override
-    public void onTokenRemoved(AutocompletePrediction token) {
+    public void onTokenRemoved(Suburb token) {
         suburbList.remove(token.getPlaceId());
         updatedListener.onChange("by_google_places[place_ids]", suburbList);
     }

@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.home.addproperty.address;
+package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -14,17 +14,22 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
-import com.soho.sohoapp.feature.marketplaceview.components.PlacesFilter;
+import com.soho.sohoapp.database.entities.Suburb;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
+/**
+ * Created by Jovan on 25/9/17.
+ */
+
+public class SuburbsAutocompleteAdapter extends ArrayAdapter<Suburb> implements Filterable {
 
     private static final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.BOLD);
     private GoogleApiClient googleApiClient;
-    private ArrayList<AutocompletePrediction> resultList;
+    private ArrayList<Suburb> resultList;
     private AutocompleteFilter placeFilter;
 
-    public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
+    public SuburbsAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
         this.googleApiClient = googleApiClient;
         placeFilter = filter;
@@ -36,7 +41,7 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     }
 
     @Override
-    public AutocompletePrediction getItem(int position) {
+    public Suburb getItem(int position) {
         return resultList.get(position);
     }
 
@@ -44,12 +49,12 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View row = super.getView(position, convertView, parent);
-        AutocompletePrediction item = getItem(position);
+        Suburb item = getItem(position);
         TextView textView1 = row.findViewById(android.R.id.text1);
         TextView textView2 = row.findViewById(android.R.id.text2);
         if (item != null) {
-            textView1.setText(item.getPrimaryText(STYLE_BOLD));
-            textView2.setText(item.getSecondaryText(STYLE_BOLD));
+            textView1.setText(item.getName());
+            textView2.setVisibility(View.GONE);
         }
         return row;
     }
@@ -60,8 +65,11 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
         return new PlacesFilter(googleApiClient, placeFilter) {
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+                resultList = new ArrayList<>();
                 if (results != null && results.count > 0) {
-                    resultList = (ArrayList<AutocompletePrediction>) results.values;
+                    for(AutocompletePrediction prediction: ((List<AutocompletePrediction>) results.values)) {
+                        resultList.add(new Suburb(prediction.getPlaceId(), prediction.getPrimaryText(STYLE_BOLD).toString()));
+                    }
                     notifyDataSetChanged();
                 } else {
                     // The API did not return any results, invalidate the data set.

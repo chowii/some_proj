@@ -53,3 +53,23 @@ fun String.toDateWithIso8601DateTimeFormat(): Date? {
 fun String.toDateLongWithIso8601DateTimeFormat(): Long? {
     return this.toDateLong(DateFormat.Iso8601DateTime().stringFormat())
 }
+
+/**
+ * Returns an abbreviated string representation of a big value e.g. $1K -> 1000
+ * @return int value of string
+ */
+fun String.abbreviatedMoneyValueToInt(): Int {
+    try {
+        val strippedString = this.replace("$", "")
+        if (strippedString.contains("K", true)) {
+            return strippedString.replace("K", "", true).toInt() * 1_000
+        } else if (strippedString.contains("M", true)) {
+            return strippedString.replace("M", "", true).toInt() * 1_000_000
+        } else if (strippedString.contains("B", true)) {
+            return strippedString.replace("B", "", true).toInt() * 1_000_000_000
+        }
+        return strippedString.toInt()
+    } catch (exception: NumberFormatException) {
+        return 0
+    }
+}

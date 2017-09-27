@@ -2,17 +2,10 @@ package com.soho.sohoapp.feature.marketplaceview.filterview.searchfilter;
 
 
 import com.soho.sohoapp.abs.AbsPresenter;
-import com.soho.sohoapp.feature.home.BaseFormModel;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ButtonItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FavouriteButtonItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterSearchItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.RadioGroupView;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.RangeItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ToggleItem;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.ValueSelectorItem;
-import com.soho.sohoapp.feature.marketplaceview.filterview.fitlermodel.PropertyRoomItem;
+import com.soho.sohoapp.database.SohoDatabaseKt;
+import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
+import com.soho.sohoapp.database.entities.Suburb;
+import com.soho.sohoapp.utils.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,68 +24,59 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.ViewPresentable {
 
     private final PropertyFilterContract.ViewInteractable interactable;
-    private final CompositeDisposable compositeDisposable;
-    private List<BaseFormModel> modelList;
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    PropertyFilterPresenter(PropertyFilterContract.ViewInteractable interactable) {
+    public MarketplaceFilterWithSuburbs getCurrentFilter() {
+        return currentFilter;
+    }
+
+    private MarketplaceFilterWithSuburbs currentFilter;
+    private List<Suburb> suburbsToDelete = new ArrayList<>();
+
+    PropertyFilterPresenter(PropertyFilterContract.ViewInteractable interactable, MarketplaceFilterWithSuburbs currentFilter) {
         this.interactable = interactable;
-        compositeDisposable = new CompositeDisposable();
+        this.currentFilter = currentFilter;
+    }
 
+    public void addSuburbToDelete(Suburb suburb) {
+        if(suburbsToDelete == null)
+            suburbsToDelete = new ArrayList<>();
+        suburbsToDelete.add(suburb);
     }
 
     @Override
     public void startPresenting() {
-        initViewList();
+        retrieveFilterFromApi();
     }
 
-    void initViewList() {
-        modelList = new ArrayList<>();
-        modelList.add(new HeaderItem<String>("ENTER SEARCH LOCATION, i.e. Areas, Suburbs"));
-        modelList.add(new FilterSearchItem());
-
-        modelList.add(new HeaderItem("Radius"));
-        modelList.add(new ValueSelectorItem<Integer>());
-
-        modelList.add(new HeaderItem("Range"));
-        modelList.add(new RangeItem<ArrayList<String>>());
-
-
-        modelList.add(new HeaderItem("Property Type"));
-
-        modelList.add(new HeaderItem("Property Type"));
-        modelList.add(new PropertyRoomItem());
-
-
-        modelList.add(new HeaderItem("Property Status"));
-        List<String> group = new ArrayList<>();
-        group.add("All properties");
-        group.add("Properties actively for Sale or Auction");
-        RadioGroupView<String> v = new RadioGroupView(group);
-
-        modelList.add(v);
-
-        modelList.add(new HeaderItem(""));
-        modelList.add(new ToggleItem("Surrounding suburb"));
-        modelList.add(new FavouriteButtonItem("Save this search"));
-
-        modelList.add(new ButtonItem("Search"));
-
-        interactable.configureAdapter(modelList);
+    public void applyFilters() {
+        currentFilter.getFilter().setCurrentFilter(true);
+        compositeDisposable.add(SohoDatabaseKt.insertReactive(DEPENDENCIES.getDatabase(), currentFilter)
+                .map(insertedRowId -> DEPENDENCIES.getDatabase().suburbDao().removeAll(suburbsToDelete))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        insertedRowId -> interactable.finishApplyingFilters(),
+                        interactable::showError
+                ));
     }
 
     @Override
     public void retrieveFilterFromApi() {
-        compositeDisposable.add(DEPENDENCIES.getSohoService().getPropertyTypesForFilter()
+        interactable.toggleLoadingIndicator(true);
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getPropertyTypes()
+                .map(Converter::toPropertyTypeList)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(
-                        list -> {
-                            modelList.add(7, new FilterCheckboxItem("All"));
-                            modelList.addAll(8, list);
-
-                            interactable.configureAdapter(modelList);
-                        },
-                        interactable::showError
+                .subscribe(list ->
+                        {
+                            interactable.populateForm(currentFilter, list);
+                            interactable.toggleLoadingIndicator(false);
+                        }, error ->
+                        {
+                            interactable.showError(error);
+                            interactable.toggleLoadingIndicator(false);
+                        }
                 ));
     }
 
