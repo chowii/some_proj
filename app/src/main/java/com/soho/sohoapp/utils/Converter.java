@@ -420,7 +420,9 @@ public final class Converter {
     public static QueryHashMap toMap(@NonNull Property property) {
         QueryHashMap map = new QueryHashMap();
         map.put(Keys.Property.DESCRIPTION, property.getDescription());
-        putPropertyFinance(map, property.getPropertyFinance());
+        QueryHashMap financeMap = new QueryHashMap();
+        putPropertyFinance(financeMap, property.getPropertyFinance());
+        map.put(Keys.Property.PROPERTY_FINANCE_ATTRIBUTES, financeMap);
         return map;
     }
 

@@ -32,9 +32,7 @@ fun String.toDate(stringFormat: String): Date? {
  * @param stringFormat the expected date format to parse
  * @return the date object after string has been parsed (Nullable)
  */
-fun String.toDateLong(stringFormat: String): Long? {
-    return this.toDate(stringFormat)?.time
-}
+fun String.toDateLong(stringFormat: String) = this.toDate(stringFormat)?.time
 
 // MARK: - ================== Convenience methods for common formats ==================
 
@@ -42,16 +40,25 @@ fun String.toDateLong(stringFormat: String): Long? {
  * Returns a date object of the string if it matches the 'stringFormat' specified, otherwise null
  * @return returns date if string is in 'YYYY-MM-dd'T'HH:mm:ss.SSSZ' format (Nullable)
  */
-fun String.toDateWithIso8601DateTimeFormat(): Date? {
-    return this.toDate(DateFormat.Iso8601DateTime().stringFormat())
-}
+fun String.toDateWithIso8601DateTimeFormat() = this.toDate(DateFormat.Iso8601DateTime().stringFormat())
 
 /**
  * Returns a date Long of the string if it matches the 'stringFormat' specified
  * @return returns Long representation of string date
  */
-fun String.toDateLongWithIso8601DateTimeFormat(): Long? {
-    return this.toDateLong(DateFormat.Iso8601DateTime().stringFormat())
+fun String.toDateLongWithIso8601DateTimeFormat() = this.toDateLong(DateFormat.Iso8601DateTime().stringFormat())
+
+/**
+ * Returns Double value of the string if it is possibly
+ * @return returns Double value of string
+ */
+fun String.toDoubleOrDefault(default: Double): Double {
+    try {
+        return this.trim().toDouble()
+    } catch (e: NumberFormatException) {
+        DEPENDENCIES.logger.e("Exception during parsing string to date")
+        return default
+    }
 }
 
 /**

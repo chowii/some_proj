@@ -45,6 +45,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     public void onPropertyStatusUpdated(Property property) {
         this.property = property;
         initPropertyListing(property.getPropertyListing());
+        view.setPropertyFinance(property.getPropertyFinance());
         //todo: update also property description
     }
 

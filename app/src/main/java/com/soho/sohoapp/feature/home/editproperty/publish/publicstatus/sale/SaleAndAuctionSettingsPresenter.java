@@ -8,6 +8,7 @@ import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.extensions.LongExtKt;
+import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.logger.Logger;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
@@ -30,9 +31,9 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     private final CompositeDisposable compositeDisposable;
     private Property property;
     private PropertyListing propertyListing;
+    private PropertyFinance propertyFinance;
     private Calendar auctionDateCalendar;
     private Calendar auctionTimeCalendar;
-    private PropertyFinance propertyFinance;
 
     public SaleAndAuctionSettingsPresenter(SaleAndAuctionSettingsContract.ViewInteractable view,
                                            NavigatorInterface navigator,
@@ -64,14 +65,19 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
 
             initAuctionDate();
             initAuctionLocation();
-
         } else if (PropertyStatus.SALE.equals(propertyListing.getState())) {
             view.showTitle(propertyListing.getSaleTitle());
             view.showOptionsForSale();
         }
 
-        view.showPriceGuide(propertyFinance.getEstimatedValue());
-        view.showDescription(property.getDescription());
+        if (propertyFinance.getEstimatedValue() > 0) {
+            view.showPriceGuide(propertyFinance.getEstimatedValue());
+        }
+
+        String description = property.getDescription();
+        if (description != null && !description.isEmpty()) {
+            view.showDescription(description);
+        }
     }
 
     @Override
@@ -177,8 +183,8 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     }
 
     @Override
-    public void onPriceChanged(String text) {
-        view.changePriceValidationIndicator(toDouble(text) > 0);
+    public void onPriceChanged(String price) {
+        view.changePriceValidationIndicator(StringExtKt.toDoubleOrDefault(price, 0) > 0);
     }
 
     @Override
@@ -207,7 +213,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
                 propertyListing.setAuctionTime(auctionDateCalendar.getTimeInMillis());
             }
 
-            propertyFinance.setEstimatedValue(toDouble(view.getPriceValue()));
+            propertyFinance.setEstimatedValue(StringExtKt.toDoubleOrDefault(view.getPriceValue(), 0));
             property.setPropertyFinance(propertyFinance);
             property.setPropertyListing(propertyListing);
 
@@ -220,7 +226,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
         if (view.getListingTitle().isEmpty()) {
             view.showToastMessage(R.string.publish_property_not_valid_title);
             dataIsValid = false;
-        } else if (toDouble(view.getPriceValue()) <= 0) {
+        } else if (StringExtKt.toDoubleOrDefault(view.getPriceValue(), 0) <= 0) {
             view.showToastMessage(R.string.publish_property_not_valid_price);
             dataIsValid = false;
         } else if (!view.isForSaleChecked() && view.isOffSiteLocationChecked() && propertyListing.getOffSiteLocation() == null) {
@@ -239,7 +245,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     private void sendDataToServer() {
         view.showLoadingDialog();
         QueryHashMap listingMap = Converter.toMap(propertyListing);
-        DEPENDENCIES.getSohoService().updatePropertyListing(property.getId(), listingMap)
+        compositeDisposable.add(DEPENDENCIES.getSohoService().updatePropertyListing(property.getId(), listingMap)
                 .switchMap(propertyListingResult ->
                 {
                     QueryHashMap propertyMap = Converter.toMap(property);
@@ -257,7 +263,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
                     view.showError(throwable);
                     view.hideLoadingDialog();
                     logger.e("Error during property publishing", throwable);
-                });
+                }));
     }
 
     private void initAuctionLocation() {
@@ -285,12 +291,5 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             view.showAuctionTime(LongExtKt.toStringWithTimeFormat(auctionTime));
             view.showAuctionDate(LongExtKt.toStringWithDisplayFormat(auctionTime));
         }
-    }
-
-    private double toDouble(String string) {
-        if (string.trim().isEmpty()) {
-            return 0.0;
-        }
-        return Double.parseDouble(string.trim());
     }
 }

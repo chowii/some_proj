@@ -62,7 +62,7 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:id="@+id/indicator"
+                    android:id="@+id/priceIndicator"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     app:srcCompat="@drawable/ic_orange_exclaimation"/>

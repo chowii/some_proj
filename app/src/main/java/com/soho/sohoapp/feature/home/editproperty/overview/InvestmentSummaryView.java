@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.extensions.LongExtKt;
+import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.utils.DateUtils;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
@@ -184,13 +185,12 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedWeeklyRentTitle.setText(R.string.edit_property_estimated_weekly_rent);
     }
 
-    //TODO: Change TextChangeListeners to use Butterknife
     private void initInputFields() {
         purchasePriceValue = ButterKnife.findById(purchasePrice, R.id.value);
         purchasePriceValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setPurchasePrice(toDouble(charSequence));
+                finance.setPurchasePrice(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
             }
         });
@@ -198,7 +198,7 @@ public class InvestmentSummaryView extends LinearLayout {
         loanAmountValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setLoanAmount(toDouble(charSequence));
+                finance.setLoanAmount(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
             }
         });
@@ -206,7 +206,7 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedValueValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setEstimatedValue(toDouble(charSequence));
+                finance.setEstimatedValue(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
             }
         });
@@ -214,7 +214,7 @@ public class InvestmentSummaryView extends LinearLayout {
         weeklyRentValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setActualRent(toDouble(charSequence));
+                finance.setActualRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
             }
         });
@@ -222,7 +222,7 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedWeeklyRentValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setEstimatedRent(toDouble(charSequence));
+                finance.setEstimatedRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
             }
         });
@@ -246,12 +246,4 @@ public class InvestmentSummaryView extends LinearLayout {
             datePicker.show(activity.getFragmentManager(), TAG_DATE_PICKER_DIALOG);
         });
     }
-
-    private Double toDouble(CharSequence charSequence) {
-        if (charSequence.length() == 0) {
-            return 0.0;
-        }
-        return Double.parseDouble(charSequence.toString().trim());
-    }
-
 }

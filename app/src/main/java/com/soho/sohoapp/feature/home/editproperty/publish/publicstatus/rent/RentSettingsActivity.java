@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -14,21 +17,26 @@ import android.widget.TextView;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 import static butterknife.ButterKnife.findById;
-import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class RentSettingsActivity extends AbsActivity implements RentSettingsContract.ViewInteractable {
     private static final String KEY_PROPERTY = "KEY_PROPERTY";
+    private static final String TAG_DATE_PICKER_DIALOG = "TAG_DATE_PICKER_DIALOG";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -48,8 +56,21 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @BindView(R.id.description)
     TextView description;
 
+    @BindView(R.id.availableFrom)
+    TextView availableFrom;
+
+    @BindView(R.id.rentTitle)
+    EditText rentTitle;
+
+    @BindView(R.id.priceValue)
+    EditText priceValue;
+
+    @BindView(R.id.priceIndicator)
+    ImageView priceIndicator;
+
     private RentSettingsContract.ViewPresentable presentable;
     private RentSettingsPresenter presenter;
+    private LoadingDialog loadingDialog;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull Property property) {
@@ -67,9 +88,7 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
         toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
         initView();
 
-        presenter = new RentSettingsPresenter(this,
-                NavigatorImpl.newInstance(this),
-                DEPENDENCIES.getLogger());
+        presenter = new RentSettingsPresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -116,6 +135,67 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     }
 
     @Override
+    public void changePriceValidationIndicator(boolean priceIsValid) {
+        if (priceIsValid) {
+            priceIndicator.setImageResource(R.drawable.ic_green_exclaimation);
+        } else {
+            priceIndicator.setImageResource(R.drawable.ic_orange_exclaimation);
+        }
+    }
+
+    @Override
+    public void showDatePicker(Calendar calendar, DatePickerDialog.OnDateSetListener listener) {
+        DatePickerDialog datePicker = DatePickerDialog.newInstance(listener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        datePicker.show(getFragmentManager(), TAG_DATE_PICKER_DIALOG);
+    }
+
+    @Override
+    public void showAvailableFrom(String date) {
+        availableFrom.setText(date);
+    }
+
+    @Override
+    public void showToastMessage(@StringRes int resId) {
+        super.showToast(resId);
+    }
+
+    @Override
+    public void showPriceGuide(double value) {
+        priceValue.setText(String.valueOf(value));
+    }
+
+    @Override
+    public void showTitle(String title) {
+        this.rentTitle.setText(title);
+    }
+
+    @Override
+    public boolean isWeeklyPaymentChecked() {
+        return R.id.leftOption == rentPeriodOptions.getCheckedRadioButtonId();
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show(getString(R.string.common_loading));
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        loadingDialog.dismiss();
+    }
+
+    @Override
+    public void selectMonthlyRentOption() {
+        RadioButton monthlyRent = findById(rentPeriodOptions, R.id.rightOption);
+        monthlyRent.setChecked(true);
+    }
+
+    @Override
     public Property getPropertyFromExtras() {
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
@@ -124,9 +204,44 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
         return extras.getParcelable(KEY_PROPERTY);
     }
 
+    @Override
+    public String getRentTitle() {
+        return rentTitle.getText().toString();
+    }
+
+    @Override
+    public String getRentalPriceValue() {
+        return priceValue.getText().toString();
+    }
+
     @OnClick(R.id.description)
     void onDescriptionClicked() {
         presentable.onDescriptionClicked();
+    }
+
+    @OnClick(R.id.availability)
+    void onAvailabilityClicked() {
+        presentable.onAvailabilityClicked();
+    }
+
+    @OnClick(R.id.inspectionTimeLayout)
+    void onInspectionTimeClicked() {
+        presentable.onInspectionTimeClicked();
+    }
+
+    @OnClick(R.id.propertySizeLayout)
+    void onPropertySizeClicked() {
+        presentable.onPropertySizeClicked();
+    }
+
+    @OnClick(R.id.save)
+    void onSaveClicked() {
+        presentable.onSaveClicked();
+    }
+
+    @OnTextChanged(R.id.priceValue)
+    void onPriceChanged(CharSequence text) {
+        presentable.onPriceChanged(text.toString());
     }
 
     private void initView() {

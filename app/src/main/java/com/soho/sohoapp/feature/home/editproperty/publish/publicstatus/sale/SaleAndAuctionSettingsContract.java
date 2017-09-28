@@ -41,7 +41,7 @@ public interface SaleAndAuctionSettingsContract {
 
         void onSaveClicked();
 
-        void onPriceChanged(String text);
+        void onPriceChanged(String price);
 
         void onDescriptionClicked();
 

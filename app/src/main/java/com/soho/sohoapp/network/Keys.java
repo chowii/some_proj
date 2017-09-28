@@ -28,6 +28,7 @@ public interface Keys {
         String IS_INVESTMENT = "property[is_investment]";
         String TYPE_OF_PROPERTY = "property[type_of_property]";
         String IMAGE = "property_photos_attributes[0][image]";
+        String PROPERTY_FINANCE_ATTRIBUTES = "property_finance_attributes";
     }
 
     interface Location {
@@ -60,13 +61,13 @@ public interface Keys {
     }
 
     interface PropertyFinance {
-        String PURCHASE_PRICE = "property_finance_attributes[purchase_price]";
-        String LOAN_AMOUNT = "property_finance_attributes[loan_amount]";
-        String ESTIMATED_VALUE = "property_finance_attributes[estimated_value]";
-        String IS_RANTED = "property_finance_attributes[is_rented]";
-        String ESTIMATED_RENT = "property_finance_attributes[estimated_rent]";
-        String ACTUAL_RENT = "property_finance_attributes[actual_rent]";
-        String LEASED_TO = "property_finance_attributes[leased_to]";
+        String PURCHASE_PRICE = "purchase_price";
+        String LOAN_AMOUNT = "loan_amount";
+        String ESTIMATED_VALUE = "estimated_value";
+        String IS_RANTED = "is_rented";
+        String ESTIMATED_RENT = "estimated_rent";
+        String ACTUAL_RENT = "actual_rent";
+        String LEASED_TO = "leased_to";
     }
 
     interface Filter {

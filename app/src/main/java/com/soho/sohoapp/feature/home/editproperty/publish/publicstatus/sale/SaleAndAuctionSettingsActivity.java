@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -60,9 +61,6 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @BindView(R.id.inspectionTimeLayout)
     LinearLayout inspectionTimeLayout;
 
-    @BindView(R.id.propertySizeLayout)
-    LinearLayout propertySizeLayout;
-
     @BindView(R.id.inspectionTimeDesc)
     TextView inspectionTimeDesc;
 
@@ -87,8 +85,8 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @BindView(R.id.priceValue)
     EditText priceValue;
 
-    @BindView(R.id.indicator)
-    ImageView indicator;
+    @BindView(R.id.priceIndicator)
+    ImageView priceIndicator;
 
     private SaleAndAuctionSettingsContract.ViewPresentable presentable;
     private SaleAndAuctionSettingsPresenter presenter;
@@ -187,7 +185,7 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     }
 
     @Override
-    public void showToastMessage(int resId) {
+    public void showToastMessage(@StringRes int resId) {
         super.showToast(resId);
     }
 
@@ -268,9 +266,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @Override
     public void changePriceValidationIndicator(boolean priceIsValid) {
         if (priceIsValid) {
-            indicator.setImageResource(R.drawable.ic_green_exclaimation);
+            priceIndicator.setImageResource(R.drawable.ic_green_exclaimation);
         } else {
-            indicator.setImageResource(R.drawable.ic_orange_exclaimation);
+            priceIndicator.setImageResource(R.drawable.ic_orange_exclaimation);
         }
     }
 
