@@ -136,11 +136,7 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
 
     @Override
     public void changePriceValidationIndicator(boolean priceIsValid) {
-        if (priceIsValid) {
-            priceIndicator.setImageResource(R.drawable.ic_green_exclaimation);
-        } else {
-            priceIndicator.setImageResource(R.drawable.ic_orange_exclaimation);
-        }
+        priceIndicator.setImageResource(priceIsValid ? R.drawable.ic_green_exclaimation : R.drawable.ic_orange_exclaimation);
     }
 
     @Override

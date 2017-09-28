@@ -199,6 +199,17 @@
     <string name="publish_property_rent_title_hint">e.g. $1000 per week</string>
     <string name="publish_property_rent_availability">Availability</string>
     <string name="publish_property_rent_available_from">Available From</string>
+    <string name="publish_property_discoverable_settings">Discoverable Settings</string>
+    <string name="publish_property_discoverable_settings_turn_on">Turn on Market Settings</string>
+    <string name="publish_property_receive_offers_to_buy">Receive offers to buy my property</string>
+    <string name="publish_property_receive_offers_to_buy_desc">Receive actual offer bids for a more acurate pricing of your property. Estimated value will not be shown on the market.</string>
+    <string name="publish_property_estimated_value">Estimated Value</string>
+    <string name="publish_property_receive_offers_to_lease">Receive offers to lease my property</string>
+    <string name="publish_property_receive_offers_to_lease_desc">Receive rental offers in advance to always keep your property leased out.</string>
+    <string name="publish_property_estimated_weekly_rent">Estimated Weekly Rent</string>
+    <string name="publish_property_no_option_selected">Please select at least one option</string>
+    <string name="publish_property_empty_estimated_value">Please provide estimated value</string>
+    <string name="publish_property_empty_estimated_weekly_rent">Please provide estimated weekly rent</string>
     <!--Publish property screens end-->
 
     <!--Autocomplete address screen start-->

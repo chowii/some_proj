@@ -40,6 +40,8 @@ public interface NavigatorInterface {
 
     void openRentSettingsScreen(@NonNull Property property, int requestCode);
 
+    void openDiscoverableSettingsScreen(@NonNull Property property, int requestCode);
+
     void openAutocompleteAddressScreen(int requestCode);
 
     void openPropertyDescriptionScreen(String description, int requestCode);

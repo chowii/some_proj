@@ -61,7 +61,7 @@ public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatus
 
     @Override
     public void onDiscoverableClicked() {
-        //todo: open Discoverable screen
+        navigator.openDiscoverableSettingsScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATE);
     }
 
     @Override

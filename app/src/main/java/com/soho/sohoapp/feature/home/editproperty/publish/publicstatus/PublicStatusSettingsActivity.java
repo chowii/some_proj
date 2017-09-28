@@ -124,7 +124,6 @@ public class PublicStatusSettingsActivity extends AbsActivity implements PublicS
 
     @OnClick(R.id.discoverable)
     public void onDiscoverableClicked() {
-        showToast("Open Discoverable screen");
         presentable.onDiscoverableClicked();
     }
 

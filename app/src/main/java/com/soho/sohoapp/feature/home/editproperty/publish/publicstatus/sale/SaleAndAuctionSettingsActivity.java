@@ -265,11 +265,7 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
 
     @Override
     public void changePriceValidationIndicator(boolean priceIsValid) {
-        if (priceIsValid) {
-            priceIndicator.setImageResource(R.drawable.ic_green_exclaimation);
-        } else {
-            priceIndicator.setImageResource(R.drawable.ic_orange_exclaimation);
-        }
+        priceIndicator.setImageResource(priceIsValid ? R.drawable.ic_green_exclaimation : R.drawable.ic_orange_exclaimation);
     }
 
     @Override
