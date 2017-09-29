@@ -1,5 +1,7 @@
 package com.soho.sohoapp.extensions
 
+import android.content.res.Resources
+import android.util.DisplayMetrics
 import com.soho.sohoapp.R
 import com.soho.sohoapp.SohoApplication
 import java.text.DecimalFormat
@@ -17,3 +19,6 @@ fun Int.toShortHand(): String {
         else -> "$this"
     }
 }
+
+fun Int.dpToPx(resources:Resources) : Int =
+        Math.round(this * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))

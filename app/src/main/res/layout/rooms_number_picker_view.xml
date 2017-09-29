@@ -4,34 +4,42 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical"
-       tools:parentTag="android.widget.LinearLayout">
+       tools:parentTag="android.widget.LinearLayout"
+       android:gravity="center_vertical">
 
     <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/bedrooms"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"/>
-
-    <include layout="@layout/horizontal_rule"/>
+        android:paddingTop="4dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/border_grey_square"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
 
     <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/bathrooms"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"/>
-
-    <include layout="@layout/horizontal_rule"/>
+        android:paddingTop="4dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/border_grey_square"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
 
     <com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView
         android:id="@+id/carspots"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"/>
+        android:paddingTop="4dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/border_grey_square"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
 
-    <include layout="@layout/horizontal_rule"/>
 </merge>

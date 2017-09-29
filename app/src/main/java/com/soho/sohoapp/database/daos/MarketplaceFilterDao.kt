@@ -1,9 +1,6 @@
 package com.soho.sohoapp.database.daos
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.soho.sohoapp.database.entities.MarketplaceFilter
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs
 import io.reactivex.Maybe
@@ -15,13 +12,19 @@ import io.reactivex.Maybe
 @Dao
 interface  MarketplaceFilterDao {
 
+    @Query("SELECT * FROM marketplace_filters WHERE is_current_filter == 0")
+    fun getAllNonCurrentFilters(): Maybe<List<MarketplaceFilterWithSuburbs>>
+
     @Query("SELECT * FROM marketplace_filters")
-    fun getAllMarketplaceFilters(): Maybe<List<MarketplaceFilterWithSuburbs>>
+    fun getAllFilters(): Maybe<List<MarketplaceFilterWithSuburbs>>
 
     @Query("SELECT * FROM marketplace_filters WHERE is_current_filter == 1 LIMIT 1")
     fun getCurrentMarketplaceFilter(): Maybe<MarketplaceFilterWithSuburbs>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdateFilter(filter:MarketplaceFilter): Long
+
+    @Delete
+    fun delete(filter:MarketplaceFilter): Int
 
 }

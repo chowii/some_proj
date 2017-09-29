@@ -17,12 +17,10 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.PropertyFilterActivity;
+import com.soho.sohoapp.feature.marketplaceview.feature.filters.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,9 +130,9 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @Override
     public void configureViewForFilter(MarketplaceFilterWithSuburbs currentFilter) {
-        tabLayout.getTabAt(currentFilter.getFilter().isSaleFilter() ? 0 : 1).select();
+        tabLayout.getTabAt(currentFilter.getMarketplaceFilter().isSaleFilter() ? 0 : 1).select();
         priceRangeTextView.setText(
-                currentFilter.getFilter().priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
+                currentFilter.getMarketplaceFilter().priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
                 getString(R.string.dollar_format),
                 getString(R.string.filters_price_any))
         );

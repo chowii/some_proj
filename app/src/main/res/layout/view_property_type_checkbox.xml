@@ -10,5 +10,6 @@
     android:button="@android:color/transparent"
     tools:text="Test"
     android:drawableEnd="@drawable/check_selector"
-    android:paddingStart="15dp"
-    android:paddingEnd="15dp"/>
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    style="@style/Text"/>

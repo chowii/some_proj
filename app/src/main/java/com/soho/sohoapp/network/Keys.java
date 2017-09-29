@@ -71,8 +71,9 @@ public interface Keys {
     }
 
     interface Filter {
-        String FILTER_BY_GOOGLE_PLACES_DISTANCE = "by_google_places[distance]";
-        String FILTER_BY_GOOGLE_PLACES_IDS = "by_google_places[place_ids]";
+        String FILTER_BY_GOOGLE_PLACES = "by_google_places";
+        String FILTER_PLACE_IDS = "place_ids";
+        String FILTER_DISTANCE = "distance";
         String FILTER_MIN_SALE_PRICE = "by_min_sell_price";
         String FILTER_MAX_SALE_PRICE = "by_max_sell_price";
         String FILTER_MIN_RENT_PRICE = "by_min_rent_price";

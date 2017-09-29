@@ -16,7 +16,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.Propert
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyLocationImageItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract.PropertyDetailContract;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem;
+import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 

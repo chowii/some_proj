@@ -335,6 +335,9 @@
     <string name="filters_price_any">Any</string>
     <string name="filters_all_suburbs">All Suburbs</string>
     <string name="filters_multiple_suburbs_format">%1$s &amp; %2$d more</string>
+    <string name="filters_saved_empty_datatset_message">You have no saved filters.</string>
+    <string name="filters_saved_success_message">This filter has been saved.</string>
+    <string name="filters_delete_saved_successful_message">Filter has been deleted.</string>
     <!--Marketplace Filters end-->
 
     <!--IntExt start-->

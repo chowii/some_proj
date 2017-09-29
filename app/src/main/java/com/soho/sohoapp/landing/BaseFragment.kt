@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.soho.sohoapp.feature.network.ThrowableHandler
+import com.soho.sohoapp.helper.SohoSnackbar
 
 /**
  * Created by chowii on 25/7/17.
@@ -24,6 +25,10 @@ open class BaseFragment : Fragment() {
 
     fun handleError(t: Throwable, showInternetErrors: Boolean, coordinatorLayout: FrameLayout?) {
         ThrowableHandler.showError(t, showInternetErrors, coordinatorLayout, view, activity)
+    }
+
+    fun showSnackBar(message: String, view:View?) {
+        SohoSnackbar().showSnackbar(view, message)
     }
 
     open fun setFragmentTransactionListener(listener: FragmentTransactionListener?) {

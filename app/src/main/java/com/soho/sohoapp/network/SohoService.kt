@@ -5,7 +5,6 @@ import com.soho.sohoapp.data.dtos.PropertyListingResult
 import com.soho.sohoapp.data.dtos.PropertyResult
 import com.soho.sohoapp.data.dtos.UserResult
 import com.soho.sohoapp.feature.home.more.model.AccountVerification
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.FilterCheckboxItem
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult

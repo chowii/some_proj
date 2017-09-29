@@ -9,8 +9,6 @@ import com.soho.sohoapp.database.entities.MarketplaceFilter
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs
 import com.soho.sohoapp.database.entities.Suburb
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Jovan on 22/9/17.
@@ -27,11 +25,17 @@ abstract class SohoDatabase : RoomDatabase() {
 fun SohoDatabase.insertReactive(filter: MarketplaceFilterWithSuburbs): Observable<List<Long>> = Observable
         .fromCallable<Long>
         {
-            this.marketplaceFilterDao().insertOrUpdateFilter(filter.filter)
+            this.marketplaceFilterDao().insertOrUpdateFilter(filter.marketplaceFilter)
         }
         .map<List<Long>> { insertedRowId ->
             for (suburb in filter.suburbs) {
                 suburb.marketplaceFilterId = insertedRowId
             }
             return@map this.suburbDao().insertOrUpdateAll(filter.suburbs)
+        }
+
+fun SohoDatabase.deleteReactive(filter: MarketplaceFilterWithSuburbs): Observable<Int> = Observable
+        .fromCallable<Int>
+        {
+            this.marketplaceFilterDao().delete(filter.marketplaceFilter)
         }

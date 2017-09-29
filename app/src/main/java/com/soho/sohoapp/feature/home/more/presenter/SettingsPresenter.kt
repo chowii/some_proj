@@ -12,7 +12,7 @@ import com.soho.sohoapp.feature.home.more.SettingsActivity.Companion.CAMERA_INTE
 import com.soho.sohoapp.feature.home.more.contract.SettingsContract
 import com.soho.sohoapp.feature.home.more.model.SettingItem
 import com.soho.sohoapp.feature.home.more.model.VerificationItem
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.fitlermodel.HeaderItem
+import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem
 import com.soho.sohoapp.navigator.NavigatorImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

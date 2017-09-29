@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <include layout="@layout/horizontal_rule" />
 
@@ -26,8 +27,7 @@
         android:paddingEnd="15dp"
         android:paddingTop="7dp"
         android:paddingBottom="15dp"
-        style="@style/TextView.Message.Large.Start.LightWhite"
-        />
+        style="@style/TextView.Message.Large.Start.LightWhite"/>
 
     <include layout="@layout/horizontal_rule" />
 

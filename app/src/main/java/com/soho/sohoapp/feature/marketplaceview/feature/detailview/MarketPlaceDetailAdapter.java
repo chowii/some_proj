@@ -15,7 +15,7 @@ import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.PropertyDetailDescriptionViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.PropertyDetailHeaderViewHolder;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.PropertyLocationImageViewHolder;
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.HeaderViewHolder;
+import com.soho.sohoapp.feature.marketplaceview.feature.filters.filterviewholder.HeaderViewHolder;
 
 import java.util.List;
 

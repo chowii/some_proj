@@ -25,4 +25,7 @@ data class Suburb(
     @Ignore
     constructor(placeId: String, name:String): this(0, placeId, name, 0)
 
+    @Ignore
+    constructor(suburbToClone:Suburb): this(0, suburbToClone.placeId, suburbToClone.name, 0)
+
 }

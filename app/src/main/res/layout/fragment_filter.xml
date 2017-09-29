@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/rootView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -135,7 +136,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_seperated_item_background"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"/>
+                android:paddingBottom="20dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"/>
 
             <TextView
                 style="@style/FilterPropertyHeader"
@@ -172,10 +175,11 @@
                 android:background="@drawable/white_seperated_item_background"
                 android:text="@string/filter_button_save_this_search"
                 android:gravity="start|center_vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_marginTop="16dp"
-                android:drawableEnd="@drawable/star_selector"/>
+                android:layout_marginBottom="24dp"
+                android:drawableEnd="@drawable/star"/>
 
         </LinearLayout>
 

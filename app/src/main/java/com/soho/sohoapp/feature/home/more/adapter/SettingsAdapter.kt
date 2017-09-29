@@ -9,7 +9,7 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.viewholder.SettingViewHolder
 import com.soho.sohoapp.feature.home.more.viewholder.VerificationViewHolder
-import com.soho.sohoapp.feature.marketplaceview.feature.filterview.filterviewholder.HeaderViewHolder
+import com.soho.sohoapp.feature.marketplaceview.feature.filters.filterviewholder.HeaderViewHolder
 
 /**
  * Created by chowii on 11/9/17.
