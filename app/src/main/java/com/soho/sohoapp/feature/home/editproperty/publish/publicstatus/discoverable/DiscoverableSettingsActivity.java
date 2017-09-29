@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.discoverable;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.navigator.NavigatorImpl;
+import com.soho.sohoapp.navigator.RequestCode;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -83,6 +85,17 @@ public class DiscoverableSettingsActivity extends AbsActivity implements Discove
     protected void onDestroy() {
         presenter.stopPresenting();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+            }
+        }
     }
 
     @Override

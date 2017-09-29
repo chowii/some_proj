@@ -210,6 +210,15 @@
     <string name="publish_property_no_option_selected">Please select at least one option</string>
     <string name="publish_property_empty_estimated_value">Please provide estimated value</string>
     <string name="publish_property_empty_estimated_weekly_rent">Please provide estimated weekly rent</string>
+    <string name="publish_property_status_updated">Status Updated</string>
+    <string name="publish_property_next">Next</string>
+    <string name="publish_property_next_verification">Next: Verification</string>
+    <string name="publish_property_property_status_updated">Property Status Updated</string>
+    <string name="publish_property_status_updated_desc" formatted="true">You\'ve successfully updated your property status</string>
+    <string name="publish_property_status_discoverable">Discoverable</string>
+    <string name="publish_property_status_for_sale">For Sale</string>
+    <string name="publish_property_status_for_auction">For Auction</string>
+    <string name="publish_property_status_for_rent">For Rent</string>
     <!--Publish property screens end-->
 
     <!--Autocomplete address screen start-->

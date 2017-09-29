@@ -33,6 +33,10 @@ class Property : BasicProperty {
 
     fun getPropertyFinanceSafe() = propertyFinance ?: PropertyFinance()
 
+    fun getLocationSafe() = location ?: Location()
+
+    fun getVerificationsSafe() = verifications ?: ArrayList()
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         super.writeToParcel(parcel, flags)
         parcel.writeInt(landSize)

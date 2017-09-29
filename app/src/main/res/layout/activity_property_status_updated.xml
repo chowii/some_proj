@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        app:title="@string/publish_property_status_updated"
+        app:titleTextColor="@color/white"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="48dp"
+        android:layout_weight="1"
+        android:scaleType="centerInside"
+        android:src="@drawable/success"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/publish_property_property_status_updated"
+        android:textColor="@color/primaryText"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/publish_property_status_updated_desc"
+        android:textColor="@color/secondaryText"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/status_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textColor="@color/greenText"
+        android:textSize="14sp"
+        tools:text="@string/test_text_short"/>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/lightBackground"
+        android:gravity="center"
+        android:padding="8dp"
+        tools:text="@string/test_text_long">
+    </TextView>
+
+    <Button
+        android:id="@+id/next"
+        style="@style/Button.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/publish_property_next"
+        android:textAllCaps="true"/>
+
+    <Button
+        android:id="@+id/next_verification"
+        style="@style/Button.Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/publish_property_next_verification"
+        android:textAllCaps="true"
+        android:visibility="gone"/>
+</LinearLayout>

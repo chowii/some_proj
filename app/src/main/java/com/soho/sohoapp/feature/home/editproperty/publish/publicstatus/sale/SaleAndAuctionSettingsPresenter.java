@@ -199,6 +199,11 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     }
 
     @Override
+    public void onPropertyPublicStatusUpdated(Property property) {
+        navigator.exitWithResultCodeOk(property);
+    }
+
+    @Override
     public void onSaveClicked() {
         if (isDataValid()) {
             if (view.isForSaleChecked()) {
@@ -257,7 +262,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
                 .subscribe(property ->
                 {
                     view.hideLoadingDialog();
-                    navigator.exitWithResultCodeOk(property);
+                    navigator.openPropertyStatusUpdatedScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED);
                 }, throwable ->
                 {
                     view.showError(throwable);

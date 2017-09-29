@@ -11,6 +11,7 @@ public final class RequestCode {
     public static final int PROPERTY_AUCTION_ADDRESS = 43;
     public static final int PROPERTY_SALE_SETTINGS_DESCRIPTION = 44;
     public static final int PROPERTY_RENT_SETTINGS_DESCRIPTION = 45;
+    public static final int PROPERTY_PUBLIC_STATUS_UPDATED = 46;
 
     private RequestCode() {
         //utils class to hold constants

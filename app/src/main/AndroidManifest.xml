@@ -116,6 +116,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
 

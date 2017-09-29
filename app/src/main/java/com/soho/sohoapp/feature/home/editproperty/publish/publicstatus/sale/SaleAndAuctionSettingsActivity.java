@@ -132,6 +132,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
                 case RequestCode.PROPERTY_SALE_SETTINGS_DESCRIPTION:
                     presentable.onDescriptionChanged(extras.getString(NavigatorImpl.KEY_STRING));
                     break;
+                case RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED:
+                    presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
             }
         }
     }

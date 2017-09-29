@@ -8,6 +8,7 @@ import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.navigator.NavigatorInterface;
+import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.Converter;
 import com.soho.sohoapp.utils.QueryHashMap;
 
@@ -97,6 +98,11 @@ public class DiscoverableSettingsPresenter implements AbsPresenter, Discoverable
         view.changeEstimatedWeeklyRentIndicator(StringExtKt.toDoubleOrDefault(value, 0) > 0);
     }
 
+    @Override
+    public void onPropertyPublicStatusUpdated(Property property) {
+        navigator.exitWithResultCodeOk(property);
+    }
+
     private boolean isDataValid() {
         boolean dataIsValid = true;
         boolean receiveOffersToBuy = view.isReceiveOffersToBuyChecked();
@@ -130,7 +136,7 @@ public class DiscoverableSettingsPresenter implements AbsPresenter, Discoverable
                 .subscribe(property ->
                 {
                     view.hideLoadingDialog();
-                    navigator.exitWithResultCodeOk(property);
+                    navigator.openPropertyStatusUpdatedScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED);
                 }, throwable ->
                 {
                     view.showError(throwable);

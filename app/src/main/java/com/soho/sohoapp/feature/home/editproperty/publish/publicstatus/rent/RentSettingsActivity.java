@@ -101,10 +101,15 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_RENT_SETTINGS_DESCRIPTION) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                presentable.onDescriptionUpdated(extras.getString(NavigatorImpl.KEY_STRING));
+        Bundle extras = getExtras(data);
+        if (resultCode == Activity.RESULT_OK && extras != null) {
+            switch (requestCode) {
+                case RequestCode.PROPERTY_RENT_SETTINGS_DESCRIPTION:
+                    presentable.onDescriptionUpdated(extras.getString(NavigatorImpl.KEY_STRING));
+                    break;
+                case RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED:
+                    presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
             }
         }
     }
@@ -238,6 +243,11 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @OnTextChanged(R.id.priceValue)
     void onPriceChanged(CharSequence text) {
         presentable.onPriceChanged(text.toString());
+    }
+
+    @Nullable
+    private Bundle getExtras(Intent data) {
+        return data != null ? data.getExtras() : null;
     }
 
     private void initView() {

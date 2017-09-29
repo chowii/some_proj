@@ -19,6 +19,8 @@ public interface DiscoverableSettingsContract {
         void onEstimatedValueChanged(String value);
 
         void onEstimatedWeeklyRentChanged(String value);
+
+        void onPropertyPublicStatusUpdated(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

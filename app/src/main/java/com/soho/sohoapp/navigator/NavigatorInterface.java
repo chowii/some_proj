@@ -42,6 +42,8 @@ public interface NavigatorInterface {
 
     void openDiscoverableSettingsScreen(@NonNull Property property, int requestCode);
 
+    void openPropertyStatusUpdatedScreen(@NonNull Property property, int requestCode);
+
     void openAutocompleteAddressScreen(int requestCode);
 
     void openPropertyDescriptionScreen(String description, int requestCode);

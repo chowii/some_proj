@@ -30,6 +30,8 @@ public interface RentSettingsContract {
         void onPropertySizeClicked();
 
         void onSaveClicked();
+
+        void onPropertyPublicStatusUpdated(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

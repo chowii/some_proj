@@ -153,6 +153,11 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
         }
     }
 
+    @Override
+    public void onPropertyPublicStatusUpdated(Property property) {
+        navigator.exitWithResultCodeOk(property);
+    }
+
     private boolean isDataValid() {
         boolean dataIsValid = true;
         if (view.getRentTitle().isEmpty()) {
@@ -180,7 +185,7 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
                 .subscribe(property ->
                 {
                     view.hideLoadingDialog();
-                    navigator.exitWithResultCodeOk(property);
+                    navigator.openPropertyStatusUpdatedScreen(property, RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED);
                 }, throwable ->
                 {
                     view.showError(throwable);
