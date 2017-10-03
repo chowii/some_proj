@@ -93,7 +93,8 @@ public class DiscoverableSettingsActivity extends AbsActivity implements Discove
         if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED) {
             Bundle extras = data.getExtras();
             if (extras != null) {
-                presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
+                        extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
             }
         }
     }

@@ -108,7 +108,8 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
                     presentable.onDescriptionUpdated(extras.getString(NavigatorImpl.KEY_STRING));
                     break;
                 case RequestCode.PROPERTY_PUBLIC_STATUS_UPDATED:
-                    presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
+                            extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
                     break;
             }
         }

@@ -70,7 +70,8 @@ public class PropertyStatusActivity extends AbsActivity implements PropertyStatu
         if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.PROPERTY_STATUS_UPDATE) {
             Bundle extras = data.getExtras();
             if (extras != null) {
-                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
+                        extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
             }
         }
     }

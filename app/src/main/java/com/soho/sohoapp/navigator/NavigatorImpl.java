@@ -21,6 +21,7 @@ import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.discovera
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.rent.RentSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity;
+import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
@@ -38,6 +39,7 @@ public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY = "KEY_PROPERTY";
     public static final String KEY_PROPERTY_LOCATION = "KEY_PROPERTY_LOCATION";
     public static final String KEY_STRING = "KEY_STRING";
+    public static final String KEY_VERIFICATION_COMPLETED = "KEY_VERIFICATION_COMPLETED";
     private Activity activity;
     private Fragment fragment;
 
@@ -81,9 +83,10 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void exitWithResultCodeOk(@NonNull Property property) {
+    public void exitWithResultCodeOk(@NonNull Property property, boolean verificationCompleted) {
         Intent intent = new Intent();
         intent.putExtra(KEY_PROPERTY, property);
+        intent.putExtra(KEY_VERIFICATION_COMPLETED, verificationCompleted);
         setResultAndExit(intent);
     }
 
@@ -206,6 +209,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(PropertyStatusUpdatedActivity.createIntent(fragment.getActivity(), property), requestCode);
         } else {
             activity.startActivityForResult(PropertyStatusUpdatedActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openVerificationScreen(@NonNull Property property) {
+        if (fragment != null) {
+            fragment.startActivity(VerificationActivity.Companion.createIntent(fragment.getActivity(), property));
+        } else {
+            activity.startActivity(VerificationActivity.Companion.createIntent(activity, property));
         }
     }
 

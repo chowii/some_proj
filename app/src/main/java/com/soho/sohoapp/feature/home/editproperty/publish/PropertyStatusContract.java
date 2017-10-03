@@ -11,7 +11,7 @@ public interface PropertyStatusContract {
 
         void onPrivateClicked();
 
-        void onPropertyStatusUpdated(Property property);
+        void onPropertyStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable {

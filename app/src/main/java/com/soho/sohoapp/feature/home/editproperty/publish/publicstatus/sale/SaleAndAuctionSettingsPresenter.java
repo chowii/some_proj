@@ -199,8 +199,8 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     }
 
     @Override
-    public void onPropertyPublicStatusUpdated(Property property) {
-        navigator.exitWithResultCodeOk(property);
+    public void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted) {
+        navigator.exitWithResultCodeOk(property, verificationCompleted);
     }
 
     @Override

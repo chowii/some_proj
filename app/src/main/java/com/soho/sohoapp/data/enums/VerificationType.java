@@ -6,16 +6,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @StringDef({
-        VerificationType.NEW,
-        VerificationType.NOT_VERIFIED,
-        VerificationType.PENDING,
-        VerificationType.VERIFIED
+        VerificationType.LICENCE,
+        VerificationType.AGENT_LICENCE,
+        VerificationType.MOBILE_NUMBER,
+        VerificationType.PROPERTY
 })
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface VerificationType {
-    String NEW = "new";
-    String NOT_VERIFIED = "not_verified";
-    String PENDING = "pending";
-    String VERIFIED = "verified";
+    String LICENCE = "LicenceVerification";
+    String AGENT_LICENCE = "AgentLicenceVerification";
+    String MOBILE_NUMBER = "MobileVerification";
+    String PROPERTY = "PropertyVerification";
 }

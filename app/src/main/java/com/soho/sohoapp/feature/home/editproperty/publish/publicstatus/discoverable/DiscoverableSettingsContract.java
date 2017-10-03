@@ -20,7 +20,7 @@ public interface DiscoverableSettingsContract {
 
         void onEstimatedWeeklyRentChanged(String value);
 
-        void onPropertyPublicStatusUpdated(Property property);
+        void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

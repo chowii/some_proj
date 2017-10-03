@@ -38,14 +38,17 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
 
     @Override
     public void onVerificationClicked() {
-        view.showToast("Open verification settings");
+        navigator.openVerificationScreen(property);
     }
 
     @Override
-    public void onPropertyStatusUpdated(Property property) {
+    public void onPropertyStatusUpdated(Property property, boolean verificationCompleted) {
         this.property = property;
         initPropertyListing(property.getPropertyListing());
         view.setPropertyFinance(property.getPropertyFinance());
+        if (!verificationCompleted) {
+            navigator.openVerificationScreen(property);
+        }
         //todo: update also property description
     }
 

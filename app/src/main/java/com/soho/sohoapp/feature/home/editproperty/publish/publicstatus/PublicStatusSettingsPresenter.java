@@ -75,7 +75,7 @@ public class PublicStatusSettingsPresenter implements AbsPresenter, PublicStatus
     }
 
     @Override
-    public void onPropertyStatusUpdated(Property property) {
-        navigator.exitWithResultCodeOk(property);
+    public void onPropertyStatusUpdated(Property property, boolean verificationCompleted) {
+        navigator.exitWithResultCodeOk(property, verificationCompleted);
     }
 }

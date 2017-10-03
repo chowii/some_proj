@@ -3,7 +3,7 @@ package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.updated;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.enums.PropertyStatus;
-import com.soho.sohoapp.data.enums.VerificationType;
+import com.soho.sohoapp.data.enums.VerificationStatus;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.navigator.NavigatorInterface;
@@ -43,7 +43,7 @@ public class PropertyStatusUpdatedPresenter implements AbsPresenter, PropertySta
                     view.showStatus(R.string.publish_property_status_for_auction);
                     break;
                 case PropertyStatus.RENT:
-                    view.showStatus(R.string.publish_property_status_for_sale);
+                    view.showStatus(R.string.publish_property_status_for_rent);
                     break;
             }
         }
@@ -56,17 +56,17 @@ public class PropertyStatusUpdatedPresenter implements AbsPresenter, PropertySta
 
     @Override
     public void onNextClicked() {
-        navigator.exitWithResultCodeOk(property);
+        navigator.exitWithResultCodeOk(property, true);
     }
 
     @Override
     public void onNextVerificationClicked() {
-        navigator.exitWithResultCodeOk(property);
+        navigator.exitWithResultCodeOk(property, false);
     }
 
     private boolean hasNotVerifiedItem(List<Verification> verifications) {
         for (Verification verification : verifications) {
-            if (!VerificationType.VERIFIED.equals(verification.getState())) {
+            if (!VerificationStatus.VERIFIED.equals(verification.getState())) {
                 return true;
             }
         }

@@ -96,7 +96,6 @@ public class PropertyStatusUpdatedActivity extends AbsActivity implements Proper
 
     @OnClick(R.id.next_verification)
     void onNextVerification() {
-        showToast("TODO: go to verifications");
         presentable.onNextVerificationClicked();
     }
 }

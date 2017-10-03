@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="@string/verification_toolbar"
+        app:titleTextColor="@color/white"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/verification_description"
+        android:textColor="@color/primaryText"/>
+
+    <TextView
+        style="@style/ListTextHeader"
+        android:text="@string/verification_process"/>
+
+    <LinearLayout
+        android:id="@+id/photo_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_selector"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verification_photo_id"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/photo_id_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/hintText"
+                tools:text="@string/test_text_short"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_arrow_right"/>
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_rule"/>
+
+    <LinearLayout
+        android:id="@+id/ownership_proof"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_selector"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verification_ownership_proof"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/ownership_proof_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/hintText"
+                tools:text="@string/test_text_short"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_arrow_right"/>
+    </LinearLayout>
+</LinearLayout>

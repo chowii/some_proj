@@ -47,7 +47,7 @@ public interface SaleAndAuctionSettingsContract {
 
         void onDescriptionChanged(String description);
 
-        void onPropertyPublicStatusUpdated(Property property);
+        void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

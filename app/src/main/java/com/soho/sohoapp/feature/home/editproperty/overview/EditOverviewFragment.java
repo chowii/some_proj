@@ -59,9 +59,6 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_overview, container, false);
-//        FragmentEditOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_overview, container, false);
-//        View view = binding.getRoot();
-//        binding.setProperty(getProperty());
         ButterKnife.bind(this, view);
 
         initView();
@@ -83,7 +80,8 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.EDIT_PROPERTY_STATUS_UPDATE) {
             Bundle extras = data.getExtras();
             if (extras != null) {
-                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
+                        extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
             }
         }
     }

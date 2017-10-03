@@ -13,7 +13,7 @@ public interface PublicStatusSettingsContract {
 
         void onRentClicked();
 
-        void onPropertyStatusUpdated(Property property);
+        void onPropertyStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable {

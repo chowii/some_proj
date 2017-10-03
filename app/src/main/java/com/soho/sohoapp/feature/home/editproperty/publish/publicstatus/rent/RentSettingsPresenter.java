@@ -154,8 +154,8 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
     }
 
     @Override
-    public void onPropertyPublicStatusUpdated(Property property) {
-        navigator.exitWithResultCodeOk(property);
+    public void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted) {
+        navigator.exitWithResultCodeOk(property, verificationCompleted);
     }
 
     private boolean isDataValid() {

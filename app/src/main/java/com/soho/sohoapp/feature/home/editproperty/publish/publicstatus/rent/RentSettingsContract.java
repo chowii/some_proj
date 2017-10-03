@@ -31,7 +31,7 @@ public interface RentSettingsContract {
 
         void onSaveClicked();
 
-        void onPropertyPublicStatusUpdated(Property property);
+        void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

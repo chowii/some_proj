@@ -14,7 +14,7 @@ public interface NavigatorInterface {
 
     void exitWithResultCodeOk();
 
-    void exitWithResultCodeOk(@NonNull Property property);
+    void exitWithResultCodeOk(@NonNull Property property, boolean verificationCompleted);
 
     void exitWithResultCodeOk(@NonNull Location location);
 
@@ -43,6 +43,8 @@ public interface NavigatorInterface {
     void openDiscoverableSettingsScreen(@NonNull Property property, int requestCode);
 
     void openPropertyStatusUpdatedScreen(@NonNull Property property, int requestCode);
+
+    void openVerificationScreen(@NonNull Property property);
 
     void openAutocompleteAddressScreen(int requestCode);
 

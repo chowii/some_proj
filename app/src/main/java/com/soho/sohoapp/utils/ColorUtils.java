@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.data.enums.VerificationType;
+import com.soho.sohoapp.data.enums.VerificationStatus;
 import com.soho.sohoapp.data.models.Verification;
 
 import java.util.List;
@@ -24,10 +24,10 @@ public final class ColorUtils {
     public static int getPublicPropertyStateColor(List<Verification> verifications) {
         int color = R.color.propertyStateVerified;
 
-        if (hasState(verifications, VerificationType.NOT_VERIFIED)) {
+        if (hasState(verifications, VerificationStatus.NOT_VERIFIED)) {
             color = R.color.propertyStateNotVerified;
-        } else if (hasState(verifications, VerificationType.NEW)
-                || hasState(verifications, VerificationType.PENDING)) {
+        } else if (hasState(verifications, VerificationStatus.NEW)
+                || hasState(verifications, VerificationStatus.PENDING)) {
             color = R.color.propertyStateNotCompleted;
         }
 

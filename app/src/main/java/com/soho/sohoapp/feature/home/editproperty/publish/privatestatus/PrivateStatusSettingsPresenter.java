@@ -60,7 +60,7 @@ public class PrivateStatusSettingsPresenter implements AbsPresenter, PrivateStat
                         {
                             view.hideLoadingDialog();
                             property.setPropertyListing(newPropertyListing);
-                            navigator.exitWithResultCodeOk(property);
+                            navigator.exitWithResultCodeOk(property, true);
                         },
                         throwable -> {
                             view.hideLoadingDialog();

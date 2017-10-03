@@ -13,7 +13,7 @@ public interface EditOverviewContract {
 
         void onVerificationClicked();
 
-        void onPropertyStatusUpdated(Property property);
+        void onPropertyStatusUpdated(Property property, boolean verificationCompleted);
     }
 
     interface ViewInteractable {

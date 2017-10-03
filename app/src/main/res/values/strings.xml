@@ -221,6 +221,19 @@
     <string name="publish_property_status_for_rent">For Rent</string>
     <!--Publish property screens end-->
 
+    <!--Verification screen start-->
+    <string name="verification_toolbar">Verification</string>
+    <string name="verification_description">Complete a quick 2 step verification process in order to publish your properties in the network.\n\nTo ensure thq quality of the marketplace we take reasonable steps to qualify each property that is listed in our marketplace</string>
+    <string name="verification_process">Verification process</string>
+    <string name="verification_photo_id">Photo ID Check</string>
+    <string name="verification_ownership_proof">Proof of Ownership</string>
+    <string name="verification_verified">Verified</string>
+    <string name="verification_unverified">Unverified</string>
+    <string name="verification_pending">Pending</string>
+    <string name="verification_rejected">Rejected</string>
+    <string name="verification_unknown">Unknown</string>
+    <!--Verification screen end-->
+
     <!--Autocomplete address screen start-->
     <string name="autocomplete_address_toolbar_title">Auction Address</string>
     <string name="autocomplete_address_done">Done</string>
