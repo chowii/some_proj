@@ -2,13 +2,10 @@ package com.soho.sohoapp.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import com.soho.sohoapp.Dependencies.DEPENDENCIES
-import com.soho.sohoapp.utils.Converter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.soho.sohoapp.network.Keys
+import com.soho.sohoapp.utils.orFalse
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * Created by chowii on 25/7/17.
@@ -18,61 +15,34 @@ class User : BasicUser {
 
     var authenticationToken: String? = null
     var country: String? = null
-    var registrationCallback: RegistrationCallback? = null
     var verifications: List<Verification>? = null
+    var intentions: HashSet<String> = HashSet()
+    var role: String = ROLE.USER().const
+    var agentsLicenseNumber: String? = null
 
     constructor() : super()
 
     constructor(parcel: Parcel) : super(parcel) {
         authenticationToken = parcel.readString()
         country = parcel.readString()
+        parcel.readTypedList(verifications, Verification.CREATOR)
+        parcel.readStringArray(intentions?.toTypedArray())
+        role = parcel.readString()
+        agentsLicenseNumber = parcel.readString()
     }
 
     fun getFullnameShort() = String.format(Locale.getDefault(), "%s.%s", firstName?.get(0), lastName)
 
     fun getFullname() = String.format(Locale.getDefault(), "%s %s", firstName, lastName)
 
-
-    fun registerUser(registerMap: Map<String, String>): Disposable? {
-        return DEPENDENCIES.sohoService.register(registerMap)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ user ->
-                    Log.v("LOG_TAG---", user.authenticationToken)
-                    email = user.email
-                    firstName = user.firstName
-                    DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                    DEPENDENCIES.preferences.mUser = Converter.toUser(user)
-                    this.registrationCallback?.onRegistrationSuccessful()
-                }, {
-                    error ->
-                    Log.e("LOG_TAG---", error.message)
-                })
-    }
-
-    fun updateUserProfile(updateMap: Map<String, String>): Disposable? {
-        return DEPENDENCIES.sohoService.updateUserProfile(updateMap)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ user ->
-                    firstName = user.firstName
-                    lastName = user.lastName
-                    country = user.country
-                    this.registrationCallback?.onRegistrationSuccessful()
-                }, {
-                    error ->
-                    Log.e("LOG_TAG---", error.message)
-                })
-    }
-
-    interface RegistrationCallback {
-        fun onRegistrationSuccessful()
-    }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         super.writeToParcel(parcel, flags)
         parcel.writeString(authenticationToken)
         parcel.writeString(country)
+        parcel.writeTypedList(verifications)
+        parcel.writeStringArray(intentions?.toTypedArray())
+        parcel.writeString(role)
+        parcel.writeString(agentsLicenseNumber)
     }
 
     override fun describeContents(): Int {
@@ -89,3 +59,19 @@ class User : BasicUser {
         }
     }
 }
+
+sealed class ROLE(val const: String) {
+    class AGENT : ROLE(Keys.Role.AGENT)
+    class USER : ROLE(Keys.Role.USER)
+}
+
+sealed class INTENTION(val const: String) {
+    class BUYING : INTENTION(Keys.Intention.BUYING)
+    class RENTING : INTENTION(Keys.Intention.RENTING)
+    class SELLING : INTENTION(Keys.Intention.SELLING)
+}
+
+fun User.isSelling(): Boolean = this.intentions.contains(INTENTION.SELLING().const)
+fun User.isRenting(): Boolean = this.intentions.contains(INTENTION.RENTING().const)
+fun User.isBuying(): Boolean = this.intentions.contains(INTENTION.BUYING().const)
+fun User.isAgent(): Boolean = this.role?.contains(ROLE.AGENT().const).orFalse()

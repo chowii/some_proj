@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/settings_edit_account_profile_photo" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/white">
+
+            <android.support.v4.widget.Space
+                android:id="@+id/center_space"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="16dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_avatar_iv"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toStartOf="@id/center_space"
+                android:background="@drawable/ph_avatar_profile" /><!--for the CircleImageView the placeholder
+                                                            won't work, we need to set it as background-->
+            <TextView
+                android:id="@+id/edit_photo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/center_space"
+                android:text="@string/settings_edit_account_edit_photo"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_alignEnd="@id/edit_photo_tv"
+                android:layout_alignStart="@id/edit_photo_tv"
+                android:layout_below="@id/edit_photo_tv"
+                android:background="@color/colorPrimary" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/horizontal_rule" />
+
+        <TextView
+            android:id="@+id/saleTitleHeader"
+            style="@style/ListTextHeader"
+            android:text="@string/settings_edit_account_account_details" />
+
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="@string/settings_edit_account_name_hint"
+            android:padding="16dp"
+            android:textSize="14sp" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <EditText
+            android:id="@+id/last_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="@string/settings_edit_account_last_name_hint"
+            android:padding="16dp"
+            android:textSize="14sp" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <EditText
+            android:id="@+id/email_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="@string/settings_edit_account_email_hint"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/settings_edit_account_dob" />
+
+        <TextView
+            android:id="@+id/dob_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="@string/settings_edit_account_dob"
+            android:padding="16dp"
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/settings_edit_account_country" />
+
+        <Spinner
+            android:id="@+id/country_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/settings_edit_account_interested_in" />
+
+        <CheckBox
+            android:id="@+id/buying_cb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:button="@null"
+            android:checked="false"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="16dp"
+            android:text="@string/settings_edit_account_buying_cb"
+            android:theme="@style/Checkbox.Theme.WhiteBg" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <CheckBox
+            android:id="@+id/selling_cb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:button="@null"
+            android:checked="false"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="16dp"
+            android:text="@string/settings_edit_account_selling_cb"
+            android:theme="@style/Checkbox.Theme.WhiteBg" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <CheckBox
+            android:id="@+id/renting_cb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:button="@null"
+            android:checked="false"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:padding="16dp"
+            android:text="@string/settings_edit_account_renting_cb"
+            android:theme="@style/Checkbox.Theme.WhiteBg" />
+
+        <include layout="@layout/horizontal_rule" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/im_agent_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:padding="16dp"
+            android:text="@string/settings_edit_account_agent_switch" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="@string/settings_edit_account_change_password"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/update_btn"
+            style="@style/Button.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:text="@string/settings_edit_account_update"
+            android:textAllCaps="true"
+            tools:targetApi="lollipop" />
+
+    </LinearLayout>
+</ScrollView>

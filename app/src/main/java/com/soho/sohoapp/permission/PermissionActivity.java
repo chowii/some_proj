@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.soho.sohoapp.permission.eventbus.PermissionEvent;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 

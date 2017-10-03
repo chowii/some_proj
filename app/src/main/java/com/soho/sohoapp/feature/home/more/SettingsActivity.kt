@@ -75,8 +75,8 @@ class SettingsActivity: AppCompatActivity(), SettingsContract.ViewInteractable, 
 
     override fun onSettingsItemClicked(item: String) = presenter.onSettingsItemClicked(item)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
-        if (requestCode == CAMERA_INTENT_REQUEST_CODE && intent.extras != null) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        if (requestCode == CAMERA_INTENT_REQUEST_CODE && intent != null &&  intent.extras != null) {
             val photoIdBitmap: Bitmap = retrievePhotoFromIntent(intent.extras)
             photoIdBitmap.byteCount
         }

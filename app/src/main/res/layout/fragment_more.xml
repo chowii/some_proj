@@ -17,7 +17,7 @@
             android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="@drawable/ph_more_profile" /><!--for the CircleImageView the placeholder
+            android:background="@drawable/ph_avatar_profile" /><!--for the CircleImageView the placeholder
                                                             won't work, we need to set it as background-->
 
         <LinearLayout

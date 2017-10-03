@@ -35,7 +35,10 @@ interface SohoService {
     fun loginUser(@Body map: Map<String, String>): Observable<UserResult>
 
     @PUT("profile")
-    fun updateUserProfile(@Body map: Map<String, String>): Observable<UserResult>
+    fun updateUserProfile(@Body map: QueryHashMap): Observable<UserResult>
+
+    @PUT("profile")
+    fun updateUserProfileWithPhoto(@Body requestBody: RequestBody): Observable<UserResult>
 
     @GET("profile")
     fun getProfile(): Observable<UserResult>

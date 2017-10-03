@@ -7,10 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @StringDef({
-        Permission.WRITE_EXTERNAL_STORAGE
+        Permission.WRITE_EXTERNAL_STORAGE,
+        Permission.CAMERA
 })
 
 @Retention(RetentionPolicy.SOURCE)
 public @interface Permission {
     String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    String CAMERA = Manifest.permission.CAMERA;
 }

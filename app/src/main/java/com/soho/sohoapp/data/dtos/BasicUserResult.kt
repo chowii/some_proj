@@ -21,6 +21,9 @@ open class BasicUserResult {
     var dateOfBirth: String? = null
 
     @SerializedName("avatar")
-    var avatar:ImageResult? = null
+    var avatar: ImageResult? = null
+
+    @SerializedName("profile_complete")
+    var isProfileComplete: Boolean? = null
 
 }

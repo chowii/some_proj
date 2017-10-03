@@ -33,6 +33,7 @@ import com.soho.sohoapp.feature.landing.ForgotPasswordActivity;
 import com.soho.sohoapp.feature.landing.LandingActivity;
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity;
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
+import com.soho.sohoapp.feature.profile.EditAccountActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
 public class NavigatorImpl implements NavigatorInterface {
@@ -119,6 +120,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(AddPropertyActivity.createIntent(fragment.getActivity()), requestCode);
         } else {
             activity.startActivityForResult(AddPropertyActivity.createIntent(activity), requestCode);
+        }
+    }
+
+    @Override
+    public void openEditProfileScreen(int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(EditAccountActivity.createIntent(fragment.getActivity()), requestCode);
+        } else {
+            activity.startActivityForResult(EditAccountActivity.createIntent(activity), requestCode);
         }
     }
 
@@ -322,6 +332,7 @@ public class NavigatorImpl implements NavigatorInterface {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (activity == null) {
             if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
+
                 fragment.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
             }
         } else {

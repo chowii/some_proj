@@ -28,6 +28,12 @@
 
     <style name="AppTheme.Base.SwitchCompat" parent="AppTheme">
         <item name="colorControlActivated">@color/colorPrimary</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/greyLightPrimary</item>
+
+        <!-- inactive track color (30% transparency automatically added) -->
+        <item name="android:colorForeground">@color/greyDarkPrimary</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -69,7 +75,7 @@
         <item name="textAllCaps">true</item>
     </style>
 
-    // MARK: - ================== Text Styles ==================
+    <!--MARK: - ================== Text Styles ==================-->
 
     <style name="Text">
         <item name="fontPath">fonts/Gibson-Regular.ttf</item>
@@ -111,7 +117,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    // MARK: - ================== Button Styles ==================
+    <!--MARK: - ================== Button Styles ==================-->
 
     <style name="Button" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:background">@android:color/transparent</item>
@@ -156,7 +162,7 @@
         <item name="android:textColor">@color/green_gray_text</item>
     </style>
 
-    // MARK: - ================== Button Styles ====================
+    <!--MARK: - ================== Button Styles ====================-->
 
     <style name="FilterButton">
         <item name="android:layout_width">wrap_content</item>
@@ -166,7 +172,7 @@
         <item name="android:background">@drawable/ring_grey</item>
     </style>
 
-    // MARK: - ================== TextView Styles ==================
+    <!--MARK: - ================== TextView Styles ==================-->
 
     <style name="TextView" parent="Text">
         <item name="android:layout_width">match_parent</item>
@@ -174,7 +180,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    // MARK: - ================== Base TextView Styles =============
+    <!--MARK: - ================== Base TextView Styles =============-->
 
     <style name="TextView.Header">
         <item name="fontPath">fonts/Gibson-Bold.ttf</item>
@@ -215,7 +221,7 @@
         <item name="android:paddingTop">16dp</item>
     </style>
 
-    // MARK: - ================== Bold TextView Styles =============
+    <!--MARK: - ================== Bold TextView Styles =============-->
 
     <style name="TextView.Header.Bold">
         <item name="android:textStyle">bold</item>
@@ -229,7 +235,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    // MARK: - ================== Center TextView Styles ===========
+    <!--MARK: - ================== Center TextView Styles ===========-->
 
     <style name="TextView.Header.Center">
         <item name="android:layout_gravity">center</item>
@@ -246,7 +252,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    // MARK: - ================== White TextView Styles ============
+    <!--MARK: - ================== White TextView Styles ============-->
 
     <style name="TextView.Header.White">
         <item name="android:textColor">@color/white</item>
@@ -260,7 +266,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    // MARK: - ================== Primary White TextView Styles ====
+    <!--MARK: - ================== Primary White TextView Styles ====-->
 
     <style name="TextView.Header.PrimaryWhite">
         <item name="android:textColor">@color/whitePrimary</item>
@@ -274,7 +280,7 @@
         <item name="android:textColor">@color/whitePrimary</item>
     </style>
 
-    // MARK: - ================== Dark TextView Styles =============
+    <!--MARK: - ================== Dark TextView Styles =============-->
 
     <style name="TextView.Header.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
@@ -288,7 +294,7 @@
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
-    // MARK: - ================== Grey TextView Styles =============
+    <!--MARK: - ================== Grey TextView Styles =============-->
 
     <style name="TextView.Header.Grey">
         <item name="android:textColor">@color/greyLightPrimary</item>
@@ -302,7 +308,7 @@
         <item name="android:textColor">@color/greyLightPrimary</item>
     </style>
 
-    // MARK: - ================== Center White TextView Styles =====
+    <!--MARK: - ================== Center White TextView Styles =====-->
 
     <style name="TextView.Header.Center.White">
         <item name="android:textColor">@color/white</item>
@@ -316,7 +322,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    // MARK: - ================== Center Dark TextView Styles ======
+    <!--MARK: - ================== Center Dark TextView Styles ======-->
 
     <style name="TextView.Header.Center.Dark">
         <item name="android:textColor">@color/blackLightPrimary</item>
@@ -330,7 +336,7 @@
         <item name="android:textColor">@color/blackLightPrimary</item>
     </style>
 
-    // MARK: - ================== Center Dark TextView Styles ======
+    <!--MARK: - ================== Center Dark TextView Styles ======-->
 
     <style name="TextView.Header.Center.Grey">
         <item name="android:textColor">@color/greyLightPrimary</item>
@@ -344,7 +350,7 @@
         <item name="android:textColor">@color/greyLightPrimary</item>
     </style>
 
-    // MARK: - ================== Message TextView Styles ====
+    <!--MARK: - ================== Message TextView Styles ====-->
 
     <style name="TextView.Message.Large" parent="TextView.SubTitle">
         <item name="android:textSize">14sp</item>
@@ -398,7 +404,7 @@
         <item name="android:textColor">@color/whiteLight</item>
     </style>
 
-    // MARK: - ================== MarketPlace TextView Styles ======
+    <!--MARK: - ================== MarketPlace TextView Styles ======-->
 
     <style name="PropertyTitle" parent="TextView.Header.Dark">
         <item name="android:layout_width">match_parent</item>
@@ -422,7 +428,7 @@
         <item name="android:drawablePadding">5dp</item>
     </style>
 
-    // MARK: - ================== Filter TextView Styles ======
+    <!--MARK: - ================== Filter TextView Styles ======-->
 
     <style name="FilterPropertyHeader" parent="TextView.SubTitle.Bold">
         <item name="android:layout_width">match_parent</item>
@@ -462,7 +468,7 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
-    // MARK: - ================== CustomView Styles ==================
+    <!--MARK: - ================== CustomView Styles ==================-->
 
     <style name="CustomView" />
 
@@ -473,7 +479,7 @@
         <item name="android:paddingRight">0dp</item>
     </style>
 
-    // MARK: - ================== EditText Styles ==================
+    <!--MARK: - ================== EditText Styles ==================-->
 
     <style name="EditText">
         <item name="fontPath">fonts/Gibson-Light.ttf</item>
@@ -494,8 +500,7 @@
         <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
-    // MARK: - ================== EditText Styles ==================
-
+    <!--MARK: - ================== Check box Styles ==================-->
     <style name="Checkbox" parent="AppTheme">
         <item name="fontPath">fonts/Gibson-Light.ttf</item>
     </style>
@@ -511,5 +516,11 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginLeft">-5dp</item>
     </style>
+
+    <style name="Checkbox.Theme.WhiteBg" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/darkerPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 
 </resources>

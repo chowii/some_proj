@@ -21,7 +21,7 @@ import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.NavigatorImpl;
-import com.soho.sohoapp.permission.AndroidPermissionManager;
+import com.soho.sohoapp.permission.PermissionManagerImpl;
 import com.soho.sohoapp.utils.FileHelper;
 
 import java.util.List;
@@ -70,7 +70,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
         presenter = new EditPropertyPresenter(this,
                 NavigatorImpl.newInstance(this),
-                AndroidPermissionManager.newInstance(this),
+                PermissionManagerImpl.newInstance(this),
                 FileHelper.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
     }

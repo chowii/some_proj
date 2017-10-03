@@ -14,6 +14,7 @@ open class BasicUser() : Parcelable {
     var lastName: String? = null
     var dateOfBirth: Long? = null
     var avatar: Image? = null
+    var isProfileComplete: Boolean = false
 
     constructor(parcel: Parcel) : this() {
         email = parcel.readString()
@@ -21,6 +22,8 @@ open class BasicUser() : Parcelable {
         lastName = parcel.readString()
         dateOfBirth = parcel.readValue(Long::class.java.classLoader) as Long?
         avatar = parcel.readParcelable(Image::class.java.classLoader)
+        isProfileComplete = parcel.readInt() == 1
+
     }
 
     fun fullName(): String {
@@ -29,7 +32,7 @@ open class BasicUser() : Parcelable {
 
     fun fullNameWithAbbreviatedFirstName(): String {
         var abbreviatedFirstName = ""
-        if((firstName?.length ?: 0) > 0) {
+        if ((firstName?.length ?: 0) > 0) {
             abbreviatedFirstName = firstName?.get(0).toString() ?: ""
             abbreviatedFirstName += ". "
         }
@@ -42,6 +45,7 @@ open class BasicUser() : Parcelable {
         parcel.writeString(lastName)
         parcel.writeValue(dateOfBirth)
         parcel.writeParcelable(avatar, flags)
+        parcel.writeInt(if (isProfileComplete) 1 else 0)
     }
 
     override fun describeContents(): Int {

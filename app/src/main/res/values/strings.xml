@@ -8,6 +8,8 @@
     <string name="register_button">SIGN UP</string>
     <string name="register_loading">Please wait while we register you</string>
     <string name="login_loading">Please wait while we log you in</string>
+    <string name="registering">Registering</string>
+    <string name="please_wait">Please wait..</string>
     <!--Login and Registration screens end-->
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -359,6 +361,25 @@
     <string name="int_ext_shorthand_million">M</string>
     <string name="int_ext_shorthand_thousand">K</string>
     <!--IntExt end-->
+
+    <!--Edit Profile /Settings-->
+    <string name="settings_edit_account_title">Edit Account</string>
+    <string name="settings_edit_account_profile_photo">profile photo</string>
+    <string name="settings_edit_account_account_details">account details</string>
+    <string name="settings_edit_account_name_hint">Name</string>
+    <string name="settings_edit_account_last_name_hint">Last name</string>
+    <string name="settings_edit_account_email_hint">Email</string>
+    <string name="settings_edit_account_dob">Date of Birth</string>
+    <string name="settings_edit_account_country">Country</string>
+    <string name="settings_edit_account_interested_in">I\'m interested in</string>
+    <string name="settings_edit_account_buying_cb">Buying</string>
+    <string name="settings_edit_account_selling_cb">Selling</string>
+    <string name="settings_edit_account_renting_cb">Renting</string>
+    <string name="settings_edit_account_agent_switch">I\'m an agent</string>
+    <string name="settings_edit_account_change_password">change password</string>
+    <string name="settings_edit_account_update">update</string>
+    <string name="settings_edit_account_edit_photo">Edit photo</string>
+    <string name="edit_account_title">Edit Account</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

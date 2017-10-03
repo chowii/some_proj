@@ -10,7 +10,7 @@ import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
-import com.soho.sohoapp.permission.PermissionManager;
+import com.soho.sohoapp.permission.PermissionManagerInterface;
 import com.soho.sohoapp.utils.Converter;
 import com.soho.sohoapp.utils.FileHelper;
 
@@ -20,33 +20,30 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract.ViewPresentable {
     private final EditPropertyContract.ViewInteractable view;
     private final NavigatorInterface navigator;
-    private final PermissionManager permissionManager;
+    private final PermissionManagerInterface permissionManager;
     private final FileHelper fileHelper;
     private final List<Image> propertyImages;
-    private final CompositeSubscription compositeSubscription;
     private final CompositeDisposable compositeDisposable;
-    private Subscription permissionSubscription;
+    private Disposable permissionDisposable;
     private Property property;
 
     EditPropertyPresenter(EditPropertyContract.ViewInteractable view,
                           NavigatorInterface navigator,
-                          PermissionManager permissionManager,
+                          PermissionManagerInterface permissionManager,
                           FileHelper fileHelper) {
         this.fileHelper = fileHelper;
         this.view = view;
         this.navigator = navigator;
         this.permissionManager = permissionManager;
         propertyImages = new ArrayList<>();
-        compositeSubscription = new CompositeSubscription();
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -80,7 +77,6 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void stopPresenting() {
-        compositeSubscription.unsubscribe();
         compositeDisposable.clear();
     }
 
@@ -99,15 +95,15 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         if (permissionManager.hasStoragePermission()) {
             view.capturePhoto();
         } else {
-            permissionSubscription = permissionManager.requestStoragePermission(RequestCode.EDIT_PROPERTY_PRESENTER_STORAGE)
-                    .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+            permissionDisposable = permissionManager.requestStoragePermission(RequestCode.EDIT_PROPERTY_PRESENTER_STORAGE)
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(permissionEvent -> {
                         if (permissionEvent.isPermissionGranted()) {
                             view.capturePhoto();
                         }
-                        permissionSubscription.unsubscribe();
+                        permissionDisposable.dispose();
                     }, Throwable::printStackTrace);
-            compositeSubscription.add(permissionSubscription);
+            compositeDisposable.add(permissionDisposable);
         }
     }
 

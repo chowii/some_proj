@@ -1,7 +1,7 @@
 package com.soho.sohoapp.permission.eventbus;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 public class AndroidEventBus {
     private final PublishSubject<Object> subject = PublishSubject.create();

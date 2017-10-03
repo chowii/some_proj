@@ -16,6 +16,24 @@ public interface Keys {
         String FIRST_NAME = "first_name";
         String LAST_NAME = "last_name";
         String COUNTRY = "country";
+        String INTENDE_ROLE = "intended_role";
+        String INTENDED_INTENTIONS = "intended_intentions";
+        String INTENDED_INTENTIONS_ARRAY_MULTIPART = "intended_intentions[]";
+        String AGENT_LICENCE_NUMBER = "agent_licence_number";
+        String AVATAR = "avatar";
+        String DOB = "dob";
+        String AGENT_LOGO = "agent_logo";
+    }
+
+    interface Intention {
+        String BUYING = "buying";
+        String SELLING = "selling";
+        String RENTING = "renting";
+    }
+
+    interface Role {
+        String USER = "user";
+        String AGENT = "agent";
     }
 
     interface Property {

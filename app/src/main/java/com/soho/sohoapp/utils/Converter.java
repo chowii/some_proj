@@ -45,6 +45,7 @@ import com.soho.sohoapp.network.results.PropertyUserRolesResult;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -298,6 +299,15 @@ public final class Converter {
         user.setAuthenticationToken(result.getAuthenticationToken());
         user.setCountry(result.getCountry());
         user.setVerifications(toVerifications(result.getVerifications()));
+        if (result.getIntentions() != null) {
+            user.setIntentions(result.getIntentions());
+        }
+        if (result.getIntendedRole() != null)
+            user.setRole(result.getIntendedRole());
+        //noinspection ConstantConditions
+        user.setProfileComplete(result.isProfileComplete() == null ? false : result.isProfileComplete());
+        user.setAgentsLicenseNumber(result.getAgentLicenseNumber());
+
         if (!isEmpty(result.getDateOfBirth())) {
             user.setDateOfBirth(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getDateOfBirth()));
         }
@@ -377,6 +387,49 @@ public final class Converter {
             builder.addFormDataPart(Keys.Property.IMAGE, file.getName(), imageRequestBody);
             return builder.build();
         });
+    }
+
+    public static Observable<RequestBody> toImageRequestBodyUser(@NonNull FileHelper fileHelper, @NonNull Image image, @NonNull QueryHashMap values) {
+        return Observable.fromCallable(() -> {
+            Uri uri;
+            if (image.getFilePath() != null) {
+                uri = Uri.fromFile(new File(image.getFilePath()));
+            } else {
+                uri = image.getUri();
+            }
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            builder.setType(MultipartBody.FORM);
+
+            if (uri != null) {
+                RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+                File file = new File(uri.getPath());
+                builder.addFormDataPart(Keys.User.AVATAR, file.getName() + ".jpg", imageRequestBody);
+
+            }
+//            Keys.User.INTENDED_INTENTIONS, intentions)
+            if (values.containsKey(Keys.User.INTENDED_INTENTIONS)) {
+                HashSet<String> intentions = (HashSet<String>) values.get(Keys.User.INTENDED_INTENTIONS);
+                int i = 0;
+                for (String intention : intentions) {
+                    builder.addFormDataPart(Keys.User.INTENDED_INTENTIONS_ARRAY_MULTIPART, intention);
+                    i = i + 1;
+                }
+            }
+            checkNullBuilderValuesMap(builder, Keys.User.INTENDE_ROLE, (String) values.get(Keys.User.INTENDE_ROLE));
+            checkNullBuilderValuesMap(builder, Keys.User.DOB, (String) values.get(Keys.User.DOB));
+            checkNullBuilderValuesMap(builder, Keys.User.COUNTRY, (String) values.get(Keys.User.COUNTRY));
+            checkNullBuilderValuesMap(builder, Keys.User.AGENT_LICENCE_NUMBER, (String) values.get(Keys.User.AGENT_LICENCE_NUMBER));
+            checkNullBuilderValuesMap(builder, Keys.User.LAST_NAME, (String) values.get(Keys.User.LAST_NAME));
+            checkNullBuilderValuesMap(builder, Keys.User.FIRST_NAME, (String) values.get(Keys.User.FIRST_NAME));
+
+            return builder.build();
+        });
+    }
+
+    private static void checkNullBuilderValuesMap(MultipartBody.Builder builder, String key, String value) {
+        if (value != null) {
+            builder.addFormDataPart(key, value);
+        }
     }
 
     @NonNull

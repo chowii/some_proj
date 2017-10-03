@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="endpoint">http://app.sohoapp-staging.com.stg.sohoapp.anchor.net.au/api/</string>
+
     <string name="provider_authorities">com.soho.sohoapp.dev.fileprovider</string>
 
     <string name="facebook_app_id">295676500898461</string>

@@ -4,18 +4,19 @@ import android.content.Context;
 
 import com.soho.sohoapp.permission.eventbus.PermissionEvent;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public class AndroidPermissionManager implements PermissionManager {
+
+public class PermissionManagerImpl implements PermissionManagerInterface {
 
     private final Context context;
 
-    private AndroidPermissionManager(Context context) {
+    private PermissionManagerImpl(Context context) {
         this.context = context;
     }
 
-    public static AndroidPermissionManager newInstance(Context context) {
-        return new AndroidPermissionManager(context);
+    public static PermissionManagerImpl newInstance(Context context) {
+        return new PermissionManagerImpl(context);
     }
 
     @Override

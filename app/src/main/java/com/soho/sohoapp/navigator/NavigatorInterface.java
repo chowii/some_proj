@@ -24,6 +24,8 @@ public interface NavigatorInterface {
 
     void openAddPropertyScreen(int requestCode);
 
+    void openEditProfileScreen(int requestCode);
+
     void openEditPropertyScreen(PortfolioProperty property);
 
     void openOwnerPortfolioDetails(@NonNull PortfolioCategory portfolioCategory);
