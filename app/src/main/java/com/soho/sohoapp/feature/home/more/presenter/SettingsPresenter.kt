@@ -12,6 +12,7 @@ import com.soho.sohoapp.feature.home.more.model.SettingItem
 import com.soho.sohoapp.feature.home.more.model.VerificationItem
 import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.navigator.RequestCode
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -59,7 +60,7 @@ class SettingsPresenter(var interactable: SettingsContract.ViewInteractable, val
             getStringFromResource(R.string.settings_account_verification_photo_id_text) -> verifyPhotoId()
             getStringFromResource(R.string.settings_account_verification_mobile_number_text) -> verifyPhone()
             getStringFromResource(R.string.settings_account_verification_agent_license_text) -> verifyLicense()
-            else -> navigatorImpl.openEditProfileScreen(0)
+            else -> navigatorImpl.openEditProfileScreen(RequestCode.NOT_USED)
         }
     }
 

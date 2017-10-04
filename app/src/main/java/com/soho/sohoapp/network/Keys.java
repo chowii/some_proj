@@ -13,6 +13,8 @@ public interface Keys {
     interface User {
         String EMAIL = "email";
         String PASSWORD = "password";
+        String CURRENT_PASSWORD= "current_password";
+        String PASSWORD_CONFIRMATION = "password_confirmation";
         String FIRST_NAME = "first_name";
         String LAST_NAME = "last_name";
         String COUNTRY = "country";

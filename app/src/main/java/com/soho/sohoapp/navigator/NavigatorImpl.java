@@ -34,6 +34,7 @@ import com.soho.sohoapp.feature.landing.LandingActivity;
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity;
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
 import com.soho.sohoapp.feature.profile.EditAccountActivity;
+import com.soho.sohoapp.feature.profile.password.EditAccountPassActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
 public class NavigatorImpl implements NavigatorInterface {
@@ -129,6 +130,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(EditAccountActivity.createIntent(fragment.getActivity()), requestCode);
         } else {
             activity.startActivityForResult(EditAccountActivity.createIntent(activity), requestCode);
+        }
+    }
+
+    @Override
+    public void openEditPasswordProfileScreen(int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(EditAccountPassActivity.createIntent(fragment.getActivity()), requestCode);
+        } else {
+            activity.startActivityForResult(EditAccountPassActivity.createIntent(activity), requestCode);
         }
     }
 

@@ -10,7 +10,6 @@
         style="@style/Toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:title="@string/edit_account_title"
         app:titleTextColor="@color/white" />
 
     <FrameLayout

@@ -18,6 +18,8 @@ class Constants {
         fun init(context: Context): Unit {
             ENDPOINT = context.getString(R.string.endpoint)
         }
+
+        val PASSWORD_MIN_LENGTH: Int = 6
     }
 
 }

@@ -381,6 +381,17 @@
     <string name="settings_edit_account_edit_photo">Edit photo</string>
     <string name="edit_account_title">Edit Account</string>
 
+    <!--Change Password screen-->
+    <string name="edit_account_pass_title">Change Password</string>
+    <string name="edit_account_pass_current_password">Current password</string>
+    <string name="edit_account_pass_password_hint">password</string>
+    <string name="edit_account_pass_change_password">change password</string>
+    <string name="edit_account_pass_new_password">New password</string>
+    <string name="edit_account_pass_confirm_new_password">Confirm New password</string>
+    <string name="edit_account_pass_requirement_password">Min 6 character 1 number</string>
+    <string name="edit_account_pass_confirm_password">confirm password</string>
+    <string name="edit_account_pass_save_changes">save changes</string>
+
     <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50k</item>

@@ -55,7 +55,7 @@
 
         <activity
             android:name=".feature.marketplaceview.feature.filters.PropertyFilterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".feature.home.editproperty.EditPropertyActivity"
@@ -125,7 +125,13 @@
         <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.profile.EditAccountActivity" />
+        <activity
+            android:name=".feature.profile.EditAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.profile.password.EditAccountPassActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

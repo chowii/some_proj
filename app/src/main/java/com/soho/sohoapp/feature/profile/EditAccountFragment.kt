@@ -137,6 +137,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         }
 
         update_btn.setOnClickListener(updateProfile)
+        change_password_tv.setOnClickListener{presenter.onChangePasswordClick()}
 
     }
 

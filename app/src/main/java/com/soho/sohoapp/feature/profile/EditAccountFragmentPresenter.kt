@@ -81,7 +81,7 @@ class EditAccountFragmentPresenter(private val view: EditAccountContract.ViewInt
 
 
     override fun onChangePasswordClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        navigator.openEditPasswordProfileScreen(RequestCode.NOT_USED)
     }
 
     private fun selectPhotoFromGallery() {
