@@ -1,67 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.soho.sohoapp.feature.landing.signup.SignUpActivity"
     android:background="@drawable/register_email_account"
-    >
+    tools:context="com.soho.sohoapp.feature.landing.signup.SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        >
+        android:orientation="vertical">
 
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/soho_logo_white"
-            android:layout_marginTop="35dp"
             android:layout_marginBottom="35dp"
-            />
+            android:layout_marginTop="35dp"
+            android:src="@drawable/soho_logo_white" />
 
         <EditText
-            android:id="@+id/register_email_edit_text"
-            android:hint="@string/your_email"
-            android:drawableEnd="@drawable/email"
-            android:layout_marginBottom="30dp"
-            android:inputType="textEmailAddress"
+            android:id="@+id/email_et"
             style="@style/EditText.RegisterStyle"
-            android:theme="@style/EditText.RegisterTheme"
-            />
+            android:layout_marginBottom="30dp"
+            android:drawableEnd="@drawable/email"
+            android:hint="@string/your_email"
+            android:inputType="textEmailAddress"
+            android:theme="@style/EditText.RegisterTheme" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="00dp"
             style="@style/TextView.Message.Large.Center"
-            android:text="@string/register_agreement_message"
-            />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            style="@style/TextView.Message.Small.Center.HyperLink"
-            android:text="@string/register_terms_of_condition"
-            />
+            android:text="@string/signup_we_send_email" />
 
         <Button
-            android:id="@+id/reset_password_button"
+            android:id="@+id/reset_password_bt"
+            style="@style/Button.Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            style="@style/Button.Green"
             android:text="@string/reset_password"
-            />
-
+            android:textAllCaps="true" />
     </LinearLayout>
-
 </FrameLayout>

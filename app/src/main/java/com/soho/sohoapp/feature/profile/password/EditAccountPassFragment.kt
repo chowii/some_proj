@@ -15,6 +15,7 @@ import com.soho.sohoapp.feature.landing.BaseFragment
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.QueryHashMap
+import com.soho.sohoapp.utils.checkEnableDisableAlpha
 import kotlinx.android.synthetic.main.fragment_edit_account_password.*
 
 /**
@@ -50,7 +51,7 @@ class EditAccountPasswordFragment : BaseFragment(), EditAccountPasswordFragContr
                 put(Keys.User.PASSWORD_CONFIRMATION, confirm_new_pass_et.text.toString())
             })
         }
-        toggleButtonEnabled(0.4f, false)
+        change_password_bt.checkEnableDisableAlpha(false)
     }
 
     private val rulesForPasswordWatcher: TextWatcher = object : TextWatcher {
@@ -58,24 +59,16 @@ class EditAccountPasswordFragment : BaseFragment(), EditAccountPasswordFragContr
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
         override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-            if (checkPasswordRequirements(charSequence)) {
-                if (checkPasswordRequirements(new_pass_et.text) && checkPasswordRequirements(confirm_new_pass_et.text))
-                    toggleButtonEnabled(1f, true)
-
-            } else toggleButtonEnabled(0.4f, false)
+            change_password_bt.checkEnableDisableAlpha(checkPasswordRequirements(charSequence)
+                    && checkPasswordRequirements(new_pass_et.text) && checkPasswordRequirements(confirm_new_pass_et.text))
         }
     }
 
     private fun checkPasswordRequirements(charSequence: CharSequence?): Boolean {
-        return (charSequence !=null
+        return (charSequence != null
                 && !charSequence.isEmpty()
                 && charSequence.length >= Constants.PASSWORD_MIN_LENGTH //never null as we check it before
                 && charSequence.any { Character.isDigit(it) })
-    }
-
-    private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
-        change_password_bt.alpha = alpha
-        change_password_bt.isEnabled = isEnabled
     }
 
     override fun resetFieldsAndFinish() {

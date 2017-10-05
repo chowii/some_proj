@@ -307,9 +307,9 @@ public class NavigatorImpl implements NavigatorInterface {
     @Override
     public void openForgetPasswordActivity() {
         if (fragment != null) {
-            fragment.startActivity(ForgotPasswordActivity.createIntent(fragment.getActivity()));
+            fragment.startActivity(ForgotPasswordActivity.Companion.createIntent(fragment.getActivity()));
         } else {
-            activity.startActivity(ForgotPasswordActivity.createIntent(activity));
+            activity.startActivity(ForgotPasswordActivity.Companion.createIntent(activity));
         }
     }
 

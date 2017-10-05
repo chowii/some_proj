@@ -46,6 +46,9 @@ interface SohoService {
     @GET("profile")
     fun getProfile(): Observable<UserResult>
 
+    @GET("passwords/new")
+    fun sendForgotPasswordRequest(@Query("email") email: String): Observable<Unit>
+
     // MARK: - ================== Property Related ==================
 
     @POST("search/properties")

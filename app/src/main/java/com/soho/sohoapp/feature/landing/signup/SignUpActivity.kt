@@ -19,6 +19,7 @@ import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
+import com.soho.sohoapp.utils.checkEnableDisableAlpha
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -40,20 +41,14 @@ class SignUpActivity : AppCompatActivity() {
 
     @OnTextChanged(R.id.register_email_edit_text, R.id.register_password_edit_text)
     fun onTextChanged(editable: Editable) {
-        if (emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
-            toggleButtonEnabled(0.4f, !editable.toString().isEmpty())
-        else toggleButtonEnabled(1f, !editable.toString().isEmpty())
+        registerButton.checkEnableDisableAlpha(
+                !(emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty()))
     }
 
     @OnClick(R.id.terms_and_condition_bt)
     fun onTermsAndConditionClicked() {
         NavigatorImpl.newInstance(this)
                 .openExternalUrl(Uri.parse(getString(R.string.url_terms_and_conditions)))
-    }
-
-    private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
-        registerButton.alpha = alpha
-        registerButton.isEnabled = isEnabled
     }
 
     @OnClick(R.id.register_button)
@@ -74,7 +69,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
         ButterKnife.bind(this)
         loadingDialog = LoadingDialog(this)
-        toggleButtonEnabled(0.4f, false)
+        registerButton.checkEnableDisableAlpha(false)
     }
 
     override fun onDestroy() {
