@@ -11,7 +11,6 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.utils.StringUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
     @BindView(R.id.name)
@@ -33,13 +32,14 @@ public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
         properties.setText(context.getResources()
                 .getQuantityString(R.plurals.portfolio_properties_quantity, propertyCount, propertyCount));
 
+        boolean isFavouriteCategory = PortfolioCategory.FILTER_FAVOURITES.equals(model.getFilterForPortfolio());
+        estimatedValue.setVisibility(isFavouriteCategory ? View.GONE : View.VISIBLE);
         estimatedValue.setText(StringUtils.formatPrice(context, model.getEstimatedValue()));
     }
 
     public PortfolioOwnerHolder(@NonNull Context context, View itemView) {
         super(itemView);
         this.context = context;
-        ButterKnife.bind(this, itemView);
     }
 
     public void setListener(Listener listener) {

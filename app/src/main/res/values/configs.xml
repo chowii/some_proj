@@ -17,4 +17,5 @@
     <string name="key_zendesk_app_url">https://sohoapp.zendesk.com</string>
     <string name="key_zendesk_application_id">7d8347a64a33098aeb5344acec8502a937feafe1219c5732</string>
     <string name="key_zendesk_mobile_sdk_client">mobile_sdk_client_125ff581d2f34ca9d90d</string>
+    <string name="url_terms_and_conditions">https://sohoapp.com/terms-and-conditions/</string>
 </resources>

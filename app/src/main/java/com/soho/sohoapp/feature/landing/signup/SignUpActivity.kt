@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.landing.signup
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -42,6 +43,12 @@ class SignUpActivity : AppCompatActivity() {
         if (emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
             toggleButtonEnabled(0.4f, !editable.toString().isEmpty())
         else toggleButtonEnabled(1f, !editable.toString().isEmpty())
+    }
+
+    @OnClick(R.id.terms_and_condition_bt)
+    fun onTermsAndConditionClicked() {
+        NavigatorImpl.newInstance(this)
+                .openExternalUrl(Uri.parse(getString(R.string.url_terms_and_conditions)))
     }
 
     private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp"
     android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/auction_location_text_view"
@@ -17,9 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/description_text_view"
@@ -27,26 +25,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/test_text_tiny"/>
+            android:text="@string/test_text_tiny" />
 
         <TextView
             android:id="@+id/add_to_calendar_button"
+            style="@style/TextView.SubTitle.Dark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            style="@style/TextView.SubTitle.Dark"
-            android:text="@string/test_text_tiny"
-            android:paddingBottom="5dp"
+            android:drawableEnd="@drawable/ic_calendar_plus"
+            android:drawablePadding="10dp"
             android:gravity="end|center_vertical"
-            />
+            android:minHeight="40dp"
+            android:paddingBottom="5dp"
+            android:text="@string/test_text_tiny" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_calendar_plus"
-            android:paddingLeft="10dp"
-            android:clickable="false"
-            android:focusable="false"/>
 
     </LinearLayout>
 

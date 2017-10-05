@@ -141,12 +141,13 @@ public class PropertyDetailActivity extends AbsActivity
         calendarIntent.setType("vnd.android.cursor.item/event");
         long startTime;
         if (state.equalsIgnoreCase("auction")) {
-            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime());
+            PropertyHostTimeItem.PropertyAuctionItem propertyAuctionItem = timeItem.retrievePropertyAuctionItem();
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, propertyAuctionItem.getAuctionDate());
         } else {
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().getStartTime());
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().getEndTime());
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
         }
-        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, timeItem.retrievePropertyInspectionItem().getPropertyInspectionTime().getStartTime());
 
         StringBuilder builder = new StringBuilder(state);
         builder.append(": ")

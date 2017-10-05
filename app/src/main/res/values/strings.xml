@@ -108,6 +108,8 @@
     <string name="portfolio_changed_value_null">--</string>
     <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
     <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
+    <string name="portfolio_portfolios_list_item">PORTFOLIOS</string>
+    <string name="portfolio_plus_property">+ Add property</string>
     <!--Portfolio screen end-->
 
     <!--Edit property screen start-->
@@ -246,8 +248,8 @@
     <string name="property_description_toolbar">Description</string>
     <string name="property_description_enter_description">Add a description of your property..</string>
     <string name="property_description_done">Done</string>
-    <!--Property description screen end-->
 
+    <!--Property description screen end-->
     <string name="property_filter_filter_tab">Filter</string>
     <string name="property_saved_filter_tab">Saved</string>
     <string name="filter_suburb_search_header">ENTER SEARCH LOCATION, i.e. Areas, Suburbs</string>

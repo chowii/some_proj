@@ -20,11 +20,13 @@ import java.util.List;
 
 public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final Context context;
+    private final boolean isFromFavouriteCategory;
     private List<BaseModel> dataList;
     private OnItemClickListener onItemClickListener;
 
-    public PortfolioDetailsAdapter(@NonNull Context context) {
+    public PortfolioDetailsAdapter(@NonNull Context context, boolean isFromFavouriteCategory) {
         this.context = context;
+        this.isFromFavouriteCategory = isFromFavouriteCategory;
         dataList = new ArrayList<>();
     }
 
@@ -32,8 +34,10 @@ public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         switch (viewType) {
-            case R.layout.item_button:
+            case R.layout.item_button: {
+                itemView.setVisibility(isFromFavouriteCategory ? View.GONE : View.VISIBLE);
                 return new ButtonHolder(itemView, () -> onItemClickListener.onAddPropertyClicked());
+            }
             case R.layout.item_owner_portfolio_details:
                 return new PortfolioOwnerDetailsHolder(context, itemView);
             case R.layout.item_manager_portfolio_details:

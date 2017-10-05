@@ -145,8 +145,9 @@ public class AddressFragment extends BaseFragment implements AddressContract.Vie
 
     private void initAutocomplete() {
         googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), GOOGLE_CLIENT_ID, connectionResult ->
-                        DEPENDENCIES.getLogger().w("Connection failed"))
+                .enableAutoManage(getActivity(), GOOGLE_CLIENT_ID,
+                        connectionResult ->
+                                DEPENDENCIES.getLogger().w("Connection failed"))
                 .addApi(Places.GEO_DATA_API)
                 .build();
         PlaceAutocompleteAdapter adapter = new PlaceAutocompleteAdapter(getActivity(), googleApiClient, null);

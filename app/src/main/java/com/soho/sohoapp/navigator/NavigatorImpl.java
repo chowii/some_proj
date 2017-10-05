@@ -2,6 +2,7 @@ package com.soho.sohoapp.navigator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,8 @@ import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
 import com.soho.sohoapp.feature.profile.EditAccountActivity;
 import com.soho.sohoapp.feature.profile.password.EditAccountPassActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
+
+import org.jetbrains.annotations.Nullable;
 
 public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY = "KEY_PROPERTY";
@@ -394,6 +397,17 @@ public class NavigatorImpl implements NavigatorInterface {
             ContactZendeskActivity.startActivity(fragment.getContext(), null);
         } else {
             ContactZendeskActivity.startActivity(activity, null);
+        }
+    }
+
+    @Override
+    public void openExternalUrl(@Nullable Uri uri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        if (fragment != null) {
+            fragment.getActivity().startActivity(intent);
+        } else {
+            activity.startActivity(intent);
         }
     }
 

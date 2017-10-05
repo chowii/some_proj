@@ -38,7 +38,9 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
     @BindView(R.id.user_avatar_view)
     UserAvatarView userAvatarView;
 
-    public PropertyDetailHeaderViewHolder(View itemView) { super(itemView); }
+    public PropertyDetailHeaderViewHolder(View itemView) {
+        super(itemView);
+    }
 
     @Override
     public void onBindViewHolder(PropertyDetailHeaderItem model) {
@@ -47,13 +49,14 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
         bedroomTextView.setText(String.valueOf(model.getBedroom()));
         bathroomTextView.setText(String.valueOf(model.getBathroom()));
         parkingTextView.setText(String.valueOf(model.getCarspot()));
-        propertySizeTextView.setText(model.getPropertySizeWithUnit());
-        if(model.getPropertyState() != null && model.retrievePropertyType() != null) {
+        if (model.getPropertySize() > 0)
+            propertySizeTextView.setText(model.getPropertySizeWithUnit());
+        if (model.getPropertyState() != null && model.retrievePropertyType() != null) {
             typeTextView.setText(StringUtils.capitalize(model.retrievePropertyType())
                     + " | "
                     + StringUtils.capitalize(model.getPropertyState()));
         }
-        if(model.getRepresentingUser() != null) {
+        if (model.getRepresentingUser() != null) {
             userAvatarView.setVisibility(View.VISIBLE);
             userAvatarView.populateWithPropertyUser(model.getRepresentingUser());
         } else {

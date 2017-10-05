@@ -40,6 +40,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
     private PortfolioDetailsContract.ViewPresentable presentable;
     private PortfolioDetailsPresenter presenter;
     private PortfolioDetailsAdapter adapter;
+    private boolean isFromFavouriteCategory;
 
     @NonNull
     public static Intent createOwnerIntent(@NonNull Context context, @NonNull PortfolioCategory portfolioCategory) {
@@ -63,7 +64,8 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
         initToolbar();
         initView();
 
-        presenter = new PortfolioDetailsPresenter(this, NavigatorImpl.newInstance(this));
+        presenter = new PortfolioDetailsPresenter(this, NavigatorImpl.newInstance(this)
+                , getResources());
         presenter.startPresenting(savedInstanceState != null);
     }
 
@@ -135,7 +137,7 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
 
     private void initView() {
         swipeRefresh.setOnRefreshListener(() -> presentable.onPullToRefresh());
-        adapter = new PortfolioDetailsAdapter(this);
+        adapter = new PortfolioDetailsAdapter(this, isFromFavouriteCategory);
         adapter.setOnItemClickListener(new PortfolioDetailsAdapter.OnItemClickListener() {
             @Override
             public void onAddPropertyClicked() {
@@ -165,7 +167,10 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
                 }
             } else {
                 PortfolioManagerCategory portfolio = extras.getParcelable(KEY_MANAGER_PORTFOLIO);
+
                 if (portfolio != null) {
+                    isFromFavouriteCategory = portfolio.getFilterForPortfolio() != null
+                            && PortfolioCategory.FILTER_FAVOURITES.equals(portfolio.getFilterForPortfolio());
                     toolbar.setTitle(portfolio.getName());
                 }
             }

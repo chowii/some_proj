@@ -16,6 +16,7 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.data.models.INTENTION
 import com.soho.sohoapp.data.models.ROLE
+import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
@@ -25,7 +26,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_register_user_info.*
 import java.util.*
-
 
 
 class RegisterUserInfoActivity : AbsActivity() {
@@ -88,17 +88,22 @@ class RegisterUserInfoActivity : AbsActivity() {
             put(Keys.User.LAST_NAME, lastNameEditText.text.toString())
             put(Keys.User.FIRST_NAME, nameEditText.text.toString())
         }
-
+        val loadingDialog = LoadingDialog(this)
+        loadingDialog.show(getString(R.string.common_loading))
         disposableUserProfile = DEPENDENCIES.sohoService.updateUserProfile(values)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { userResult ->
+                            loadingDialog.dismiss()
                             DEPENDENCIES.preferences.mUser = Converter.toUser(userResult)
                             DEPENDENCIES.preferences.authToken = userResult.authenticationToken ?: ""
                             NavigatorImpl.newInstance(this).openHomeActivity()
                         },
-                        { handleError(it) })
+                        {
+                            handleError(it)
+                            loadingDialog.dismiss()
+                        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

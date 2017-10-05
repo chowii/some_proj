@@ -32,7 +32,7 @@
         <EditText
             android:id="@+id/last_name_edit_text"
             style="@style/EditText.RegisterStyle"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:hint="@string/last_name"
             android:theme="@style/EditText.RegisterTheme" />
 
@@ -40,8 +40,8 @@
             android:id="@+id/country_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#80000000"
-            android:padding="16dp"
+            android:background="#10000000"
+            android:padding="5dp"
             android:textSize="14sp" />
 
         <TextView

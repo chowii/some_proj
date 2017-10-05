@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.home.addproperty.address;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -11,10 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.soho.sohoapp.feature.marketplaceview.components.PlacesFilter;
+
 import java.util.ArrayList;
 
 public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePrediction> implements Filterable {
@@ -22,12 +25,17 @@ public class PlaceAutocompleteAdapter extends ArrayAdapter<AutocompletePredictio
     private static final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.BOLD);
     private GoogleApiClient googleApiClient;
     private ArrayList<AutocompletePrediction> resultList;
-    private AutocompleteFilter placeFilter;
+    private AutocompleteFilter placeFilter = new AutocompleteFilter.Builder()
+            .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+            .build();
 
-    public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, AutocompleteFilter filter) {
+    public PlaceAutocompleteAdapter(Context context, GoogleApiClient googleApiClient, @Nullable AutocompleteFilter filter) {
         super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
+
         this.googleApiClient = googleApiClient;
-        placeFilter = filter;
+        if (filter != null) {
+            this.placeFilter = filter;
+        }
     }
 
     @Override

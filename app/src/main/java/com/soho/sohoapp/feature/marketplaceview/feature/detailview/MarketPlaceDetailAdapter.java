@@ -29,11 +29,11 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 class MarketPlaceDetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private final List<BaseModel> modelList;
-    private final PropertyDetailAuctionViewHolder.OnAddToCalenderClickListener mListener;
+    private final PropertyDetailAuctionViewHolder.OnAddToCalenderClickListener addToCalenderClickListener;
 
     MarketPlaceDetailAdapter(List<BaseModel> modelList, PropertyDetailAuctionViewHolder.OnAddToCalenderClickListener listener) {
         this.modelList = modelList;
-        this.mListener = listener;
+        this.addToCalenderClickListener = listener;
     }
 
     @Override
@@ -60,7 +60,7 @@ class MarketPlaceDetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case R.layout.item_property_detail_header:
                 return new PropertyDetailHeaderViewHolder(itemView);
             case R.layout.item_property_date_information:
-                return new PropertyDetailAuctionViewHolder(itemView, mListener);
+                return new PropertyDetailAuctionViewHolder(itemView, addToCalenderClickListener);
             case R.layout.item_property_image:
 
                 String apiKey = "";
