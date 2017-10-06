@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,11 +15,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.enums.MarketplaceFilterSaleType;
+import com.soho.sohoapp.data.models.BasicProperty;
+import com.soho.sohoapp.data.models.PaginationInformation;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
-import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceContract.ViewPresentable;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
 import com.soho.sohoapp.feature.marketplaceview.feature.filters.PropertyFilterActivity;
 import com.soho.sohoapp.landing.BaseFragment;
+import com.soho.sohoapp.utils.PaginatedAdapterListener;
 
 import java.util.List;
 
@@ -27,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
+import static com.soho.sohoapp.navigator.RequestCode.FILTER_ACTIVITY_REQUEST_CODE;
 
 /**
  * Created by chowii on 14/8/17.
@@ -35,11 +41,10 @@ import static android.app.Activity.RESULT_OK;
 public class MarketPlaceFragment extends BaseFragment implements
         TabLayout.OnTabSelectedListener,
         MarketPlaceContract.ViewInteractable,
-        PropertyViewHolder.OnMarketplaceItemClickListener
-{
+        PaginatedAdapterListener<BasicProperty> {
 
-    private static final int FILTER_ACTIVITY_REQUEST_CODE = 18;
     public static final String TAG = "MarketPlaceFragment";
+
     public static MarketPlaceFragment newInstance() {
         MarketPlaceFragment fragment = new MarketPlaceFragment();
         Bundle args = new Bundle();
@@ -63,32 +68,61 @@ public class MarketPlaceFragment extends BaseFragment implements
     TextView priceRangeTextView;
 
     @OnClick(R.id.ll_search_bar)
-    public void onSearchTextClicked(View view){
+    public void onSearchTextClicked(View view) {
         Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
         startActivityForResult(filterIntent, FILTER_ACTIVITY_REQUEST_CODE);
     }
 
-    MarketPlacePresenter presenter;
+    private MarketPlacePresenter presenter;
+    private ViewPresentable presentable;
+    private MarketPlaceAdapter adapter;
+
+    // MARK: - ================== LifeCycle related ==================
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         ButterKnife.bind(this, view);
-        configueSwipeLayout();
+        configureSwipeLayout();
         presenter = new MarketPlacePresenter(this);
         presenter.createPresentation();
         presenter.startPresenting();
         return view;
     }
 
-    private void configueSwipeLayout() {
-        swipeLayout.setOnRefreshListener(() -> presenter.onRefresh());
+    @Override
+    public void onDestroyView() {
+        presentable.stopPresenting();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FILTER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            presentable.retrieveFiltersAndPerformFullRefresh();
+        }
+    }
+
+    // MARK: - ================== General methods ==================
+
+    private void configureSwipeLayout() {
+        swipeLayout.setOnRefreshListener(() -> presenter.performFullRefresh());
         int swipeProgressViewOffset = ((int) getResources().getDimension(R.dimen.marketplace_search_height));
         swipeLayout.setProgressViewOffset(false, swipeProgressViewOffset, swipeProgressViewOffset + 72);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    private void initAdapterIfNeeded() {
+        if (adapter == null) {
+            adapter = new MarketPlaceAdapter(this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.getRecycledViewPool().setMaxRecycledViews(R.id.image_view_pager, 1);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+    }
+
+    // MARK: - ================== MarketPlaceContract.ViewInteractable methods ==================
+
     @Override
     public void configureTabLayout() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.marketplace_buy_tab));
@@ -96,10 +130,16 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.addOnTabSelectedListener(this);
     }
 
+    @Override
+    public void setPresentable(ViewPresentable presentable) {
+        this.presentable = presentable;
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        presenter.saleTypeChanged(getString(R.string.marketplace_buy_tab).equalsIgnoreCase(tab.getText().toString()) ? "sale/auction" : "rent");
+        presenter.saleTypeChanged(getString(R.string.marketplace_buy_tab)
+                .equalsIgnoreCase(tab.getText().toString()) ? MarketplaceFilterSaleType.SALE : MarketplaceFilterSaleType.RENT);
     }
 
     @Override
@@ -109,12 +149,12 @@ public class MarketPlaceFragment extends BaseFragment implements
     public void onTabReselected(TabLayout.Tab tab) {}
 
     @Override
-    public void showRefreshing() {
+    public void showProgressBar() {
         swipeLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefreshing() {
+    public void hideProgressBar() {
         swipeLayout.setRefreshing(false);
     }
 
@@ -124,8 +164,15 @@ public class MarketPlaceFragment extends BaseFragment implements
     }
 
     @Override
-    public void configureAdapter(List<? extends BaseModel> model) {
-        initAdapter(model);
+    public void fullRefreshComplete(List<BasicProperty> properties, @Nullable PaginationInformation paginationInformation) {
+        initAdapterIfNeeded();
+        adapter.replaceDataset(properties, paginationInformation);
+    }
+
+    @Override
+    public void nextPageLoaded(List<BasicProperty> properties, @Nullable PaginationInformation paginationInformation) {
+        initAdapterIfNeeded();
+        adapter.addAdditionalItems(properties, paginationInformation);
     }
 
     @Override
@@ -133,8 +180,8 @@ public class MarketPlaceFragment extends BaseFragment implements
         tabLayout.getTabAt(currentFilter.getMarketplaceFilter().isSaleFilter() ? 0 : 1).select();
         priceRangeTextView.setText(
                 currentFilter.getMarketplaceFilter().priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
-                getString(R.string.dollar_format),
-                getString(R.string.filters_price_any))
+                        getString(R.string.dollar_format),
+                        getString(R.string.filters_price_any))
         );
         suburbsTextView.setText(currentFilter.suburbsDisplayString(
                 getString(R.string.filters_multiple_suburbs_format),
@@ -142,30 +189,16 @@ public class MarketPlaceFragment extends BaseFragment implements
         );
     }
 
-    void initAdapter(List<? extends BaseModel> propertyList){
-        recyclerView.setAdapter(new MarketPlaceAdapter(propertyList, this));
-        recyclerView.getRecycledViewPool().setMaxRecycledViews(R.id.image_view_pager, 1);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
+    // MARK: - ================== PaginatedAdapterListener<BasicProperty> ==================
 
     @Override
-    public void onDestroyView() {
-        presenter.stopPresenting();
-        presenter.destroyPresentation();
-        presenter = null;
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onMarketplaceItemClicked(int id) {
-        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity(), id);
+    public void adapterItemClicked(@NonNull BasicProperty item) {
+        Intent detailIntent = PropertyDetailActivity.createIntent(getActivity(), item.getId());
         getActivity().startActivity(detailIntent);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == FILTER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            presenter.startPresenting();
-        }
+    public void shouldLoadNextPage(int page) {
+        presentable.fetchNextPage(page);
     }
 }

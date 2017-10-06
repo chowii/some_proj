@@ -10,6 +10,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.UserAvatarView;
 import com.soho.sohoapp.data.models.BasicProperty;
 import com.soho.sohoapp.feature.home.editproperty.ImageHeaderViewPager;
+import com.soho.sohoapp.utils.PaginatedAdapterListener;
 
 import butterknife.BindView;
 
@@ -46,10 +47,10 @@ class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
     @BindView(R.id.rootView)
     ViewGroup viewView;
 
-    private final OnMarketplaceItemClickListener listener;
+    private final PaginatedAdapterListener listener;
     ImageHeaderViewPager pagerAdapter;
 
-    PropertyViewHolder(View itemView, OnMarketplaceItemClickListener listener) {
+    PropertyViewHolder(View itemView, PaginatedAdapterListener listener) {
         super(itemView);
         this.listener = listener;
     }
@@ -60,9 +61,9 @@ class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
             pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
         pagerAdapter.setData(property.getPhotosAsImages());
-        viewView.setOnClickListener(v -> listener.onMarketplaceItemClicked(property.getId()));
+        viewView.setOnClickListener(v -> listener.adapterItemClicked(property));
         pagerAdapter.setOnItemClickListener(image -> {
-            listener.onMarketplaceItemClicked(property.getId());
+            listener.adapterItemClicked(property);
         });
         userAvatarView.populateWithPropertyUser(property.getRepresentingUser());
         configurePropertyDetails(property);
@@ -76,9 +77,4 @@ class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
         bathroomTextView.setText(String.valueOf(property.getBathrooms()));
         parkingTextView.setText(String.valueOf(property.getCarspots()));
     }
-
-    interface OnMarketplaceItemClickListener {
-        void onMarketplaceItemClicked(int id);
-    }
-
 }

@@ -13,6 +13,7 @@ import com.soho.sohoapp.utils.QueryHashMap
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -52,7 +53,7 @@ interface SohoService {
     // MARK: - ================== Property Related ==================
 
     @POST("search/properties")
-    fun searchProperties(@Body map: java.util.Map<String, Object>): Observable<java.util.List<BasicPropertyResult>>
+    fun searchProperties(@Body map: QueryHashMap): Observable<Response<List<BasicPropertyResult>>>
 
     @POST("properties")
     fun createProperty(@QueryMap map: QueryHashMap): Observable<PropertyResult>

@@ -401,6 +401,7 @@
     <string name="edit_account_pass_requirement_password">Min 6 character 1 number</string>
     <string name="edit_account_pass_confirm_password">confirm password</string>
     <string name="edit_account_pass_save_changes">save changes</string>
+    <string name="exception_paginated_adapter_override">You must override \'viewHolderFormItem(parent: ViewGroup, viewType: Int)\'.</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

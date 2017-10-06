@@ -104,6 +104,17 @@ public interface Keys {
         String FILTER_BY_PROPERTY_TYPE = "by_property_types";
         String FILTER_BY_LISTING_TYPE = "by_listing_type";
         String FILTER_ALL_PROPERTIES = "all_properties";
+        String FILTER_PER_PAGE = "per_page";
+        String FILTER_PAGE = "page";
+    }
+
+    interface Pagination {
+        String PAGINATION_PAGE = "x-page";
+        String PAGINATION_NEXT_PAGE = "x-next-page";
+        String PAGINATION_PER_PAGE = "x-per-page";
+        String PAGINATION_TOTAL_PAGES = "x-total-pages";
+        String PAGINATION_TOTAL_ITEMS = "x-total";
+        String PAGINATION_OFFSET = "x-offset";
     }
 
     interface Verification {

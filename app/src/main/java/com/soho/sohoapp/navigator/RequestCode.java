@@ -14,6 +14,7 @@ public final class RequestCode {
     public static final int PROPERTY_RENT_SETTINGS_DESCRIPTION = 45;
     public static final int PROPERTY_PUBLIC_STATUS_UPDATED = 46;
     public static final int EDIT_ACCOUNT_PRESENTER_STORAGE = 50;
+    public static final int FILTER_ACTIVITY_REQUEST_CODE = 18;
 
     private RequestCode() {
         //utils class to hold constants
