@@ -23,6 +23,7 @@ import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.rent.Rent
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity;
 import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
+import com.soho.sohoapp.feature.home.editproperty.verification.ownership.OwnershipVerificationActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
 import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
@@ -241,6 +242,15 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivity(VerificationActivity.Companion.createIntent(fragment.getActivity(), property));
         } else {
             activity.startActivity(VerificationActivity.Companion.createIntent(activity, property));
+        }
+    }
+
+    @Override
+    public void openOwnershipVerificationScreen(Property property) {
+        if (fragment != null) {
+            fragment.startActivity(OwnershipVerificationActivity.Companion.createIntent(fragment.getActivity(), property));
+        } else {
+            activity.startActivity(OwnershipVerificationActivity.Companion.createIntent(activity, property));
         }
     }
 

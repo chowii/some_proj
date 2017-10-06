@@ -13,12 +13,14 @@ class Verification() : Parcelable {
     var type: String? = null
     var text: String? = null
     var state: String? = null
+    var attachments: List<Attachment> = mutableListOf()
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         type = parcel.readString()
         text = parcel.readString()
         state = parcel.readString()
+        attachments = parcel.createTypedArrayList(Attachment)
     }
 
     @StringRes
@@ -43,6 +45,7 @@ class Verification() : Parcelable {
         parcel.writeString(type)
         parcel.writeString(text)
         parcel.writeString(state)
+        parcel.writeTypedList(attachments)
     }
 
     override fun describeContents(): Int {

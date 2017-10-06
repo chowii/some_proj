@@ -14,4 +14,7 @@ class VerificationResult {
 
     @SerializedName("state")
     var state: String? = null
+
+    @SerializedName("attachments")
+    var attachment: List<AttachmentResult>? = null
 }

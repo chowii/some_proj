@@ -43,7 +43,7 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
     }
 
     override fun onOwnershipProofClicked() {
-        view.showToastMessage(R.string.coming_soon)
+        navigator.openOwnershipVerificationScreen(property)
     }
 
     override fun onPhotoIdClicked() {

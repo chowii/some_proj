@@ -3,7 +3,7 @@ package com.soho.sohoapp.feature.network
 import android.app.Activity
 import android.view.View
 import android.widget.FrameLayout
-import com.soho.sohoapp.Dependencies
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.helper.SohoSnackbar
 import com.soho.sohoapp.navigator.NavigatorImpl
@@ -22,29 +22,27 @@ class ThrowableHandler {
                       , coordinatorLayout: FrameLayout? = null
                       , snackbarAnchorView: View?
                       , activity: Activity) {
-            if (throwable is HttpStatusException)
+            if (throwable is HttpStatusException) {
                 when (throwable.errorType) {
                     HttpErrorType.General -> {
                         if (showInternetErrors) {
                             SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
                         }
-                        else handleCustomError(throwable, throwable.error)
                     }
 
                     HttpErrorType.PasswordReEnterRequired,
-                    HttpErrorType.PasswordResetRequired ->
-                        NavigatorImpl.newInstance(activity).showLandingActivity()
-
+                    HttpErrorType.PasswordResetRequired,
                     HttpErrorType.ReloginRequired ->
                         NavigatorImpl.newInstance(activity).showLandingActivity()
                 }
-            else if (showInternetErrors && snackbarAnchorView != null)
+            } else if (showInternetErrors && snackbarAnchorView != null) {
                 SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))
-            else handleCustomError(throwable, "Something went wrong. Please try again")
+            }
+            handleCustomError(throwable, activity.getString(R.string.something_wrong_error))
         }
 
         private fun handleCustomError(throwable: Throwable, errorMessage: String) {
-            Dependencies.DEPENDENCIES.logger.e(errorMessage, throwable)
+            DEPENDENCIES.logger.e(errorMessage, throwable)
         }
     }
 }

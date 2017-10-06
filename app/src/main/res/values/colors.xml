@@ -15,6 +15,7 @@
 
     <color name="white">#FFF</color>
     <color name="blackDarkPrimary">#2D2D2D</color>
+    <color name="blackDarkPrimaryTransparent">#992D2D2D</color>
 
     <color name="blueFacebookLogin">#1A78E5</color>
     <color name="redGooglePlusLogin">#D1422B</color>

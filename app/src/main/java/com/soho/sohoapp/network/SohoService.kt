@@ -97,6 +97,9 @@ interface SohoService {
 
     @PUT("verifications/agent_licence")
     fun verifyAgentLicenseNumber(@Body map: HashMap<String, Any>): Observable<AccountVerification>
+
+    @PUT("verifications/property")
+    fun sendPropertyVerificationAttachments(@Body file: RequestBody): Observable<ResponseBody>
 }
 
 

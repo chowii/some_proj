@@ -105,4 +105,8 @@ public interface Keys {
         String FILTER_BY_LISTING_TYPE = "by_listing_type";
         String FILTER_ALL_PROPERTIES = "all_properties";
     }
+
+    interface Verification {
+        String ATTACHMENT = "attachments_attributes[%d][file]";
+    }
 }

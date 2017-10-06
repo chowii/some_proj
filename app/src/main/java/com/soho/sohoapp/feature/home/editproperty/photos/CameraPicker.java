@@ -1,11 +1,13 @@
 package com.soho.sohoapp.feature.home.editproperty.photos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 
 import com.soho.sohoapp.R;
@@ -16,12 +18,20 @@ import java.io.IOException;
 
 public class CameraPicker {
     private static final int REQUEST_TAKE_PHOTO = 0;
-    private final Activity activity;
+    private Activity activity;
+    private Fragment fragment;
     private String photoPath;
     private ImageCapturedListener listener;
+    private Context context;
 
     public CameraPicker(@NonNull Activity activity) {
         this.activity = activity;
+        context = activity;
+    }
+
+    public CameraPicker(@NonNull Fragment fragment) {
+        this.fragment = fragment;
+        context = fragment.getActivity();
     }
 
     public void takePhoto(ImageCapturedListener listener) {
@@ -32,7 +42,7 @@ public class CameraPicker {
     private File createImageFile() throws IOException {
         String timeStamp = DateUtils.getDateFormatForFileName();
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         photoPath = image.getAbsolutePath();
@@ -41,7 +51,8 @@ public class CameraPicker {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+
+        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -50,9 +61,13 @@ public class CameraPicker {
             }
 
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, activity.getString(R.string.provider_authorities), photoFile);
+                Uri photoURI = FileProvider.getUriForFile(context, context.getString(R.string.provider_authorities), photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                activity.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                if (fragment != null) {
+                    fragment.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                } else {
+                    activity.startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
             }
         }
     }

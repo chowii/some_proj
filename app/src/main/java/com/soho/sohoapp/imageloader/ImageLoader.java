@@ -22,12 +22,14 @@ public class ImageLoader {
         if (params.uri != null) {
             Picasso.with(context)
                     .load(params.uri)
+                    .fit()
                     .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
                     .error(params.placeHolder)
                     .into(params.imageView);
         } else {
             Picasso.with(context)
                     .load(params.url)
+                    .fit()
                     .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
                     .error(params.placeHolder)
                     .into(params.imageView);

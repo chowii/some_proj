@@ -237,6 +237,13 @@
     <string name="verification_pending">Pending</string>
     <string name="verification_rejected">Rejected</string>
     <string name="verification_unknown">Unknown</string>
+    <string name="verification_ownership_details">Details</string>
+    <string name="verification_ownership_files">Files</string>
+    <string name="verification_ownership_details_description">To ensure safety on the Soho marketplace we require all homeowners or agents to upload at least one document illustrating ownership or management.</string>
+    <string name="verification_ownership_details_title">Upload at least one of the following</string>
+    <string name="verification_ownership_details_documents">&#8226; Strata Statement\n&#8226; Council rate\n&#8226; Land title deed\n&#8226; Other supporting ownership documents</string>
+    <string name="verification_ownership_attach_files">Attach files</string>
+    <string name="verification_ownership_submit">Submit to Verify</string>
     <!--Verification screen end-->
 
     <!--Autocomplete address screen start-->

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.dtos.AttachmentResult;
 import com.soho.sohoapp.data.dtos.BasicPropertyResult;
 import com.soho.sohoapp.data.dtos.BasicUserResult;
 import com.soho.sohoapp.data.dtos.ImageResult;
@@ -18,6 +19,7 @@ import com.soho.sohoapp.data.dtos.PropertyResult;
 import com.soho.sohoapp.data.dtos.PropertyUserResult;
 import com.soho.sohoapp.data.dtos.UserResult;
 import com.soho.sohoapp.data.dtos.VerificationResult;
+import com.soho.sohoapp.data.models.Attachment;
 import com.soho.sohoapp.data.models.BasicProperty;
 import com.soho.sohoapp.data.models.BasicUser;
 import com.soho.sohoapp.data.models.Image;
@@ -47,6 +49,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.Observable;
 import okhttp3.MediaType;
@@ -199,7 +202,26 @@ public final class Converter {
         verification.setType(result.getType());
         verification.setText(result.getText());
         verification.setState(result.getState());
+        verification.setAttachments(toAttachments(result.getAttachment()));
         return verification;
+    }
+
+    @NonNull
+    private static List<Attachment> toAttachments(@Nullable List<AttachmentResult> results) {
+        List<Attachment> attachments = new ArrayList<>();
+        if (results != null) {
+            Attachment attachment;
+            for (AttachmentResult result : results) {
+                attachment = new Attachment();
+                attachment.setId(result.getId());
+                attachment.setHolder(R.drawable.bc_add_new_file);
+                if (result.getFile() != null) {
+                    attachment.setFileUrl(result.getFile().getFileUrl());
+                }
+                attachments.add(attachment);
+            }
+        }
+        return attachments;
     }
 
     @NonNull
@@ -385,6 +407,28 @@ public final class Converter {
             RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
             File file = new File(uri.getPath());
             builder.addFormDataPart(Keys.Property.IMAGE, file.getName(), imageRequestBody);
+            return builder.build();
+        });
+    }
+
+    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull List<Attachment> attachments, int propertyId) {
+        return Observable.fromCallable(() -> {
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            for (int i = 0; i < attachments.size(); i++) {
+                Attachment attachment = attachments.get(i);
+                Uri uri;
+                if (attachment.getFilePath() != null) {
+                    uri = Uri.fromFile(new File(attachment.getFilePath()));
+                } else {
+                    uri = attachment.getUri();
+                }
+                RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+                File file = new File(uri.getPath());
+                builder.addFormDataPart(String.format(Locale.getDefault(),
+                        Keys.Verification.ATTACHMENT, i), file.getName(), imageRequestBody);
+            }
+
+            builder.addFormDataPart(Keys.Property.PROPRETY_ID, String.valueOf(propertyId));
             return builder.build();
         });
     }

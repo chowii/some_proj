@@ -53,6 +53,8 @@ public interface NavigatorInterface {
 
     void openVerificationScreen(@NonNull Property property);
 
+    void openOwnershipVerificationScreen(Property property);
+
     void openAutocompleteAddressScreen(int requestCode);
 
     void openPropertyDescriptionScreen(String description, int requestCode);
