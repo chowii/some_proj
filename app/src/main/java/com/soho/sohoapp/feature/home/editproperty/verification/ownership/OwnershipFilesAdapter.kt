@@ -1,11 +1,13 @@
 package com.soho.sohoapp.feature.home.editproperty.verification.ownership
 
 import android.content.Context
+import android.graphics.Point
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
@@ -40,6 +42,10 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
                         .view(fileHolder.photo)
                         .placeHolder(file.holder)
 
+                val imageSize = calculateImageSize()
+                params.height(imageSize)
+                params.width(imageSize)
+
                 //we have this check because attachment can be from gallery, camera or server
                 if (file.uri != null) {
                     imageLoader.load(params.file(file.uri!!))
@@ -71,6 +77,13 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
+    }
+
+    private fun calculateImageSize(): Int {
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val point = Point()
+        wm.defaultDisplay.getSize(point)
+        return point.x / 3
     }
 
     inner class FileHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

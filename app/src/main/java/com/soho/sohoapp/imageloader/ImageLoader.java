@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.soho.sohoapp.utils.Preconditions;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 public class ImageLoader {
     private final Context context;
@@ -19,27 +20,28 @@ public class ImageLoader {
 
     public void load(@NonNull Params params) {
         Preconditions.checkIfNull(params.imageView, "Params.imageView must not be null.");
+        RequestCreator creator;
         if (params.uri != null) {
-            Picasso.with(context)
-                    .load(params.uri)
-                    .fit()
-                    .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
-                    .error(params.placeHolder)
-                    .into(params.imageView);
+            creator = Picasso.with(context)
+                    .load(params.uri);
         } else {
-            Picasso.with(context)
-                    .load(params.url)
-                    .fit()
-                    .placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
-                    .error(params.placeHolder)
-                    .into(params.imageView);
+            creator = Picasso.with(context)
+                    .load(params.url);
         }
+        if (params.width > 0 && params.height > 0) {
+            creator.resize(params.width, params.height);
+        }
+        creator.placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
+                .error(params.placeHolder)
+                .into(params.imageView);
     }
 
     public static class Params {
         ImageView imageView;
         String url;
         Uri uri;
+        int height;
+        int width;
 
         @DrawableRes
         int placeHolder;
@@ -69,6 +71,16 @@ public class ImageLoader {
 
         public Params placeHolder(@DrawableRes int placeHolder) {
             this.placeHolder = placeHolder;
+            return this;
+        }
+
+        public Params height(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Params width(int width) {
+            this.width = width;
             return this;
         }
     }
