@@ -17,6 +17,7 @@ import com.soho.sohoapp.data.dtos.UserResult
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.utils.Converter
+import com.soho.sohoapp.utils.orFalse
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -126,9 +127,15 @@ class LandingActivity : AbsActivity() {
     }
 
     private fun goHomeActivity(user: UserResult) {
-        DEPENDENCIES.preferences.mUser = Converter.toUser(user)
-        DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-        NavigatorImpl.newInstance(this).openHomeActivity()
+        DEPENDENCIES.prefs.user = Converter.toUser(user)
+        DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
+
+        val navigator = NavigatorImpl.newInstance(this)
+        if (!DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
+            navigator.showRegisterUserInfoActivity()
+        } else {
+            navigator.openHomeActivity()
+        }
     }
 
     companion object {

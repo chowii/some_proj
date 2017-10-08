@@ -29,7 +29,7 @@ class EditAccountPassActivity : AbsActivity(), EditAccountPasswordContract.ViewI
         fun createIntent(context: Context): Intent = Intent(context, EditAccountPassActivity::class.java)
     }
 
-    val presenter by lazy { EditAccountPassActivityPresenter(this, DEPENDENCIES.preferences.mUser) }
+    val presenter by lazy { EditAccountPassActivityPresenter(this, DEPENDENCIES.prefs.user) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

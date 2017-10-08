@@ -15,7 +15,7 @@ import com.soho.sohoapp.preferences.Prefs
 enum class Dependencies {
     DEPENDENCIES;
 
-    lateinit var preferences: Prefs
+    lateinit var prefs: Prefs
         private set
 
     lateinit var imageLoader: ImageLoader
@@ -33,7 +33,7 @@ enum class Dependencies {
     val sohoService: SohoService = ApiClient.getService()
 
     fun init(context: Context) {
-        preferences = Prefs(context)
+        prefs = Prefs(context)
         imageLoader = ImageLoader(context)
         logger = AndroidLogger()
         eventBus = AndroidEventBus()

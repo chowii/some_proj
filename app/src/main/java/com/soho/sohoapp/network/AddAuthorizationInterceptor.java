@@ -18,7 +18,7 @@ public class AddAuthorizationInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
 
-        String authToken = DEPENDENCIES.getPreferences().getAuthToken();
+        String authToken = DEPENDENCIES.getPrefs().getAuthToken();
         Request.Builder requestBuilder = request.newBuilder();
         if (!authToken.equals("")) {
             requestBuilder.addHeader("Authorization", authToken);

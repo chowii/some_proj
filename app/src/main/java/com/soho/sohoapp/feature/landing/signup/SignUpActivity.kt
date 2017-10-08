@@ -84,10 +84,10 @@ class SignUpActivity : AppCompatActivity() {
                 .subscribe(
                         { user ->
                             DEPENDENCIES.logger.d(user.authenticationToken)
-                            DEPENDENCIES.preferences.mUser = Converter.toUser(user)
-                            DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
+                            DEPENDENCIES.prefs.user = Converter.toUser(user)
+                            DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
                             loadingDialog?.dismiss()
-
+                            //profile is incomplete cause we are signing up so we don't need to check
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()
                         },
                         { throwable ->

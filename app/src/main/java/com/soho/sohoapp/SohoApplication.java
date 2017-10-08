@@ -52,7 +52,7 @@ public class SohoApplication extends MultiDexApplication {
 
         DEPENDENCIES.init(this);
 
-        Prefs prefs = DEPENDENCIES.getPreferences();
+        Prefs prefs = DEPENDENCIES.getPrefs();
         if (!prefs.getHasInstalled()) {
             prefs.setHasInstalled(true);
             createShortCut();
@@ -85,14 +85,14 @@ public class SohoApplication extends MultiDexApplication {
 
     @NotNull
     public static void getUserProfile() {
-        if (!isEmpty(DEPENDENCIES.getPreferences().getAuthToken())) {
+        if (!isEmpty(DEPENDENCIES.getPrefs().getAuthToken())) {
             DEPENDENCIES.getSohoService().getProfile()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userResult ->
                             {
                                 User user = Converter.toUser(userResult);
-                                DEPENDENCIES.getPreferences().setMUser(user);
+                                DEPENDENCIES.getPrefs().setUser(user);
                             }, throwable -> DEPENDENCIES.getLogger().e("Error when getting user profile", throwable)
                     );
         }

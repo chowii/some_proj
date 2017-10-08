@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import android.widget.*
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnCheckedChanged
-import butterknife.OnClick
+import butterknife.*
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsActivity
@@ -21,6 +19,7 @@ import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
 import com.soho.sohoapp.utils.QueryHashMap
+import com.soho.sohoapp.utils.checkEnableDisableAlpha
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -47,6 +46,9 @@ class RegisterUserInfoActivity : AbsActivity() {
     @BindView(R.id.buying_checkbox)
     lateinit var buyingCheckBox: CheckBox
 
+    @BindView(R.id.register_button)
+    lateinit var registerButton: Button
+
     @BindView(R.id.selling_checkbox)
     lateinit var sellingCheckBox: CheckBox
 
@@ -57,6 +59,12 @@ class RegisterUserInfoActivity : AbsActivity() {
     private var registerDialog: ProgressDialog? = null
     private var role: ROLE = ROLE.USER()
     private var country: String? = null
+
+    private var firstNameEntered: Boolean = false
+    private var lastNameEntered: Boolean = false
+    private var intentionsChecked: Boolean = false
+    private var conditionsMet: Boolean = false
+        get() = firstNameEntered && lastNameEntered && intentionsChecked
 
     @OnCheckedChanged(R.id.buying_checkbox, R.id.selling_checkbox, R.id.renting_checkbox)
     fun onCheckChanged(button: CompoundButton, checked: Boolean) {
@@ -69,6 +77,8 @@ class RegisterUserInfoActivity : AbsActivity() {
 
     private fun syncListIntentions(intentionConst: String, checked: Boolean) {
         if (checked) intentions.add(intentionConst) else intentions.remove(intentionConst)
+        intentionsChecked = rentingCheckBox.isChecked || sellingCheckBox.isChecked || buyingCheckBox.isChecked
+        registerButton.checkEnableDisableAlpha(conditionsMet)
     }
 
     private var disposableUserProfile: Disposable? = null
@@ -76,6 +86,18 @@ class RegisterUserInfoActivity : AbsActivity() {
     @OnCheckedChanged(R.id.im_agent_switch)
     fun onAgentRoleChanged(checked: Boolean) {
         role = if (checked) ROLE.AGENT() else ROLE.USER()
+    }
+
+    @OnTextChanged(value = R.id.first_name_edit_text, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    fun afterFirstNameInput(editable: Editable?) {
+        firstNameEntered = !editable.isNullOrEmpty()
+        registerButton.checkEnableDisableAlpha(conditionsMet)
+    }
+
+    @OnTextChanged(value = R.id.last_name_edit_text, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    fun afterLastNameInput(editable: Editable?) {
+        lastNameEntered = !editable.isNullOrEmpty()
+        registerButton.checkEnableDisableAlpha(conditionsMet)
     }
 
     @OnClick(R.id.register_button)
@@ -96,8 +118,8 @@ class RegisterUserInfoActivity : AbsActivity() {
                 .subscribe(
                         { userResult ->
                             loadingDialog.dismiss()
-                            DEPENDENCIES.preferences.mUser = Converter.toUser(userResult)
-                            DEPENDENCIES.preferences.authToken = userResult.authenticationToken ?: ""
+                            DEPENDENCIES.prefs.user = Converter.toUser(userResult)
+                            DEPENDENCIES.prefs.authToken = userResult.authenticationToken ?: ""
                             NavigatorImpl.newInstance(this).openHomeActivity()
                         },
                         {
@@ -112,7 +134,6 @@ class RegisterUserInfoActivity : AbsActivity() {
         ButterKnife.bind(this)
         initView()
     }
-
 
     private fun initView() {
         val availableLocales = Locale.getAvailableLocales()
@@ -133,6 +154,7 @@ class RegisterUserInfoActivity : AbsActivity() {
                 country = availableLocales[pos]
             }
         }
+        registerButton.checkEnableDisableAlpha(conditionsMet)
     }
 
 

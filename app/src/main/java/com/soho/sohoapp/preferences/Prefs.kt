@@ -4,10 +4,11 @@ import android.content.Context
 import com.google.gson.Gson
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.data.models.User
+import com.soho.sohoapp.utils.orFalse
 
 class Prefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
-    private val prefs= context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     var authToken: String
         set(value) {
@@ -17,7 +18,7 @@ class Prefs(context: Context) {
         get() {
             return prefs.getString(SHARED_PREFS_AUTH_TOKEN, "")
         }
-    var mUser: User? = null
+    var user: User? = null
 
     var hasInstalled: Boolean
         set(value) {
@@ -49,5 +50,8 @@ class Prefs(context: Context) {
     companion object {
         private val SHARED_PREFS_NAME = "Soho-prefs"
     }
+
+    var isProfileComplete: Boolean = false
+        get() = user?.isProfileComplete.orFalse()
 
 }

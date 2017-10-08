@@ -16,6 +16,7 @@ import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
+import com.soho.sohoapp.utils.orFalse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -70,9 +71,14 @@ class LoginActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ user ->
-                        DEPENDENCIES.preferences.mUser = Converter.toUser(user)
-                        DEPENDENCIES.preferences.authToken = user.authenticationToken ?: ""
-                        NavigatorImpl.newInstance(this).openHomeActivity()
+                        DEPENDENCIES.prefs.user = Converter.toUser(user)
+                        DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
+                        val navigatorImpl = NavigatorImpl.newInstance(this)
+                        if (DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
+                            navigatorImpl.showRegisterUserInfoActivity()
+                        } else {
+                            navigatorImpl.openHomeActivity()
+                        }
                         loadingDialog?.dismiss()
                     },
                             { throwable ->

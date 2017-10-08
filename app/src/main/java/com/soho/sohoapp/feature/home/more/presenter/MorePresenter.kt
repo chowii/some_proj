@@ -25,14 +25,14 @@ class MorePresenter(private val interactable: MoreContract.ViewInteractable, pri
             , MoreItem(getString(R.string.settings_log_out_item_text), R.drawable.ic_menu_logout))
 
     override fun getUser(forHelpActivity: Boolean) {
-        if (DEPENDENCIES.preferences.mUser == null) {
+        if (DEPENDENCIES.prefs.user == null) {
             compositeDisposable.add(DEPENDENCIES.sohoService.getProfile()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
                                 val user = Converter.toUser(it)
-                                DEPENDENCIES.preferences.mUser = user
+                                DEPENDENCIES.prefs.user = user
 
                                 if (forHelpActivity)
                                     user?.let { interactable.showSupportActivity(it) }
@@ -46,7 +46,7 @@ class MorePresenter(private val interactable: MoreContract.ViewInteractable, pri
                                 DEPENDENCIES.logger.e(throwable.message, throwable)
                             }))
         } else {
-            DEPENDENCIES.preferences.mUser?.let {
+            DEPENDENCIES.prefs.user?.let {
                 if (forHelpActivity)
                     interactable.showSupportActivity(it)
                 else

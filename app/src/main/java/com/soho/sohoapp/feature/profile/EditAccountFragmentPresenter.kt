@@ -69,8 +69,8 @@ class EditAccountFragmentPresenter(private val view: EditAccountContract.ViewInt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { userResult ->
-                            DEPENDENCIES.preferences.mUser = Converter.toUser(userResult)
-                            DEPENDENCIES.preferences.authToken = userResult.authenticationToken ?: ""
+                            DEPENDENCIES.prefs.user = Converter.toUser(userResult)
+                            DEPENDENCIES.prefs.authToken = userResult.authenticationToken ?: ""
                             view.hideLoading()
                         },
                         {

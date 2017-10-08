@@ -86,9 +86,9 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
     }
 
     private fun logoutUser() {
-        DEPENDENCIES.preferences.authToken = ""
+        DEPENDENCIES.prefs.authToken = ""
         //Double check and keep one
-        DEPENDENCIES.preferences.mUser = null
+        DEPENDENCIES.prefs.user = null
         NavigatorImpl.newInstance(this).openHomeActivity(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
 

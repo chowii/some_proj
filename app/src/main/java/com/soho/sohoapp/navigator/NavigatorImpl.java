@@ -326,18 +326,26 @@ public class NavigatorImpl implements NavigatorInterface {
     @Override
     public void openSignUpActivity() {
         if (fragment != null) {
-            fragment.startActivity(SignUpActivity.Companion.createIntent(fragment.getActivity()));
+            Intent intent = SignUpActivity.Companion.createIntent(fragment.getActivity());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.startActivity(intent);
         } else {
-            activity.startActivity(SignUpActivity.Companion.createIntent(activity));
+            Intent intent = SignUpActivity.Companion.createIntent(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
         }
     }
 
     @Override
     public void showRegisterUserInfoActivity() {
         if (fragment != null) {
-            fragment.startActivity(RegisterUserInfoActivity.Companion.createIntent(fragment.getActivity()));
+            Intent intent = RegisterUserInfoActivity.Companion.createIntent(fragment.getActivity());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.startActivity(intent);
         } else {
-            activity.startActivity(RegisterUserInfoActivity.Companion.createIntent(activity));
+            Intent intent = RegisterUserInfoActivity.Companion.createIntent(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
         }
     }
 
@@ -355,7 +363,6 @@ public class NavigatorImpl implements NavigatorInterface {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (activity == null) {
             if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
-
                 fragment.startActivityForResult(intent, CAMERA_INTENT_REQUEST_CODE);
             }
         } else {
