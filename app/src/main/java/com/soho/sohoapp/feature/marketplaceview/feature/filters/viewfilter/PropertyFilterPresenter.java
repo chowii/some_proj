@@ -38,7 +38,7 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
         this.currentFilter = currentFilter;
     }
 
-    public void addSuburbToDelete(Suburb suburb) {
+    void addSuburbToDelete(Suburb suburb) {
         if(suburbsToDelete == null)
             suburbsToDelete = new ArrayList<>();
         suburbsToDelete.add(suburb);

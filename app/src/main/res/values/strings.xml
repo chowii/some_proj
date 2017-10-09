@@ -26,6 +26,8 @@
     <string name="something_wrong_error">Something went wrong. Please try again</string>
     <string name="coming_soon">Coming soon..</string>
     <string name="dollar_format">$%1$s</string>
+    <string name="common_settings">Settings</string>
+    <string name="common_pin_sent">pin sent</string>
     <!--Common strings end-->
 
     <!--Test strings start-->
@@ -245,6 +247,11 @@
     <string name="verification_ownership_attach_files">Attach files</string>
     <string name="verification_ownership_submit">Submit to Verify</string>
     <!--Verification screen end-->
+
+    <!--ENTER PIN CODE -->
+    <string name="enter_pin_enter_pin">Enter pin</string>
+    <string name="enter_pin_enter_4_digit">Enter your 4 digit pin</string>
+    <string name="enter_pin_resend_code">Re-send confirmation code.</string>
 
     <!--Autocomplete address screen start-->
     <string name="autocomplete_address_toolbar_title">Auction Address</string>

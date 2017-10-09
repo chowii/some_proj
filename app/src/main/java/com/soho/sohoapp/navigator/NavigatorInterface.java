@@ -79,6 +79,8 @@ public interface NavigatorInterface {
 
     void startVerifyPhoneActivity();
 
+    void startEnterPinActivity(String phoneNumber);
+
     void startVerifyPhoneActivity(int flag);
 
     void openSettingActivity();

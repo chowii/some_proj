@@ -26,7 +26,8 @@ import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActiv
 import com.soho.sohoapp.feature.home.editproperty.verification.ownership.OwnershipVerificationActivity;
 import com.soho.sohoapp.feature.home.more.SettingsActivity;
 import com.soho.sohoapp.feature.home.more.VerifyAgentLicenseActivity;
-import com.soho.sohoapp.feature.home.more.VerifyPhoneActivity;
+import com.soho.sohoapp.feature.home.more.verifyNumber.EnterPinActivity;
+import com.soho.sohoapp.feature.home.more.verifyNumber.VerifyPhoneActivity;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
@@ -378,6 +379,17 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext()));
         } else {
             activity.startActivity(VerifyPhoneActivity.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void startEnterPinActivity(String phoneNumber) {
+        if (fragment != null) {
+            Intent intent = EnterPinActivity.createIntent(fragment.getContext(), phoneNumber);
+            fragment.getActivity().startActivity(intent);
+        } else {
+            Intent intent = EnterPinActivity.createIntent(activity, phoneNumber);
+            activity.startActivity(intent);
         }
     }
 

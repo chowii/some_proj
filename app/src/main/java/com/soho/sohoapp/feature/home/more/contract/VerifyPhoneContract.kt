@@ -1,9 +1,11 @@
 package com.soho.sohoapp.feature.home.more.contract
 
+import com.soho.sohoapp.feature.BaseViewInteractable
+
 /**
  * Created by chowii on 13/9/17.
  */
-interface VerifyPhoneContract{
+interface VerifyPhoneContract {
 
     interface ViewPresentable {
         fun startPresenting()
@@ -11,8 +13,9 @@ interface VerifyPhoneContract{
         fun stopPresenting()
     }
 
-    interface ViewInteractable {
+    interface ViewInteractable : BaseViewInteractable {
         fun configureToolbar()
+        fun showLoading()
+        fun hideLoading()
     }
-
 }

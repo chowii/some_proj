@@ -48,9 +48,12 @@ class SettingsActivity: AppCompatActivity(), SettingsContract.ViewInteractable, 
         configureAdapter()
         presenter = SettingsPresenter(this, this)
         presenter.startPresenting()
-        presenter.retrieveAccount()
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.retrieveAccount()
+    }
     override fun onDestroy() {
         super.onDestroy()
         presenter.stopPresenting()
@@ -59,10 +62,10 @@ class SettingsActivity: AppCompatActivity(), SettingsContract.ViewInteractable, 
     override fun configureToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Settings"
+        supportActionBar?.title = getString(R.string.common_settings)
     }
 
-    fun configureAdapter() {
+    private fun configureAdapter() {
         adapter = SettingsAdapter(listOf(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)

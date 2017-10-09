@@ -36,6 +36,7 @@ allprojects {
         zendesk_version ="1.11.0.1"
         outbound_version ="0.2.8"
 
+        libphonenumber_version = "8.8.3"
         mockitoKotlin_version = "1.5.0"
         support_version = "26.1.0"
 
@@ -54,6 +55,7 @@ allprojects {
         junit_version = "4.12"
         okhttp_version = "3.6.0"
 
+        pin_view_version = "1.1.0"
         image_picker_version = "0.6.0"
     }
 }

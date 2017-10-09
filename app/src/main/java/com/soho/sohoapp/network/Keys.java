@@ -119,5 +119,6 @@ public interface Keys {
 
     interface Verification {
         String ATTACHMENT = "attachments_attributes[%d][file]";
+        String PIN_CODE = "code";
     }
 }

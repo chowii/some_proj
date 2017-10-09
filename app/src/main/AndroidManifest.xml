@@ -69,7 +69,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.home.more.VerifyPhoneActivity"
+            android:name=".feature.home.more.verifyNumber.VerifyPhoneActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -136,6 +136,7 @@
         <activity
             android:name=".feature.profile.password.EditAccountPassActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".feature.home.more.verifyNumber.EnterPinActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

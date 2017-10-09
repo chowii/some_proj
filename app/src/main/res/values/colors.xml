@@ -31,6 +31,7 @@
     <color name="secondaryText">@color/greyDarkPrimary</color>
     <color name="greenText">@color/colorPrimary</color>
     <color name="blueText">#42A5F5</color>
+    <color name="darkBlueText">#1288FF</color>
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
 

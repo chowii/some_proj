@@ -1,6 +1,9 @@
 package com.soho.sohoapp.database.entities
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.PrimaryKey
 import com.soho.sohoapp.data.enums.MarketplaceFilterSaleType
 import com.soho.sohoapp.extensions.toShortHand
 
@@ -20,13 +23,13 @@ data class MarketplaceFilter(
         var priceToRent:Int = 0,
         var priceFromBuy:Int = 0,
         var priceToBuy:Int = 0,
-        var bedrooms:Double = 0.0,
+        var bedrooms:Double = 1.0,
         var bathrooms:Double = 0.0,
         var carspots:Double = 0.0,
         var allProperties:Boolean = true ) {
 
     @Ignore
-    constructor() :this(0, false, MarketplaceFilterSaleType.SALE, 25, ArrayList<String>(), 0, 0, 0, 0, 0.0, 0.0, 0.0, true)
+    constructor() :this(0, false, MarketplaceFilterSaleType.SALE, 25, ArrayList<String>(), 0, 0, 0, 0, 1.0, 0.0, 0.0, true)
 
     val isSaleFilter: Boolean
         get() = saleType.equals( MarketplaceFilterSaleType.SALE)

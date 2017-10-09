@@ -26,7 +26,7 @@ class User : BasicUser {
         authenticationToken = parcel.readString()
         country = parcel.readString()
         parcel.readTypedList(verifications, Verification.CREATOR)
-        parcel.readStringArray(intentions?.toTypedArray())
+        parcel.readStringArray(intentions.toTypedArray())
         role = parcel.readString()
         agentsLicenseNumber = parcel.readString()
     }
@@ -40,7 +40,7 @@ class User : BasicUser {
         parcel.writeString(authenticationToken)
         parcel.writeString(country)
         parcel.writeTypedList(verifications)
-        parcel.writeStringArray(intentions?.toTypedArray())
+        parcel.writeStringArray(intentions.toTypedArray())
         parcel.writeString(role)
         parcel.writeString(agentsLicenseNumber)
     }

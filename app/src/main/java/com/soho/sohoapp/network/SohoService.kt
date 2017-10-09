@@ -96,6 +96,9 @@ interface SohoService {
     @PUT("verifications/mobile")
     fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<AccountVerification>
 
+    @POST("verifications/mobile")
+    fun verifyPin(@Body map: QueryHashMap): Observable<AccountVerification>
+
     @PUT("verifications/agent_licence")
     fun verifyAgentLicenseNumber(@Body map: HashMap<String, Any>): Observable<AccountVerification>
 
