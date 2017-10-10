@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/header_text_view"
-        style="@style/FilterPropertyHeader"
-        tools:text="Header"
-        android:paddingStart="@dimen/standard_padding_left"
-        android:paddingEnd="@dimen/standard_padding_right"
-        />
+        style="@style/ListTextHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        tools:text="@string/test_text_short"/>
 
     <include layout="@layout/horizontal_rule"/>
 

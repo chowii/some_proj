@@ -14,7 +14,7 @@ import com.soho.sohoapp.feature.home.more.model.SettingItem
 /**
  * Created by chowii on 12/9/17.
  */
-class SettingViewHolder(var itemView: View, val listener: SettingsAdapter.OnSettingsItemClickListener): BaseViewHolder<SettingItem>(itemView) {
+class SettingViewHolder(var itemView: View, val listener: SettingsAdapter.OnSettingsItemClickListener) : BaseViewHolder<SettingItem>(itemView) {
 
     @BindView(R.id.settings_root_view)
     lateinit var settingsRootLayout: RelativeLayout
@@ -29,10 +29,10 @@ class SettingViewHolder(var itemView: View, val listener: SettingsAdapter.OnSett
     lateinit var iconItemImageView: ImageView
 
     override fun onBindViewHolder(model: SettingItem?) {
-        model.let {
-            titleTextView.text = model?.title
-            subtitleTextView.text = model?.dateOfBirth?.toStringWithDisplayFormat() ?: ""
-            iconItemImageView.setImageResource(model?.iconRes!!)
+        model?.let {
+            titleTextView.text = it.title.orEmpty()
+            subtitleTextView.text = it.dateOfBirth.toStringWithDisplayFormat()
+            iconItemImageView.setImageResource(model.iconRes)
         }
         settingsRootLayout.setOnClickListener({ _ -> listener.onSettingsItemClicked(model?.title ?: "") })
     }

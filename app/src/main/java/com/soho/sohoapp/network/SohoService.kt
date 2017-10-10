@@ -93,6 +93,9 @@ interface SohoService {
     @GET("verifications")
     fun retrieveVerificationList(): Observable<List<AccountVerification>>
 
+    @PUT("verifications/licence")
+    fun verifyPhotoId(@Body file: RequestBody): Observable<AccountVerification>
+
     @PUT("verifications/mobile")
     fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<AccountVerification>
 

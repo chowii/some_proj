@@ -395,20 +395,13 @@ public final class Converter {
 
     // MARK: - ================== Params/Body related ==================
 
-    public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull Image image) {
-        return Observable.fromCallable(() -> {
-            Uri uri;
-            if (image.getFilePath() != null) {
-                uri = Uri.fromFile(new File(image.getFilePath()));
-            } else {
-                uri = image.getUri();
-            }
-            MultipartBody.Builder builder = new MultipartBody.Builder();
-            RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
-            File file = new File(uri.getPath());
-            builder.addFormDataPart(Keys.Property.IMAGE, file.getName(), imageRequestBody);
-            return builder.build();
-        });
+    public static Observable<RequestBody> toPropertyImageRequestBody(@NonNull FileHelper fileHelper, @NonNull Image image) {
+        return Observable.fromCallable(() -> createBody(fileHelper, createUri(image.getFilePath(), image.getUri()), Keys.Property.IMAGE));
+    }
+
+    public static Observable<RequestBody> toPhotoVerificationRequestBody(@NonNull FileHelper fileHelper, @NonNull Attachment attachment) {
+        return Observable.fromCallable(() -> createBody(fileHelper, createUri(attachment.getFilePath(), attachment.getUri()),
+                String.format(Locale.getDefault(), Keys.Verification.ATTACHMENT, 0)));
     }
 
     public static Observable<RequestBody> toImageRequestBody(@NonNull FileHelper fileHelper, @NonNull List<Attachment> attachments, int propertyId) {
@@ -416,16 +409,8 @@ public final class Converter {
             MultipartBody.Builder builder = new MultipartBody.Builder();
             for (int i = 0; i < attachments.size(); i++) {
                 Attachment attachment = attachments.get(i);
-                Uri uri;
-                if (attachment.getFilePath() != null) {
-                    uri = Uri.fromFile(new File(attachment.getFilePath()));
-                } else {
-                    uri = attachment.getUri();
-                }
-                RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
-                File file = new File(uri.getPath());
-                builder.addFormDataPart(String.format(Locale.getDefault(),
-                        Keys.Verification.ATTACHMENT, i), file.getName(), imageRequestBody);
+                addFormData(fileHelper, createUri(attachment.getFilePath(), attachment.getUri()),
+                        String.format(Locale.getDefault(), Keys.Verification.ATTACHMENT, i), builder);
             }
 
             builder.addFormDataPart(Keys.Property.PROPRETY_ID, String.valueOf(propertyId));
@@ -435,12 +420,7 @@ public final class Converter {
 
     public static Observable<RequestBody> toImageRequestBodyUser(@NonNull FileHelper fileHelper, @NonNull Image image, @NonNull QueryHashMap values) {
         return Observable.fromCallable(() -> {
-            Uri uri;
-            if (image.getFilePath() != null) {
-                uri = Uri.fromFile(new File(image.getFilePath()));
-            } else {
-                uri = image.getUri();
-            }
+            Uri uri = createUri(image.getFilePath(), image.getUri());
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.setType(MultipartBody.FORM);
 
@@ -665,5 +645,24 @@ public final class Converter {
                     .put(Keys.PropertyFinance.ACTUAL_RENT, finance.getActualRent())
                     .put(Keys.PropertyFinance.LEASED_TO, finance.getLeasedToDate());
         }
+    }
+
+    private static Uri createUri(@Nullable String filePath, @Nullable Uri uri) {
+        if (filePath != null) {
+            return Uri.fromFile(new File(filePath));
+        }
+        return uri;
+    }
+
+    private static MultipartBody createBody(@NonNull FileHelper fileHelper, @NonNull Uri uri, String fromName) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        addFormData(fileHelper, uri, fromName, builder);
+        return builder.build();
+    }
+
+    private static void addFormData(@NonNull FileHelper fileHelper, @NonNull Uri uri, String fromName, MultipartBody.Builder builder) {
+        RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+        File file = new File(uri.getPath());
+        builder.addFormDataPart(fromName, file.getName(), imageRequestBody);
     }
 }

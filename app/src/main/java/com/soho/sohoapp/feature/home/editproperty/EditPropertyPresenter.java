@@ -21,6 +21,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.functions.Functions;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
@@ -136,12 +137,12 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     private void sendImageOnServer(Image propertyImage) {
         compositeDisposable.add(
-                Converter.toImageRequestBody(fileHelper, propertyImage)
+                Converter.toPropertyImageRequestBody(fileHelper, propertyImage)
                         .switchMap(requestBody -> DEPENDENCIES.getSohoService()
                                 .sendPropertyPhoto(property.getId(), requestBody))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe());
+                        .subscribe(Functions.emptyConsumer(), view::showError));
     }
 
     private void clearImagesListIfNeeded() {

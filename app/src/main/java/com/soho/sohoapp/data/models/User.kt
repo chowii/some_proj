@@ -31,7 +31,8 @@ class User : BasicUser {
         agentsLicenseNumber = parcel.readString()
     }
 
-    fun getFullnameShort() = String.format(Locale.getDefault(), "%s.%s", firstName?.get(0), lastName)
+    fun getFullnameShort() =
+            if (firstName != null && lastName != null) String.format(Locale.getDefault(), "%s.%s", firstName?.get(0), lastName) else ""
 
     fun getFullname() = String.format(Locale.getDefault(), "%s %s", firstName, lastName)
 

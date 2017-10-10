@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.home.more.contract
 
+import android.net.Uri
+import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.home.BaseModel
 
 /**
@@ -8,15 +10,23 @@ import com.soho.sohoapp.feature.home.BaseModel
 interface SettingsContract {
 
     interface ViewPresentable {
-        fun startPresenting()
-        fun retrieveAccount()
-        fun stopPresenting()
         fun onSettingsItemClicked(item: String)
+        fun onTakeNewPhotoClicked()
+        fun onChooseFromGalleryClicked()
+        fun onPhotoReady(path: String)
+        fun onPhotoPicked(uri: Uri)
+        fun onBackClicked()
     }
 
-    interface ViewInteractable {
-        fun configureToolbar()
+    interface ViewInteractable : BaseViewInteractable {
         fun updateAdapterDataset(dataset: List<BaseModel>)
+        fun showAddPhotoDialog()
+        fun capturePhoto()
+        fun pickImageFromGallery()
+        fun showLoadingDialog()
+        fun hideLoadingDialog()
+        fun showLoadingView()
+        fun hideLoadingView()
     }
 
 }

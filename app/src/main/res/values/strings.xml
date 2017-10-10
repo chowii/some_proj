@@ -336,7 +336,8 @@
     <string name="property_detail_header_no_header_text">No title available.</string>
     <string name="filter_item_save_this_search">Save this search</string>
 
-    <!-- More / Settings -->
+    <!-- More / Settings screens start-->
+    <string name="settings_toolbar">Settings</string>
     <string name="settings_phone_verify_message">Please Verify your mobile number so you can\nbe contacted by an owner or agent if you\nmake an enquiry</string>
     <string name="settings_phone_verify_title">Verification Required</string>
     <string name="settings_phone_mobile_number">Mobile Number</string>
@@ -349,6 +350,7 @@
     <string name="error_creatin_property">Error during creating new property</string>
     <string name="settings_more_add_property">add property</string>
     <string name="settings_name_last_name_format">%1$s %2$s</string>
+    <!-- More / Settings screens ens-->
 
     <!--Marketplace Filters start-->
     <string name="filter_property_status_active_sale">Only properties actively for Sale/Auction</string>
