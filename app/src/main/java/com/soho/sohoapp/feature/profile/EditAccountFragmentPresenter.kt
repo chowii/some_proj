@@ -130,7 +130,9 @@ class EditAccountFragmentPresenter(private val view: EditAccountContract.ViewInt
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
+
         )
+        datePicker.maxDate = Calendar.getInstance()
         datePicker.showYearPickerFirst(true)
         datePicker.show(fragmentManager, DATE_PICKER_TAG)
     }

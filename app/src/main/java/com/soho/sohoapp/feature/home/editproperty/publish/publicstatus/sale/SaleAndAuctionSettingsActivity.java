@@ -233,6 +233,7 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
+        datePicker.setMinDate(Calendar.getInstance());
         datePicker.show(getFragmentManager(), TAG_DATE_PICKER_DIALOG);
     }
 

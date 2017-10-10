@@ -30,7 +30,6 @@ import com.soho.sohoapp.feature.home.more.verifyNumber.EnterPinActivity;
 import com.soho.sohoapp.feature.home.more.verifyNumber.VerifyPhoneActivity;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.feature.home.portfolio.details.PortfolioDetailsActivity;
 import com.soho.sohoapp.feature.landing.ForgotPasswordActivity;
 import com.soho.sohoapp.feature.landing.LandingActivity;
@@ -148,11 +147,11 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void openEditPropertyScreen(PortfolioProperty property) {
+    public void openEditPropertyScreen(int propertyID) {
         if (fragment != null) {
-            fragment.startActivity(EditPropertyActivity.createIntent(fragment.getActivity(), property));
+            fragment.startActivity(EditPropertyActivity.createIntent(fragment.getActivity(), propertyID));
         } else {
-            activity.startActivity(EditPropertyActivity.createIntent(activity, property));
+            activity.startActivity(EditPropertyActivity.createIntent(activity, propertyID));
         }
     }
 

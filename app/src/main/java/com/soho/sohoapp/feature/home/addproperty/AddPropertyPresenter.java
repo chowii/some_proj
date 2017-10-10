@@ -75,10 +75,10 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
         this.bathrooms = bathrooms;
         this.carspots = carspots;
 
-        createPromotion();
+        createProperty();
     }
 
-    private void createPromotion() {
+    private void createProperty() {
         view.showLoadingDialog();
         QueryHashMap map = Converter.toMap(location, propertyRole, propertyType,
                 isInvestment, bedrooms, bathrooms, carspots);
@@ -88,12 +88,11 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sohoProperty -> {
                     view.hideLoadingDialog();
+                    navigator.openEditPropertyScreen(sohoProperty.getId());
                     navigator.exitWithResultCodeOk();
                 }, throwable -> {
-
                     view.showError(throwable);
                     view.hideLoadingDialog();
-                    throwable.printStackTrace();
                 }));
     }
 }

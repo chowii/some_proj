@@ -53,8 +53,8 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
         if (RentPaymentFrequency.MONTHLY.equals(propertyListing.getRentPaymentFrequency())) {
             view.selectMonthlyRentOption();
         }
-        if (propertyFinance.getEstimatedValue() > 0) {
-            view.showPriceGuide(propertyFinance.getEstimatedValue());
+        if (propertyFinance.getEstimatedRent() > 0) {
+            view.showPriceGuide(propertyFinance.getEstimatedRent());
         }
 
         String description = property.getDescription();

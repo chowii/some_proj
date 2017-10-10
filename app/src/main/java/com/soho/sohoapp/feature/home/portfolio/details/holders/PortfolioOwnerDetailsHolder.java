@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.extensions.IntExtKt;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
@@ -47,7 +48,7 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
         }
 
         double estimatedValue = model.getPropertyFinance().getEstimatedValue();
-        this.estimatedValue.setText(StringUtils.formatPrice(context, estimatedValue));
+        this.estimatedValue.setText(IntExtKt.toShortHand((int) estimatedValue));
 
         double yield = PropertyCalculator.calculateYield(model.getPropertyFinance());
         this.yield.setText(StringUtils.longFormatYield(context, yield));

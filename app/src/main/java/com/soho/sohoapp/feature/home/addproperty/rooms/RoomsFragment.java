@@ -36,11 +36,11 @@ public class RoomsFragment extends BaseFragment {
 
     @OnClick(R.id.addProperty)
     void addProperty() {
-        Listener listener = (Listener) getActivity();
+        RoomsSelectedListener listener = (RoomsSelectedListener) getActivity();
         listener.onRoomsSelected(roomsSelector.getBedroomsCount(), roomsSelector.getBathroomsCount(), roomsSelector.getCarspotsCount());
     }
 
-    public interface Listener {
+    public interface RoomsSelectedListener {
         void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
     }
 

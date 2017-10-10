@@ -76,7 +76,7 @@ public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetails
 
     @Override
     public void onOwnerPropertyClicked(PortfolioProperty property) {
-        navigator.openEditPropertyScreen(property);
+        navigator.openEditPropertyScreen(property.getId());
     }
 
     private void loadData() {

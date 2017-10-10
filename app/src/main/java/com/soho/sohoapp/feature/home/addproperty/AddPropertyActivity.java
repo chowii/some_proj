@@ -34,7 +34,7 @@ public class AddPropertyActivity extends AbsActivity implements
         RelationFragment.Listener,
         PropertyTypeFragment.Listener,
         InvestmentFragment.Listener,
-        RoomsFragment.Listener {
+        RoomsFragment.RoomsSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

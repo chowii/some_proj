@@ -19,7 +19,6 @@ import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.permission.PermissionManagerImpl;
 import com.soho.sohoapp.utils.FileHelper;
@@ -54,9 +53,9 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     private View loadingView;
 
     @NonNull
-    public static Intent createIntent(@NonNull Context context, @NonNull PortfolioProperty property) {
+    public static Intent createIntent(@NonNull Context context, @NonNull int propertyId) {
         Intent intent = new Intent(context, EditPropertyActivity.class);
-        intent.putExtra(KEY_PROPERTY_ID, property.getId());
+        intent.putExtra(KEY_PROPERTY_ID, propertyId);
         return intent;
     }
 

@@ -7,7 +7,6 @@ import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
-import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,7 +30,7 @@ public interface NavigatorInterface {
 
     void openEditPasswordProfileScreen(int requestCode);
 
-    void openEditPropertyScreen(PortfolioProperty property);
+    void openEditPropertyScreen(int propertyId);
 
     void openOwnerPortfolioDetails(@NonNull PortfolioCategory portfolioCategory);
 

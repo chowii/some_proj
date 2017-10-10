@@ -12,7 +12,7 @@ public class PortfolioCategoryResult {
     @SerializedName("property_count")
     public int propertyCount;
 
-    @SerializedName("estimatedValue")
+    @SerializedName("estimated_value")
     public double estimatedValue;
 
     @SerializedName("public_properties_count")
