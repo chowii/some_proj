@@ -3,7 +3,6 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'me.tatarka.retrolambda'
 
 buildscript {
     repositories {
@@ -70,9 +69,6 @@ android {
     }
     dexOptions {
         preDexLibraries = false
-    }
-    retrolambda {
-        jvmArgs '-noverify'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
