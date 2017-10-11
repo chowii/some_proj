@@ -3,7 +3,7 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/button"
-    style="@style/BorderWhiteButton"
+    android:theme="@style/MaterialButton.BorderWhiteButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:drawableEnd="@drawable/star_selector"

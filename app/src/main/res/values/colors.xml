@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2AC86D</color>
-    <color name="darkerPrimary">#218B4A</color>
+    <color name="primary">#2AC86D</color>
+    <color name="primaryDark">#218B4A</color>
+    <color name="accent">#42A5F5</color>
 
     <color name="redPrimary">#D71D34</color>
     <color name="greyLightPrimary">#BEBABA</color>
@@ -29,13 +30,13 @@
 
     <color name="primaryText">@color/blackDarkPrimary</color>
     <color name="secondaryText">@color/greyDarkPrimary</color>
-    <color name="greenText">@color/colorPrimary</color>
+    <color name="greenText">@color/primary</color>
     <color name="blueText">#42A5F5</color>
     <color name="darkBlueText">#1288FF</color>
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
 
-    <color name="propertyStateVerified">@color/colorPrimary</color>
+    <color name="propertyStateVerified">@color/primary</color>
     <color name="propertyStateNotCompleted">@color/orangePrimary</color>
     <color name="propertyStateNotVerified">@color/redPrimary</color>
 

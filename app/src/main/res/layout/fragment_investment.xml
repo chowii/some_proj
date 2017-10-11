@@ -28,7 +28,7 @@
 
         <Button
             android:id="@+id/yes_home_button"
-            style="@style/BorderWhiteButton"
+            android:theme="@style/MaterialButton.BorderWhiteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -36,7 +36,7 @@
 
         <Button
             android:id="@+id/no_investment_button"
-            style="@style/BorderWhiteButton"
+            android:theme="@style/MaterialButton.BorderWhiteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -25,7 +25,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:theme="@style/CircularButton.Green"
             android:background="@drawable/circle_green"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/home_add_property"
             android:textColor="@color/white"
             android:textSize="20sp"/>

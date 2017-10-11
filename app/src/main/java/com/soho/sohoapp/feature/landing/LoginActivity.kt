@@ -16,6 +16,7 @@ import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
 import com.soho.sohoapp.utils.Converter
+import com.soho.sohoapp.utils.checkEnableDisableAlpha
 import com.soho.sohoapp.utils.orFalse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,9 +37,8 @@ class LoginActivity : AppCompatActivity() {
 
     @OnTextChanged(R.id.login_email_edit_text, R.id.login_password_edit_text)
     fun onTextChanged(editable: Editable) {
-        if (emailEditText.text.toString().isEmpty() || passwordEditText.text.toString().isEmpty())
-            toggleButtonEnabled(0.4f, !editable.toString().isEmpty())
-        else toggleButtonEnabled(1f, !editable.toString().isEmpty())
+        loginButton.checkEnableDisableAlpha(
+                (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()))
     }
 
     @OnClick(R.id.sign_up_redirect_button)
@@ -48,11 +48,6 @@ class LoginActivity : AppCompatActivity() {
     @OnClick(R.id.forgot_password_button)
     fun onForgotPasswordClicked(): Unit = NavigatorImpl.newInstance(this).openForgetPasswordActivity()
 
-    @OnClick(R.id.login_button)
-    fun onLoginClicked() {
-        //TODO wait for login api call
-    }
-
     private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         loadingDialog = LoadingDialog(this)
-        toggleButtonEnabled(0.4f, false)
         loginButton.setOnClickListener {
             loadingDialog?.show(getString(R.string.login_loading))
             val map = hashMapOf(
@@ -74,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
                         DEPENDENCIES.prefs.user = Converter.toUser(user)
                         DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
                         val navigatorImpl = NavigatorImpl.newInstance(this)
-                        if (DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
+                        if (!DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
                             navigatorImpl.showRegisterUserInfoActivity()
                         } else {
                             navigatorImpl.openHomeActivity()
@@ -94,10 +88,5 @@ class LoginActivity : AppCompatActivity() {
     override fun onDestroy() {
         disposable?.dispose()
         super.onDestroy()
-    }
-
-    private fun toggleButtonEnabled(alpha: Float, isEnabled: Boolean) {
-        loginButton.alpha = alpha
-        loginButton.isEnabled = isEnabled
     }
 }

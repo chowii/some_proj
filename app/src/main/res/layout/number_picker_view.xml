@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:gravity="center_vertical"
-       android:orientation="horizontal"
-       tools:parentTag="android.widget.LinearLayout">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
 
     <Button
         android:id="@+id/decrease"
-        style="@style/CircleWhiteButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:text="@string/rooms_picker_decrease"/>
+        android:background="@drawable/circle_gray_stroke_button"
+        android:gravity="center"
+        android:text="@string/rooms_picker_decrease"
+        android:textColor="@color/accent"
+        android:textSize="20sp"
+        android:theme="@style/CircleWhiteButton" />
 
     <TextView
         android:id="@+id/text"
@@ -20,12 +24,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        tools:text="1 - Bedrooms"/>
+        tools:text="1 - Bedrooms" />
 
     <Button
         android:id="@+id/increase"
-        style="@style/CircleWhiteButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:text="@string/rooms_picker_increase"/>
+        android:background="@drawable/circle_gray_stroke_button"
+        android:textColor="@color/accent"
+        android:text="@string/rooms_picker_increase"
+        android:theme="@style/CircleWhiteButton" />
 </merge>

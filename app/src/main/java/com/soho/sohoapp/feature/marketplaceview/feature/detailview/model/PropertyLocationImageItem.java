@@ -73,8 +73,8 @@ public class PropertyLocationImageItem implements BaseModel {
 
     public String retrieveImageUrlWithMask(LatLng latLng){
         ArrayList<LatLng> circlePoints = getCircleAsPolyline(latLng, 100.0);
-        String colorPrimary = SohoApplication.getContext().getString(R.color.colorPrimary).replaceFirst("#ff","");
-        String darkerPrimary = SohoApplication.getContext().getString(R.color.darkerPrimary).replaceFirst("#ff","");
+        String colorPrimary = SohoApplication.getContext().getString(R.color.primary).replaceFirst("#ff","");
+        String darkerPrimary = SohoApplication.getContext().getString(R.color.primaryDark).replaceFirst("#ff","");
 
         if (circlePoints.size() > 0)
             imageUrl.append("&path=color:0x")               // Path Color parameter in hex; prefix `0x` is included

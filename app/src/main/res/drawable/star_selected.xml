@@ -12,6 +12,6 @@
         android:right="5dp"
         android:top="5dp"
         android:bottom="5dp">
-        <bitmap android:src="@drawable/star" android:tint="@color/colorPrimary"   />
+        <bitmap android:src="@drawable/star" android:tint="@color/primary"   />
     </item>
 </layer-list>

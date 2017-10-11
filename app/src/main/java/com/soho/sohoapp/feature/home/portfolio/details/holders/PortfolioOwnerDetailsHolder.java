@@ -8,12 +8,14 @@ import android.widget.TextView;
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
-import com.soho.sohoapp.extensions.IntExtKt;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioProperty;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
 
 import butterknife.BindView;
+
+import static com.soho.sohoapp.extensions.IntExtKt.toShortHand;
+import static com.soho.sohoapp.extensions.StringExtKt.withCurrency;
 
 public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioProperty> {
     @BindView(R.id.title)
@@ -48,7 +50,7 @@ public class PortfolioOwnerDetailsHolder extends BaseViewHolder<PortfolioPropert
         }
 
         double estimatedValue = model.getPropertyFinance().getEstimatedValue();
-        this.estimatedValue.setText(IntExtKt.toShortHand((int) estimatedValue));
+        this.estimatedValue.setText(withCurrency(toShortHand((int) estimatedValue)));
 
         double yield = PropertyCalculator.calculateYield(model.getPropertyFinance());
         this.yield.setText(StringUtils.longFormatYield(context, yield));

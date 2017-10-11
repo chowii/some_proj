@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/type"
-        android:layout_marginBottom="8dp"
-        style="@style/BorderWhiteButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Duplex or Semi"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/type"
+    android:theme="@style/MaterialButton.BorderWhiteButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    tools:text="Duplex or Semi" />

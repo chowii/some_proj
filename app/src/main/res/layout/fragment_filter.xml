@@ -28,7 +28,7 @@
             android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            style="@style/Button.Green"
+            android:theme="@style/MaterialButton.Green"
             android:text="@string/filter_button_search"
             android:layout_margin="12dp"/>
 

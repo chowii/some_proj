@@ -25,8 +25,6 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.database.entities.Suburb;
-import com.soho.sohoapp.extensions.IntExtKt;
-import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.addproperty.views.NumberPickerView;
 import com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView;
@@ -45,6 +43,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.soho.sohoapp.extensions.IntExtKt.dpToPx;
+import static com.soho.sohoapp.extensions.IntExtKt.toShortHand;
+import static com.soho.sohoapp.extensions.StringExtKt.abbreviatedMoneyValueToInt;
+import static com.soho.sohoapp.extensions.StringExtKt.withCurrency;
+
 /**
  * Created by chowii on 27/08/17.
  */
@@ -53,30 +56,40 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         TokenCompleteTextView.TokenListener<Suburb>,
         RoomsNumberPickerView.OnRoomsNumberChangedListener,
         RadioGroup.OnCheckedChangeListener,
-        CompoundButton.OnCheckedChangeListener
-{
+        CompoundButton.OnCheckedChangeListener {
 
     private static final int RADIUS_MIN = 5;
     private static final int RADIUS_MAX = 1000;
     private static final int RADIUS_INCREMENT = 5;
-    @BindView(R.id.rootView) RelativeLayout rootView;
-    @BindView(R.id.autocomplete_suburb) TokenizedSuburbAutoCompleteTextView suburbsAutocompleteTextView;
-    @BindView(R.id.textview_price_range) TextView priceRangeTextView;
-    @BindView(R.id.picker_from) HorizontalPicker priceFromPicker;
-    @BindView(R.id.picker_to) HorizontalPicker priceToPicker;
-    @BindView(R.id.rooms_selector) RoomsNumberPickerView roomsNumberPickerView;
-    @BindView(R.id.property_status_radio_group) RadioGroup propertyStatusRadioGroup;
-    @BindView(R.id.radio_button_only_active) RadioButton onlyActiveRadioButton;
-    @BindView(R.id.number_picker_view_radius) NumberPickerView radiusPickerView;
-    @BindView(R.id.ll_property_types) LinearLayout linearLayoutPropertyTypes;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.scrollview_form) ScrollView scrollView;
+    @BindView(R.id.rootView)
+    RelativeLayout rootView;
+    @BindView(R.id.autocomplete_suburb)
+    TokenizedSuburbAutoCompleteTextView suburbsAutocompleteTextView;
+    @BindView(R.id.textview_price_range)
+    TextView priceRangeTextView;
+    @BindView(R.id.picker_from)
+    HorizontalPicker priceFromPicker;
+    @BindView(R.id.picker_to)
+    HorizontalPicker priceToPicker;
+    @BindView(R.id.rooms_selector)
+    RoomsNumberPickerView roomsNumberPickerView;
+    @BindView(R.id.property_status_radio_group)
+    RadioGroup propertyStatusRadioGroup;
+    @BindView(R.id.radio_button_only_active)
+    RadioButton onlyActiveRadioButton;
+    @BindView(R.id.number_picker_view_radius)
+    NumberPickerView radiusPickerView;
+    @BindView(R.id.ll_property_types)
+    LinearLayout linearLayoutPropertyTypes;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.scrollview_form)
+    ScrollView scrollView;
 
     CheckBox allCheckBox;
     List<CheckBox> propertyTypeCheckboxes;
 
     PropertyFilterPresenter presenter;
-    private GoogleApiClient apiClient;
 
     // MARK: - ================== Lifecycle methods ==================
 
@@ -105,8 +118,8 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
 
     // MARK: - ================== General methods ==================
 
-    private void setupSuburbAutocompleteAdapter(){
-        apiClient = new GoogleApiClient.Builder(getContext())
+    private void setupSuburbAutocompleteAdapter() {
+        GoogleApiClient apiClient = new GoogleApiClient.Builder(getContext())
                 .addApi(Places.GEO_DATA_API)
                 .build();
         apiClient.connect();
@@ -117,8 +130,8 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     }
 
     private int indexOfPickerValue(String[] items, String selectedValue) {
-        for(int i = 0; i < items.length; i++) {
-            if(items[i].equalsIgnoreCase(selectedValue)) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].equalsIgnoreCase(selectedValue)) {
                 return i;
             }
         }
@@ -130,7 +143,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     @Override
     public void populateForm(MarketplaceFilterWithSuburbs filterWithSuburbs, List<PropertyType> propertyTypes) {
         suburbsAutocompleteTextView.clear();
-        for(Suburb suburb: filterWithSuburbs.getSuburbs()) {
+        for (Suburb suburb : filterWithSuburbs.getSuburbs()) {
             suburbsAutocompleteTextView.addObject(suburb);
         }
         setupRadiusPicker(filterWithSuburbs);
@@ -173,12 +186,22 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         String[] pickerItems = getPickerItemsFor(filterWithSuburbs.getMarketplaceFilter().isSaleFilter() ? R.array.filter_buy_price_range : R.array.filter_rent_price_range);
         priceFromPicker.setValues(pickerItems);
         priceToPicker.setValues(pickerItems);
-        priceToPicker.setSelectedItem(indexOfPickerValue(pickerItems, "$" + IntExtKt.toShortHand(filterWithSuburbs.getMarketplaceFilter().getToPrice())));
-        priceFromPicker.setSelectedItem(indexOfPickerValue(pickerItems, "$" + IntExtKt.toShortHand(filterWithSuburbs.getMarketplaceFilter().getFromPrice())));
+
+        priceToPicker.setSelectedItem(indexOfPickerValue(pickerItems, withCurrency(
+                toShortHand(filterWithSuburbs.getMarketplaceFilter().getToPrice()))));
+
+        priceFromPicker.setSelectedItem(indexOfPickerValue(pickerItems, withCurrency(
+                toShortHand(filterWithSuburbs.getMarketplaceFilter().getFromPrice()))));
+
         priceToPicker.setOnItemSelectedListener(index ->
-                presenter.getCurrentFilter().getMarketplaceFilter().setToPrice(pickerItems[index].equalsIgnoreCase("all") ? 0 : StringExtKt.abbreviatedMoneyValueToInt(pickerItems[index])));
+                presenter.getCurrentFilter().getMarketplaceFilter().setToPrice(
+                        pickerItems[index].equalsIgnoreCase(getString(R.string.filter_type_all)) ? 0
+                                : abbreviatedMoneyValueToInt(pickerItems[index])));
+
         priceFromPicker.setOnItemSelectedListener(index ->
-                presenter.getCurrentFilter().getMarketplaceFilter().setFromPrice(pickerItems[index].equalsIgnoreCase("all") ? 0 : StringExtKt.abbreviatedMoneyValueToInt(pickerItems[index])));
+                presenter.getCurrentFilter().getMarketplaceFilter().setFromPrice(
+                        pickerItems[index].equalsIgnoreCase(getString(R.string.filter_type_all)) ? 0
+                                : abbreviatedMoneyValueToInt(pickerItems[index])));
     }
 
     private void setupRadiusPicker(MarketplaceFilterWithSuburbs filterWithSuburbs) {
@@ -200,7 +223,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         allCheckBox = checkBoxViewWith("All", "", filterWithSuburbs.getMarketplaceFilter().getPropertyTypes().size() == 0);
         propertyTypeCheckboxes.add(allCheckBox);
         linearLayoutPropertyTypes.addView(allCheckBox);
-        for(PropertyType type:propertyTypes) {
+        for (PropertyType type : propertyTypes) {
             CheckBox checkBox = checkBoxViewWith(type.getLabel(), type.getKey(), filterWithSuburbs.getMarketplaceFilter().getPropertyTypes().contains(type.getKey()));
             propertyTypeCheckboxes.add(checkBox);
             linearLayoutPropertyTypes.addView(checkBox);
@@ -218,7 +241,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         checkBox.setTag(key);
         checkBox.setOnCheckedChangeListener(this);
         checkBox.setChecked(checked);
-        checkBox.setHeight(IntExtKt.dpToPx(50, getResources()));
+        checkBox.setHeight(dpToPx(50, getResources()));
         return checkBox;
     }
 
@@ -237,7 +260,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
 
     @Override
     public void onTokenRemoved(Suburb token) {
-        if(token.getId() != 0) {
+        if (token.getId() != 0) {
             presenter.addSuburbToDelete(token);
         }
     }
@@ -256,9 +279,14 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
         switch (i) {
-            case R.id.radio_button_all: presenter.getCurrentFilter().getMarketplaceFilter().setAllProperties(true); break;
-            case R.id.radio_button_only_active: presenter.getCurrentFilter().getMarketplaceFilter().setAllProperties(false); break;
-            default: break;
+            case R.id.radio_button_all:
+                presenter.getCurrentFilter().getMarketplaceFilter().setAllProperties(true);
+                break;
+            case R.id.radio_button_only_active:
+                presenter.getCurrentFilter().getMarketplaceFilter().setAllProperties(false);
+                break;
+            default:
+                break;
         }
     }
 
@@ -267,19 +295,19 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         Dependencies.DEPENDENCIES.getLogger().d(compoundButton.getTag().toString());
-        if(compoundButton == allCheckBox && b) {
-            for(CheckBox checkBox: propertyTypeCheckboxes) {
+        if (compoundButton == allCheckBox && b) {
+            for (CheckBox checkBox : propertyTypeCheckboxes) {
                 checkBox.setChecked(false);
             }
             compoundButton.setChecked(true);
             presenter.getCurrentFilter().getMarketplaceFilter().getPropertyTypes().clear();
         } else {
-            if(b) {
+            if (b) {
                 presenter.getCurrentFilter().getMarketplaceFilter().addPropertyType(compoundButton.getTag().toString());
             } else {
                 presenter.getCurrentFilter().getMarketplaceFilter().removePropertyType(compoundButton.getTag().toString());
             }
-            if(allCheckBox != null)
+            if (allCheckBox != null)
                 allCheckBox.setChecked(presenter.getCurrentFilter().getMarketplaceFilter().getPropertyTypes().size() == 0);
         }
     }

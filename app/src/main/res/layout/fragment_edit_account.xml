@@ -56,7 +56,7 @@
                 android:layout_alignEnd="@id/edit_photo_tv"
                 android:layout_alignStart="@id/edit_photo_tv"
                 android:layout_below="@id/edit_photo_tv"
-                android:background="@color/colorPrimary" />
+                android:background="@color/primary" />
 
         </RelativeLayout>
 
@@ -187,11 +187,11 @@
             android:padding="20dp"
             android:text="@string/settings_edit_account_change_password"
             android:textAllCaps="true"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/primary" />
 
         <Button
             android:id="@+id/update_btn"
-            style="@style/Button.Green"
+            android:theme="@style/MaterialButton.Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

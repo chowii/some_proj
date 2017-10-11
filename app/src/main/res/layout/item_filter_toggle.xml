@@ -5,5 +5,5 @@
     style="@style/FilterPropertyRegular.Left"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:colorControlActivated="@color/colorPrimary"
+    app:colorControlActivated="@color/primary"
     app:theme="@style/AppTheme.Base.SwitchCompat" />

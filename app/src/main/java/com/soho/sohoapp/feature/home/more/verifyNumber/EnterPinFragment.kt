@@ -59,7 +59,7 @@ class EnterPinFragment : BaseFragment(), EnterPinFragmentContract.ViewInteractab
         pin_view.apply {
             setAnimationEnable(true)
             //this works just programmatically
-            setBorderColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+            setBorderColor(ResourcesCompat.getColor(resources, R.color.primary, null))
         }
         pin_view.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}

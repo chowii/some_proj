@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         app:title="@string/publish_property_status_updated"
         app:titleTextColor="@color/white"/>
 
@@ -70,7 +70,7 @@
 
     <Button
         android:id="@+id/next"
-        style="@style/Button.Green"
+        android:theme="@style/MaterialButton.Green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -79,7 +79,7 @@
 
     <Button
         android:id="@+id/next_verification"
-        style="@style/Button.Green"
+        android:theme="@style/MaterialButton.Green"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

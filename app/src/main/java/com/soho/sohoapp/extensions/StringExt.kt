@@ -1,6 +1,8 @@
 package com.soho.sohoapp.extensions
 
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
+import com.soho.sohoapp.R
+import com.soho.sohoapp.SohoApplication.getStringFromResource
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,15 +70,18 @@ fun String.toDoubleOrDefault(default: Double): Double {
 fun String.abbreviatedMoneyValueToInt(): Int {
     try {
         val strippedString = this.replace("$", "")
-        if (strippedString.contains("K", true)) {
-            return strippedString.replace("K", "", true).toInt() * 1_000
-        } else if (strippedString.contains("M", true)) {
-            return strippedString.replace("M", "", true).toInt() * 1_000_000
-        } else if (strippedString.contains("B", true)) {
-            return strippedString.replace("B", "", true).toInt() * 1_000_000_000
+        if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true)) {
+            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
+        } else if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true)) {
+            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true).toInt() * 1_000_000
+        } else if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_billion), true)) {
+            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_billion), "", true).toInt() * 1_000_000_000
         }
         return strippedString.toInt()
     } catch (exception: NumberFormatException) {
         return 0
     }
 }
+
+//note useless to localize instead use Currency class with Locale
+fun String.withCurrency() = "$" + this

@@ -27,7 +27,7 @@
             android:id="@+id/license_number_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:met_textColor="@color/colorPrimary"
+            app:met_textColor="@color/primary"
             android:inputType="text"
             android:maxLines="1"
             />
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        style="@style/Button.Green"
+        android:theme="@style/MaterialButton.Green"
         android:text="@string/save_agent_license_text"
         android:layout_gravity="bottom"
         android:layout_margin="15dp"

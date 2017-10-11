@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -33,15 +34,22 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
 
     @BindView(R.id.tabs)
     TabLayout tabs;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
     @BindView(R.id.imageViewPager)
     ViewPager imageViewPager;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
+
     @BindView(R.id.addressLine1)
     TextView addressLine1;
+
     @BindView(R.id.addressLine2)
     TextView addressLine2;
 
@@ -66,6 +74,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         ButterKnife.bind(this);
 
         initView();
+        appBarLayout.setExpanded(false, false);
 
         presenter = new EditPropertyPresenter(this,
                 NavigatorImpl.newInstance(this),
@@ -179,6 +188,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this, getSupportFragmentManager(), property);
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setAdapter(adapter);
+        appBarLayout.setExpanded(true, true);
         tabs.setupWithViewPager(viewPager);
     }
 

@@ -40,7 +40,7 @@
             android:paddingRight="6dp"
             android:paddingTop="4dp"
             android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/primary"
             android:textSize="12sp"
             tools:ignore="RtlHardcoded"
             tools:text="DISCOVERABLE"/>

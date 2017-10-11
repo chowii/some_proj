@@ -7,10 +7,12 @@ import android.widget.TextView;
 
 import com.soho.sohoapp.BaseViewHolder;
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.extensions.IntExtKt;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 
 import butterknife.BindView;
+
+import static com.soho.sohoapp.extensions.IntExtKt.toShortHand;
+import static com.soho.sohoapp.extensions.StringExtKt.withCurrency;
 
 public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
     @BindView(R.id.name)
@@ -36,7 +38,7 @@ public class PortfolioOwnerHolder extends BaseViewHolder<PortfolioCategory> {
         boolean isValueSmallerThanZero = model.getEstimatedValue() <= 0;
         int estimateVisible = (isFavouriteCategory || isValueSmallerThanZero) ? View.GONE : View.VISIBLE;
         estimatedValue.setVisibility(estimateVisible);
-        estimatedValue.setText(IntExtKt.toShortHand((int) model.getEstimatedValue()));
+        estimatedValue.setText(withCurrency(toShortHand((int) model.getEstimatedValue())));
     }
 
     public PortfolioOwnerHolder(@NonNull Context context, View itemView) {
