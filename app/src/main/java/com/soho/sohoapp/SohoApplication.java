@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.preferences.Prefs;
 import com.soho.sohoapp.utils.Converter;
@@ -35,7 +36,10 @@ public class SohoApplication extends MultiDexApplication {
         super.onCreate();
         instance = this;
 
-        Fabric.with(this, new Crashlytics());
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(this, crashlyticsKit);
 
         Constants.Companion.init(this);
 

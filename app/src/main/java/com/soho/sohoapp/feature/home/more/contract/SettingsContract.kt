@@ -10,7 +10,7 @@ import com.soho.sohoapp.feature.home.BaseModel
 interface SettingsContract {
 
     interface ViewPresentable {
-        fun onSettingsItemClicked(item: String)
+        fun onSettingsItemClicked(type: String?)
         fun onTakeNewPhotoClicked()
         fun onChooseFromGalleryClicked()
         fun onPhotoReady(path: String)

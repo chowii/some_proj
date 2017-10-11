@@ -13,7 +13,13 @@ import butterknife.OnClick
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.data.models.Property
+import com.soho.sohoapp.dialogs.LoadingDialog
+import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
+import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
+import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.permission.PermissionManagerImpl
+import com.soho.sohoapp.utils.FileHelper
 
 class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractable {
 
@@ -28,6 +34,10 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
 
     private lateinit var presentable: VerificationContract.ViewPresentable
     private lateinit var presenter: VerificationPresenter
+
+    private var galleryPicker: GalleryPicker? = null
+    private var cameraPicker: CameraPicker? = null
+    private var loadingDialog: LoadingDialog? = null
 
     companion object {
         private val KEY_PROPERTY = "KEY_PROPERTY"
@@ -45,8 +55,17 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
         ButterKnife.bind(this)
 
         toolbar.setNavigationOnClickListener { presentable.onBackClicked() }
-        presenter = VerificationPresenter(this, NavigatorImpl.newInstance(this))
+        presenter = VerificationPresenter(this,
+                NavigatorImpl.newInstance(this),
+                FileHelper.newInstance(this),
+                PermissionManagerImpl.newInstance(this))
         presenter.startPresenting(savedInstanceState != null)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        galleryPicker?.onActivityResult(requestCode, resultCode, intent)
+        cameraPicker?.onActivityResult(requestCode, resultCode)
     }
 
     override fun setPresentable(presentable: VerificationContract.ViewPresentable) {
@@ -55,10 +74,6 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
 
     override fun showError(throwable: Throwable) {
         handleError(throwable)
-    }
-
-    override fun showToastMessage(@StringRes resId: Int) {
-        showToast(resId)
     }
 
     override fun showPhotoVerificationStatus(@StringRes status: Int) {
@@ -78,6 +93,39 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
     }
 
     override fun getPropertyFromExtras() = intent.extras?.getParcelable<Property>(KEY_PROPERTY)
+
+    override fun showAddPhotoDialog() {
+        val addPhotoDialog = AddPhotoDialog(this)
+        addPhotoDialog.show(object : AddPhotoDialog.OnItemClickedListener {
+
+            override fun onTakeNewPhotoClicked() {
+                presenter.onTakeNewPhotoClicked()
+            }
+
+            override fun onChooseFromGalleryClicked() {
+                presenter.onChooseFromGalleryClicked()
+            }
+        })
+    }
+
+    override fun capturePhoto() {
+        cameraPicker = CameraPicker(this)
+        cameraPicker?.takePhoto({ path -> presenter.onPhotoReady(path) })
+    }
+
+    override fun pickImageFromGallery() {
+        galleryPicker = GalleryPicker(this)
+        galleryPicker?.choosePhoto({ uri -> presenter.onPhotoPicked(uri) })
+    }
+
+    override fun showLoadingDialog() {
+        loadingDialog = LoadingDialog(this)
+        loadingDialog?.show(getString(R.string.common_loading))
+    }
+
+    override fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+    }
 
     @OnClick(R.id.photo_id)
     internal fun onPhotoIdClicked() {

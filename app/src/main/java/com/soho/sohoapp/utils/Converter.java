@@ -174,6 +174,20 @@ public final class Converter {
     }
 
     @Nullable
+    public static Verification toVerification(@Nullable VerificationResult result) {
+        if (result == null) {
+            return null;
+        }
+        Verification verification = new Verification();
+        verification.setId(result.getId());
+        verification.setType(result.getType());
+        verification.setText(result.getText());
+        verification.setState(result.getState());
+        verification.setAttachments(toAttachments(result.getAttachment()));
+        return verification;
+    }
+
+    @Nullable
     private static PropertyFinance toPropertyFinance(@Nullable PropertyFinanceResult result) {
         if (result == null) {
             return null;
@@ -190,20 +204,6 @@ public final class Converter {
             finance.setLeasedToDate(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getLeasedTo()));
         }
         return finance;
-    }
-
-    @Nullable
-    private static Verification toVerification(@Nullable VerificationResult result) {
-        if (result == null) {
-            return null;
-        }
-        Verification verification = new Verification();
-        verification.setId(result.getId());
-        verification.setType(result.getType());
-        verification.setText(result.getText());
-        verification.setState(result.getState());
-        verification.setAttachments(toAttachments(result.getAttachment()));
-        return verification;
     }
 
     @NonNull

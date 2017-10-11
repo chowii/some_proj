@@ -27,7 +27,7 @@ import com.soho.sohoapp.utils.FileHelper
 /**
  * Created by chowii on 10/09/17.
  */
-class SettingsActivity : AbsActivity(), SettingsContract.ViewInteractable, SettingsAdapter.OnSettingsItemClickListener {
+class SettingsActivity : AbsActivity(), SettingsContract.ViewInteractable {
 
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
@@ -78,10 +78,7 @@ class SettingsActivity : AbsActivity(), SettingsContract.ViewInteractable, Setti
 
     override fun updateAdapterDataset(dataset: List<BaseModel>) {
         adapter.updateDataset(dataset)
-        adapter.notifyDataSetChanged()
     }
-
-    override fun onSettingsItemClicked(item: String) = presenter.onSettingsItemClicked(item)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
@@ -136,7 +133,11 @@ class SettingsActivity : AbsActivity(), SettingsContract.ViewInteractable, Setti
     }
 
     private fun configureAdapter() {
-        adapter = SettingsAdapter(listOf(), this)
+        adapter = SettingsAdapter(listOf(), object : SettingsAdapter.OnSettingsItemClickListener {
+            override fun onSettingsItemClicked(type: String?) {
+                presenter.onSettingsItemClicked(type)
+            }
+        })
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }

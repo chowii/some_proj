@@ -6,10 +6,11 @@ import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.SohoApplication.getStringFromResource
 import com.soho.sohoapp.abs.AbsPresenter
+import com.soho.sohoapp.data.dtos.VerificationResult
+import com.soho.sohoapp.data.enums.VerificationType
 import com.soho.sohoapp.data.models.Attachment
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.contract.SettingsContract
-import com.soho.sohoapp.feature.home.more.model.AccountVerification
 import com.soho.sohoapp.feature.home.more.model.SettingItem
 import com.soho.sohoapp.feature.home.more.model.VerificationItem
 import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem
@@ -42,11 +43,11 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
         compositeDisposable.clear()
     }
 
-    override fun onSettingsItemClicked(item: String) {
-        when (item) {
-            getStringFromResource(R.string.settings_account_verification_photo_id_text) -> verifyPhotoId()
-            getStringFromResource(R.string.settings_account_verification_mobile_number_text) -> verifyPhone()
-            getStringFromResource(R.string.settings_account_verification_agent_license_text) -> verifyLicense()
+    override fun onSettingsItemClicked(type: String?) {
+        when (type) {
+            VerificationType.LICENCE -> verifyPhotoId()
+            VerificationType.MOBILE_NUMBER -> verifyPhone()
+            VerificationType.AGENT_LICENCE -> verifyLicense()
             else -> navigatorImpl.openEditProfileScreen(RequestCode.NOT_USED)
         }
     }
@@ -98,6 +99,7 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
     private fun retrieveAccount() {
         interactable.showLoadingView()
         compositeDisposable.add(DEPENDENCIES.sohoService.retrieveVerificationList()
+                .map { verifications -> Converter.toVerifications(verifications) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -109,7 +111,7 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
                                 add(HeaderItem<String>(
                                         getStringFromResource(R.string.settings_account_verification_text)))
                                 accountList.forEach {
-                                    add(VerificationItem(it.id, it.type, it.state.type()))
+                                    add(VerificationItem(it))
                                 }
                             }
                             interactable.updateAdapterDataset(settingsList)
@@ -129,18 +131,18 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
     private fun sendImageToServer(attachment: Attachment) {
         interactable.showLoadingDialog()
         compositeDisposable.add(Converter.toPhotoVerificationRequestBody(fileHelper, attachment)
-                .switchMap<AccountVerification>
-                { requestBody ->
+                .switchMap<VerificationResult> { requestBody ->
                     DEPENDENCIES.sohoService.verifyPhotoId(requestBody)
                 }
+                .map { verification -> Converter.toVerification(verification) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { verification ->
+                        { newVerification ->
                             interactable.hideLoadingDialog()
                             settingsList.filterIsInstance<VerificationItem>()
-                                    .find { it.verificationId == verification.id }
-                                    ?.state = verification.state.type()
+                                    .find { it.verification.id == newVerification?.id }
+                                    ?.verification?.state = newVerification?.state
                             interactable.updateAdapterDataset(settingsList)
                         },
                         {

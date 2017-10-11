@@ -15,8 +15,8 @@ import com.soho.sohoapp.feature.marketplaceview.feature.filters.filterviewholder
  * Created by chowii on 11/9/17.
  */
 
-class SettingsAdapter(private var list: List<BaseModel>, private val moreListener: OnSettingsItemClickListener): RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
-
+class SettingsAdapter(private var list: List<BaseModel>,
+                      private val moreListener: OnSettingsItemClickListener) : RecyclerView.Adapter<BaseViewHolder<BaseModel>>() {
 
     override fun getItemCount(): Int = list.size
 
@@ -24,7 +24,7 @@ class SettingsAdapter(private var list: List<BaseModel>, private val moreListene
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<BaseModel> {
         val itemView: View = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
-        when(viewType){
+        when (viewType) {
             R.layout.item_filter_header -> return HeaderViewHolder(itemView) as BaseViewHolder<BaseModel>
             R.layout.item_settings -> return SettingViewHolder(itemView, moreListener) as BaseViewHolder<BaseModel>
             R.layout.item_verification -> return VerificationViewHolder(itemView, moreListener, itemView.context) as BaseViewHolder<BaseModel>
@@ -32,16 +32,17 @@ class SettingsAdapter(private var list: List<BaseModel>, private val moreListene
         return VerificationViewHolder(itemView, moreListener, itemView.context) as BaseViewHolder<BaseModel>
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<BaseModel>?, position: Int) {
-        holder?.onBindViewHolder(list[holder.adapterPosition])
+    override fun onBindViewHolder(holder: BaseViewHolder<BaseModel>, position: Int) {
+        holder.onBindViewHolder(list[holder.adapterPosition])
     }
 
     interface OnSettingsItemClickListener {
-        fun onSettingsItemClicked(item: String)
+        fun onSettingsItemClicked(type: String?)
     }
 
     fun updateDataset(dataset: List<BaseModel>) {
         list = dataset
+        notifyDataSetChanged()
     }
 
 }

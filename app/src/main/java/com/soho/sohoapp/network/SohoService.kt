@@ -1,10 +1,6 @@
 package com.soho.sohoapp.network
 
-import com.soho.sohoapp.data.dtos.BasicPropertyResult
-import com.soho.sohoapp.data.dtos.PropertyListingResult
-import com.soho.sohoapp.data.dtos.PropertyResult
-import com.soho.sohoapp.data.dtos.UserResult
-import com.soho.sohoapp.feature.home.more.model.AccountVerification
+import com.soho.sohoapp.data.dtos.*
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
@@ -91,19 +87,19 @@ interface SohoService {
     // MARK: - ================== Verification Related ==================
 
     @GET("verifications")
-    fun retrieveVerificationList(): Observable<List<AccountVerification>>
+    fun retrieveVerificationList(): Observable<List<VerificationResult>>
 
     @PUT("verifications/licence")
-    fun verifyPhotoId(@Body file: RequestBody): Observable<AccountVerification>
+    fun verifyPhotoId(@Body file: RequestBody): Observable<VerificationResult>
 
     @PUT("verifications/mobile")
-    fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<AccountVerification>
+    fun verifyPhoneNumber(@Body mapOf: HashMap<String, Any>): Observable<VerificationResult>
 
     @POST("verifications/mobile")
-    fun verifyPin(@Body map: QueryHashMap): Observable<AccountVerification>
+    fun verifyPin(@Body map: QueryHashMap): Observable<VerificationResult>
 
     @PUT("verifications/agent_licence")
-    fun verifyAgentLicenseNumber(@Body map: HashMap<String, Any>): Observable<AccountVerification>
+    fun verifyAgentLicenseNumber(@Body map: HashMap<String, Any>): Observable<VerificationResult>
 
     @PUT("verifications/property")
     fun sendPropertyVerificationAttachments(@Body file: RequestBody): Observable<ResponseBody>
