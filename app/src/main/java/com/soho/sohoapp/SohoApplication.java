@@ -8,6 +8,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.preferences.Prefs;
 import com.soho.sohoapp.utils.Converter;
@@ -48,6 +49,8 @@ public class SohoApplication extends MultiDexApplication {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        FirebaseAnalytics.getInstance(this);
 
         ZendeskConfig.INSTANCE.init(this
                 , getString(R.string.key_zendesk_app_url)
