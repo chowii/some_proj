@@ -13,7 +13,7 @@ public interface Keys {
     interface User {
         String EMAIL = "email";
         String PASSWORD = "password";
-        String CURRENT_PASSWORD= "current_password";
+        String CURRENT_PASSWORD = "current_password";
         String PASSWORD_CONFIRMATION = "password_confirmation";
         String FIRST_NAME = "first_name";
         String LAST_NAME = "last_name";
@@ -78,6 +78,11 @@ public interface Keys {
         String RENT_PAYMENT_FREQUENCY = "rent_payment_frequency";
         String AVAILABLE_FROM = "available_from";
         String APPOINTMENT_ONLY = "appointment_only";
+    }
+
+    interface InspectionTime {
+        String START_TIME = "start_time";
+        String END_TIME = "end_time";
     }
 
     interface PropertyFinance {

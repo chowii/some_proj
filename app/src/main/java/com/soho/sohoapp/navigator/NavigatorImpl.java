@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.HomeActivity;
@@ -19,6 +20,8 @@ import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateS
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.discoverable.DiscoverableSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.inspection.InspectionTimeActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.inspection.NewInspectionTimeActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.rent.RentSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity;
@@ -46,6 +49,8 @@ public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY_LOCATION = "KEY_PROPERTY_LOCATION";
     public static final String KEY_STRING = "KEY_STRING";
     public static final String KEY_VERIFICATION_COMPLETED = "KEY_VERIFICATION_COMPLETED";
+    public static final String KEY_INSPECTION_TIME = "KEY_INSPECTION_TIME";
+    public static final String KEY_INSPECTION_TIME_IS_CREATED = "KEY_INSPECTION_TIME_IS_CREATED";
     private Activity activity;
     private Fragment fragment;
 
@@ -100,6 +105,14 @@ public class NavigatorImpl implements NavigatorInterface {
     public void exitWithResultCodeOk(@NonNull Location location) {
         Intent intent = new Intent();
         intent.putExtra(KEY_PROPERTY_LOCATION, location);
+        setResultAndExit(intent);
+    }
+
+    @Override
+    public void exitWithResultCodeOk(InspectionTime inspectionTime, boolean inspectionTimeIsCreated) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_INSPECTION_TIME, inspectionTime);
+        intent.putExtra(KEY_INSPECTION_TIME_IS_CREATED, inspectionTimeIsCreated);
         setResultAndExit(intent);
     }
 
@@ -233,6 +246,25 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(PropertyStatusUpdatedActivity.createIntent(fragment.getActivity(), property), requestCode);
         } else {
             activity.startActivityForResult(PropertyStatusUpdatedActivity.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openInspectionTimeScreen(@NonNull Property property, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(InspectionTimeActivity.Companion.createIntent(fragment.getActivity(), property), requestCode);
+        } else {
+            activity.startActivityForResult(InspectionTimeActivity.Companion.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openNewInspectionTimeScreen(@Nullable InspectionTime inspectionTime, int propertyId, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(
+                    NewInspectionTimeActivity.Companion.createIntent(fragment.getActivity(), inspectionTime, propertyId), requestCode);
+        } else {
+            activity.startActivityForResult(NewInspectionTimeActivity.Companion.createIntent(activity, inspectionTime, propertyId), requestCode);
         }
     }
 

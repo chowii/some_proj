@@ -9,7 +9,6 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,11 +46,8 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @BindView(R.id.inspectionTimeOptions)
     RadioGroup inspectionTimeOptions;
 
-    @BindView(R.id.inspectionTimeLayout)
-    LinearLayout inspectionTimeLayout;
-
-    @BindView(R.id.inspectionTimeDesc)
-    TextView inspectionTimeDesc;
+    @BindView(R.id.inspectionTime)
+    TextView inspectionTime;
 
     @BindView(R.id.description)
     TextView description;
@@ -111,6 +107,9 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
                     presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
                             extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
                     break;
+                case RequestCode.RENT_SETTINGS_INSPECTION_TIME:
+                    presentable.onInspectionTimesChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
             }
         }
     }
@@ -127,11 +126,11 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
 
     @Override
     public void enableInspectionTime(boolean enable) {
-        inspectionTimeLayout.setEnabled(enable);
+        inspectionTime.setEnabled(enable);
         if (enable) {
-            inspectionTimeDesc.setTextColor(getResources().getColor(R.color.primaryText));
+            inspectionTime.setTextColor(getResources().getColor(R.color.primaryText));
         } else {
-            inspectionTimeDesc.setTextColor(getResources().getColor(R.color.hintText));
+            inspectionTime.setTextColor(getResources().getColor(R.color.hintText));
         }
     }
 
@@ -216,6 +215,11 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
         return priceValue.getText().toString();
     }
 
+    @Override
+    public void showInspectionTimes(int inspectionTimesQuantity) {
+        inspectionTime.setText(getString(R.string.publish_property_inspection_time_quantity, inspectionTimesQuantity));
+    }
+
     @OnClick(R.id.description)
     void onDescriptionClicked() {
         presentable.onDescriptionClicked();
@@ -226,7 +230,7 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
         presentable.onAvailabilityClicked();
     }
 
-    @OnClick(R.id.inspectionTimeLayout)
+    @OnClick(R.id.inspectionTime)
     void onInspectionTimeClicked() {
         presentable.onInspectionTimeClicked();
     }

@@ -3,6 +3,7 @@ package com.soho.sohoapp.navigator;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
@@ -19,6 +20,8 @@ public interface NavigatorInterface {
     void exitWithResultCodeOk(@NonNull Property property, boolean verificationCompleted);
 
     void exitWithResultCodeOk(@NonNull Location location);
+
+    void exitWithResultCodeOk(InspectionTime inspectionTime, boolean inspectionTimeIsCreated);
 
     void exitWithResultCodeOk(String string);
 
@@ -49,6 +52,10 @@ public interface NavigatorInterface {
     void openDiscoverableSettingsScreen(@NonNull Property property, int requestCode);
 
     void openPropertyStatusUpdatedScreen(@NonNull Property property, int requestCode);
+
+    void openInspectionTimeScreen(@NonNull Property property, int requestCode);
+
+    void openNewInspectionTimeScreen(@Nullable InspectionTime inspectionTime, int propertyId, int requestCode);
 
     void openVerificationScreen(@NonNull Property property);
 

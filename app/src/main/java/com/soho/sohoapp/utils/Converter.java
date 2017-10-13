@@ -504,6 +504,13 @@ public final class Converter {
     }
 
     @NonNull
+    public static QueryHashMap toMap(@NonNull InspectionTime inspectionTime) {
+        return new QueryHashMap()
+                .put(Keys.InspectionTime.START_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(inspectionTime.getStartTime()))
+                .put(Keys.InspectionTime.END_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(inspectionTime.getEndTime()));
+    }
+
+    @NonNull
     public static List<PortfolioCategory> toPortfolioCategoryList(@NonNull List<PortfolioCategoryResult> results) {
         List<PortfolioCategory> portfolioCategoryList = new ArrayList<>();
         for (PortfolioCategoryResult result : results) {

@@ -58,11 +58,8 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @BindView(R.id.auctionDateLayouts)
     LinearLayout auctionDateLayouts;
 
-    @BindView(R.id.inspectionTimeLayout)
-    LinearLayout inspectionTimeLayout;
-
-    @BindView(R.id.inspectionTimeDesc)
-    TextView inspectionTimeDesc;
+    @BindView(R.id.inspectionTime)
+    TextView inspectionTime;
 
     @BindView(R.id.saleTitleHeader)
     TextView saleTitleHeader;
@@ -136,6 +133,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
                     presentable.onPropertyPublicStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
                             extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
                     break;
+                case RequestCode.SALE_SETTINGS_INSPECTION_TIME:
+                    presentable.onInspectionTimesChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
             }
         }
     }
@@ -180,11 +180,11 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
 
     @Override
     public void enableInspectionTime(boolean enable) {
-        inspectionTimeLayout.setEnabled(enable);
+        inspectionTime.setEnabled(enable);
         if (enable) {
-            inspectionTimeDesc.setTextColor(getResources().getColor(R.color.primaryText));
+            inspectionTime.setTextColor(getResources().getColor(R.color.primaryText));
         } else {
-            inspectionTimeDesc.setTextColor(getResources().getColor(R.color.hintText));
+            inspectionTime.setTextColor(getResources().getColor(R.color.hintText));
         }
     }
 
@@ -300,6 +300,10 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
         loadingDialog.dismiss();
     }
 
+    @Override
+    public void showInspectionTimes(int inspectionTimesQuantity) {
+        inspectionTime.setText(getString(R.string.publish_property_inspection_time_quantity, inspectionTimesQuantity));
+    }
 
     @OnClick(R.id.description)
     void onDescriptionClicked() {
@@ -311,7 +315,7 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
         presentable.onAuctionAddressClicked();
     }
 
-    @OnClick(R.id.inspectionTimeLayout)
+    @OnClick(R.id.inspectionTime)
     void onInspectionTimeClicked() {
         presentable.onInspectionTimeClicked();
     }

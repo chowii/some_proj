@@ -48,6 +48,8 @@ public interface SaleAndAuctionSettingsContract {
         void onDescriptionChanged(String description);
 
         void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
+
+        void onInspectionTimesChanged(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {
@@ -100,5 +102,7 @@ public interface SaleAndAuctionSettingsContract {
         void showLoadingDialog();
 
         void hideLoadingDialog();
+
+        void showInspectionTimes(int inspectionTimesQuantity);
     }
 }

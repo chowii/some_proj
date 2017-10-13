@@ -185,33 +185,15 @@
 
             <include layout="@layout/horizontal_rule"/>
 
-            <LinearLayout
-                android:id="@+id/inspectionTimeLayout"
+            <TextView
+                android:id="@+id/inspectionTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_selector"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/inspectionTimeDesc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/publish_property_inspection_time_decs"
-                    android:textColor="@color/primaryText"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/inspectionTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/primaryText"
-                    android:textSize="14sp"
-                    android:visibility="gone"
-                    tools:text="@string/test_text_short"
-                    tools:visibility="visible"/>
-            </LinearLayout>
+                android:padding="16dp"
+                android:text="@string/publish_property_inspection_time_decs"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"/>
 
             <Button
                 android:id="@+id/save"

@@ -7,11 +7,9 @@ import android.os.Parcelable
  * Created by chowii on 5/9/17.
  */
 
-class InspectionTime() : Parcelable {
-
-    var id: Int = 0
-    var startTime: Long? = null
-    var endTime: Long? = null
+data class InspectionTime(var id: Int = 0,
+                          var startTime: Long? = null,
+                          var endTime: Long? = null) : Parcelable {
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -38,5 +36,4 @@ class InspectionTime() : Parcelable {
             return arrayOfNulls(size)
         }
     }
-
 }

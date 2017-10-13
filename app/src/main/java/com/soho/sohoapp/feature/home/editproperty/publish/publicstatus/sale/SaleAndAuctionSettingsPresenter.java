@@ -57,6 +57,8 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             view.showAuctionAddress(location.getFullAddress());
         }
 
+        view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
+
         //init view
         if (PropertyStatus.AUCTION.equals(propertyListing.getState())) {
             view.showTitle(propertyListing.getAuctionTitle());
@@ -139,7 +141,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
 
     @Override
     public void onInspectionTimeClicked() {
-        view.showToastMessage(R.string.coming_soon);
+        navigator.openInspectionTimeScreen(property, RequestCode.SALE_SETTINGS_INSPECTION_TIME);
     }
 
     @Override
@@ -201,6 +203,12 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     @Override
     public void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted) {
         navigator.exitWithResultCodeOk(property, verificationCompleted);
+    }
+
+    @Override
+    public void onInspectionTimesChanged(Property property) {
+        this.property = property;
+        view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
     }
 
     @Override

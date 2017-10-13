@@ -62,6 +62,11 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
         presenter.startPresenting(savedInstanceState != null)
     }
 
+    override fun onDestroy() {
+        presenter.stopPresenting()
+        super.onDestroy()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         galleryPicker?.onActivityResult(requestCode, resultCode, intent)

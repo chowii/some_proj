@@ -120,6 +120,14 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.inspection.InspectionTimeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.home.editproperty.publish.publicstatus.inspection.NewInspectionTimeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".feature.home.editproperty.verification.VerificationActivity"
             android:screenOrientation="portrait" />
 

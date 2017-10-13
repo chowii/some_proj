@@ -187,6 +187,7 @@
     <string name="publish_property_auction_off_site">Off Site</string>
     <string name="publish_property_inspection_time">Inspection time</string>
     <string name="publish_property_inspection_time_decs">Set Inspection Time</string>
+    <string name="publish_property_inspection_time_quantity" formatted="true">Set Inspection Time (%d)</string>
     <string name="publish_property_set_time">Set time</string>
     <string name="publish_property_appointment_only">Appointment Only</string>
     <string name="publish_property_auction_date">Auction Date</string>
@@ -227,6 +228,27 @@
     <string name="publish_property_status_for_auction">For Auction</string>
     <string name="publish_property_status_for_rent">For Rent</string>
     <!--Publish property screens end-->
+
+    <!--Inspection Time screen start-->
+    <string name="inspection_time_toolbar">Inspections</string>
+    <string name="inspection_time_add_new">Add a Time</string>
+    <string name="inspection_time_set_date">Set Day and Time</string>
+    <string name="inspection_time_date">Date</string>
+    <string name="inspection_time_start_time">Start Time</string>
+    <string name="inspection_time_end_time">End Time</string>
+    <string name="inspection_time_save">Save</string>
+    <string name="inspection_time_not_valid_date">Provide a day</string>
+    <string name="inspection_time_not_valid_start_time">Provide a start time</string>
+    <string name="inspection_time_not_valid_end_time">Provide an end time</string>
+    <string name="inspection_time_date_in_past">Inspection time should be in future</string>
+    <string name="inspection_time_too_short">Inspection time should be at least 10 min</string>
+    <string name="inspection_time_not_valid_range">End of inspection should be later than start</string>
+    <string name="inspection_time_confirmation">Confirmation</string>
+    <string name="inspection_time_confirm_deletion">Are you sure you want to remove this inspection time?</string>
+    <string name="inspection_time_confirm_deletion_yes">Remove</string>
+    <string name="inspection_time_confirm_deletion_no">Cancel</string>
+    <string name="inspection_time_delete">Delete</string>
+    <!--Inspection Time screen end-->
 
     <!--Verification screen start-->
     <string name="verification_toolbar">Verification</string>

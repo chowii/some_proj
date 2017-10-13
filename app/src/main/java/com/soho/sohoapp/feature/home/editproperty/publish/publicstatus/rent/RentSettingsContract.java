@@ -32,6 +32,8 @@ public interface RentSettingsContract {
         void onSaveClicked();
 
         void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
+
+        void onInspectionTimesChanged(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {
@@ -67,5 +69,6 @@ public interface RentSettingsContract {
 
         String getRentalPriceValue();
 
+        void showInspectionTimes(int inspectionTimesQuantity);
     }
 }

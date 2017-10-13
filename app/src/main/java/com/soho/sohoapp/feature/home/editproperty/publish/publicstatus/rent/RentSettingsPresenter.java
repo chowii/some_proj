@@ -68,6 +68,8 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
             availabilityCalendar.setTime(new Date(availableFrom));
             view.showAvailableFrom(LongExtKt.toStringWithDisplayFormat(availableFrom));
         }
+
+        view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
     }
 
     @Override
@@ -122,7 +124,7 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
 
     @Override
     public void onInspectionTimeClicked() {
-        view.showToastMessage(R.string.coming_soon);
+        navigator.openInspectionTimeScreen(property, RequestCode.RENT_SETTINGS_INSPECTION_TIME);
     }
 
     @Override
@@ -156,6 +158,12 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
     @Override
     public void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted) {
         navigator.exitWithResultCodeOk(property, verificationCompleted);
+    }
+
+    @Override
+    public void onInspectionTimesChanged(Property property) {
+        this.property = property;
+        view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
     }
 
     private boolean isDataValid() {

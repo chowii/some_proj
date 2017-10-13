@@ -52,6 +52,8 @@ class PropertyListing() : Parcelable {
         inspectionTimes = parcel.createTypedArrayList(InspectionTime)
     }
 
+    fun getInspectionTimesSafe() = inspectionTimes ?: ArrayList<InspectionTime>()
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(state)

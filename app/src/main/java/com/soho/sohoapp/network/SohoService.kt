@@ -72,6 +72,12 @@ interface SohoService {
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>
 
+    @POST("properties/{id}/property_listing/inspection_times")
+    fun createInspectionTime(@Path("id") propertyId: Int, @Body map: QueryHashMap): Observable<InspectionTimeResult>
+
+    @DELETE("properties/{property_id}/property_listing/inspection_times/{id}")
+    fun deleteInspectionTime(@Path("property_id") propertyId: Int, @Path("id") inspectionTimeId: Int): Observable<InspectionTimeResult>
+
     // MARK: - ================== Portfolio Related ==================
 
     @GET("portfolios")
