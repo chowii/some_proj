@@ -41,10 +41,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.enableCrashlytics = false
+            manifestPlaceholders = [ api_key_crashlytics:"c1578fbecca8db659e13e4e0d630da441201b92d"]
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //this api key belongs to Soho Soho Property Pty Ltd Fabric organization
+            manifestPlaceholders = [ api_key_crashlytics:"27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb"]
         }
     }
 
@@ -81,7 +84,6 @@ android {
             dimension "default"
             resValue "string", "app_name", "Soho Dev"
             applicationIdSuffix ".dev"
-
         }
         production {
             dimension "default"

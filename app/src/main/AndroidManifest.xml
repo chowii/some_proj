@@ -145,7 +145,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb" />  <!--not working as string resource-->
+            android:value="${api_key_crashlytics}"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
