@@ -29,7 +29,7 @@ android {
         applicationId "com.soho.sohoapp"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,7 +40,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ext.enableCrashlytics = false
+//            ext.enableCrashlytics = true
             manifestPlaceholders = [ api_key_crashlytics:"c1578fbecca8db659e13e4e0d630da441201b92d"]
         }
         release {
@@ -104,8 +104,8 @@ android {
 
 dependencies {
     implementation 'com.google.firebase:firebase-core:11.4.2'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
@@ -155,7 +155,7 @@ dependencies {
 
    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
