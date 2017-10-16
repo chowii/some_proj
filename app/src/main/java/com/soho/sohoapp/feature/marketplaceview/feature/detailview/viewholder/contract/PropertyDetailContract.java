@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract;
 
+import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.BaseModel;
@@ -16,6 +17,7 @@ public interface PropertyDetailContract {
         void startPresenting();
         void retrieveProperty(int id);
         void stopPresenting();
+        void onHeaderPhotoClicked(List<Image> images, int currentItem);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

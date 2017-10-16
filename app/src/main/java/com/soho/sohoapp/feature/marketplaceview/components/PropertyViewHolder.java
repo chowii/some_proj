@@ -56,7 +56,7 @@ class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
     }
 
     @Override
-    public void onBindViewHolder(BasicProperty property){
+    public void onBindViewHolder(BasicProperty property) {
         if (pagerAdapter == null)
             pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);

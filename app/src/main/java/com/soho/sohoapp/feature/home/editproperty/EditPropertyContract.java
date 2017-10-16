@@ -22,6 +22,8 @@ interface EditPropertyContract {
         void onPhotoReady(String path);
 
         void onPhotoPicked(Uri uri);
+
+        void onHeaderPhotoClicked(List<Image> images, int currentItem);
     }
 
     interface ViewInteractable  extends BaseViewInteractable{

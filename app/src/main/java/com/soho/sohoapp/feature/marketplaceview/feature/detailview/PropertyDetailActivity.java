@@ -87,7 +87,7 @@ public class PropertyDetailActivity extends AbsActivity
         ButterKnife.bind(this);
         initToolbar();
         id = getIntent().getIntExtra(EXTRA_PROPERTY_ID, -1);
-        presenter = new PropertyDetailPresenter(this);
+        presenter = new PropertyDetailPresenter(this,this);
         presenter.startPresenting();
         presenter.retrieveProperty(id);
     }
@@ -104,6 +104,8 @@ public class PropertyDetailActivity extends AbsActivity
         addressLine2TextView.setText(property.getLocation().getAddressLine2());
         if (pagerAdapter == null)
             pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
+        pagerAdapter.setOnItemClickListener(image ->
+                presenter.onHeaderPhotoClicked(pagerAdapter.getDataSet(),imageViewPager.getCurrentItem()));
         imageViewPager.setAdapter(pagerAdapter);
         pagerAdapter.setData(property.getPhotosAsImages());
         appBarLayout.setExpanded(true, true);

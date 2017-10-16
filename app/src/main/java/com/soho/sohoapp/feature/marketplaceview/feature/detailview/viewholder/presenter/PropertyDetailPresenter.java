@@ -1,11 +1,13 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
+import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
@@ -17,6 +19,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.Propert
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyLocationImageItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract.PropertyDetailContract;
 import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem;
+import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.network.ApiClient;
 import com.soho.sohoapp.utils.Converter;
 
@@ -36,6 +39,7 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 public class PropertyDetailPresenter implements PropertyDetailContract.ViewPresentable {
 
     private final PropertyDetailContract.ViewInteractable interactable;
+    private final Activity context;
     private Disposable mDisposable;
 
     public Property getProperty() {
@@ -44,12 +48,14 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     private Property property;
 
-    public PropertyDetailPresenter(PropertyDetailContract.ViewInteractable interactable) {
+    public PropertyDetailPresenter(PropertyDetailContract.ViewInteractable interactable, Activity context) {
         this.interactable = interactable;
+        this.context = context;
     }
 
     @Override
-    public void startPresenting() { }
+    public void startPresenting() {
+    }
 
     @Override
     public void retrieveProperty(int id) {
@@ -115,7 +121,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         return headerItem;
     }
 
-    private List<BaseModel> addPropertyDescription( PropertyDetailDescriptionItem propertyDetailDescriptionItem){
+    private List<BaseModel> addPropertyDescription(PropertyDetailDescriptionItem propertyDetailDescriptionItem) {
         List<BaseModel> descriptionList = new ArrayList<>();
         descriptionList.add(new HeaderItem<>(getString(R.string.property_detail_header_description), R.layout.item_header));
         descriptionList.add(new PropertyDetailDescriptionItem(propertyDetailDescriptionItem.getDescription()));
@@ -124,7 +130,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     private List<BaseModel> addPropertyIfAuctioned(Property property) {
         List<BaseModel> descriptionList = new ArrayList<>();
-        if (property.getState().equalsIgnoreCase(getString(R.string.property_state_auction))){
+        if (property.getState().equalsIgnoreCase(getString(R.string.property_state_auction))) {
             descriptionList.add(new HeaderItem<>(getString(R.string.property_state_auction), R.layout.item_header));
             descriptionList.add(new PropertyHostTimeItem(
                             property.getPropertyListing().getAuctionTime(),
@@ -149,14 +155,23 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     private List<BaseModel> addInspectionItem(List<InspectionTime> inspectionTimeList, Location location, boolean isAppoinmentOnly) {
         List<BaseModel> modelList = new ArrayList<>();
-        for(InspectionTime inspectionTime : inspectionTimeList)
+        for (InspectionTime inspectionTime : inspectionTimeList)
             modelList.add(new PropertyHostTimeItem(inspectionTime, location, getString(R.string.property_state_inspection), isAppoinmentOnly));
         return modelList;
     }
 
 
-    private String getString(@StringRes int stringRes){ return SohoApplication.getContext().getString(stringRes); }
+    private String getString(@StringRes int stringRes) {
+        return SohoApplication.getContext().getString(stringRes);
+    }
 
     @Override
-    public void stopPresenting() { mDisposable.dispose(); }
+    public void onHeaderPhotoClicked(List<Image> images, int currentItem) {
+        NavigatorImpl.newInstance(context).showGallery(images, currentItem);
+    }
+
+    @Override
+    public void stopPresenting() {
+        mDisposable.dispose();
+    }
 }

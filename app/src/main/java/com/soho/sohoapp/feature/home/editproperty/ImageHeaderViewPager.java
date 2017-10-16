@@ -99,4 +99,8 @@ public class ImageHeaderViewPager extends PagerAdapter {
         }
         notifyDataSetChanged();
     }
+
+    public List<Image> getDataSet() {
+        return propertyImages;
+    }
 }

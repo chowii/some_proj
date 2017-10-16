@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.gallery.GalleryViewActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
@@ -43,6 +45,8 @@ import com.soho.sohoapp.feature.profile.password.EditAccountPassActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY = "KEY_PROPERTY";
@@ -129,6 +133,16 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivity(AddPropertyActivity.createIntent(fragment.getActivity()));
         } else {
             activity.startActivity(AddPropertyActivity.createIntent(activity));
+        }
+    }
+
+    @Override
+    public void showGallery(List<Image> images, int currentItemPos) {
+        if (fragment != null) {
+            fragment.startActivity(GalleryViewActivity.createIntent(fragment.getActivity()
+                    , images, currentItemPos));
+        } else {
+            activity.startActivity(GalleryViewActivity.createIntent(activity, images, currentItemPos));
         }
     }
 

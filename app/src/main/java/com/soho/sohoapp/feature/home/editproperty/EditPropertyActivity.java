@@ -207,5 +207,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         initToolbar();
         pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
+        pagerAdapter.setOnItemClickListener(image ->
+                presenter.onHeaderPhotoClicked(pagerAdapter.getDataSet(),imageViewPager.getCurrentItem()));
     }
 }

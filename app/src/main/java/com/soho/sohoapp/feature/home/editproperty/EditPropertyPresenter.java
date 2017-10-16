@@ -161,6 +161,11 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         }
     }
 
+    @Override
+    public void onHeaderPhotoClicked(List<Image> images, int currentItem) {
+        navigator.showGallery(images, currentItem);
+    }
+
     private void initPropertyImages() {
         List<Image> propertyImagesFromServer = property.getPhotosAsImages();
         if (propertyImagesFromServer.isEmpty()) {

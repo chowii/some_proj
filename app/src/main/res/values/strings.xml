@@ -423,6 +423,9 @@
     <string name="settings_edit_account_edit_photo">Edit photo</string>
     <string name="edit_account_title">Edit Account</string>
 
+    <!--gallery-->
+    <string name="gallery_title">Gallery</string>
+
     <!--Change Password screen-->
     <string name="edit_account_pass_title">Change Password</string>
     <string name="edit_account_pass_current_password">Current password</string>

@@ -147,6 +147,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".feature.home.more.verifyNumber.EnterPinActivity" />
 
+        <activity android:name=".feature.gallery.GalleryViewActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/key_google_geo_api" />

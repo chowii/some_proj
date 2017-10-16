@@ -3,6 +3,7 @@ package com.soho.sohoapp.navigator;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
@@ -10,6 +11,8 @@ import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface NavigatorInterface {
 
@@ -96,4 +99,6 @@ public interface NavigatorInterface {
     void openHelpActivity();
 
     void openExternalUrl(@Nullable Uri uri);
+
+    void showGallery(List<Image> images, int currentItemPos);
 }
