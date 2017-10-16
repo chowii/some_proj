@@ -355,6 +355,15 @@ public final class Converter {
         }
         Image image = new Image();
         image.setImageUrl(imageResult.getUrl());
+        if (imageResult.getSmall() != null) {
+            image.setSmallImageUrl(imageResult.getSmall().getUrl());
+        }
+        if (imageResult.getMedium() != null) {
+            image.setMediumImageUrl(imageResult.getMedium().getUrl());
+        }
+        if (imageResult.getLarge() != null) {
+            image.setLargeImageUrl(imageResult.getLarge().getUrl());
+        }
         if (basicPropertyResult != null) {
             image.setHolder(PropertyType.getDefaultImage(basicPropertyResult.getType()));
         }

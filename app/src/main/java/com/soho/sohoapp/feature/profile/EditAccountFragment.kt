@@ -105,10 +105,10 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         last_name_et.setText(user.lastName)
         email_et.setText(user.email)
 
-        if (context != null && !user.avatar?.imageUrl.isNullOrEmpty()) {
+        if (context != null && !user.avatar?.smallImageUrl.isNullOrEmpty()) {
             val imageLoader = DEPENDENCIES.imageLoader
             val params = ImageLoader.Params.create()
-                    .url(user.avatar?.imageUrl!!)
+                    .url(user.avatar?.smallImageUrl!!)
                     .view(user_avatar_iv)
                     .placeHolder(R.drawable.ph_avatar_profile)
             imageLoader.load(params)

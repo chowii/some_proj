@@ -68,7 +68,7 @@ open class BasicProperty() : BaseModel, Parcelable {
     //Gets nested image in photos as array
     fun getPhotosAsImages(): List<Image> {
         val images =  photos?.filter({ it != null })?.map({ it.image!! }) ?: arrayListOf()
-        return if (images.size > 0) images else arrayListOf(Image(PropertyType.getDefaultImage(type)))
+        return if (images.isNotEmpty()) images else arrayListOf(Image(PropertyType.getDefaultImage(type)))
     }
 
     @Nullable

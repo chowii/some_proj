@@ -54,7 +54,7 @@ class UserAvatarView(context: Context, attrs: AttributeSet?) : LinearLayout(cont
     fun populateWithPropertyUser(propertyUser: PropertyUser?) {
         userNameTextView.text = propertyUser?.representingUserFullName() ?: ""
         userRoleTextView.text = propertyUser?.role?.capitalize() ?: ""
-        propertyUser?.userDetails?.avatar?.imageUrl?.let { avatarStringUrl ->
+        propertyUser?.userDetails?.avatar?.smallImageUrl?.let { avatarStringUrl ->
             if (!avatarStringUrl.isEmpty()) {
                 Picasso.with(userAvatarImageView.context)
                         .load(avatarStringUrl)

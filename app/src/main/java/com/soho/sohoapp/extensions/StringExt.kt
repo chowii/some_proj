@@ -64,7 +64,7 @@ fun String.toDoubleOrDefault(default: Double): Double {
 }
 
 /**
- * Returns an abbreviated string representation of a big value e.g. $1K -> 1000
+ * Returns an abbreviated string representation of a large value e.g. $1K -> 1000
  * @return int value of string
  */
 fun String.abbreviatedMoneyValueToInt(): Int {

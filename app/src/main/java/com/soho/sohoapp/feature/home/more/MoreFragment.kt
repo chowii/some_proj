@@ -104,10 +104,10 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
 
         userNameTv.text = getString(R.string.settings_name_last_name_format).format(
                 user.firstName, user.lastName, Locale.getDefault())
-        if (context != null && !user.avatar?.imageUrl.isNullOrEmpty()) {
+        if (context != null && !user.avatar?.smallImageUrl.isNullOrEmpty()) {
             val imageLoader = DEPENDENCIES.imageLoader
             val params = ImageLoader.Params.create()
-                    .url(user.avatar?.imageUrl!!)
+                    .url(user.avatar?.smallImageUrl!!)
                     .view(userAvatarIv)
                     .placeHolder(R.drawable.ph_avatar_profile)
             imageLoader.load(params)

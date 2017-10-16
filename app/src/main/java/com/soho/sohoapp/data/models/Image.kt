@@ -4,15 +4,20 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 
-class Image(): Parcelable {
+class Image() : Parcelable {
 
     var holder: Int = 0
     var drawableId: Int = 0
+
     var imageUrl: String? = null
+    var smallImageUrl: String? = null
+    var mediumImageUrl: String? = null
+    var largeImageUrl: String? = null
+
     var filePath: String? = null
     var uri: Uri? = null
 
-    constructor(drawableId:Int) : this() {
+    constructor(drawableId: Int) : this() {
         this.drawableId = drawableId
     }
 
@@ -20,6 +25,9 @@ class Image(): Parcelable {
         holder = parcel.readInt()
         drawableId = parcel.readInt()
         imageUrl = parcel.readString()
+        smallImageUrl = parcel.readString()
+        mediumImageUrl = parcel.readString()
+        largeImageUrl = parcel.readString()
         filePath = parcel.readString()
         uri = parcel.readParcelable(Uri::class.java.classLoader)
     }
@@ -28,6 +36,9 @@ class Image(): Parcelable {
         parcel.writeInt(holder)
         parcel.writeInt(drawableId)
         parcel.writeString(imageUrl)
+        parcel.writeString(smallImageUrl)
+        parcel.writeString(mediumImageUrl)
+        parcel.writeString(largeImageUrl)
         parcel.writeString(filePath)
         parcel.writeParcelable(uri, flags)
     }

@@ -47,8 +47,8 @@ public class ImageHeaderViewPager extends PagerAdapter {
                 .view(imageView)
                 .placeHolder(image.getHolder());
 
-        if (image.getImageUrl() != null) {
-            imageLoader.load(params.url(image.getImageUrl()));
+        if (image.getLargeImageUrl() != null) {
+            imageLoader.load(params.url(image.getLargeImageUrl()));
         } else if (image.getFilePath() != null) {
             imageLoader.load(params.file(Uri.fromFile(new File(image.getFilePath()))));
         } else if (image.getUri() != null) {
@@ -57,7 +57,7 @@ public class ImageHeaderViewPager extends PagerAdapter {
             imageView.setImageResource(image.getDrawableId());
         }
         itemView.setOnClickListener(view -> {
-            if(onItemClickListener != null) {
+            if (onItemClickListener != null) {
                 onItemClickListener.imageOnClick(image);
             }
         });
