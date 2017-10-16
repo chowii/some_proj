@@ -16,6 +16,8 @@ public class PortfolioManagerDetailsHolder extends BaseViewHolder<PortfolioPrope
     @BindView(R.id.state)
     TextView state;
 
+    private PortfolioOwnerDetailsHolder.OnItemClickListener listener;
+
     public PortfolioManagerDetailsHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -23,7 +25,12 @@ public class PortfolioManagerDetailsHolder extends BaseViewHolder<PortfolioPrope
 
     @Override
     public void onBindViewHolder(PortfolioProperty model) {
+        itemView.setOnClickListener(v -> listener.onClick());
         title.setText(model.getLocation().getAddressLine1());
         state.setText(model.getState());
+    }
+
+    public void setListener(PortfolioOwnerDetailsHolder.OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

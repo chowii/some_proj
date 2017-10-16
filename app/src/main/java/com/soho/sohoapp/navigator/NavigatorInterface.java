@@ -30,6 +30,8 @@ public interface NavigatorInterface {
 
     void openAddPropertyScreen();
 
+    void openPropertyDetailScreen(@NonNull int id);
+
     void openAddPropertyScreen(int requestCode);
 
     void openEditProfileScreen(int requestCode);

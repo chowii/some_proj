@@ -79,6 +79,16 @@ public class PortfolioDetailsPresenter implements AbsPresenter, PortfolioDetails
         navigator.openEditPropertyScreen(property.getId());
     }
 
+    @Override
+    public void onManagedPropertyClicked(PortfolioProperty property) {
+        navigator.openEditPropertyScreen(property.getId());
+    }
+
+    @Override
+    public void onFavouritePropertyClicked(PortfolioProperty property) {
+        navigator.openPropertyDetailScreen(property.getId());
+    }
+
     private void loadData() {
         view.showPullToRefresh();
         compositeDisposable.add(DEPENDENCIES.getSohoService().getPortfolios(portfolio.getFilterForPortfolio(), portfolio.getUserId())

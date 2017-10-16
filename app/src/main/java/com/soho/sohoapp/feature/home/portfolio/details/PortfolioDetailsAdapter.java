@@ -55,6 +55,14 @@ public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder
                 PortfolioOwnerDetailsHolder ownerHolder = (PortfolioOwnerDetailsHolder) holder;
                 ownerHolder.setListener(() -> onItemClickListener.onOwnerPropertyClicked((PortfolioProperty) model));
                 break;
+            case R.layout.item_manager_portfolio_details:
+                PortfolioManagerDetailsHolder managerHolder = (PortfolioManagerDetailsHolder) holder;
+                if(isFromFavouriteCategory) {
+                    managerHolder.setListener(() -> onItemClickListener.onFavouritePropertyClicked((PortfolioProperty) model));
+                } else {
+                    managerHolder.setListener(() -> onItemClickListener.onManagedPropertyClicked((PortfolioProperty) model));
+                }
+                break;
         }
         holder.onBindViewHolder(model);
     }
@@ -84,5 +92,9 @@ public class PortfolioDetailsAdapter extends RecyclerView.Adapter<BaseViewHolder
         void onAddPropertyClicked();
 
         void onOwnerPropertyClicked(PortfolioProperty property);
+
+        void onManagedPropertyClicked(PortfolioProperty property);
+
+        void onFavouritePropertyClicked(PortfolioProperty property);
     }
 }

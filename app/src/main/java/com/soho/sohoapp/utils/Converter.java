@@ -686,7 +686,7 @@ public final class Converter {
                     .put(Keys.PropertyFinance.IS_RANTED, finance.isRented())
                     .put(Keys.PropertyFinance.ESTIMATED_RENT, finance.getEstimatedRent())
                     .put(Keys.PropertyFinance.ACTUAL_RENT, finance.getActualRent())
-                    .put(Keys.PropertyFinance.LEASED_TO, finance.getLeasedToDate());
+                    .put(Keys.PropertyFinance.LEASED_TO, LongExtKt.toDateLongWithIso8601DateTimeFormat(finance.getLeasedToDate()));
         }
     }
 

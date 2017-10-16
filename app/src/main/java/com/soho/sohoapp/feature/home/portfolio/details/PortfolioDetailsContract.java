@@ -19,6 +19,10 @@ public interface PortfolioDetailsContract {
         void onNewPropertyCreated();
 
         void onOwnerPropertyClicked(PortfolioProperty property);
+
+        void onManagedPropertyClicked(PortfolioProperty property);
+
+        void onFavouritePropertyClicked(PortfolioProperty property);
     }
 
     interface ViewInteractable {

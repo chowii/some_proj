@@ -40,6 +40,7 @@ import com.soho.sohoapp.feature.landing.ForgotPasswordActivity;
 import com.soho.sohoapp.feature.landing.LandingActivity;
 import com.soho.sohoapp.feature.landing.signup.RegisterUserInfoActivity;
 import com.soho.sohoapp.feature.landing.signup.SignUpActivity;
+import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
 import com.soho.sohoapp.feature.profile.EditAccountActivity;
 import com.soho.sohoapp.feature.profile.password.EditAccountPassActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
@@ -480,6 +481,15 @@ public class NavigatorImpl implements NavigatorInterface {
             ContactZendeskActivity.startActivity(fragment.getContext(), null);
         } else {
             ContactZendeskActivity.startActivity(activity, null);
+        }
+    }
+
+    @Override
+    public void openPropertyDetailScreen(int id) {
+        if (fragment != null) {
+            fragment.getActivity().startActivity(PropertyDetailActivity.createIntent(fragment.getContext(), id));
+        } else {
+            activity.startActivity(PropertyDetailActivity.createIntent(activity, id));
         }
     }
 

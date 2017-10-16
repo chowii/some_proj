@@ -148,6 +148,16 @@ public class PortfolioDetailsActivity extends AbsActivity implements PortfolioDe
             public void onOwnerPropertyClicked(PortfolioProperty property) {
                 presentable.onOwnerPropertyClicked(property);
             }
+
+            @Override
+            public void onManagedPropertyClicked(PortfolioProperty property) {
+                presentable.onManagedPropertyClicked(property);
+            }
+
+            @Override
+            public void onFavouritePropertyClicked(PortfolioProperty property) {
+                presentable.onFavouritePropertyClicked(property);
+            }
         });
 
         portfolioDetailsList.setAdapter(adapter);
