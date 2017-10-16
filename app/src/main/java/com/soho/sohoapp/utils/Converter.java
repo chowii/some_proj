@@ -477,7 +477,7 @@ public final class Converter {
                 .put(Keys.Property.CARSPOTS, carspots)
                 .put(Keys.Property.IS_INVESTMENT, isInvestment)
                 .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey());
-        putLocation(map, location);
+        putLocationAttributes(map, location);
         return map;
     }
 
@@ -498,7 +498,7 @@ public final class Converter {
                 .put(Keys.PropertyListing.AUCTION_DATE, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAuctionTime()))
                 .put(Keys.PropertyListing.AUCTION_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAuctionTime()))
                 .put(Keys.PropertyListing.AVAILABLE_FROM, LongExtKt.toDateLongWithIso8601DateTimeFormat(propertyListing.getAvailableFrom()));
-        putLocation(map, propertyListing.getOffSiteLocation());
+        putLocationAttributes(map, propertyListing.getOffSiteLocation());
         return map;
     }
 
@@ -509,6 +509,10 @@ public final class Converter {
         QueryHashMap financeMap = new QueryHashMap();
         putPropertyFinance(financeMap, property.getPropertyFinance());
         map.put(Keys.Property.PROPERTY_FINANCE_ATTRIBUTES, financeMap);
+
+        QueryHashMap locationMap = new QueryHashMap();
+        putLocation(locationMap, property.getLocation());
+        map.put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap);
         return map;
     }
 
@@ -517,6 +521,13 @@ public final class Converter {
         return new QueryHashMap()
                 .put(Keys.InspectionTime.START_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(inspectionTime.getStartTime()))
                 .put(Keys.InspectionTime.END_TIME, LongExtKt.toDateLongWithIso8601DateTimeFormat(inspectionTime.getEndTime()));
+    }
+
+    @NonNull
+    public static QueryHashMap toPropertyMap(@NonNull Property property) {
+        QueryHashMap locationMap = new QueryHashMap();
+        putLocation(locationMap, property.getLocation());
+        return new QueryHashMap().put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap);
     }
 
     @NonNull
@@ -636,6 +647,21 @@ public final class Converter {
     }
 
     @NonNull
+    private static void putLocationAttributes(@NonNull QueryHashMap map, @Nullable Location location) {
+        if (location != null) {
+            map.put(Keys.LocationAttributes.SUBURB, location.getSuburb())
+                    .put(Keys.LocationAttributes.STATE, location.getState())
+                    .put(Keys.LocationAttributes.POSTCODE, location.getPostcode())
+                    .put(Keys.LocationAttributes.COUNTRY, location.getCountry())
+                    .put(Keys.LocationAttributes.LATITUDE, location.getLatitude())
+                    .put(Keys.LocationAttributes.LONGITUDE, location.getLongitude())
+                    .put(Keys.LocationAttributes.FULL_ADDRESS, location.getFullAddress())
+                    .put(Keys.LocationAttributes.ADDRESS1, location.getAddressLine1())
+                    .put(Keys.LocationAttributes.ADDRESS2, location.getAddressLine2());
+        }
+    }
+
+    @NonNull
     private static void putLocation(@NonNull QueryHashMap map, @Nullable Location location) {
         if (location != null) {
             map.put(Keys.Location.SUBURB, location.getSuburb())
@@ -646,7 +672,8 @@ public final class Converter {
                     .put(Keys.Location.LONGITUDE, location.getLongitude())
                     .put(Keys.Location.FULL_ADDRESS, location.getFullAddress())
                     .put(Keys.Location.ADDRESS1, location.getAddressLine1())
-                    .put(Keys.Location.ADDRESS2, location.getAddressLine2());
+                    .put(Keys.Location.ADDRESS2, location.getAddressLine2())
+                    .put(Keys.Location.MASK_ADDRESS, location.getMaskAddress());
         }
     }
 

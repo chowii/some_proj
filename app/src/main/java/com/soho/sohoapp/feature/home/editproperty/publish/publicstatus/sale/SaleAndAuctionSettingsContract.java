@@ -104,5 +104,9 @@ public interface SaleAndAuctionSettingsContract {
         void hideLoadingDialog();
 
         void showInspectionTimes(int inspectionTimesQuantity);
+
+        boolean isMaskAddress();
+
+        void showMaskAddress(boolean isMaskAddress);
     }
 }

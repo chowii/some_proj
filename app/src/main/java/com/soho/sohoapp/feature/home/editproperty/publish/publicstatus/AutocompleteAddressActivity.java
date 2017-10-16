@@ -1,10 +1,12 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
@@ -29,6 +31,7 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class AutocompleteAddressActivity extends AbsActivity implements AutocompleteAddressContract.ViewInteractable {
     private static final int GOOGLE_CLIENT_ID = 1000;
+    public static final String KEY_SHOW_CONFIRMATION_DIALOG = "KEY_SHOW_CONFIRMATION_DIALOG";
     private AutocompleteAddressContract.ViewPresentable presentable;
     private AutocompleteAddressPresenter presenter;
     private GoogleApiClient googleApiClient;
@@ -43,6 +46,13 @@ public class AutocompleteAddressActivity extends AbsActivity implements Autocomp
     @NonNull
     public static Intent createIntent(@NonNull Context context) {
         return new Intent(context, AutocompleteAddressActivity.class);
+    }
+
+    @NonNull
+    public static Intent createIntent(@NonNull Context context, boolean showConfirmationDialog) {
+        Intent intent = new Intent(context, AutocompleteAddressActivity.class);
+        intent.putExtra(KEY_SHOW_CONFIRMATION_DIALOG, showConfirmationDialog);
+        return intent;
     }
 
     @Override
@@ -114,6 +124,21 @@ public class AutocompleteAddressActivity extends AbsActivity implements Autocomp
     @Override
     public void showEmptyLocationError() {
         showToast(R.string.autocomplete_address_not_selected);
+    }
+
+    @Override
+    public boolean confirmationDialogIsNeeded() {
+        Bundle extras = getIntent().getExtras();
+        return extras != null && extras.getBoolean(KEY_SHOW_CONFIRMATION_DIALOG);
+    }
+
+    @Override
+    public void showConfirmationDialog(DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(this).setMessage(R.string.autocomplete_address_confirmation_message)
+                .setTitle(R.string.autocomplete_address_confirmation)
+                .setPositiveButton(R.string.autocomplete_address_confirmation_yes, listener)
+                .setNegativeButton(R.string.autocomplete_address_confirmation_no, listener)
+                .show();
     }
 
     private void initAutocomplete() {

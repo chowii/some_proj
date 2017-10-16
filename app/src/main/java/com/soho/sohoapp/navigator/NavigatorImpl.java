@@ -310,6 +310,15 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
+    public void openAutocompleteAddressScreen(int requestCode, boolean showConfirmationDialog) {
+        if (fragment != null) {
+            fragment.startActivityForResult(AutocompleteAddressActivity.createIntent(fragment.getActivity(), showConfirmationDialog), requestCode);
+        } else {
+            activity.startActivityForResult(AutocompleteAddressActivity.createIntent(activity, showConfirmationDialog), requestCode);
+        }
+    }
+
+    @Override
     public void openPropertyDescriptionScreen(String description, int requestCode) {
         if (fragment != null) {
             fragment.startActivityForResult(PropertyDescriptionActivity.createIntent(fragment.getActivity(), description), requestCode);

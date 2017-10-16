@@ -49,9 +49,10 @@ public interface Keys {
         String TYPE_OF_PROPERTY = "property[type_of_property]";
         String IMAGE = "property_photos_attributes[0][image]";
         String PROPERTY_FINANCE_ATTRIBUTES = "property_finance_attributes";
+        String PROPERTY_LOCATION_ATTRIBUTES = "location_attributes";
     }
 
-    interface Location {
+    interface LocationAttributes {
         String FULL_ADDRESS = "property[location_attributes][full_address]";
         String ADDRESS1 = "property[location_attributes][address_1]";
         String ADDRESS2 = "property[location_attributes][address_2]";
@@ -61,6 +62,19 @@ public interface Keys {
         String COUNTRY = "property[location_attributes][country]";
         String LATITUDE = "property[location_attributes][latitude]";
         String LONGITUDE = "property[location_attributes][longitude]";
+    }
+
+    interface Location {
+        String FULL_ADDRESS = "full_address";
+        String ADDRESS1 = "address_1";
+        String ADDRESS2 = "address_2";
+        String SUBURB = "suburb";
+        String STATE = "state";
+        String POSTCODE = "postcode";
+        String COUNTRY = "country";
+        String LATITUDE = "latitude";
+        String LONGITUDE = "longitude";
+        String MASK_ADDRESS = "mask_address";
     }
 
     interface PropertyListing {

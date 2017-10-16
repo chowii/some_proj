@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_photo_camera_white"
         android:title="@string/edit_property_add_photo"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_done_white"
+        android:title="@string/edit_property_save"
+        app:showAsAction="ifRoom"/>
 </menu>

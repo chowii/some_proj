@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
+import android.content.DialogInterface;
+
 public interface AutocompleteAddressContract {
     interface ViewPresentable {
         void onBackClicked();
@@ -29,5 +31,9 @@ public interface AutocompleteAddressContract {
         void hideKeyboard();
 
         void showEmptyLocationError();
+
+        boolean confirmationDialogIsNeeded();
+
+        void showConfirmationDialog(DialogInterface.OnClickListener listener);
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -84,6 +85,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
 
     @BindView(R.id.priceIndicator)
     ImageView priceIndicator;
+
+    @BindView(R.id.isMaskAddress)
+    SwitchCompat isMaskAddress;
 
     private SaleAndAuctionSettingsContract.ViewPresentable presentable;
     private SaleAndAuctionSettingsPresenter presenter;
@@ -303,6 +307,16 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @Override
     public void showInspectionTimes(int inspectionTimesQuantity) {
         inspectionTime.setText(getString(R.string.publish_property_inspection_time_quantity, inspectionTimesQuantity));
+    }
+
+    @Override
+    public boolean isMaskAddress() {
+        return isMaskAddress.isChecked();
+    }
+
+    @Override
+    public void showMaskAddress(boolean isMaskAddress) {
+        this.isMaskAddress.setChecked(isMaskAddress);
     }
 
     @OnClick(R.id.description)

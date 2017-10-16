@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Image;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
+import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker;
 import com.soho.sohoapp.navigator.NavigatorImpl;
@@ -29,7 +32,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditPropertyActivity extends AbsActivity implements EditPropertyContract.ViewInteractable {
+public class EditPropertyActivity extends AbsActivity implements
+        EditPropertyContract.ViewInteractable,
+        EditOverviewFragment.EditPropertyListener {
     private static final String KEY_PROPERTY_ID = "KEY_PROPERTY_ID";
 
     @BindView(R.id.tabs)
@@ -59,6 +64,7 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     private ImageHeaderViewPager pagerAdapter;
     private GalleryPicker galleryPicker;
     private View loadingView;
+    private LoadingDialog loadingDialog;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, @NonNull int propertyId) {
@@ -153,14 +159,14 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
     }
 
     @Override
-    public void showLoadingDialog() {
+    public void showLoadingView() {
         ViewGroup content = findViewById(android.R.id.content);
         loadingView = getLayoutInflater().inflate(R.layout.view_loading, content, false);
         content.addView(loadingView);
     }
 
     @Override
-    public void hideLoadingDialog() {
+    public void hideLoadingView() {
         if (loadingView != null) {
             ViewGroup content = findViewById(android.R.id.content);
             content.removeView(loadingView);
@@ -192,12 +198,33 @@ public class EditPropertyActivity extends AbsActivity implements EditPropertyCon
         tabs.setupWithViewPager(viewPager);
     }
 
+    @Override
+    public void showLoadingDialog() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show(getString(R.string.common_loading));
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        loadingDialog.dismiss();
+    }
+
+    @Override
+    public void onPropertyAddressChanged(Location location) {
+        presentable.onPropertyAddressChanged(location);
+    }
+
     private void initToolbar() {
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
         toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
         toolbar.setOnMenuItemClickListener(item -> {
-            if (R.id.action_add_photo == item.getItemId()) {
-                presentable.onAddPhotoClicked();
+            switch (item.getItemId()) {
+                case R.id.action_add_photo:
+                    presentable.onAddPhotoClicked();
+                    break;
+                case R.id.action_save:
+                    presentable.onSaveClicked();
+                    break;
             }
             return false;
         });

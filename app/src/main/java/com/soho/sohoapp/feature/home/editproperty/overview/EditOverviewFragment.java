@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.landing.BaseFragment;
@@ -27,6 +29,7 @@ import com.soho.sohoapp.utils.DrawableUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class EditOverviewFragment extends BaseFragment implements EditOverviewContract.ViewInteractable {
@@ -40,6 +43,12 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     @BindView(R.id.investmentSummary)
     InvestmentSummaryView investmentSummary;
+
+    @BindView(R.id.maskAddress)
+    SwitchCompat maskAddress;
+
+    @BindView(R.id.address)
+    TextView address;
 
     private EditOverviewContract.ViewPresentable presentable;
     private EditOverviewPresenter presenter;
@@ -77,11 +86,18 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.EDIT_PROPERTY_STATUS_UPDATE) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
-                        extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
+        Bundle extras = getExtras(data);
+        if (resultCode == Activity.RESULT_OK && extras != null) {
+            switch (requestCode) {
+                case RequestCode.EDIT_PROPERTY_STATUS_UPDATE:
+                    presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
+                            extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
+                    break;
+                case RequestCode.EDIT_PROPERTY_ADDRESS:
+                    Location location = extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LOCATION);
+                    presentable.onPropertyAddressChanged(location);
+                    notifyActivityAboutChanges(location);
+                    break;
             }
         }
     }
@@ -129,6 +145,22 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         investmentSummary.setPropertyFinance(finance);
     }
 
+    @Override
+    public void showPropertyAddress(String address) {
+        this.address.setText(address);
+    }
+
+    @Override
+    public void notifyActivityAboutChanges(Location location) {
+        EditPropertyListener listener = (EditPropertyListener) getActivity();
+        listener.onPropertyAddressChanged(location);
+    }
+
+    @Override
+    public void showMaskAddress(boolean isMaskAddress) {
+        maskAddress.setChecked(isMaskAddress);
+    }
+
     @OnClick(R.id.marketplaceState)
     void onMarketplaceStateClicked() {
         presentable.onMarketplaceStateClicked();
@@ -139,9 +171,28 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         presentable.onVerificationClicked();
     }
 
+    @OnClick(R.id.address)
+    void onAddressClicked() {
+        presentable.onAddressClicked();
+    }
+
+    @OnCheckedChanged(R.id.maskAddress)
+    void onMaskAddressChanged(boolean isChecked) {
+        presentable.onMaskAddressChanged(isChecked);
+    }
+
     private void initView() {
         marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
         verificationDesc = ButterKnife.findById(verification, R.id.title);
         verificationDesc.setText(R.string.edit_property_verification);
+    }
+
+    @Nullable
+    private Bundle getExtras(Intent data) {
+        return data != null ? data.getExtras() : null;
+    }
+
+    public interface EditPropertyListener {
+        void onPropertyAddressChanged(Location location);
     }
 }

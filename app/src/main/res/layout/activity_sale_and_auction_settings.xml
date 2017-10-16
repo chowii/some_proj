@@ -296,6 +296,7 @@
                     android:textSize="14sp"/>
 
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/isMaskAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"/>
@@ -303,12 +304,12 @@
 
             <Button
                 android:id="@+id/save"
-                android:theme="@style/MaterialButton.Green"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/publish_property_save"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                android:theme="@style/MaterialButton.Green"/>
         </LinearLayout>
     </ScrollView>
 

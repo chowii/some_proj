@@ -57,7 +57,8 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             view.showAuctionAddress(location.getFullAddress());
         }
 
-        view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
+        view.showInspectionTimes(propertyListing.getInspectionTimesSafe().size());
+        view.showMaskAddress(property.getLocationSafe().getMaskAddress());
 
         //init view
         if (PropertyStatus.AUCTION.equals(propertyListing.getState())) {
@@ -229,6 +230,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             propertyFinance.setEstimatedValue(StringExtKt.toDoubleOrDefault(view.getPriceValue(), 0));
             property.setPropertyFinance(propertyFinance);
             property.setPropertyListing(propertyListing);
+            property.getLocationSafe().setMaskAddress(view.isMaskAddress());
 
             sendDataToServer();
         }

@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus;
 
+import android.content.DialogInterface;
+
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.location.LocationProviderInterface;
@@ -59,7 +61,30 @@ public class AutocompleteAddressPresenter implements AbsPresenter, AutocompleteA
     }
 
     @Override
+    public void onClearClicked() {
+        view.setAddress("");
+    }
+
+    @Override
     public void onAddressClicked(String placeId, String fullAddress) {
+        if (view.confirmationDialogIsNeeded()) {
+            view.showConfirmationDialog((dialogInterface, i) -> {
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        selectAddress(placeId, fullAddress);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialogInterface.dismiss();
+                        view.setAddress("");
+                        break;
+                }
+            });
+        } else {
+            selectAddress(placeId, fullAddress);
+        }
+    }
+
+    private void selectAddress(String placeId, String fullAddress) {
         view.showLoadingDialog();
         compositeDisposable.add(locationProvider.getLatLng(placeId)
                 .flatMap(latLng -> locationProvider.getAddress(latLng, fullAddress))
@@ -72,10 +97,5 @@ public class AutocompleteAddressPresenter implements AbsPresenter, AutocompleteA
                     view.hideLoadingDialog();
                     view.showLoadingError();
                 }));
-    }
-
-    @Override
-    public void onClearClicked() {
-        view.setAddress("");
     }
 }

@@ -13,6 +13,7 @@ import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.permission.PermissionManagerInterface;
 import com.soho.sohoapp.utils.Converter;
 import com.soho.sohoapp.utils.FileHelper;
+import com.soho.sohoapp.utils.QueryHashMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
-        view.showLoadingDialog();
+        view.showLoadingView();
 
         compositeDisposable.add(DEPENDENCIES.getSohoService().getProperty(view.getPropertyId())
                 .map(Converter::toProperty)
@@ -67,11 +68,11 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                         view.showAddress1(address.getAddressLine1());
                         view.showAddress2(address.getAddressLine2());
                     }
-                    view.hideLoadingDialog();
+                    view.hideLoadingView();
                 }, throwable ->
                 {
 
-                    view.hideLoadingDialog();
+                    view.hideLoadingView();
                     view.showError(throwable);
                 }));
     }
@@ -133,6 +134,30 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         propertyImages.add(propertyImage);
         setPropertyImages(propertyImages, true);
         sendImageOnServer(propertyImage);
+    }
+
+    @Override
+    public void onPropertyAddressChanged(Location location) {
+        view.showAddress1(location.getAddressLine1());
+        view.showAddress2(location.getAddressLine2());
+        property.setLocation(location);
+    }
+
+    @Override
+    public void onSaveClicked() {
+        view.showLoadingDialog();
+        QueryHashMap map = Converter.toPropertyMap(property);
+        compositeDisposable.add(
+                DEPENDENCIES.getSohoService().updateProperty(property.getId(), map)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(propertyResult -> {
+                            view.hideLoadingDialog();
+                            navigator.exitCurrentScreen();
+                        }, throwable -> {
+                            view.hideLoadingDialog();
+                            view.showError(throwable);
+                        }));
     }
 
     private void sendImageOnServer(Image propertyImage) {

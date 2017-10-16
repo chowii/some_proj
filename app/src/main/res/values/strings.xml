@@ -120,6 +120,7 @@
     <string name="edit_property_connection">Connection</string>
     <string name="edit_property_files">Files</string>
     <string name="edit_property_add_photo">Add photo</string>
+    <string name="edit_property_save">Save</string>
     <string name="edit_property_take_a_photo">Take a photo</string>
     <string name="edit_property_upload_a_photo">Choose from Gallery</string>
     <string name="edit_property_image_chooser_title">Select Picture</string>
@@ -144,6 +145,8 @@
     <string name="edit_property_end_of_rent">End of rent</string>
     <string name="edit_property_yield_value" formatted="true">%.2f%%</string>
     <string name="edit_property_lvr_value" formatted="true">%.2f%%</string>
+    <string name="edit_property_address">Address</string>
+    <string name="edit_property_mask_address">Mask Address</string>
     <!--Edit property screen end-->
 
     <!--Publish property screens start-->
@@ -276,9 +279,13 @@
     <string name="enter_pin_resend_code">Re-send confirmation code.</string>
 
     <!--Autocomplete address screen start-->
-    <string name="autocomplete_address_toolbar_title">Auction Address</string>
+    <string name="autocomplete_address_toolbar_title">Address</string>
     <string name="autocomplete_address_done">Done</string>
     <string name="autocomplete_address_not_selected">Please select address</string>
+    <string name="autocomplete_address_confirmation">Confirmation</string>
+    <string name="autocomplete_address_confirmation_message">Are you sure you want to update this address? If your property is public you will need to re-verify your address.</string>
+    <string name="autocomplete_address_confirmation_yes">Yes</string>
+    <string name="autocomplete_address_confirmation_no">No</string>
     <!--Autocomplete address screen end-->
 
     <!--Property description screen start-->

@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty.overview;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.navigator.NavigatorInterface;
@@ -24,6 +25,8 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         property = view.getProperty();
         initPropertyListing(property.getPropertyListing());
         view.setPropertyFinance(property.getPropertyFinance());
+        view.showPropertyAddress(property.getLocationSafe().getAddressLine1());
+        view.showMaskAddress(property.getLocationSafe().getMaskAddress());
     }
 
     @Override
@@ -46,10 +49,29 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         this.property = property;
         initPropertyListing(property.getPropertyListing());
         view.setPropertyFinance(property.getPropertyFinance());
+        view.showMaskAddress(property.getLocationSafe().getMaskAddress());
         if (!verificationCompleted) {
             navigator.openVerificationScreen(property);
         }
         //todo: update also property description
+    }
+
+    @Override
+    public void onAddressClicked() {
+        navigator.openAutocompleteAddressScreen(RequestCode.EDIT_PROPERTY_ADDRESS, true);
+    }
+
+    @Override
+    public void onPropertyAddressChanged(Location location) {
+        property.setLocation(location);
+        view.showPropertyAddress(location.getAddressLine1());
+    }
+
+    @Override
+    public void onMaskAddressChanged(boolean isChecked) {
+        Location location = property.getLocationSafe();
+        location.setMaskAddress(isChecked);
+        view.notifyActivityAboutChanges(location);
     }
 
     private void initPropertyListing(PropertyListing propertyListing) {

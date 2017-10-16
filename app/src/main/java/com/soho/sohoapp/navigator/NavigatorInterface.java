@@ -66,6 +66,8 @@ public interface NavigatorInterface {
 
     void openAutocompleteAddressScreen(int requestCode);
 
+    void openAutocompleteAddressScreen(int requestCode, boolean showConfirmationDialog);
+
     void openPropertyDescriptionScreen(String description, int requestCode);
 
     void openHomeActivity();
