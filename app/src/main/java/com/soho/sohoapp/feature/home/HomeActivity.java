@@ -2,8 +2,10 @@ package com.soho.sohoapp.feature.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.UriMatcher;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -36,6 +38,9 @@ import butterknife.OnClick;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
+import static com.soho.sohoapp.network.Keys.DeeplinkingNotifications.ACTION_EDIT;
+import static com.soho.sohoapp.network.Keys.DeeplinkingNotifications.ACTION_VIEW;
+import static com.soho.sohoapp.network.Keys.DeeplinkingNotifications.AUTH_PROPERTIES;
 
 public class HomeActivity extends AbsActivity implements HomeContract.ViewInteractable {
 
@@ -78,6 +83,45 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
         presenter = new HomePresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
+
+        checkDeepLinking();
+    }
+
+    private void checkDeepLinking() {
+        Uri uri = getIntent().getData();
+        if (uri == null) {
+            return;
+        }
+        final int EDIT_PROPERTY = 10;
+        final int VIEW_PROPERTY = 11;
+        final UriMatcher sohoURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        sohoURIMatcher.addURI(AUTH_PROPERTIES, "/#/" + ACTION_EDIT, EDIT_PROPERTY);
+        sohoURIMatcher.addURI(AUTH_PROPERTIES, "/#/" + ACTION_VIEW, VIEW_PROPERTY);
+        int match = sohoURIMatcher.match(uri);
+        int propertyId;
+        switch (match) {
+            case EDIT_PROPERTY:
+                propertyId = getPropertyId(uri);
+                if (propertyId > 0) {
+                    navigator.openEditPropertyScreen(propertyId);
+                }
+                break;
+            case VIEW_PROPERTY:
+                propertyId = getPropertyId(uri);
+                if (propertyId > 0) {
+                    navigator.openPropertyDetailScreen(propertyId);
+                }
+                break;
+        }
+    }
+
+    private int getPropertyId(Uri uri) {
+        try {
+            return Integer.valueOf(uri.getPathSegments().get(0));
+        } catch (NumberFormatException nfe) {
+            DEPENDENCIES.getLogger().e(nfe.getMessage(), nfe);
+        }
+        return -1;
     }
 
 

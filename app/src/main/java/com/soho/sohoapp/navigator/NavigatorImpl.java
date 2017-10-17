@@ -46,6 +46,7 @@ import com.soho.sohoapp.feature.profile.EditAccountActivity;
 import com.soho.sohoapp.feature.profile.password.EditAccountPassActivity;
 import com.zendesk.sdk.feedback.ui.ContactZendeskActivity;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -359,6 +360,20 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivity(intent);
         } else {
             Intent intent = HomeActivity.createIntent(activity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.startActivity(intent);
+        }
+    }
+
+    public void openHomeActivityDeepLinking(@NotNull Uri data) {
+        if (fragment != null) {
+            Intent intent = HomeActivity.createIntent(fragment.getActivity());
+            intent.setData(data);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.startActivity(intent);
+        } else {
+            Intent intent = HomeActivity.createIntent(activity);
+            intent.setData(data);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             activity.startActivity(intent);
         }

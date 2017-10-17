@@ -11,6 +11,7 @@ import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -78,6 +79,8 @@ public interface NavigatorInterface {
     void openHomeActivity();
 
     void openHomeActivity(int flags);
+
+    void openHomeActivityDeepLinking(@NotNull Uri data);
 
     void openLandingActivity();
 

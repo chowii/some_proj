@@ -8,4 +8,5 @@
     <string name="key_google_geo_api">AIzaSyBPQoY2n2Tcv4hvKkK6A5Z6NaBQAYlKtbg</string>
     <string name="key_zendesk_application_id">f2de192c65eea4b4ed693ce1ede1923f8327d1ecfdff5717</string>
     <string name="key_zendesk_mobile_sdk_client">mobile_sdk_client_ec516a08f71975bf2989</string>
+    <string name="zen_desk_outbound_private_key">c351b97585dc6c7960ad97f01a570f83</string>
 </resources>

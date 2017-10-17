@@ -127,11 +127,10 @@ class LandingActivity : AbsActivity() {
     }
 
     private fun goHomeActivity(user: UserResult) {
-        DEPENDENCIES.prefs.user = Converter.toUser(user)
-        DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
+        DEPENDENCIES.userPrefs.login(Converter.toUser(user))
 
         val navigator = NavigatorImpl.newInstance(this)
-        if (!DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
+        if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
             navigator.showRegisterUserInfoActivity()
         } else {
             navigator.openHomeActivity()

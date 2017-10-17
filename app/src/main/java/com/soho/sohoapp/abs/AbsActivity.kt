@@ -27,7 +27,7 @@ abstract class AbsActivity : AppCompatActivity() {
 
     val isUserSignedIn: Boolean
         get() {
-            return !DEPENDENCIES.prefs.authToken.isEmpty()
+            return !DEPENDENCIES.userPrefs.authToken.isEmpty()
         }
 
     protected fun handleError(throwable: Throwable = Exception()) {

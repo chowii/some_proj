@@ -10,12 +10,12 @@ import com.soho.sohoapp.network.ApiClient
 import com.soho.sohoapp.network.Keys.Database.DB_NAME
 import com.soho.sohoapp.network.SohoService
 import com.soho.sohoapp.permission.eventbus.AndroidEventBus
-import com.soho.sohoapp.preferences.Prefs
+import com.soho.sohoapp.preferences.UserPrefs
 
 enum class Dependencies {
     DEPENDENCIES;
 
-    lateinit var prefs: Prefs
+    lateinit var userPrefs: UserPrefs
         private set
 
     lateinit var imageLoader: ImageLoader
@@ -33,7 +33,7 @@ enum class Dependencies {
     val sohoService: SohoService = ApiClient.getService()
 
     fun init(context: Context) {
-        prefs = Prefs(context)
+        userPrefs = UserPrefs(context)
         imageLoader = ImageLoader(context)
         logger = AndroidLogger()
         eventBus = AndroidEventBus()

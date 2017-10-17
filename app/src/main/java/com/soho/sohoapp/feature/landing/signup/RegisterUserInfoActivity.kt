@@ -115,11 +115,11 @@ class RegisterUserInfoActivity : AbsActivity() {
         disposableUserProfile = DEPENDENCIES.sohoService.updateUserProfile(values)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(Converter::toUser)
                 .subscribe(
-                        { userResult ->
+                        { user ->
                             loadingDialog.dismiss()
-                            DEPENDENCIES.prefs.user = Converter.toUser(userResult)
-                            DEPENDENCIES.prefs.authToken = userResult.authenticationToken ?: ""
+                            DEPENDENCIES.userPrefs.login(user)
                             NavigatorImpl.newInstance(this).openHomeActivity()
                         },
                         {

@@ -23,8 +23,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://maven.google.com"}//google support repository
-//        google() todo use this after updating the plugin to 3.0.0
+        google()
+        maven { url "http://dl.bintray.com/outbound/maven" }
     }
     ext {
         // Android config
@@ -33,10 +33,10 @@ allprojects {
         androidTargetSdk_version = 26
         androidCompileSdk_version = 26
 
-        constraintLayout_version ="1.0.2"
-        fabric_version ="1.3.17"
-        zendesk_version ="1.11.0.1"
-        outbound_version ="0.2.8"
+        constraintLayout_version = "1.0.2"
+        fabric_version = "1.3.17"
+        zendesk_version = "1.11.0.1"
+        outbound_version = "0.2.8"
 
         libphonenumber_version = "8.8.3"
         mockitoKotlin_version = "1.5.0"

@@ -81,11 +81,11 @@ class SignUpActivity : AppCompatActivity() {
         disposable = DEPENDENCIES.sohoService.register(registerMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(Converter::toUser)
                 .subscribe(
                         { user ->
-                            DEPENDENCIES.logger.d(user.authenticationToken)
-                            DEPENDENCIES.prefs.user = Converter.toUser(user)
-                            DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
+                            DEPENDENCIES.logger.d(user?.authenticationToken)
+                            DEPENDENCIES.userPrefs.login(user)
                             loadingDialog?.dismiss()
                             //profile is incomplete cause we are signing up so we don't need to check
                             NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()

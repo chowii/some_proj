@@ -27,7 +27,7 @@ class EditAccountActivity : AbsActivity(), EditAccountActivityContract.ViewInter
         fun createIntent(context: Context): Intent = Intent(context, EditAccountActivity::class.java)
     }
 
-    val presenter by lazy { EditAccountActivityPresenter(this, DEPENDENCIES.prefs.user) }
+    val presenter by lazy { EditAccountActivityPresenter(this, DEPENDENCIES.userPrefs.user) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class EditAccountActivity : AbsActivity(), EditAccountActivityContract.ViewInter
 
     override fun showUserFragment() {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, EditAccountFragment.newInstance(DEPENDENCIES.prefs.user))
+                .replace(R.id.container, EditAccountFragment.newInstance(DEPENDENCIES.userPrefs.user))
                 .commit()
     }
     override fun showError(throwable: Throwable) {

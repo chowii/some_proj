@@ -111,7 +111,9 @@ dependencies {
     })
 
     //Support Library
+
     //todo facebook sdk uses custom tabs 25.3.1 which can cause runtime bugs
+
     //check fb update and possible solutions
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:support-v4:$support_version"
@@ -125,10 +127,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version") {
         transitive = false
     }
+
     //Zendesk
     implementation("com.zendesk:sdk:$zendesk_version@aar") {
         transitive = true
     }
+
     //Fabric
     implementation("io.fabric.sdk.android:fabric:$fabric_version@aar") {
         transitive = true
@@ -168,6 +172,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'firebase-core'
     }
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
     //gallery
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
@@ -177,6 +182,7 @@ dependencies {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
     }
+
     //managing phone numbers
     implementation "com.googlecode.libphonenumber:libphonenumber:$libphonenumber_version"
 
@@ -189,17 +195,16 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
     }
-
     implementation 'com.wefika:horizontal-picker:1.1.1'
-    implementation "com.splitwise:tokenautocomplete:2.0.8@aar"
+    implementation 'com.splitwise:tokenautocomplete:2.0.8@aar'
 
     //Multidex
     implementation 'com.android.support:multidex:1.0.1'
 
-//    kapt 'com.android.databinding:compiler:2.3.3'
+    //    kapt 'com.android.databinding:compiler:2.3.3'
 
     //Material time picker
-    implementation("com.wdullaer:materialdatetimepicker:3.2.2") {
+    implementation('com.wdullaer:materialdatetimepicker:3.2.2') {
         exclude module: 'support-v13'
         exclude module: 'animated-vector-drawable'
     }
@@ -220,8 +225,7 @@ dependencies {
 
     //PinView
     implementation "com.chaos.view:pinview:$pin_view_version"
-
-
+    implementation project(':outbound-sdk')
 }
 //this needs to be at the bottom
 apply plugin: 'com.google.gms.google-services'

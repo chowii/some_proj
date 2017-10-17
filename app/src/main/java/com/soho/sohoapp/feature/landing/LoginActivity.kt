@@ -64,11 +64,11 @@ class LoginActivity : AppCompatActivity() {
             disposable = DEPENDENCIES.sohoService.loginUser(map)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .map(Converter::toUser)
                     .subscribe({ user ->
-                        DEPENDENCIES.prefs.user = Converter.toUser(user)
-                        DEPENDENCIES.prefs.authToken = user.authenticationToken ?: ""
+                        DEPENDENCIES.userPrefs.login(user)
                         val navigatorImpl = NavigatorImpl.newInstance(this)
-                        if (!DEPENDENCIES.prefs.isProfileComplete.orFalse()) {
+                        if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
                             navigatorImpl.showRegisterUserInfoActivity()
                         } else {
                             navigatorImpl.openHomeActivity()

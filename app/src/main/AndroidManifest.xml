@@ -31,7 +31,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,116 +38,114 @@
         <activity
             android:name=".feature.landing.LandingActivity"
             android:launchMode="singleInstance" />
-
-        <activity android:name=".feature.landing.signup.SignUpActivity" />
-        <activity android:name=".feature.landing.LoginActivity" />
-        <activity android:name=".feature.landing.signup.RegisterUserInfoActivity" />
-
+        <activity
+            android:name=".feature.landing.signup.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.landing.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.landing.signup.RegisterUserInfoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.home.addproperty.AddPropertyActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.portfolio.details.PortfolioDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".feature.marketplaceview.feature.filters.PropertyFilterActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.EditPropertyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".feature.landing.ForgotPasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.more.SettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.more.verifyNumber.VerifyPhoneActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.more.VerifyAgentLicenseActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".permission.PermissionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent" />
-
         <activity
             android:name=".feature.home.editproperty.publish.PropertyStatusActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.PublicStatusSettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.PropertyDescriptionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.AutocompleteAddressActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.rent.RentSettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.discoverable.DiscoverableSettingsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.inspection.InspectionTimeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.publish.publicstatus.inspection.NewInspectionTimeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.verification.VerificationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.home.editproperty.verification.ownership.OwnershipVerificationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".feature.profile.EditAccountActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.profile.password.EditAccountPassActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.home.more.verifyNumber.EnterPinActivity" />
+        <activity
+            android:name=".feature.home.more.verifyNumber.EnterPinActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".feature.gallery.GalleryViewActivity" />
+        <activity
+            android:name=".notifications.NotificationsActivityHandler"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AppCompat.Translucent">
+            <intent-filter android:label="@string/filter_view_sohoapp_home">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "sohoapp://properties” -->
+                <data
+                    android:host="properties"
+                    android:scheme="sohoapp" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -156,7 +153,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${api_key_crashlytics}"/>
+            android:value="${api_key_crashlytics}" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -175,7 +172,25 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+        <receiver
+            android:name="io.outbound.sdk.OutboundPushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
 
+        <service
+            android:name="io.outbound.sdk.OutboundService"
+            android:exported="false"
+            android:label="OutboundService">
+            <intent-filter>
+                <action android:name="com.soho.sohoapp.dev.outbound.action.TRACK_NOTIF" />
+                <action android:name="com.soho.sohoapp.dev.outbound.action.DISPLAY_NOTIF" />
+                <action android:name="com.soho.sohoapp.dev.outbound.action.RECEIVED_NOTIF" />
+                <action android:name="com.soho.sohoapp.dev.outbound.action.OPEN_NOTIF" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -9,14 +9,14 @@ import android.support.multidex.MultiDexApplication;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.soho.sohoapp.data.models.User;
-import com.soho.sohoapp.preferences.Prefs;
+import com.soho.sohoapp.preferences.UserPrefs;
 import com.soho.sohoapp.utils.Converter;
 import com.zendesk.sdk.network.impl.ZendeskConfig;
 
 import org.jetbrains.annotations.NotNull;
 
 import io.fabric.sdk.android.Fabric;
+import io.outbound.sdk.Outbound;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -57,9 +57,11 @@ public class SohoApplication extends MultiDexApplication {
                 , getString(R.string.key_zendesk_application_id)
                 , getString(R.string.key_zendesk_mobile_sdk_client));
 
+        Outbound.init(this, getString(R.string.zen_desk_outbound_private_key), getString(R.string.firebase_gcm_sender_id));
+
         DEPENDENCIES.init(this);
 
-        Prefs prefs = DEPENDENCIES.getPrefs();
+        UserPrefs prefs = DEPENDENCIES.getUserPrefs();
         if (!prefs.getHasInstalled()) {
             prefs.setHasInstalled(true);
             createShortCut();
@@ -92,14 +94,13 @@ public class SohoApplication extends MultiDexApplication {
 
     @NotNull
     public static void getUserProfile() {
-        if (!isEmpty(DEPENDENCIES.getPrefs().getAuthToken())) {
+        if (!isEmpty(DEPENDENCIES.getUserPrefs().getAuthToken())) {
             DEPENDENCIES.getSohoService().getProfile()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userResult ->
                             {
-                                User user = Converter.toUser(userResult);
-                                DEPENDENCIES.getPrefs().setUser(user);
+                                DEPENDENCIES.getUserPrefs().login(Converter.toUser(userResult));
                             }, throwable -> DEPENDENCIES.getLogger().e("Error when getting user profile", throwable)
                     );
         }

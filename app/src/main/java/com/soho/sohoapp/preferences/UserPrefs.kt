@@ -1,17 +1,17 @@
 package com.soho.sohoapp.preferences
 
 import android.content.Context
-import com.google.gson.Gson
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.utils.orFalse
+import io.outbound.sdk.Outbound
 
-class Prefs(context: Context) {
+class UserPrefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     var authToken: String
-        set(value) {
+        private set(value) {
             prefs.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
             DEPENDENCIES.logger.d(prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
         }
@@ -27,28 +27,33 @@ class Prefs(context: Context) {
         get() = prefs.getBoolean("FirstInstall", false)
 
 
-    fun putGsonObject(key: String, value: Any) {
+    fun login(user: User?) {
 
-        val gson = Gson()
-        val json: String = gson.toJson(value)
+        if (user == null) {
+            DEPENDENCIES.logger.e("user null, can't login")
+            return
+        }
 
-        putString(key, json)
+        DEPENDENCIES.userPrefs.user = user
+        DEPENDENCIES.userPrefs.authToken = user.authenticationToken.orEmpty()
+
+        val outboundUser = io.outbound.sdk.User.Builder()
+                .setUserId(user.firstName + user.lastName + user.email)
+                .setFirstName(user.firstName)
+                .setLastName(user.lastName)
+                .setEmail(user.email)
+                .build()
+        Outbound.identify(outboundUser)
     }
 
-    fun <T> getGsonObject(key: String, clazz: Class<T>): T {
-        val json = prefs.getString(key, "")
-        val gson = Gson()
-        val gsonObj: T = gson.fromJson(json, clazz)
-
-        return gsonObj
-    }
-
-    private fun putString(key: String, value: String) {
-        prefs.edit().putString(key, value).apply()
+    fun logout() {
+        DEPENDENCIES.userPrefs.authToken = ""
+        DEPENDENCIES.userPrefs.user = null
+        Outbound.logout()
     }
 
     companion object {
-        private val SHARED_PREFS_NAME = "Soho-prefs"
+        private val SHARED_PREFS_NAME = "Soho-userPrefs"
     }
 
     var isProfileComplete: Boolean = false

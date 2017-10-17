@@ -124,7 +124,7 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
     }
 
     private fun createSettingItem(): SettingItem {
-        val user = DEPENDENCIES.prefs.user
+        val user = DEPENDENCIES.userPrefs.user
         return SettingItem(user?.getFullnameShort(), user?.dateOfBirth ?: 0, R.drawable.drivers_card)
     }
 

@@ -144,4 +144,11 @@ public interface Keys {
         String ATTACHMENT = "attachments_attributes[%d][file]";
         String PIN_CODE = "code";
     }
+
+    interface DeeplinkingNotifications {
+        String SCHEME = "sohoapp";
+        String AUTH_PROPERTIES = "properties";
+        String ACTION_EDIT = "edit";
+        String ACTION_VIEW = "view";
+    }
 }
