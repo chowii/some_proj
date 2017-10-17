@@ -41,6 +41,8 @@ class OwnershipDetailsFragment : BaseFragment(), OwnershipDetailsContract.ViewIn
 
     @OnClick(R.id.attach_files)
     internal fun onAttachFilesClicked() {
-        presentable.onAttachFilesClicked()
+        (activity as? OwnershipVerificationActivity)?.let { activity ->
+            activity.changeToFilesTab()
+        }
     }
 }

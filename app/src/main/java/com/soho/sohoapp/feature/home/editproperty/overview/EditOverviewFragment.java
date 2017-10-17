@@ -22,10 +22,15 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
+import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.DrawableUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,6 +98,12 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
                     presentable.onPropertyStatusUpdated(extras.getParcelable(NavigatorImpl.KEY_PROPERTY),
                             extras.getBoolean(NavigatorImpl.KEY_VERIFICATION_COMPLETED));
                     break;
+                case RequestCode.PROPERTY_VERIFICATIONS_REQUEST_CODE:
+                    if (extras.containsKey(NavigatorImpl.KEY_VERIFICATIONS_UPDATED)) {
+                        List verificationsList = new ArrayList();
+                        Collections.addAll(verificationsList, extras.getParcelableArray(NavigatorImpl.KEY_VERIFICATIONS_UPDATED));
+                        presentable.onPropertyVerificationsUpdated(verificationsList);
+                    }
                 case RequestCode.EDIT_PROPERTY_ADDRESS:
                     Location location = extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LOCATION);
                     presentable.onPropertyAddressChanged(location);
@@ -100,6 +111,11 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
                     break;
             }
         }
+    }
+
+    @Nullable
+    private Bundle getExtras(Intent data) {
+        return data != null ? data.getExtras() : null;
     }
 
     @Override

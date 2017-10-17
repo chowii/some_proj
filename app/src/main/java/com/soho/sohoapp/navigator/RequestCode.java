@@ -19,6 +19,8 @@ public final class RequestCode {
     public static final int NEW_INSPECTION_TIME = 60;
     public static final int RENT_SETTINGS_INSPECTION_TIME = 61;
     public static final int SALE_SETTINGS_INSPECTION_TIME = 62;
+    public static final int PROOF_OF_OWNERSHIP_VERIFICATION_REQUEST_CODE = 63;
+    public static final int PROPERTY_VERIFICATIONS_REQUEST_CODE = 64;
 
     private RequestCode() {
         //utils class to hold constants

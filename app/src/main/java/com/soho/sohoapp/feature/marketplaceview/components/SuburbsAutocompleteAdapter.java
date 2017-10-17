@@ -54,7 +54,8 @@ public class SuburbsAutocompleteAdapter extends ArrayAdapter<Suburb> implements 
         TextView textView2 = row.findViewById(android.R.id.text2);
         if (item != null) {
             textView1.setText(item.getName());
-            textView2.setVisibility(View.GONE);
+            String secondaryText = item.getSecondaryText();
+            textView2.setText(secondaryText != null ? secondaryText : "");
         }
         return row;
     }
@@ -68,7 +69,9 @@ public class SuburbsAutocompleteAdapter extends ArrayAdapter<Suburb> implements 
                 resultList = new ArrayList<>();
                 if (results != null && results.count > 0) {
                     for(AutocompletePrediction prediction: ((List<AutocompletePrediction>) results.values)) {
-                        resultList.add(new Suburb(prediction.getPlaceId(), prediction.getPrimaryText(STYLE_BOLD).toString()));
+                        Suburb suburb = new Suburb(prediction.getPlaceId(), prediction.getPrimaryText(STYLE_BOLD).toString());
+                        suburb.setSecondaryText(prediction.getSecondaryText(STYLE_BOLD).toString());
+                        resultList.add(suburb);
                     }
                     notifyDataSetChanged();
                 } else {

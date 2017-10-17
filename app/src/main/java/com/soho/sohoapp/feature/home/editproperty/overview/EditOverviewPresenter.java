@@ -5,9 +5,15 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyListing;
+import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.ColorUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.soho.sohoapp.navigator.RequestCode.PROPERTY_VERIFICATIONS_REQUEST_CODE;
 
 public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract.ViewPresentable {
     private final EditOverviewContract.ViewInteractable view;
@@ -41,7 +47,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
 
     @Override
     public void onVerificationClicked() {
-        navigator.openVerificationScreen(property);
+        navigator.openVerificationScreen(property, PROPERTY_VERIFICATIONS_REQUEST_CODE);
     }
 
     @Override
@@ -51,11 +57,17 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         view.setPropertyFinance(property.getPropertyFinance());
         view.showMaskAddress(property.getLocationSafe().getMaskAddress());
         if (!verificationCompleted) {
-            navigator.openVerificationScreen(property);
+            navigator.openVerificationScreen(property, PROPERTY_VERIFICATIONS_REQUEST_CODE);
         }
         //todo: update also property description
     }
 
+    @Override
+    public void onPropertyVerificationsUpdated(List<Verification> verifications) {
+        property.setVerifications(verifications);
+        initPropertyListing(property.getPropertyListing());
+    }
+  
     @Override
     public void onAddressClicked() {
         navigator.openAutocompleteAddressScreen(RequestCode.EDIT_PROPERTY_ADDRESS, true);

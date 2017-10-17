@@ -7,8 +7,9 @@ import com.soho.sohoapp.data.dtos.VerificationResult
 import com.soho.sohoapp.data.enums.VerificationType
 import com.soho.sohoapp.data.models.Attachment
 import com.soho.sohoapp.data.models.Property
+import com.soho.sohoapp.data.models.Verification
 import com.soho.sohoapp.navigator.NavigatorInterface
-import com.soho.sohoapp.navigator.RequestCode
+import com.soho.sohoapp.navigator.RequestCode.*
 import com.soho.sohoapp.permission.PermissionManagerInterface
 import com.soho.sohoapp.utils.Converter
 import com.soho.sohoapp.utils.FileHelper
@@ -26,10 +27,7 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
     private var property: Property? = null
     private var permissionDisposable: Disposable? = null
 
-    override fun startPresenting(fromConfigChanges: Boolean) {
-        view.setPresentable(this)
-        property = view.getPropertyFromExtras()
-
+    private fun populateFormWithCurrentProperty() {
         val photoVerification = property?.verifications?.find {
             VerificationType.LICENCE == it.type
         }
@@ -49,6 +47,12 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
         }
     }
 
+    override fun startPresenting(fromConfigChanges: Boolean) {
+        view.setPresentable(this)
+        property = view.getPropertyFromExtras()
+        populateFormWithCurrentProperty()
+    }
+
     override fun stopPresenting() {
         compositeDisposable.clear()
     }
@@ -58,7 +62,7 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
     }
 
     override fun onOwnershipProofClicked() {
-        navigator.openOwnershipVerificationScreen(property)
+        navigator.openOwnershipVerificationScreen(property, PROOF_OF_OWNERSHIP_VERIFICATION_REQUEST_CODE)
     }
 
     override fun onPhotoIdClicked() {
@@ -69,7 +73,7 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
         if (permissionManager.hasStoragePermission()) {
             view.capturePhoto()
         } else {
-            permissionDisposable = permissionManager.requestStoragePermission(RequestCode.EDIT_PROPERTY_PRESENTER_STORAGE)
+            permissionDisposable = permissionManager.requestStoragePermission(EDIT_PROPERTY_PRESENTER_STORAGE)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ permissionEvent ->
                         if (permissionEvent.isPermissionGranted) {
@@ -93,6 +97,16 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
         sendImageToServer(Attachment().apply { this.uri = uri })
     }
 
+    override fun verificationUpdated(verification: Verification) {
+        this.property?.verifications?.indexOfFirst { it.id == verification.id }?.let { index ->
+            property?.verifications?.set(index, verification)
+            property?.verifications?.let { updatedVerifications ->
+                view.setVerificationsUpdatedResult(updatedVerifications)
+            }
+        }
+        populateFormWithCurrentProperty()
+    }
+
     private fun sendImageToServer(attachment: Attachment) {
         view.showLoadingDialog()
         compositeDisposable.add(Converter.toPhotoVerificationRequestBody(fileHelper, attachment)
@@ -105,9 +119,8 @@ class VerificationPresenter(private val view: VerificationContract.ViewInteracta
                 .subscribe(
                         { verification ->
                             view.hideLoadingDialog()
-                            verification?.let {
-                                view.showPhotoVerificationStatus(verification.getStateLabel())
-                                view.showPhotoVerificationColor(verification.getColor())
+                            verification?.let { verification ->
+                                verificationUpdated(verification)
                             }
                         },
                         {

@@ -12,6 +12,7 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.gallery.GalleryViewActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
@@ -54,6 +55,8 @@ public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_PROPERTY_LOCATION = "KEY_PROPERTY_LOCATION";
     public static final String KEY_STRING = "KEY_STRING";
     public static final String KEY_VERIFICATION_COMPLETED = "KEY_VERIFICATION_COMPLETED";
+    public static final String KEY_VERIFICATION_UPDATED = "KEY_VERIFICATION_UPDATED";
+    public static final String KEY_VERIFICATIONS_UPDATED = "KEY_VERIFICATIONS_UPDATED";
     public static final String KEY_INSPECTION_TIME = "KEY_INSPECTION_TIME";
     public static final String KEY_INSPECTION_TIME_IS_CREATED = "KEY_INSPECTION_TIME_IS_CREATED";
     private Activity activity;
@@ -96,6 +99,13 @@ public class NavigatorImpl implements NavigatorInterface {
             activity.setResult(Activity.RESULT_OK);
             activity.finish();
         }
+    }
+
+    @Override
+    public void exitWithResultCodeOk(@NonNull Verification verification) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_VERIFICATION_UPDATED, verification);
+        setResultAndExit(intent);
     }
 
     @Override
@@ -284,20 +294,20 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void openVerificationScreen(@NonNull Property property) {
+    public void openVerificationScreen(@NonNull Property property, int requestCode) {
         if (fragment != null) {
-            fragment.startActivity(VerificationActivity.Companion.createIntent(fragment.getActivity(), property));
+            fragment.startActivityForResult(VerificationActivity.Companion.createIntent(fragment.getActivity(), property), requestCode);
         } else {
-            activity.startActivity(VerificationActivity.Companion.createIntent(activity, property));
+            activity.startActivityForResult(VerificationActivity.Companion.createIntent(activity, property), requestCode);
         }
     }
 
     @Override
-    public void openOwnershipVerificationScreen(Property property) {
+    public void openOwnershipVerificationScreen(Property property, int requestCode) {
         if (fragment != null) {
-            fragment.startActivity(OwnershipVerificationActivity.Companion.createIntent(fragment.getActivity(), property));
+            fragment.startActivityForResult(OwnershipVerificationActivity.Companion.createIntent(fragment.getActivity(), property), requestCode);
         } else {
-            activity.startActivity(OwnershipVerificationActivity.Companion.createIntent(activity, property));
+            activity.startActivityForResult(OwnershipVerificationActivity.Companion.createIntent(activity, property), requestCode);
         }
     }
 

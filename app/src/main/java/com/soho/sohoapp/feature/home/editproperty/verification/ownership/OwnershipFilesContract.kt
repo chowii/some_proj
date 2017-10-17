@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.home.editproperty.verification.ownership
 
 import android.net.Uri
+import android.support.annotation.StringRes
 import com.soho.sohoapp.data.listdata.Displayable
 import com.soho.sohoapp.data.models.Attachment
 import com.soho.sohoapp.data.models.Property
@@ -26,5 +27,6 @@ interface OwnershipFilesContract {
         fun showAddPhotoDialog()
         fun showLoadingDialog()
         fun hideLoadingDialog()
+        fun showValidationMessage(@StringRes stringId:Int)
     }
 }

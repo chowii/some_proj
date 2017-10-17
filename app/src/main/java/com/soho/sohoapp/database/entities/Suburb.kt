@@ -20,6 +20,9 @@ data class Suburb(
         var marketplaceFilterId: Long = 0) {
 
     @Ignore
+    var secondaryText:String? = null
+
+    @Ignore
     constructor() : this(0, "", "", 0)
 
     @Ignore

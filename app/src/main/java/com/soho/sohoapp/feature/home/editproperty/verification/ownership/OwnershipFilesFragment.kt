@@ -115,6 +115,10 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
         loadingDialog?.dismiss()
     }
 
+    override fun showValidationMessage(stringId: Int) {
+        showSnackBar(getString(stringId), filesRV)
+    }
+
     @OnClick(R.id.submit)
     internal fun onSubmitClicked() {
         presentable.onSubmitClicked()

@@ -13,6 +13,8 @@ import com.soho.sohoapp.data.models.Property
 
 class OwnershipVerificationActivity : AbsActivity() {
 
+    private val OWNERSHIP_FILES_TAB_INDEX = 1;
+
     @BindView(R.id.tabs)
     lateinit var tabs: TabLayout
 
@@ -40,6 +42,10 @@ class OwnershipVerificationActivity : AbsActivity() {
             adapter = pageAdapter
         }
         tabs.setupWithViewPager(viewPager)
+    }
+
+    fun changeToFilesTab() {
+        tabs.getTabAt(OWNERSHIP_FILES_TAB_INDEX)?.select()
     }
 
     private fun getPropertyFromExtras() = intent.extras.getParcelable<Property>(KEY_PROPERTY)

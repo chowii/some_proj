@@ -4,6 +4,8 @@ import android.net.Uri
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsPresenter
+import com.soho.sohoapp.data.dtos.PropertyResult
+import com.soho.sohoapp.data.dtos.VerificationResult
 import com.soho.sohoapp.data.enums.VerificationType
 import com.soho.sohoapp.data.listdata.AddFile
 import com.soho.sohoapp.data.listdata.Displayable
@@ -106,23 +108,26 @@ class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInter
         if (!newAttachments.isEmpty()) {
             view.showLoadingDialog()
             compositeDisposable.add(Converter.toImageRequestBody(fileHelper, newAttachments, property.id)
-                    .switchMap<ResponseBody>
+                    .switchMap<VerificationResult>
                     { requestBody ->
                         DEPENDENCIES.sohoService.sendPropertyVerificationAttachments(requestBody)
                     }
+                    .map { result -> Converter.toVerification(result) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            {
-                                navigator.exitCurrentScreen()
+                            { property ->
                                 view.hideLoadingDialog()
+                                property?.let { property ->
+                                    navigator.exitWithResultCodeOk(property)
+                                } ?: navigator.exitWithResultCodeOk()
                             },
                             {
                                 view.hideLoadingDialog()
                                 view.showError(it)
                             }))
         } else {
-            navigator.exitCurrentScreen()
+            view.showValidationMessage(R.string.verification_ownership_validation_error)
         }
     }
 }

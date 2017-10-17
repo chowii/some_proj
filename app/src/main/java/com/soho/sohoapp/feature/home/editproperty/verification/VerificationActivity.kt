@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.home.editproperty.verification
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +14,13 @@ import butterknife.OnClick
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.data.models.Property
+import com.soho.sohoapp.data.models.Verification
 import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
 import com.soho.sohoapp.navigator.NavigatorImpl
+import com.soho.sohoapp.navigator.RequestCode.*
 import com.soho.sohoapp.permission.PermissionManagerImpl
 import com.soho.sohoapp.utils.FileHelper
 
@@ -71,6 +74,11 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
         super.onActivityResult(requestCode, resultCode, intent)
         galleryPicker?.onActivityResult(requestCode, resultCode, intent)
         cameraPicker?.onActivityResult(requestCode, resultCode)
+        if(requestCode == PROOF_OF_OWNERSHIP_VERIFICATION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            intent?.getParcelableExtra<Verification>(NavigatorImpl.KEY_VERIFICATION_UPDATED)?.let { verification ->
+                presentable.verificationUpdated(verification)
+            } ?: finish() //We are unable to update the dataset, so we exit to avoid showing incorrect data
+        }
     }
 
     override fun setPresentable(presentable: VerificationContract.ViewPresentable) {
@@ -130,6 +138,12 @@ class VerificationActivity : AbsActivity(), VerificationContract.ViewInteractabl
 
     override fun hideLoadingDialog() {
         loadingDialog?.dismiss()
+    }
+
+    override fun setVerificationsUpdatedResult(verifications: List<Verification>) {
+        setResult(Activity.RESULT_OK, Intent().apply {
+            intent.putExtra(NavigatorImpl.KEY_VERIFICATIONS_UPDATED, verifications.toTypedArray())
+        })
     }
 
     @OnClick(R.id.photo_id)

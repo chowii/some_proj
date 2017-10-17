@@ -6,6 +6,10 @@ import android.support.annotation.StringRes;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
+import com.soho.sohoapp.data.models.Verification;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface EditOverviewContract {
 
@@ -15,7 +19,9 @@ public interface EditOverviewContract {
         void onVerificationClicked();
 
         void onPropertyStatusUpdated(Property property, boolean verificationCompleted);
-
+      
+        void onPropertyVerificationsUpdated(List<Verification> verifications);
+      
         void onAddressClicked();
 
         void onPropertyAddressChanged(Location location);

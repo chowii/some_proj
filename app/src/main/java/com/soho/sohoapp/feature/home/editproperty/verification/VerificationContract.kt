@@ -4,6 +4,7 @@ import android.net.Uri
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import com.soho.sohoapp.data.models.Property
+import com.soho.sohoapp.data.models.Verification
 import com.soho.sohoapp.feature.BaseViewInteractable
 
 interface VerificationContract {
@@ -16,6 +17,7 @@ interface VerificationContract {
         fun onChooseFromGalleryClicked()
         fun onPhotoReady(path: String)
         fun onPhotoPicked(uri: Uri)
+        fun verificationUpdated(verification: Verification)
     }
 
     interface ViewInteractable : BaseViewInteractable {
@@ -30,5 +32,6 @@ interface VerificationContract {
         fun pickImageFromGallery()
         fun showLoadingDialog()
         fun hideLoadingDialog()
+        fun setVerificationsUpdatedResult(verifications:List<Verification>)
     }
 }

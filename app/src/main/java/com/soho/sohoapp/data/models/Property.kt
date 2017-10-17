@@ -13,7 +13,7 @@ class Property : BasicProperty {
     var agentMobileNumber: String? = null
     var propertyListing: PropertyListing? = null
     var propertyFinance: PropertyFinance? = null
-    var verifications: List<Verification>? = null
+    var verifications: MutableList<Verification>? = null
 
     constructor() : super()
 

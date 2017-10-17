@@ -7,6 +7,7 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
 
@@ -19,6 +20,8 @@ public interface NavigatorInterface {
     void exitCurrentScreen();
 
     void exitWithResultCodeOk();
+
+    void exitWithResultCodeOk(@NonNull Verification verification);
 
     void exitWithResultCodeOk(@NonNull Property property, boolean verificationCompleted);
 
@@ -62,9 +65,9 @@ public interface NavigatorInterface {
 
     void openNewInspectionTimeScreen(@Nullable InspectionTime inspectionTime, int propertyId, int requestCode);
 
-    void openVerificationScreen(@NonNull Property property);
+    void openVerificationScreen(@NonNull Property property, int requestCode);
 
-    void openOwnershipVerificationScreen(Property property);
+    void openOwnershipVerificationScreen(Property property, int requestCode);
 
     void openAutocompleteAddressScreen(int requestCode);
 

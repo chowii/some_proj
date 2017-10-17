@@ -271,6 +271,7 @@
     <string name="verification_ownership_details_documents">&#8226; Strata Statement\n&#8226; Council rate\n&#8226; Land title deed\n&#8226; Other supporting ownership documents</string>
     <string name="verification_ownership_attach_files">Attach files</string>
     <string name="verification_ownership_submit">Submit to Verify</string>
+    <string name="verification_ownership_validation_error">Please select a file to upload.</string>
     <!--Verification screen end-->
 
     <!--ENTER PIN CODE -->
