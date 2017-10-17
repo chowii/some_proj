@@ -113,11 +113,6 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         }
     }
 
-    @Nullable
-    private Bundle getExtras(Intent data) {
-        return data != null ? data.getExtras() : null;
-    }
-
     @Override
     public void setPresentable(EditOverviewContract.ViewPresentable presentable) {
         this.presentable = presentable;
