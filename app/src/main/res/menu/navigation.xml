@@ -23,7 +23,7 @@
         android:id="@+id/tab_offers"
         android:icon="@drawable/tab_offers"
         android:numericShortcut="2"
-        android:title="@string/home_tab_offers"/>
+        android:title="@string/home_tab_messages"/>
 
     <item
         android:id="@+id/tab_more"

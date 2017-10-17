@@ -18,6 +18,7 @@ import com.elasticode.provider.callback.ElasticodeResponse;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
@@ -163,7 +164,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
             navigator.openLandingActivity();
         } else {
             //todo: MoreFragment is here temporary. We need to show Offers tab
-            showFragment(MoreFragment.TAG);
+            showFragment(ComingSoonFragment.TAG);
         }
     }
 
@@ -227,6 +228,8 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
                 return PortfolioFragment.newInstance();
             case MoreFragment.TAG:
                 return MoreFragment.Companion.newInstance();
+            case ComingSoonFragment.TAG:
+                return ComingSoonFragment.Companion.newInstance();
             default:
                 return null;
         }

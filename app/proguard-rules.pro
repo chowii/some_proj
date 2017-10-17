@@ -182,3 +182,10 @@
 -keep class * implements com.google.gson.JsonDeserializer
 ##---------------End: proguard configuration for Gson  ----------
 
+#Rooms
+-keep class android.arch.persistence.room.paging.LimitOffsetDataSource
+-keep interface android.arch.persistence.room.paging.LimitOffsetDataSource
+-keep class android.arch.util.paging.CountedDataSource
+-keep interface android.arch.util.paging.CountedDataSource
+-dontwarn android.arch.util.paging.CountedDataSource
+-dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource

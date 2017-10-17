@@ -40,7 +40,7 @@
     <!--Home screen start-->
     <string name="home_add_property">+</string>
     <string name="home_tab_more">More</string>
-    <string name="home_tab_offers">Offers</string>
+    <string name="home_tab_messages">Messages</string>
     <string name="home_tab_manage">Manage</string>
     <string name="home_tab_marketplace">Marketplace</string>
     <!--Home screen end-->
