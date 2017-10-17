@@ -66,18 +66,18 @@ public class RoomsNumberPickerView extends LinearLayout {
     }
 
     public void setValues(int bedroomsCount, int bathroomsCount, int carspotsCount) {
-        if(bedroomsCount >= BEDROOMS_MIN && bedroomsCount <= BEDROOMS_MAX) {
+        if (bedroomsCount >= BEDROOMS_MIN && bedroomsCount <= BEDROOMS_MAX) {
             this.bedroomsCount = bedroomsCount;
             bedrooms.setCurrentValue(bedroomsCount);
             showBedroomText(bedroomsCount);
         }
-        if(bathroomsCount >= BATHROOMS_MIN && bedroomsCount <= BATHROOMS_MAX) {
+        if (bathroomsCount >= BATHROOMS_MIN && bedroomsCount <= BATHROOMS_MAX) {
             this.bathroomsCount = bathroomsCount;
             bathrooms.setCurrentValue(bathroomsCount);
             bathrooms.setText(getResources()
                     .getQuantityString(R.plurals.rooms_picker_bathrooms, bathroomsCount, bathroomsCount));
         }
-        if(carspotsCount >= CARSPOTS_MIN && bedroomsCount <= CARSPOTS_MAX) {
+        if (carspotsCount >= CARSPOTS_MIN && bedroomsCount <= CARSPOTS_MAX) {
             this.carspotsCount = carspotsCount;
             carspots.setCurrentValue(carspotsCount);
             carspots.setText(getResources()
@@ -102,6 +102,7 @@ public class RoomsNumberPickerView extends LinearLayout {
         carspots.setCurrentValue(CARSPOTS_DEFAULT_VALUE);
         carspots.setText(getResources()
                 .getQuantityString(R.plurals.rooms_picker_carspots, CARSPOTS_DEFAULT_VALUE, CARSPOTS_DEFAULT_VALUE));
+        carspots.setIcon(R.drawable.ic_feature_carspot);
         carspots.setListener(currentValue ->
         {
             carspotsCount = currentValue;
@@ -117,6 +118,7 @@ public class RoomsNumberPickerView extends LinearLayout {
         bathrooms.setCurrentValue(BATHROOMS_DEFAULT_VALUE);
         bathrooms.setText(getResources()
                 .getQuantityString(R.plurals.rooms_picker_bathrooms, BATHROOMS_DEFAULT_VALUE, BATHROOMS_DEFAULT_VALUE));
+        bathrooms.setIcon(R.drawable.ic_feature_bathroom);
         bathrooms.setListener(currentValue ->
         {
             bathroomsCount = currentValue;
@@ -131,6 +133,7 @@ public class RoomsNumberPickerView extends LinearLayout {
         bedrooms.setStep(STEP);
         bedrooms.setCurrentValue(BEDROOMS_DEFAULT_VALUE);
         showBedroomText(BEDROOMS_DEFAULT_VALUE);
+        bedrooms.setIcon(R.drawable.ic_feature_bed);
         bedrooms.setListener(currentValue ->
         {
             bedroomsCount = currentValue;
@@ -148,7 +151,7 @@ public class RoomsNumberPickerView extends LinearLayout {
     }
 
     private void notifyListenerOfUpdates() {
-        if(pickerValueChangedListener != null)
+        if (pickerValueChangedListener != null)
             pickerValueChangedListener.pickerValuesUpdated(bedroomsCount, bathroomsCount, carspotsCount);
     }
 

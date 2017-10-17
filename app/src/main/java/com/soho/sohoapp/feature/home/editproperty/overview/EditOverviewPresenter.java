@@ -3,9 +3,12 @@ package com.soho.sohoapp.feature.home.editproperty.overview;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.data.models.Verification;
+import com.soho.sohoapp.extensions.ListExtKt;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.ColorUtils;
@@ -33,6 +36,8 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         view.setPropertyFinance(property.getPropertyFinance());
         view.showPropertyAddress(property.getLocationSafe().getAddressLine1());
         view.showMaskAddress(property.getLocationSafe().getMaskAddress());
+        initPropertyType();
+        view.showRoomsNumber(property.getBedrooms(), property.getBathrooms(), property.getCarspots());
     }
 
     @Override
@@ -67,7 +72,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         property.setVerifications(verifications);
         initPropertyListing(property.getPropertyListing());
     }
-  
+
     @Override
     public void onAddressClicked() {
         navigator.openAutocompleteAddressScreen(RequestCode.EDIT_PROPERTY_ADDRESS, true);
@@ -83,7 +88,21 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     public void onMaskAddressChanged(boolean isChecked) {
         Location location = property.getLocationSafe();
         location.setMaskAddress(isChecked);
-        view.notifyActivityAboutChanges(location);
+        view.notifyActivityAboutAddressChanges(location);
+    }
+
+    @Override
+    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+        property.setBedrooms(bedrooms);
+        property.setBathrooms(bathrooms);
+        property.setCarspots(carspots);
+        view.notifyActivityAboutRoomsChanges(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
+    public void onPropertyTypeChanged(PickerItem pickerItem) {
+        property.setType(pickerItem.getId());
+        view.notifyActivityAboutPropertyTypeChanged(pickerItem.getId());
     }
 
     private void initPropertyListing(PropertyListing propertyListing) {
@@ -100,4 +119,17 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         }
     }
 
+    private void initPropertyType() {
+        List<PropertyType> propertyTypes = new ArrayList<>();
+        propertyTypes.addAll(view.getPropertyTypesFromExtras());
+
+        int currentType = 0;
+        for (int i = 0; i < propertyTypes.size(); i++) {
+            if (propertyTypes.get(i).getKey().equals(property.getType())) {
+                currentType = i;
+                break;
+            }
+        }
+        view.initPropertyTypes(ListExtKt.toPickerItems(propertyTypes), currentType);
+    }
 }

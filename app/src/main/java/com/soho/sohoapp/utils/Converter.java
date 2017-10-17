@@ -472,11 +472,11 @@ public final class Converter {
                                      boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
         QueryHashMap map = new QueryHashMap()
                 .put(Keys.Property.RELATION, role.getKey())
-                .put(Keys.Property.BEDROOMS, bedrooms)
-                .put(Keys.Property.BATHROOMS, bathrooms)
-                .put(Keys.Property.CARSPOTS, carspots)
+                .put(Keys.Property.BEDROOMS_ATTRIBUTE, bedrooms)
+                .put(Keys.Property.BATHROOMS_ATTRIBUTE, bathrooms)
+                .put(Keys.Property.CARSPOTS_ATTRIBUTE, carspots)
                 .put(Keys.Property.IS_INVESTMENT, isInvestment)
-                .put(Keys.Property.TYPE_OF_PROPERTY, propertyType.getKey());
+                .put(Keys.Property.TYPE_OF_PROPERTY_ATTRIBUTE, propertyType.getKey());
         putLocationAttributes(map, location);
         return map;
     }
@@ -525,9 +525,16 @@ public final class Converter {
 
     @NonNull
     public static QueryHashMap toPropertyMap(@NonNull Property property) {
+        QueryHashMap propertyMap = new QueryHashMap();
+
         QueryHashMap locationMap = new QueryHashMap();
         putLocation(locationMap, property.getLocation());
-        return new QueryHashMap().put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap);
+
+        return propertyMap.put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap)
+                .put(Keys.Property.BEDROOMS, property.getBedrooms())
+                .put(Keys.Property.BATHROOMS, property.getBathrooms())
+                .put(Keys.Property.CARSPOTS, property.getCarspots())
+                .put(Keys.Property.TYPE_OF_PROPERTY, property.getType());
     }
 
     @NonNull

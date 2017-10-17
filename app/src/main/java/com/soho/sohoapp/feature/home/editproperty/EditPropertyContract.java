@@ -6,7 +6,9 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.BaseViewInteractable;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 interface EditPropertyContract {
@@ -29,6 +31,10 @@ interface EditPropertyContract {
         void onSaveClicked();
 
         void onHeaderPhotoClicked(List<Image> images, int currentItem);
+
+        void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
+
+        void onPropertyTypeChanged(String type);
     }
 
     interface ViewInteractable extends BaseViewInteractable {
@@ -54,7 +60,7 @@ interface EditPropertyContract {
 
         void showAddress2(String address);
 
-        void initTabs(Property property);
+        void initTabs(Property property, ArrayList<PropertyType> propertyTypes);
 
         void showLoadingDialog();
 

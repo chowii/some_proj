@@ -20,13 +20,17 @@ import android.widget.Toast;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Location;
+import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView;
 import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.DrawableUtils;
+import com.soho.sohoapp.views.TypePicker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +43,7 @@ import butterknife.OnClick;
 
 public class EditOverviewFragment extends BaseFragment implements EditOverviewContract.ViewInteractable {
     private static final String KEY_PROPERTY = "KEY_PROPERTY";
+    private static final String KEY_PROPERTY_TYPES = "KEY_PROPERTY_TYPES";
 
     @BindView(R.id.marketplaceState)
     LinearLayout marketplaceState;
@@ -55,16 +60,23 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @BindView(R.id.address)
     TextView address;
 
+    @BindView(R.id.propertyTypePicker)
+    TypePicker propertyTypePicker;
+
+    @BindView(R.id.roomsSelector)
+    RoomsNumberPickerView roomsSelector;
+
     private EditOverviewContract.ViewPresentable presentable;
     private EditOverviewPresenter presenter;
     private TextView marketplaceStateDesc;
     private TextView verificationDesc;
 
     @NonNull
-    public static Fragment newInstance(@NonNull Property property) {
+    public static Fragment newInstance(@NonNull Property property, @NonNull ArrayList<PropertyType> propertyTypes) {
         Fragment fragment = new EditOverviewFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_PROPERTY, property);
+        bundle.putParcelableArrayList(KEY_PROPERTY_TYPES, propertyTypes);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -107,7 +119,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
                 case RequestCode.EDIT_PROPERTY_ADDRESS:
                     Location location = extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LOCATION);
                     presentable.onPropertyAddressChanged(location);
-                    notifyActivityAboutChanges(location);
+                    notifyActivityAboutAddressChanges(location);
                     break;
             }
         }
@@ -162,14 +174,42 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     }
 
     @Override
-    public void notifyActivityAboutChanges(Location location) {
+    public void notifyActivityAboutAddressChanges(Location location) {
         EditPropertyListener listener = (EditPropertyListener) getActivity();
         listener.onPropertyAddressChanged(location);
     }
 
     @Override
+    public void notifyActivityAboutRoomsChanges(int bedrooms, int bathrooms, int carspots) {
+        EditPropertyListener listener = (EditPropertyListener) getActivity();
+        listener.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
     public void showMaskAddress(boolean isMaskAddress) {
         maskAddress.setChecked(isMaskAddress);
+    }
+
+    @Override
+    public void showRoomsNumber(int bedrooms, int bathrooms, int carspots) {
+        roomsSelector.setValues(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
+    public List<PropertyType> getPropertyTypesFromExtras() {
+        return getArguments().getParcelableArrayList(KEY_PROPERTY_TYPES);
+    }
+
+    @Override
+    public void initPropertyTypes(List<PickerItem> pickerItems, int currentType) {
+        propertyTypePicker.setPropertyTypes(pickerItems, currentType);
+        propertyTypePicker.setListener(pickerItem -> presentable.onPropertyTypeChanged(pickerItem));
+    }
+
+    @Override
+    public void notifyActivityAboutPropertyTypeChanged(String type) {
+        EditPropertyListener listener = (EditPropertyListener) getActivity();
+        listener.onPropertyTypeChanged(type);
     }
 
     @OnClick(R.id.marketplaceState)
@@ -196,6 +236,9 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
         verificationDesc = ButterKnife.findById(verification, R.id.title);
         verificationDesc.setText(R.string.edit_property_verification);
+        roomsSelector.setPickerValueChangedListener((bedrooms, bathrooms, carspots) -> {
+            presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+        });
     }
 
     @Nullable
@@ -205,5 +248,9 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     public interface EditPropertyListener {
         void onPropertyAddressChanged(Location location);
+
+        void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
+
+        void onPropertyTypeChanged(String type);
     }
 }

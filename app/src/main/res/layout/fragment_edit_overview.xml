@@ -75,5 +75,37 @@
                 android:checked="false"/>
         </LinearLayout>
 
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/edit_property_property_type"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp">
+
+            <com.soho.sohoapp.views.TypePicker
+                android:id="@+id/propertyTypePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_grey_square"
+                android:paddingBottom="8dp"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:paddingTop="8dp"/>
+        </LinearLayout>
+
+        <com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView
+            android:id="@+id/roomsSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
@@ -7,16 +8,12 @@
        android:orientation="horizontal"
        tools:parentTag="android.widget.LinearLayout">
 
-    <Button
-        android:id="@+id/decrease"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/circle_gray_stroke_button"
-        android:gravity="center"
-        android:text="@string/rooms_picker_decrease"
-        android:textColor="@color/accent"
-        android:textSize="20sp"
-        android:theme="@style/CircleWhiteButton"/>
+    <ImageView
+        android:id="@+id/to_left"
+        android:layout_width="32dp"
+        android:layout_height="42dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_keyboard_arrow_left_gray"/>
 
     <android.support.v4.widget.Space
         android:layout_width="0dp"
@@ -27,33 +24,30 @@
         android:id="@+id/icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:padding="2dp"
         android:scaleType="centerInside"
-        android:visibility="gone"
-        tools:srcCompat="@drawable/ic_feature_bed"
-        tools:visibility="visible"/>
+        tools:srcCompat="@drawable/ic_house"/>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/secondaryText"
         android:textSize="14sp"
-        tools:text="1 - Bedrooms"/>
+        tools:text="@string/test_text_medium"/>
 
     <android.support.v4.widget.Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/increase"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/circle_gray_stroke_button"
-        android:text="@string/rooms_picker_increase"
-        android:textColor="@color/accent"
-        android:theme="@style/CircleWhiteButton"/>
+    <ImageView
+        android:id="@+id/to_right"
+        android:layout_width="32dp"
+        android:layout_height="42dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_gray"/>
 </merge>

@@ -147,6 +147,7 @@
     <string name="edit_property_lvr_value" formatted="true">%.2f%%</string>
     <string name="edit_property_address">Address</string>
     <string name="edit_property_mask_address">Mask Address</string>
+    <string name="edit_property_property_type">Property Type</string>
     <!--Edit property screen end-->
 
     <!--Publish property screens start-->

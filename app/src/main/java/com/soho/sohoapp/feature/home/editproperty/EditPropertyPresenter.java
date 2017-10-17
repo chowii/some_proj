@@ -33,6 +33,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private final PermissionManagerInterface permissionManager;
     private final FileHelper fileHelper;
     private final List<Image> propertyImages;
+    private final ArrayList<PropertyType> propertyTypes;
     private final CompositeDisposable compositeDisposable;
     private Disposable permissionDisposable;
     private Property property;
@@ -46,6 +47,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         this.navigator = navigator;
         this.permissionManager = permissionManager;
         propertyImages = new ArrayList<>();
+        propertyTypes = new ArrayList<>();
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -54,14 +56,19 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         view.setPresentable(this);
         view.showLoadingView();
 
-        compositeDisposable.add(DEPENDENCIES.getSohoService().getProperty(view.getPropertyId())
+        compositeDisposable.add(DEPENDENCIES.getSohoService().getPropertyTypes()
+                .map(Converter::toPropertyTypeList)
+                .switchMap(propertyTypes -> {
+                    EditPropertyPresenter.this.propertyTypes.addAll(propertyTypes);
+                    return DEPENDENCIES.getSohoService().getProperty(view.getPropertyId());
+                })
                 .map(Converter::toProperty)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result ->
                 {
                     property = result;
-                    view.initTabs(property);
+                    view.initTabs(property, propertyTypes);
                     initPropertyImages();
                     Location address = result.getLocation();
                     if (address != null) {
@@ -71,7 +78,6 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                     view.hideLoadingView();
                 }, throwable ->
                 {
-
                     view.hideLoadingView();
                     view.showError(throwable);
                 }));
@@ -189,6 +195,18 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onHeaderPhotoClicked(List<Image> images, int currentItem) {
         navigator.showGallery(images, currentItem);
+    }
+
+    @Override
+    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+        property.setBedrooms(bedrooms);
+        property.setBathrooms(bathrooms);
+        property.setCarspots(carspots);
+    }
+
+    @Override
+    public void onPropertyTypeChanged(String type) {
+        property.setType(type);
     }
 
     private void initPropertyImages() {

@@ -19,6 +19,7 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.dialogs.LoadingDialog;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
 import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker;
@@ -27,6 +28,7 @@ import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.permission.PermissionManagerImpl;
 import com.soho.sohoapp.utils.FileHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -190,8 +192,11 @@ public class EditPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void initTabs(Property property) {
-        EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this, getSupportFragmentManager(), property);
+    public void initTabs(Property property, ArrayList<PropertyType> propertyTypes) {
+        EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this,
+                getSupportFragmentManager(),
+                property,
+                propertyTypes);
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setAdapter(adapter);
         appBarLayout.setExpanded(true, true);
@@ -212,6 +217,16 @@ public class EditPropertyActivity extends AbsActivity implements
     @Override
     public void onPropertyAddressChanged(Location location) {
         presentable.onPropertyAddressChanged(location);
+    }
+
+    @Override
+    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+        presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
+    public void onPropertyTypeChanged(String type) {
+        presentable.onPropertyTypeChanged(type);
     }
 
     private void initToolbar() {
@@ -235,6 +250,6 @@ public class EditPropertyActivity extends AbsActivity implements
         pagerAdapter = new ImageHeaderViewPager(imageViewPager.getContext());
         imageViewPager.setAdapter(pagerAdapter);
         pagerAdapter.setOnItemClickListener(image ->
-                presenter.onHeaderPhotoClicked(pagerAdapter.getDataSet(),imageViewPager.getCurrentItem()));
+                presenter.onHeaderPhotoClicked(pagerAdapter.getDataSet(), imageViewPager.getCurrentItem()));
     }
 }

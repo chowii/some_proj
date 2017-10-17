@@ -1,9 +1,11 @@
 package com.soho.sohoapp.feature.home.addproperty.views;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,10 +16,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NumberPickerView extends LinearLayout {
+
     @BindView(R.id.text)
     TextView text;
+
+    @BindView(R.id.icon)
+    ImageView icon;
+
     @BindView(R.id.decrease)
     Button decrease;
+
     @BindView(R.id.increase)
     Button increase;
 
@@ -66,6 +74,11 @@ public class NumberPickerView extends LinearLayout {
 
     public void setText(String text) {
         this.text.setText(text);
+    }
+
+    public void setIcon(@DrawableRes int res) {
+        icon.setVisibility(VISIBLE);
+        icon.setImageResource(res);
     }
 
     @OnClick(R.id.decrease)
