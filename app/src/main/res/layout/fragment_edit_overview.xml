@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/ListTextHeader"
-            android:text="@string/edit_property_marketplace_settings"/>
+            android:text="@string/edit_property_sale_and_rent_settings"/>
 
         <include
             android:id="@+id/marketplaceState"
@@ -28,7 +28,7 @@
 
         <TextView
             style="@style/ListTextHeader"
-            android:text="@string/edit_property_investment_summary"/>
+            android:text="@string/edit_property_finance_tracker_private"/>
 
         <com.soho.sohoapp.feature.home.editproperty.overview.InvestmentSummaryView
             android:id="@+id/investmentSummary"

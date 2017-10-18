@@ -232,7 +232,8 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
 
     private void copyChangesForSaleState(boolean isSale) {
         onlyActiveRadioButton.setText(isSale ? R.string.filter_property_status_active_sale : R.string.filter_property_status_active_rent);
-        priceRangeTextView.setText(isSale ? R.string.filters_heading_price_range_sale : R.string.filters_heading_price_range_rent);
+        //TODO: Update this once weekly/monthly option added, commented out for now as is not relevant
+//        priceRangeTextView.setText(isSale ? R.string.filters_heading_price_range_sale : R.string.filters_heading_price_range_rent);
     }
 
     private CheckBox checkBoxViewWith(String title, String key, boolean checked) {
