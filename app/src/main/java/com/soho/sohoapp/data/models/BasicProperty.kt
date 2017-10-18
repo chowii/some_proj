@@ -26,9 +26,9 @@ open class BasicProperty() : BaseModel, Parcelable {
     var rentPrice: Int = 0
     var salePrice: Int = 0
     var updatedAt: Long? = null
-    var bedrooms: Int = 0
-    var bathrooms: Int = 0
-    var carspots: Int = 0
+    var bedrooms: Double= 0.0
+    var bathrooms: Double = 0.0
+    var carspots: Double = 0.0
     var location: Location? = null
     var photos: List<Photo>? = null
     var agentLogo: Image? = null
@@ -51,9 +51,9 @@ open class BasicProperty() : BaseModel, Parcelable {
         rentPrice = parcel.readInt()
         salePrice = parcel.readInt()
         updatedAt = parcel.readValue(Long::class.java.classLoader) as Long?
-        bedrooms = parcel.readInt()
-        bathrooms = parcel.readInt()
-        carspots = parcel.readInt()
+        bedrooms = parcel.readDouble()
+        bathrooms = parcel.readDouble()
+        carspots = parcel.readDouble()
         location = parcel.readParcelable(Location::class.java.classLoader)
         photos = parcel.createTypedArrayList(Photo)
         agentLogo = parcel.readParcelable(Image::class.java.classLoader)
@@ -104,9 +104,9 @@ open class BasicProperty() : BaseModel, Parcelable {
         parcel.writeInt(rentPrice)
         parcel.writeInt(salePrice)
         parcel.writeValue(updatedAt)
-        parcel.writeInt(bedrooms)
-        parcel.writeInt(bathrooms)
-        parcel.writeInt(carspots)
+        parcel.writeDouble(bedrooms)
+        parcel.writeDouble(bathrooms)
+        parcel.writeDouble(carspots)
         parcel.writeParcelable(location, flags)
         parcel.writeTypedList(photos)
         parcel.writeParcelable(agentLogo, flags)

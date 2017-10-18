@@ -29,7 +29,7 @@ public interface EditOverviewContract {
 
         void onMaskAddressChanged(boolean isChecked);
 
-        void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
+        void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots);
 
         void onPropertyTypeChanged(PickerItem pickerItem);
 
@@ -69,7 +69,7 @@ public interface EditOverviewContract {
 
         void notifyActivityAboutAddressChanges(Location location);
 
-        void notifyActivityAboutRoomsChanges(int bedrooms, int bathrooms, int carspots);
+        void notifyActivityAboutRoomsChanges(double bedrooms, double bathrooms, double carspots);
 
         void notifyActivityAboutPropertyTypeChanged(String type);
 
@@ -81,7 +81,7 @@ public interface EditOverviewContract {
 
         void showMaskAddress(boolean isMaskAddress);
 
-        void showRoomsNumber(int bedrooms, int bathrooms, int carspots);
+        void showRoomsNumber(double bedrooms, double bathrooms, double carspots);
 
         List<PropertyType> getPropertyTypesFromExtras();
 

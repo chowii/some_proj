@@ -11,15 +11,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RoomsNumberPickerView extends LinearLayout {
-    private static final int BEDROOMS_MIN = 0;
+
+    public static final int BEDROOMS_MIN_ANY = -1;
+    public static final int BEDROOMS_STUDIO = 0;
+    private static final int BEDROOMS_MIN = BEDROOMS_STUDIO;
     private static final int BEDROOMS_MAX = 99;
     private static final int BEDROOMS_DEFAULT_VALUE = 1;
 
+    private static final int BATHROOMS_MIN_ANY = 0;
     private static final int BATHROOMS_MIN = 1;
     private static final int BATHROOMS_MAX = 99;
     private static final int BATHROOMS_DEFAULT_VALUE = 1;
 
-    private static final int CARSPOTS_MIN = 0;
+    private static final int CARSPOT_MIN_ANY = 0;
+    private static final int CARSPOTS_MIN = CARSPOT_MIN_ANY;
     private static final int CARSPOTS_MAX = 99;
     private static final int CARSPOTS_DEFAULT_VALUE = 0;
 
@@ -32,12 +37,13 @@ public class RoomsNumberPickerView extends LinearLayout {
     @BindView(R.id.carspots)
     NumberPickerView carspots;
 
-    private int bedroomsCount = BEDROOMS_DEFAULT_VALUE;
-    private int bathroomsCount = BATHROOMS_DEFAULT_VALUE;
-    private int carspotsCount = CARSPOTS_DEFAULT_VALUE;
+    private double bedroomsCount = BEDROOMS_DEFAULT_VALUE;
+    private double bathroomsCount = BATHROOMS_DEFAULT_VALUE;
+    private double carspotsCount = CARSPOTS_DEFAULT_VALUE;
 
     @Nullable
     private OnRoomsNumberChangedListener pickerValueChangedListener;
+    private boolean isAnyValues;
 
     public RoomsNumberPickerView(Context context) {
         super(context);
@@ -49,15 +55,15 @@ public class RoomsNumberPickerView extends LinearLayout {
         initView();
     }
 
-    public int getBedroomsCount() {
+    public double getBedroomsCount() {
         return bedroomsCount;
     }
 
-    public int getBathroomsCount() {
+    public double getBathroomsCount() {
         return bathroomsCount;
     }
 
-    public int getCarspotsCount() {
+    public double getCarspotsCount() {
         return carspotsCount;
     }
 
@@ -65,7 +71,7 @@ public class RoomsNumberPickerView extends LinearLayout {
         this.pickerValueChangedListener = pickerValueChangedListener;
     }
 
-    public void setValues(int bedroomsCount, int bathroomsCount, int carspotsCount) {
+    public void setValues(double bedroomsCount, double bathroomsCount, double carspotsCount) {
         if (bedroomsCount >= BEDROOMS_MIN && bedroomsCount <= BEDROOMS_MAX) {
             this.bedroomsCount = bedroomsCount;
             bedrooms.setCurrentValue(bedroomsCount);
@@ -74,14 +80,12 @@ public class RoomsNumberPickerView extends LinearLayout {
         if (bathroomsCount >= BATHROOMS_MIN && bedroomsCount <= BATHROOMS_MAX) {
             this.bathroomsCount = bathroomsCount;
             bathrooms.setCurrentValue(bathroomsCount);
-            bathrooms.setText(getResources()
-                    .getQuantityString(R.plurals.rooms_picker_bathrooms, bathroomsCount, bathroomsCount));
+            showBathroomText(bathroomsCount);
         }
         if (carspotsCount >= CARSPOTS_MIN && bedroomsCount <= CARSPOTS_MAX) {
             this.carspotsCount = carspotsCount;
             carspots.setCurrentValue(carspotsCount);
-            carspots.setText(getResources()
-                    .getQuantityString(R.plurals.rooms_picker_carspots, carspotsCount, carspotsCount));
+            showCarspotsText(carspotsCount);
         }
     }
 
@@ -100,15 +104,24 @@ public class RoomsNumberPickerView extends LinearLayout {
         carspots.setMaxValue(CARSPOTS_MAX);
         carspots.setStep(STEP);
         carspots.setCurrentValue(CARSPOTS_DEFAULT_VALUE);
+        showCarspotsText(CARSPOTS_DEFAULT_VALUE);
         carspots.setText(getResources()
                 .getQuantityString(R.plurals.rooms_picker_carspots, CARSPOTS_DEFAULT_VALUE, CARSPOTS_DEFAULT_VALUE));
         carspots.setIcon(R.drawable.ic_feature_carspot);
         carspots.setListener(currentValue ->
         {
             carspotsCount = currentValue;
+            showCarspotsText(currentValue);
             notifyListenerOfUpdates();
-            carspots.setText(getResources().getQuantityString(R.plurals.rooms_picker_carspots, currentValue, currentValue));
         });
+    }
+
+    private void showCarspotsText(double carspotsCount) {
+        if (isAnyValues && carspotsCount == CARSPOT_MIN_ANY) {
+            carspots.setText(getResources().getString(R.string.rooms_picker_any_carspot));
+            return;
+        }
+        carspots.setText(getResources().getQuantityString(R.plurals.rooms_picker_carspots, (int) carspotsCount, (int) carspotsCount));
     }
 
     private void initBathroomsPicker() {
@@ -116,15 +129,23 @@ public class RoomsNumberPickerView extends LinearLayout {
         bathrooms.setMaxValue(BATHROOMS_MAX);
         bathrooms.setStep(STEP);
         bathrooms.setCurrentValue(BATHROOMS_DEFAULT_VALUE);
-        bathrooms.setText(getResources()
-                .getQuantityString(R.plurals.rooms_picker_bathrooms, BATHROOMS_DEFAULT_VALUE, BATHROOMS_DEFAULT_VALUE));
+        showBathroomText(BATHROOMS_DEFAULT_VALUE);
         bathrooms.setIcon(R.drawable.ic_feature_bathroom);
         bathrooms.setListener(currentValue ->
         {
             bathroomsCount = currentValue;
+            showBathroomText(currentValue);
             notifyListenerOfUpdates();
-            bathrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bathrooms, currentValue, currentValue));
         });
+    }
+
+    private void showBathroomText(double bathsCount) {
+        if (isAnyValues && bathsCount == BATHROOMS_MIN_ANY) {
+            bathrooms.setText(getContext().getString(R.string.rooms_picker_any_bathroom));
+            return;
+        }
+        bathrooms.setText(getResources()
+                .getQuantityString(R.plurals.rooms_picker_bathrooms, (int) bathsCount, (int) bathsCount));
     }
 
     private void initBedroomsPicker() {
@@ -137,16 +158,23 @@ public class RoomsNumberPickerView extends LinearLayout {
         bedrooms.setListener(currentValue ->
         {
             bedroomsCount = currentValue;
-            notifyListenerOfUpdates();
             showBedroomText(currentValue);
+            notifyListenerOfUpdates();
         });
     }
 
-    private void showBedroomText(int rooms) {
-        if (rooms == 0) {
-            bedrooms.setText(getContext().getString(R.string.rooms_picker_studio));
-        } else {
-            bedrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bedrooms, rooms, rooms));
+    private void showBedroomText(double roomsCount) {
+        if (roomsCount == BEDROOMS_MIN_ANY && isAnyValues) {
+            bedrooms.setText(getContext().getString(R.string.rooms_picker_any_bedroom));
+            return;
+        }
+        switch ((int) roomsCount) {
+            case BEDROOMS_STUDIO:
+                bedrooms.setText(getContext().getString(R.string.rooms_picker_studio));
+                break;
+            default:
+                bedrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bedrooms, (int) roomsCount, (int) roomsCount));
+                break;
         }
     }
 
@@ -155,7 +183,24 @@ public class RoomsNumberPickerView extends LinearLayout {
             pickerValueChangedListener.pickerValuesUpdated(bedroomsCount, bathroomsCount, carspotsCount);
     }
 
+    public void setAnyValues() {
+        this.isAnyValues = true;
+
+        bedrooms.setMinValue(BEDROOMS_MIN_ANY);
+        bedrooms.setCurrentValue(BEDROOMS_MIN_ANY);
+        showBedroomText(BEDROOMS_MIN_ANY);
+
+        bathrooms.setMinValue(BATHROOMS_MIN_ANY);
+        bathrooms.setCurrentValue(BATHROOMS_MIN_ANY);
+        showBathroomText(BATHROOMS_MIN_ANY);
+
+        carspots.setMinValue(CARSPOT_MIN_ANY);
+        carspots.setCurrentValue(CARSPOT_MIN_ANY);
+        showCarspotsText(CARSPOT_MIN_ANY);
+
+    }
+
     public interface OnRoomsNumberChangedListener {
-        void pickerValuesUpdated(int bedrooms, int bathrooms, int carspots);
+        void pickerValuesUpdated(double bedrooms, double bathrooms, double carspots);
     }
 }

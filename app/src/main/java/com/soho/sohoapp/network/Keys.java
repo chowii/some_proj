@@ -131,6 +131,8 @@ public interface Keys {
         String FILTER_ALL_PROPERTIES = "all_properties";
         String FILTER_PER_PAGE = "per_page";
         String FILTER_PAGE = "page";
+        double FILTER_STUDIO_SERVER_VALUE = 0.5;
+        double FILTER_BEDROOM_SERVER_VALUE= 0.0;
     }
 
     interface Pagination {

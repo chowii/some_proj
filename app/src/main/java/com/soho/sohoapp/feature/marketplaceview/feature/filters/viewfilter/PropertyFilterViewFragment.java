@@ -148,9 +148,10 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         }
         setupRadiusPicker(filterWithSuburbs);
         setupPricePickers(filterWithSuburbs);
-        roomsNumberPickerView.setValues(((int) filterWithSuburbs.getMarketplaceFilter().getBedrooms()),
-                ((int) filterWithSuburbs.getMarketplaceFilter().getBathrooms()),
-                ((int) filterWithSuburbs.getMarketplaceFilter().getCarspots()));
+        roomsNumberPickerView.setAnyValues();
+        roomsNumberPickerView.setValues((filterWithSuburbs.getMarketplaceFilter().getBedrooms()),
+                (filterWithSuburbs.getMarketplaceFilter().getBathrooms()),
+                (filterWithSuburbs.getMarketplaceFilter().getCarspots()));
         roomsNumberPickerView.setPickerValueChangedListener(this);
         propertyStatusRadioGroup.check(filterWithSuburbs.getMarketplaceFilter().getAllProperties() ? R.id.radio_button_all : R.id.radio_button_only_active);
         propertyStatusRadioGroup.setOnCheckedChangeListener(this);
@@ -212,8 +213,8 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         radiusPickerView.setText(getResources()
                 .getQuantityString(R.plurals.number_picker_kilometers, filterWithSuburbs.getMarketplaceFilter().getRadius(), filterWithSuburbs.getMarketplaceFilter().getRadius()));
         radiusPickerView.setListener(currentValue -> {
-            presenter.getCurrentFilter().getMarketplaceFilter().setRadius(currentValue);
-            radiusPickerView.setText(getResources().getQuantityString(R.plurals.number_picker_kilometers, currentValue, currentValue));
+            presenter.getCurrentFilter().getMarketplaceFilter().setRadius((int) currentValue);
+            radiusPickerView.setText(getResources().getQuantityString(R.plurals.number_picker_kilometers, (int) currentValue, currentValue));
         });
     }
 
@@ -269,7 +270,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     // MARK: - ================== OnRoomsNumberChangedListener ==================
 
     @Override
-    public void pickerValuesUpdated(int bedrooms, int bathrooms, int carspots) {
+    public void pickerValuesUpdated(double bedrooms, double bathrooms, double carspots) {
         presenter.getCurrentFilter().getMarketplaceFilter().setBedrooms(bedrooms);
         presenter.getCurrentFilter().getMarketplaceFilter().setBathrooms(bathrooms);
         presenter.getCurrentFilter().getMarketplaceFilter().setCarspots(carspots);

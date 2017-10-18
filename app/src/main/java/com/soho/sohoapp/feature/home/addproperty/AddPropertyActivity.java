@@ -162,7 +162,7 @@ public class AddPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
+    public void onRoomsSelected(double bedrooms, double bathrooms, double carspots) {
         presentable.onRoomsSelected(bedrooms, bathrooms, carspots);
     }
 

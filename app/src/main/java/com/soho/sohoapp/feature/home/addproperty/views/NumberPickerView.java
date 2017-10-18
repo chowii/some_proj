@@ -29,14 +29,14 @@ public class NumberPickerView extends LinearLayout {
     @BindView(R.id.increase)
     Button increase;
 
-    private static final int DEFAULT_MIN_VALUE = 0;
-    private static final int DEFAULT_MAX_VALUE = 99;
-    private static final int DEFAULT_STEP = 1;
-    private int minValue = DEFAULT_MIN_VALUE;
-    private int maxValue = DEFAULT_MAX_VALUE;
-    private int step = DEFAULT_STEP;
+    private static final double DEFAULT_MIN_VALUE = 0;
+    private static final double DEFAULT_MAX_VALUE = 99;
+    private static final double  DEFAULT_STEP = 1;
+    private double minValue = DEFAULT_MIN_VALUE;
+    private double maxValue = DEFAULT_MAX_VALUE;
+    private double step = DEFAULT_STEP;
 
-    private int currentValue;
+    private double currentValue;
     private Listener listener;
 
     public NumberPickerView(Context context) {
@@ -49,12 +49,12 @@ public class NumberPickerView extends LinearLayout {
         initView();
     }
 
-    public void setMinValue(int minValue) {
+    public void setMinValue(double minValue) {
         this.minValue = minValue;
         validateButtons();
     }
 
-    public void setMaxValue(int maxValue) {
+    public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
         validateButtons();
     }
@@ -63,7 +63,7 @@ public class NumberPickerView extends LinearLayout {
         this.step = step;
     }
 
-    public void setCurrentValue(int currentValue) {
+    public void setCurrentValue(double currentValue) {
         this.currentValue = currentValue;
         validateButtons();
     }
@@ -120,6 +120,6 @@ public class NumberPickerView extends LinearLayout {
     }
 
     public interface Listener {
-        void onValueChanged(int currentValue);
+        void onValueChanged(double currentValue);
     }
 }

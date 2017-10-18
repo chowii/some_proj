@@ -16,7 +16,7 @@ interface AddPropertyContract {
 
         void onHomeOrInvestmentSelected(boolean isInvestment);
 
-        void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
+        void onRoomsSelected(double bedrooms, double bathrooms, double carspots);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

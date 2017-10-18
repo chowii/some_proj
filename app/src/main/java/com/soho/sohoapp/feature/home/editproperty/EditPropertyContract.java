@@ -32,7 +32,7 @@ interface EditPropertyContract {
 
         void onHeaderPhotoClicked(List<Image> images, int currentItem);
 
-        void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
+        void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots);
 
         void onPropertyTypeChanged(String type);
 

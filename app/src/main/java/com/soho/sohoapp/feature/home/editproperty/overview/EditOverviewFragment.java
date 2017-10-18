@@ -190,8 +190,9 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     }
 
     @Override
-    public void notifyActivityAboutRoomsChanges(int bedrooms, int bathrooms, int carspots) {
-        getEditPropertyListener().onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+    public void notifyActivityAboutRoomsChanges(double bedrooms, double bathrooms, double carspots) {
+        EditPropertyListener listener = (EditPropertyListener) getActivity();
+        listener.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
     }
 
     @Override
@@ -220,7 +221,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     }
 
     @Override
-    public void showRoomsNumber(int bedrooms, int bathrooms, int carspots) {
+    public void showRoomsNumber(double bedrooms, double bathrooms, double carspots) {
         roomsSelector.setValues(bedrooms, bathrooms, carspots);
     }
 
@@ -318,7 +319,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     public interface EditPropertyListener {
         void onPropertyAddressChanged(Location location);
 
-        void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
+        void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots);
 
         void onPropertyTypeChanged(String type);
 

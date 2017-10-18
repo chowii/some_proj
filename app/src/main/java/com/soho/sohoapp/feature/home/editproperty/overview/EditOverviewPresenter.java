@@ -95,7 +95,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     }
 
     @Override
-    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+    public void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots) {
         property.setBedrooms(bedrooms);
         property.setBathrooms(bathrooms);
         property.setCarspots(carspots);

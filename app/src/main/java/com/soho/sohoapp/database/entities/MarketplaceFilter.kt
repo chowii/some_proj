@@ -23,7 +23,7 @@ data class MarketplaceFilter(
         var priceToRent:Int = 0,
         var priceFromBuy:Int = 0,
         var priceToBuy:Int = 0,
-        var bedrooms:Double = 1.0,
+        var bedrooms:Double = 0.0,
         var bathrooms:Double = 0.0,
         var carspots:Double = 0.0,
         var allProperties:Boolean = true ) {

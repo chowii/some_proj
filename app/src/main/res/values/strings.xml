@@ -70,6 +70,9 @@
     <string name="rooms_picker_decrease">-</string>
     <string name="rooms_picker_increase">+</string>
     <string name="rooms_picker_studio">Studio</string>
+    <string name="rooms_picker_any_bedroom">Any Bedrooms</string>
+    <string name="rooms_picker_any_bathroom">Any Bathrooms</string>
+    <string name="rooms_picker_any_carspot">Any Carspots</string>
     <string name="your_email">Your Email</string>
     <string name="reset_password">reset password</string>
     <string name="login_button">Login</string>

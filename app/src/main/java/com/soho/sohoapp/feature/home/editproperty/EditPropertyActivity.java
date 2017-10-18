@@ -220,7 +220,7 @@ public class EditPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+    public void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots) {
         presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
     }
 

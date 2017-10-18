@@ -41,7 +41,7 @@ public class RoomsFragment extends BaseFragment {
     }
 
     public interface RoomsSelectedListener {
-        void onRoomsSelected(int bedrooms, int bathrooms, int carspots);
+        void onRoomsSelected(double bedrooms, double bathrooms, double carspots);
     }
 
 }

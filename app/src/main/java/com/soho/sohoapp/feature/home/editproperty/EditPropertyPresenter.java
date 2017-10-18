@@ -203,7 +203,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     }
 
     @Override
-    public void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots) {
+    public void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots) {
         property.setBedrooms(bedrooms);
         property.setBathrooms(bathrooms);
         property.setCarspots(carspots);

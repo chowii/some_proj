@@ -15,9 +15,9 @@ import static com.soho.sohoapp.SohoApplication.getStringFromResource;
 public class PropertyDetailHeaderItem implements BaseModel {
 
     private String header;
-    private int bedroom;
-    private int bathroom;
-    private int carspot;
+    private double bedroom;
+    private double bathroom;
+    private double carspot;
     private int propertySize;
     private String sizeUnit;
     private String propertyType;
@@ -36,17 +36,17 @@ public class PropertyDetailHeaderItem implements BaseModel {
         else this.header = header;
     }
 
-    public int getBathroom() { return bathroom; }
+    public double getBathroom() { return bathroom; }
 
-    public void setBathroom(int bathroom) { this.bathroom = (bathroom); }
+    public void setBathroom(double bathroom) { this.bathroom = (bathroom); }
 
-    public int getBedroom() { return bedroom; }
+    public double getBedroom() { return bedroom; }
 
-    public void setBedroom(int bedroom) { this.bedroom = bedroom; }
+    public void setBedroom(double bedroom) { this.bedroom = bedroom; }
 
-    public int getCarspot() { return carspot; }
+    public double getCarspot() { return carspot; }
 
-    public void setCarspot(int carspot) { this.carspot = carspot; }
+    public void setCarspot(double carspot) { this.carspot = carspot; }
 
     public int getPropertySize() { return propertySize; }
 

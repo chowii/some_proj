@@ -57,6 +57,10 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static android.text.TextUtils.isEmpty;
+import static com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView.BEDROOMS_MIN_ANY;
+import static com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView.BEDROOMS_STUDIO;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_BEDROOM_SERVER_VALUE;
+import static com.soho.sohoapp.network.Keys.Filter.FILTER_STUDIO_SERVER_VALUE;
 
 public final class Converter {
 
@@ -80,7 +84,9 @@ public final class Converter {
         basicProperty.setFavourite(result.isFavourite());
         basicProperty.setRentPrice(result.getRentPrice());
         basicProperty.setSalePrice(result.getSalePrice());
-        basicProperty.setBedrooms(result.getBedrooms());
+        int bedrooms = result.getBedrooms();
+        basicProperty.setBedrooms(bedrooms == FILTER_STUDIO_SERVER_VALUE ?
+                BEDROOMS_STUDIO : bedrooms);
         basicProperty.setCarspots(result.getCarspots());
         basicProperty.setBathrooms(result.getBathrooms());
         basicProperty.setLocation(toLocation(result.getLocation()));
@@ -120,7 +126,9 @@ public final class Converter {
         property.setFavourite(result.isFavourite());
         property.setRentPrice(result.getRentPrice());
         property.setSalePrice(result.getSalePrice());
-        property.setBedrooms(result.getBedrooms());
+        int bedrooms = result.getBedrooms();
+        property.setBedrooms(bedrooms == FILTER_STUDIO_SERVER_VALUE ?
+                BEDROOMS_STUDIO : bedrooms);
         property.setCarspots(result.getCarspots());
         property.setBathrooms(result.getBathrooms());
         property.setLocation(toLocation(result.getLocation()));
@@ -469,7 +477,14 @@ public final class Converter {
     public static QueryHashMap toMap(@Nullable Location location,
                                      @NonNull PropertyRole role,
                                      @NonNull PropertyType propertyType,
-                                     boolean isInvestment, int bedrooms, int bathrooms, int carspots) {
+                                     boolean isInvestment, double bedrooms, double bathrooms, double carspots) {
+        boolean isAnyBedrooms = bedrooms == BEDROOMS_MIN_ANY;
+        boolean isStudio = bedrooms == BEDROOMS_STUDIO;
+        if (isAnyBedrooms) {
+            bedrooms = FILTER_BEDROOM_SERVER_VALUE;
+        } else if (isStudio) {
+            bedrooms = FILTER_STUDIO_SERVER_VALUE;
+        }
         QueryHashMap map = new QueryHashMap()
                 .put(Keys.Property.RELATION, role.getKey())
                 .put(Keys.Property.BEDROOMS_ATTRIBUTE, bedrooms)

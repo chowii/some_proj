@@ -147,7 +147,7 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
                 propertyListing.setAvailableFrom(availabilityCalendar.getTimeInMillis());
             }
 
-            propertyFinance.setEstimatedValue(StringExtKt.toDoubleOrDefault(view.getRentalPriceValue(), 0));
+            propertyFinance.setEstimatedRent(StringExtKt.toDoubleOrDefault(view.getRentalPriceValue(), 0));
             property.setPropertyFinance(propertyFinance);
             property.setPropertyListing(propertyListing);
 

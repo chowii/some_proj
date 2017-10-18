@@ -22,9 +22,9 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     private Location location;
     private PropertyType propertyType;
     private boolean isInvestment;
-    private int bedrooms;
-    private int bathrooms;
-    private int carspots;
+    private double bedrooms;
+    private double bathrooms;
+    private double carspots;
 
     public AddPropertyPresenter(AddPropertyContract.ViewInteractable view, NavigatorInterface navigator) {
         this.view = view;
@@ -70,7 +70,7 @@ public class AddPropertyPresenter implements AbsPresenter, AddPropertyContract.V
     }
 
     @Override
-    public void onRoomsSelected(int bedrooms, int bathrooms, int carspots) {
+    public void onRoomsSelected(double bedrooms, double bathrooms, double carspots) {
         this.bedrooms = bedrooms;
         this.bathrooms = bathrooms;
         this.carspots = carspots;
