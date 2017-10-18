@@ -109,6 +109,9 @@ interface SohoService {
 
     @PUT("verifications/property")
     fun sendPropertyVerificationAttachments(@Body file: RequestBody): Observable<VerificationResult>
+
+    @PUT("verifications/property")
+    fun deletePropertyVerificationAttachments(@Body map: QueryHashMap): Observable<VerificationResult>
 }
 
 

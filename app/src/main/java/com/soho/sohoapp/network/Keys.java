@@ -146,6 +146,9 @@ public interface Keys {
 
     interface Verification {
         String ATTACHMENT = "attachments_attributes[%d][file]";
+        String ATTACHMENT_ID = "id";
+        String ATTACHMENT_DESTROY = "_destroy";
+        String ATTACHMENT_ATTRIBUTES = "attachments_attributes";
         String PIN_CODE = "code";
     }
 

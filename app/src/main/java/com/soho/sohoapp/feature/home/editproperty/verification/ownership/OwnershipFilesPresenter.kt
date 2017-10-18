@@ -4,7 +4,6 @@ import android.net.Uri
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsPresenter
-import com.soho.sohoapp.data.dtos.PropertyResult
 import com.soho.sohoapp.data.dtos.VerificationResult
 import com.soho.sohoapp.data.enums.VerificationType
 import com.soho.sohoapp.data.listdata.AddFile
@@ -16,11 +15,12 @@ import com.soho.sohoapp.navigator.RequestCode
 import com.soho.sohoapp.permission.PermissionManagerInterface
 import com.soho.sohoapp.utils.Converter
 import com.soho.sohoapp.utils.FileHelper
+import com.soho.sohoapp.utils.Optional
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.ResponseBody
 
 class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInteractable,
                               private val navigator: NavigatorInterface,
@@ -103,31 +103,50 @@ class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInter
                 .filterIsInstance<Attachment>()
                 .filter { it.fileUrl == null }
 
-        val removedAttachements = attachmentsFromServer.removeAll(displayableList)
+        val removedAttachments: ArrayList<Attachment> = attachmentsFromServer as ArrayList<Attachment>
+        removedAttachments.removeAll(displayableList)
 
-        if (!newAttachments.isEmpty()) {
+        if (newAttachments.isEmpty() && removedAttachments.isEmpty()) {
+            view.showValidationMessage(R.string.verification_ownership_validation_error)
+        } else {
             view.showLoadingDialog()
-            compositeDisposable.add(Converter.toImageRequestBody(fileHelper, newAttachments, property.id)
-                    .switchMap<VerificationResult>
-                    { requestBody ->
-                        DEPENDENCIES.sohoService.sendPropertyVerificationAttachments(requestBody)
-                    }
-                    .map { result -> Converter.toVerification(result) }
+            addAttachments(newAttachments).mergeWith(removeAttachments(removedAttachments))
+                    .filter { it.isPresent }
+                    .takeLast(1)
+                    .map { optionalResult -> Converter.toVerification(optionalResult.get()) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             { property ->
                                 view.hideLoadingDialog()
-                                property?.let { property ->
-                                    navigator.exitWithResultCodeOk(property)
+                                property?.let { verifications ->
+                                    navigator.exitWithResultCodeOk(verifications)
                                 } ?: navigator.exitWithResultCodeOk()
                             },
                             {
                                 view.hideLoadingDialog()
                                 view.showError(it)
-                            }))
-        } else {
-            view.showValidationMessage(R.string.verification_ownership_validation_error)
+                            })
         }
+    }
+
+    private fun addAttachments(newAttachments: List<Attachment>): Observable<Optional<VerificationResult>> {
+        if (newAttachments.isEmpty()) {
+            return Observable.just(Optional.empty())
+        }
+        return Converter.toImageRequestBody(fileHelper, newAttachments, property.id)
+                .switchMap<VerificationResult> { requestBody ->
+                    DEPENDENCIES.sohoService.sendPropertyVerificationAttachments(requestBody)
+                }
+                .map { verificationResult -> Optional.of(verificationResult) }
+    }
+
+    private fun removeAttachments(removedAttachments: List<Attachment>): Observable<Optional<VerificationResult>> {
+        if (removedAttachments.isEmpty()) {
+            return Observable.just(Optional.empty())
+        }
+        val map = Converter.toMap(removedAttachments, property.id)
+        return DEPENDENCIES.sohoService.deletePropertyVerificationAttachments(map)
+                .map { verificationResult -> Optional.of(verificationResult) }
     }
 }

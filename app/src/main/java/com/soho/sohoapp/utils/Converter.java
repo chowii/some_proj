@@ -555,6 +555,19 @@ public final class Converter {
     }
 
     @NonNull
+    public static QueryHashMap toMap(@NonNull List<Attachment> attachments, int propertyId) {
+        List<QueryHashMap> attributes = new ArrayList<>();
+        for (Attachment attachment : attachments) {
+            QueryHashMap attachmentMap = new QueryHashMap()
+                    .put(Keys.Verification.ATTACHMENT_ID, attachment.getId())
+                    .put(Keys.Verification.ATTACHMENT_DESTROY, true);
+            attributes.add(attachmentMap);
+        }
+        return new QueryHashMap().put(Keys.Property.PROPRETY_ID, propertyId)
+                .put(Keys.Verification.ATTACHMENT_ATTRIBUTES, attributes);
+    }
+
+    @NonNull
     public static List<PortfolioCategory> toPortfolioCategoryList(@NonNull List<PortfolioCategoryResult> results) {
         List<PortfolioCategory> portfolioCategoryList = new ArrayList<>();
         for (PortfolioCategoryResult result : results) {
