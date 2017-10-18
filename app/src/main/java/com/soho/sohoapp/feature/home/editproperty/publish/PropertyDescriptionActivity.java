@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 public class PropertyDescriptionActivity extends AbsActivity implements PropertyDescriptionContract.ViewInteractable {
     private static final String KEY_DESCRIPTION = "KEY_DESCRIPTION";
+    private static final String KEY_FOR_RENOVATION = "KEY_FOR_RENOVATION";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,6 +35,14 @@ public class PropertyDescriptionActivity extends AbsActivity implements Property
     @NonNull
     public static Intent createIntent(@NonNull Context context, String description) {
         Intent intent = new Intent(context, PropertyDescriptionActivity.class);
+        intent.putExtra(KEY_DESCRIPTION, description);
+        return intent;
+    }
+
+    @NonNull
+    public static Intent createIntent(@NonNull Context context, boolean forRenovation, String description) {
+        Intent intent = new Intent(context, PropertyDescriptionActivity.class);
+        intent.putExtra(KEY_FOR_RENOVATION, forRenovation);
         intent.putExtra(KEY_DESCRIPTION, description);
         return intent;
     }
@@ -87,6 +96,18 @@ public class PropertyDescriptionActivity extends AbsActivity implements Property
     @Override
     public void hideKeyboard() {
         ActivityExtKt.hideKeyboard(this);
+    }
+
+    @Override
+    public boolean isForRenovation() {
+        Bundle extras = getIntent().getExtras();
+        return extras != null && extras.getBoolean(KEY_FOR_RENOVATION);
+    }
+
+    @Override
+    public void initForRenovation() {
+        toolbar.setTitle(R.string.property_renovation_toolbar);
+        description.setHint(R.string.property_renovation_enter_renovation);
     }
 
     private void initToolbar() {

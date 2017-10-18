@@ -20,5 +20,9 @@ public interface PropertyDescriptionContract {
         String getDescription();
 
         void hideKeyboard();
+
+        boolean isForRenovation();
+
+        void initForRenovation();
     }
 }

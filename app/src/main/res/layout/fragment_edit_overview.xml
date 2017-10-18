@@ -107,5 +107,52 @@
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
             android:paddingTop="8dp"/>
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/edit_property_renovation"/>
+
+        <TextView
+            android:id="@+id/renovation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_selector"
+            android:ellipsize="end"
+            android:hint="@string/edit_property_renovation_desc"
+            android:maxLines="3"
+            android:padding="16dp"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/hintText"
+            android:textSize="14sp"
+            tools:text="@string/test_text_long"/>
+
+        <TextView
+            style="@style/ListTextHeader"
+            android:text="@string/edit_property_portfolio"/>
+
+        <LinearLayout
+            android:id="@+id/portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_selector"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit_property_portfolio_type"
+                android:textColor="@color/primaryText"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/portfolioType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/greenText"
+                android:textSize="14sp"
+                tools:text="@string/test_text_short"/>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

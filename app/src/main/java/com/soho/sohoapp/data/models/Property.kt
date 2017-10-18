@@ -8,7 +8,7 @@ class Property : BasicProperty {
     var landSize: Int = 0
     var landSizeMeasurement: String? = null
     var auctionDate: Long? = null
-    var rennovationDetails: String? = null
+    var renovationDetails: String? = null
     var agentLicenseNumber: String? = null
     var agentMobileNumber: String? = null
     var propertyListing: PropertyListing? = null
@@ -21,7 +21,7 @@ class Property : BasicProperty {
         landSize = parcel.readInt()
         landSizeMeasurement = parcel.readString()
         auctionDate = parcel.readValue(Long::class.java.classLoader) as Long?
-        rennovationDetails = parcel.readString()
+        renovationDetails = parcel.readString()
         agentLicenseNumber = parcel.readString()
         agentMobileNumber = parcel.readString()
         propertyListing = parcel.readParcelable(PropertyListing::class.java.classLoader)
@@ -42,7 +42,7 @@ class Property : BasicProperty {
         parcel.writeInt(landSize)
         parcel.writeString(landSizeMeasurement)
         parcel.writeValue(auctionDate)
-        parcel.writeString(rennovationDetails)
+        parcel.writeString(renovationDetails)
         parcel.writeString(agentLicenseNumber)
         parcel.writeString(agentMobileNumber)
         parcel.writeParcelable(propertyListing, flags)

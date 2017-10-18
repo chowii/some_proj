@@ -117,6 +117,9 @@
             android:name=".feature.home.editproperty.verification.ownership.OwnershipVerificationActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".feature.home.editproperty.archive.ArchiveConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".feature.marketplaceview.feature.detailview.PropertyDetailActivity"
             android:screenOrientation="portrait" />
         <activity

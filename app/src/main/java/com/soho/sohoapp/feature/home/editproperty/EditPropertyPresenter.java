@@ -152,9 +152,14 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onSaveClicked() {
         view.showLoadingDialog();
-        QueryHashMap map = Converter.toPropertyMap(property);
+        QueryHashMap listingMap = Converter.toMap(property.getPropertyListingSafe());
         compositeDisposable.add(
-                DEPENDENCIES.getSohoService().updateProperty(property.getId(), map)
+                DEPENDENCIES.getSohoService().updatePropertyListing(property.getId(), listingMap)
+                        .switchMap(propertyListingResult ->
+                        {
+                            QueryHashMap propertyMap = Converter.toPropertyMap(property);
+                            return DEPENDENCIES.getSohoService().updateProperty(property.getId(), propertyMap);
+                        })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(propertyResult -> {
@@ -207,6 +212,21 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onPropertyTypeChanged(String type) {
         property.setType(type);
+    }
+
+    @Override
+    public void onRenovationChanged(String renovation) {
+        property.setRenovationDetails(renovation);
+    }
+
+    @Override
+    public void onInvestmentStatusChanged(boolean isInvestment) {
+        property.setInvestment(isInvestment);
+    }
+
+    @Override
+    public void onPropertyStatusChanged(String propertyStatus) {
+        property.getPropertyListingSafe().setState(propertyStatus);
     }
 
     private void initPropertyImages() {

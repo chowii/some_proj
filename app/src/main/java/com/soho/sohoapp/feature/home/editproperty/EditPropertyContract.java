@@ -35,6 +35,12 @@ interface EditPropertyContract {
         void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
 
         void onPropertyTypeChanged(String type);
+
+        void onRenovationChanged(String renovation);
+
+        void onInvestmentStatusChanged(boolean isInvestment);
+
+        void onPropertyStatusChanged(String propertyStatus);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

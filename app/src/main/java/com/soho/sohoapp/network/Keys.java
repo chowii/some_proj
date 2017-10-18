@@ -42,14 +42,16 @@ public interface Keys {
         String PROPRETY_ID = "property_id";
         String RELATION = "relation";
         String DESCRIPTION = "description";
+        String RENOVATION_DETAILS = "renovation_details";
         String BEDROOMS = "bedrooms";
         String BATHROOMS = "bathrooms";
         String CARSPOTS = "carspots";
         String TYPE_OF_PROPERTY = "type_of_property";
+        String IS_INVESTMENT = "is_investment";
         String BEDROOMS_ATTRIBUTE = "property[bedrooms]";
         String BATHROOMS_ATTRIBUTE = "property[bathrooms]";
         String CARSPOTS_ATTRIBUTE = "property[carspots]";
-        String IS_INVESTMENT = "property[is_investment]";
+        String IS_INVESTMENT_ATTRIBUTE = "property[is_investment]";
         String TYPE_OF_PROPERTY_ATTRIBUTE = "property[type_of_property]";
         String IMAGE = "property_photos_attributes[0][image]";
         String PROPERTY_FINANCE_ATTRIBUTES = "property_finance_attributes";

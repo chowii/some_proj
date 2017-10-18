@@ -148,7 +148,20 @@
     <string name="edit_property_address">Address</string>
     <string name="edit_property_mask_address">Mask Address</string>
     <string name="edit_property_property_type">Property Type</string>
+    <string name="edit_property_renovation">Renovation</string>
+    <string name="edit_property_renovation_desc">Add information about works done to the property</string>
+    <string name="edit_property_portfolio">Portfolio</string>
+    <string name="edit_property_portfolio_type">Portfolio Type</string>
+    <string name="edit_property_portfolio_type_home">Home</string>
+    <string name="edit_property_portfolio_type_investment">Investment</string>
+    <string name="edit_property_portfolio_type_archived">Archived</string>
     <!--Edit property screen end-->
+
+    <!--Archive confirmation screen start-->
+    <string name="archive_confirm_toolbar">Confirm Archive</string>
+    <string name="archive_confirm_desc">will be archive</string>
+    <string name="archive_confirm_button">Confirm</string>
+    <!--Archive confirmation screen end-->
 
     <!--Publish property screens start-->
     <string name="publish_property_set_status">Set Status</string>
@@ -290,10 +303,12 @@
     <string name="autocomplete_address_confirmation_no">No</string>
     <!--Autocomplete address screen end-->
 
-    <!--Property description screen start-->
+    <!--Property description and renovation screen start-->
     <string name="property_description_toolbar">Description</string>
     <string name="property_description_enter_description">Add a description of your property..</string>
     <string name="property_description_done">Done</string>
+    <string name="property_renovation_toolbar">Renovation</string>
+    <string name="property_renovation_enter_renovation">Add information about works done to the property</string>
 
     <!--Property description screen end-->
     <string name="property_filter_filter_tab">Filter</string>

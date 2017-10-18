@@ -133,7 +133,7 @@ public final class Converter {
         //Property Details
         property.setLandSize(result.getLandSize());
         property.setLandSizeMeasurement(result.getLandSizeMeasurement());
-        property.setRennovationDetails(result.getRennovationDetails());
+        property.setRenovationDetails(result.getRenovationDetails());
         property.setAgentLicenseNumber(result.getAgentLicenseNumber());
         property.setAgentMobileNumber(result.getAgentMobileNumber());
         property.setPropertyListing(toPropertyListing(result.getPropertyListing()));
@@ -475,7 +475,7 @@ public final class Converter {
                 .put(Keys.Property.BEDROOMS_ATTRIBUTE, bedrooms)
                 .put(Keys.Property.BATHROOMS_ATTRIBUTE, bathrooms)
                 .put(Keys.Property.CARSPOTS_ATTRIBUTE, carspots)
-                .put(Keys.Property.IS_INVESTMENT, isInvestment)
+                .put(Keys.Property.IS_INVESTMENT_ATTRIBUTE, isInvestment)
                 .put(Keys.Property.TYPE_OF_PROPERTY_ATTRIBUTE, propertyType.getKey());
         putLocationAttributes(map, location);
         return map;
@@ -534,7 +534,9 @@ public final class Converter {
                 .put(Keys.Property.BEDROOMS, property.getBedrooms())
                 .put(Keys.Property.BATHROOMS, property.getBathrooms())
                 .put(Keys.Property.CARSPOTS, property.getCarspots())
-                .put(Keys.Property.TYPE_OF_PROPERTY, property.getType());
+                .put(Keys.Property.TYPE_OF_PROPERTY, property.getType())
+                .put(Keys.Property.RENOVATION_DETAILS, property.getRenovationDetails())
+                .put(Keys.Property.IS_INVESTMENT, property.isInvestment());
     }
 
     @NonNull

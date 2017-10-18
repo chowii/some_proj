@@ -15,6 +15,9 @@ public class PropertyDescriptionPresenter implements AbsPresenter, PropertyDescr
     @Override
     public void startPresenting(boolean fromConfigChanges) {
         view.setPresentable(this);
+        if (view.isForRenovation()) {
+            view.initForRenovation();
+        }
         view.showDescription(view.getDescriptionFromExtras());
     }
 

@@ -34,7 +34,7 @@ public interface NavigatorInterface {
 
     void openAddPropertyScreen();
 
-    void openPropertyDetailScreen(@NonNull int id);
+    void openPropertyDetailScreen(int id);
 
     void openAddPropertyScreen(int requestCode);
 
@@ -75,6 +75,10 @@ public interface NavigatorInterface {
     void openAutocompleteAddressScreen(int requestCode, boolean showConfirmationDialog);
 
     void openPropertyDescriptionScreen(String description, int requestCode);
+
+    void openPropertyDescriptionScreen(String description, boolean forRenovation, int requestCode);
+
+    void openArchiveConfirmationScreen(String propertyAddress, int requestCode);
 
     void openHomeActivity();
 

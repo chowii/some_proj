@@ -14,8 +14,8 @@ class PropertyResult : BasicPropertyResult() {
     @SerializedName("auction_date")
     var auctionDate: String? = null
 
-    @SerializedName("rennovation_details")
-    var rennovationDetails: String? = null
+    @SerializedName("renovation_details")
+    var renovationDetails: String? = null
 
     @SerializedName("agent_licence_number")
     var agentLicenseNumber: String? = null

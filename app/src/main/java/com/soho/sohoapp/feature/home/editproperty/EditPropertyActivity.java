@@ -69,7 +69,7 @@ public class EditPropertyActivity extends AbsActivity implements
     private LoadingDialog loadingDialog;
 
     @NonNull
-    public static Intent createIntent(@NonNull Context context, @NonNull int propertyId) {
+    public static Intent createIntent(@NonNull Context context, int propertyId) {
         Intent intent = new Intent(context, EditPropertyActivity.class);
         intent.putExtra(KEY_PROPERTY_ID, propertyId);
         return intent;
@@ -227,6 +227,21 @@ public class EditPropertyActivity extends AbsActivity implements
     @Override
     public void onPropertyTypeChanged(String type) {
         presentable.onPropertyTypeChanged(type);
+    }
+
+    @Override
+    public void onRenovationChanged(String renovation) {
+        presentable.onRenovationChanged(renovation);
+    }
+
+    @Override
+    public void onInvestmentStatusChanged(boolean isInvestment) {
+        presentable.onInvestmentStatusChanged(isInvestment);
+    }
+
+    @Override
+    public void onPropertyStatusChanged(String propertyStatus) {
+        presentable.onPropertyStatusChanged(propertyStatus);
     }
 
     private void initToolbar() {

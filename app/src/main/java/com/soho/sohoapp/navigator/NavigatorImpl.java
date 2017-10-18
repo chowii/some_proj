@@ -17,6 +17,7 @@ import com.soho.sohoapp.feature.gallery.GalleryViewActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
+import com.soho.sohoapp.feature.home.editproperty.archive.ArchiveConfirmationActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyDescriptionActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
@@ -336,6 +337,24 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(PropertyDescriptionActivity.createIntent(fragment.getActivity(), description), requestCode);
         } else {
             activity.startActivityForResult(PropertyDescriptionActivity.createIntent(activity, description), requestCode);
+        }
+    }
+
+    @Override
+    public void openPropertyDescriptionScreen(String description, boolean forRenovation, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(PropertyDescriptionActivity.createIntent(fragment.getActivity(), forRenovation, description), requestCode);
+        } else {
+            activity.startActivityForResult(PropertyDescriptionActivity.createIntent(activity, forRenovation, description), requestCode);
+        }
+    }
+
+    @Override
+    public void openArchiveConfirmationScreen(String propertyAddress, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(ArchiveConfirmationActivity.Companion.createIntent(fragment.getActivity(), propertyAddress), requestCode);
+        } else {
+            activity.startActivityForResult(ArchiveConfirmationActivity.Companion.createIntent(activity, propertyAddress), requestCode);
         }
     }
 

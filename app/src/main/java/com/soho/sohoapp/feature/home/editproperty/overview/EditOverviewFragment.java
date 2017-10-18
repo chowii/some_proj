@@ -23,9 +23,9 @@ import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
+import com.soho.sohoapp.dialogs.PortfolioTypesDialog;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.addproperty.views.RoomsNumberPickerView;
-import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
 import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
@@ -65,6 +65,12 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     @BindView(R.id.roomsSelector)
     RoomsNumberPickerView roomsSelector;
+
+    @BindView(R.id.renovation)
+    TextView txtRenovation;
+
+    @BindView(R.id.portfolioType)
+    TextView txtPortfolioType;
 
     private EditOverviewContract.ViewPresentable presentable;
     private EditOverviewPresenter presenter;
@@ -116,12 +122,17 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
                         Collections.addAll(verificationsList, extras.getParcelableArray(NavigatorImpl.KEY_VERIFICATIONS_UPDATED));
                         presentable.onPropertyVerificationsUpdated(verificationsList);
                     }
+                    break;
                 case RequestCode.EDIT_PROPERTY_ADDRESS:
                     Location location = extras.getParcelable(NavigatorImpl.KEY_PROPERTY_LOCATION);
                     presentable.onPropertyAddressChanged(location);
-                    notifyActivityAboutAddressChanges(location);
+                    break;
+                case RequestCode.EDIT_PROPERTY_RENOVATION:
+                    presentable.onRenovationChanged(extras.getString(NavigatorImpl.KEY_STRING));
                     break;
             }
+        } else if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.EDIT_PROPERTY_ARCHIVE_CONFIRMATION) {
+            presentable.onArchiveConfirmed();
         }
     }
 
@@ -175,14 +186,32 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     @Override
     public void notifyActivityAboutAddressChanges(Location location) {
-        EditPropertyListener listener = (EditPropertyListener) getActivity();
-        listener.onPropertyAddressChanged(location);
+        getEditPropertyListener().onPropertyAddressChanged(location);
     }
 
     @Override
     public void notifyActivityAboutRoomsChanges(int bedrooms, int bathrooms, int carspots) {
-        EditPropertyListener listener = (EditPropertyListener) getActivity();
-        listener.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+        getEditPropertyListener().onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+    }
+
+    @Override
+    public void notifyActivityAboutPropertyTypeChanged(String type) {
+        getEditPropertyListener().onPropertyTypeChanged(type);
+    }
+
+    @Override
+    public void notifyActivityAboutRenovationChanged(String renovation) {
+        getEditPropertyListener().onRenovationChanged(renovation);
+    }
+
+    @Override
+    public void notifyActivityAboutInvestmentStatusChanged(boolean isInvestment) {
+        getEditPropertyListener().onInvestmentStatusChanged(isInvestment);
+    }
+
+    @Override
+    public void notifyActivityAboutPropertyStatusChanged(String status) {
+        getEditPropertyListener().onPropertyStatusChanged(status);
     }
 
     @Override
@@ -207,9 +236,35 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     }
 
     @Override
-    public void notifyActivityAboutPropertyTypeChanged(String type) {
-        EditPropertyListener listener = (EditPropertyListener) getActivity();
-        listener.onPropertyTypeChanged(type);
+    public void showRenovation(String renovation) {
+        txtRenovation.setText(renovation);
+    }
+
+    @Override
+    public void showPortfolioTypesDialog() {
+        //todo: replace deprecated dialog
+        PortfolioTypesDialog portfolioTypesDialog = new PortfolioTypesDialog(getContext());
+        portfolioTypesDialog.show(new PortfolioTypesDialog.Listener() {
+            @Override
+            public void onHomeClicked() {
+                presentable.onHomeClicked();
+            }
+
+            @Override
+            public void onInvestmentClicked() {
+                presentable.onInvestmentClicked();
+            }
+
+            @Override
+            public void onArchiveClicked() {
+                presentable.onArchiveClicked();
+            }
+        });
+    }
+
+    @Override
+    public void showPortfolioTypes(@StringRes int portfolioType) {
+        txtPortfolioType.setText(portfolioType);
     }
 
     @OnClick(R.id.marketplaceState)
@@ -232,6 +287,16 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         presentable.onMaskAddressChanged(isChecked);
     }
 
+    @OnClick(R.id.renovation)
+    void onRenovationClicked() {
+        presentable.onRenovationClicked();
+    }
+
+    @OnClick(R.id.portfolio)
+    void onPortfolioClicked() {
+        presentable.onPortfolioClicked();
+    }
+
     private void initView() {
         marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
         verificationDesc = ButterKnife.findById(verification, R.id.title);
@@ -246,11 +311,21 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         return data != null ? data.getExtras() : null;
     }
 
+    private EditPropertyListener getEditPropertyListener() {
+        return (EditPropertyListener) getActivity();
+    }
+
     public interface EditPropertyListener {
         void onPropertyAddressChanged(Location location);
 
         void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
 
         void onPropertyTypeChanged(String type);
+
+        void onRenovationChanged(String renovation);
+
+        void onInvestmentStatusChanged(boolean isInvestment);
+
+        void onPropertyStatusChanged(String propertyStatus);
     }
 }

@@ -7,10 +7,9 @@ import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.PropertyFinance;
-import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.data.models.Verification;
+import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface EditOverviewContract {
@@ -33,6 +32,20 @@ public interface EditOverviewContract {
         void onRoomsNumberChanged(int bedrooms, int bathrooms, int carspots);
 
         void onPropertyTypeChanged(PickerItem pickerItem);
+
+        void onRenovationClicked();
+
+        void onRenovationChanged(String renovation);
+
+        void onPortfolioClicked();
+
+        void onHomeClicked();
+
+        void onInvestmentClicked();
+
+        void onArchiveClicked();
+
+        void onArchiveConfirmed();
     }
 
     interface ViewInteractable {
@@ -58,6 +71,14 @@ public interface EditOverviewContract {
 
         void notifyActivityAboutRoomsChanges(int bedrooms, int bathrooms, int carspots);
 
+        void notifyActivityAboutPropertyTypeChanged(String type);
+
+        void notifyActivityAboutRenovationChanged(String renovation);
+
+        void notifyActivityAboutInvestmentStatusChanged(boolean isInvestment);
+
+        void notifyActivityAboutPropertyStatusChanged(String status);
+
         void showMaskAddress(boolean isMaskAddress);
 
         void showRoomsNumber(int bedrooms, int bathrooms, int carspots);
@@ -66,6 +87,10 @@ public interface EditOverviewContract {
 
         void initPropertyTypes(List<PickerItem> pickerItems, int currentType);
 
-        void notifyActivityAboutPropertyTypeChanged(String type);
+        void showRenovation(String renovation);
+
+        void showPortfolioTypesDialog();
+
+        void showPortfolioTypes(@StringRes int portfolioType);
     }
 }

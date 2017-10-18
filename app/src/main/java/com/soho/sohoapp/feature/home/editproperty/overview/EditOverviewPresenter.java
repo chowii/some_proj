@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty.overview;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
@@ -38,6 +39,8 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         view.showMaskAddress(property.getLocationSafe().getMaskAddress());
         initPropertyType();
         view.showRoomsNumber(property.getBedrooms(), property.getBathrooms(), property.getCarspots());
+        view.showRenovation(property.getRenovationDetails());
+        showPortfolioType();
     }
 
     @Override
@@ -64,7 +67,6 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         if (!verificationCompleted) {
             navigator.openVerificationScreen(property, PROPERTY_VERIFICATIONS_REQUEST_CODE);
         }
-        //todo: update also property description
     }
 
     @Override
@@ -82,6 +84,7 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     public void onPropertyAddressChanged(Location location) {
         property.setLocation(location);
         view.showPropertyAddress(location.getAddressLine1());
+        view.notifyActivityAboutAddressChanges(location);
     }
 
     @Override
@@ -103,6 +106,49 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
     public void onPropertyTypeChanged(PickerItem pickerItem) {
         property.setType(pickerItem.getId());
         view.notifyActivityAboutPropertyTypeChanged(pickerItem.getId());
+    }
+
+    @Override
+    public void onRenovationClicked() {
+        navigator.openPropertyDescriptionScreen(property.getRenovationDetails(), true, RequestCode.EDIT_PROPERTY_RENOVATION);
+    }
+
+    @Override
+    public void onRenovationChanged(String renovation) {
+        view.showRenovation(renovation);
+        property.setRenovationDetails(renovation);
+        view.notifyActivityAboutRenovationChanged(renovation);
+    }
+
+    @Override
+    public void onPortfolioClicked() {
+        view.showPortfolioTypesDialog();
+    }
+
+    @Override
+    public void onHomeClicked() {
+        property.setInvestment(false);
+        view.notifyActivityAboutInvestmentStatusChanged(false);
+        view.showPortfolioTypes(R.string.edit_property_portfolio_type_home);
+    }
+
+    @Override
+    public void onInvestmentClicked() {
+        property.setInvestment(true);
+        view.notifyActivityAboutInvestmentStatusChanged(true);
+        view.showPortfolioTypes(R.string.edit_property_portfolio_type_investment);
+    }
+
+    @Override
+    public void onArchiveClicked() {
+        navigator.openArchiveConfirmationScreen(property.getLocationSafe().getFullAddress(), RequestCode.EDIT_PROPERTY_ARCHIVE_CONFIRMATION);
+    }
+
+    @Override
+    public void onArchiveConfirmed() {
+        property.getPropertyListingSafe().setState(PropertyStatus.ARCHIVED);
+        view.showPortfolioTypes(R.string.edit_property_portfolio_type_archived);
+        view.notifyActivityAboutPropertyStatusChanged(PropertyStatus.ARCHIVED);
     }
 
     private void initPropertyListing(PropertyListing propertyListing) {
@@ -131,5 +177,15 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
             }
         }
         view.initPropertyTypes(ListExtKt.toPickerItems(propertyTypes), currentType);
+    }
+
+    private void showPortfolioType() {
+        if (PropertyStatus.ARCHIVED.equals(property.getPropertyListingSafe().getState())) {
+            view.showPortfolioTypes(R.string.edit_property_portfolio_type_archived);
+        } else if (property.isInvestment()) {
+            view.showPortfolioTypes(R.string.edit_property_portfolio_type_investment);
+        } else {
+            view.showPortfolioTypes(R.string.edit_property_portfolio_type_home);
+        }
     }
 }
