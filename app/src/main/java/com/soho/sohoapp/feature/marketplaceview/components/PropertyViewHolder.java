@@ -73,8 +73,8 @@ class PropertyViewHolder extends BaseViewHolder<BasicProperty> {
         titleTextView.setText(property.getDisplayTitle());
         streetAddressTextView.setText(property.getLocation().getAddressLine1());
         suburbAddressTextView.setText(property.getLocation().getAddressLine2());
-        bedroomTextView.setText(String.valueOf(property.getBedrooms()));
-        bathroomTextView.setText(String.valueOf(property.getBathrooms()));
-        parkingTextView.setText(String.valueOf(property.getCarspots()));
+        bedroomTextView.setText(String.valueOf((int) property.getBedrooms()));
+        bathroomTextView.setText(String.valueOf((int) property.getBathrooms()));
+        parkingTextView.setText(String.valueOf((int) property.getCarspots()));
     }
 }

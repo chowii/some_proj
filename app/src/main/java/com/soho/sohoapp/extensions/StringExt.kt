@@ -3,6 +3,7 @@ package com.soho.sohoapp.extensions
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.SohoApplication.getStringFromResource
+import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,11 +56,20 @@ fun String.toDateLongWithIso8601DateTimeFormat() = this.toDateLong(DateFormat.Is
  * @return returns Double value of string
  */
 fun String.toDoubleOrDefault(default: Double): Double {
-    try {
-        return this.trim().toDouble()
+    return try {
+        this.trim().filter { it.isDigit() }.toDouble()
     } catch (e: NumberFormatException) {
-        DEPENDENCIES.logger.e("Exception during parsing string to date")
-        return default
+        DEPENDENCIES.logger.e("Exception during parsing string")
+        default
+    }
+}
+
+fun String.toFormattedNumberValue(): String {
+    return try {
+        NumberFormat.getNumberInstance().format(this.filter { it.isDigit() }.toLong())
+    } catch (e: NumberFormatException) {
+        DEPENDENCIES.logger.e("Exception during parsing string to formatted number")
+        return ""
     }
 }
 
@@ -68,20 +78,18 @@ fun String.toDoubleOrDefault(default: Double): Double {
  * @return int value of string
  */
 fun String.abbreviatedMoneyValueToInt(): Int {
-    try {
-        val strippedString = this.replace("$", "")
-        if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true)) {
-            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
-        } else if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true)) {
-            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true).toInt() * 1_000_000
-        } else if (strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_billion), true)) {
-            return strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_billion), "", true).toInt() * 1_000_000_000
+    return try {
+        val strippedString = this.filter { it.isDigit() }
+        when {
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true).toInt() * 1_000_000
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_billion), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_billion), "", true).toInt() * 1_000_000_000
+            else -> strippedString.toInt()
         }
-        return strippedString.toInt()
     } catch (exception: NumberFormatException) {
-        return 0
+        0
     }
 }
 
 //note useless to localize instead use Currency class with Locale
-fun String.withCurrency() = "$" + this
+fun String.withCurrency() = if (this.isNullOrEmpty()) this else "$" + this

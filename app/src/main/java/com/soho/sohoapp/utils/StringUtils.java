@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.extensions.IntExtKt;
 
 public final class StringUtils {
 
@@ -73,11 +74,12 @@ public final class StringUtils {
     }
 
     public static String formatChangedValue(@NonNull Context context, double changedValue) {
-        String formattedChangedValue = formatPrice(context, Math.abs(changedValue));
+        boolean isNegative = changedValue < 0;
+        String formattedChangedValue = IntExtKt.toShortHand((int)changedValue);
         String result;
         if (changedValue == 0) {
             result = context.getString(R.string.portfolio_changed_value_null);
-        } else if (changedValue < 0) {
+        } else if (isNegative) {
             result = context.getString(R.string.portfolio_changed_value_minus, formattedChangedValue);
         } else {
             result = context.getString(R.string.portfolio_changed_value_plus, formattedChangedValue);

@@ -46,9 +46,9 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
     public void onBindViewHolder(PropertyDetailHeaderItem model) {
         titleTextView.setText(model.getHeader());
         typeTextView.setText(model.retrievePropertyType());
-        bedroomTextView.setText(String.valueOf(model.getBedroom()));
-        bathroomTextView.setText(String.valueOf(model.getBathroom()));
-        parkingTextView.setText(String.valueOf(model.getCarspot()));
+        bedroomTextView.setText(String.valueOf((int) model.getBedroom()));
+        bathroomTextView.setText(String.valueOf((int) model.getBathroom()));
+        parkingTextView.setText(String.valueOf((int) model.getCarspot()));
         if (model.getPropertySize() > 0)
             propertySizeTextView.setText(model.getPropertySizeWithUnit());
         if (model.getPropertyState() != null && model.retrievePropertyType() != null) {

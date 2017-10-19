@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.extensions.LongExtKt;
-import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.utils.DateUtils;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
@@ -26,6 +25,12 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.soho.sohoapp.extensions.StringExtKt.toDoubleOrDefault;
+import static com.soho.sohoapp.extensions.StringExtKt.toFormattedNumberValue;
+import static com.soho.sohoapp.extensions.StringExtKt.withCurrency;
+import static com.soho.sohoapp.utils.StringUtils.shortFormatLvr;
+import static com.soho.sohoapp.utils.StringUtils.shortFormatYield;
 
 public class InvestmentSummaryView extends LinearLayout {
     private static final String TAG_DATE_PICKER_DIALOG = "TAG_DATE_PICKER_DIALOG";
@@ -99,15 +104,15 @@ public class InvestmentSummaryView extends LinearLayout {
         rented.setChecked(finance.isRented());
         notRented.setChecked(!finance.isRented());
         endDateOfRent.setText(LongExtKt.toStringWithDisplayFormat(finance.getLeasedToDate()));
-        setValue(purchasePriceValue, finance.getPurchasePrice());
-        setValue(loanAmountValue, finance.getLoanAmount());
-        setValue(estimatedValueValue, finance.getEstimatedValue());
-        setValue(weeklyRentValue, finance.getActualRent());
-        setValue(estimatedWeeklyRentValue, finance.getEstimatedRent());
+        setValue(purchasePriceValue, (int) finance.getPurchasePrice());
+        setValue(loanAmountValue, (int) finance.getLoanAmount());
+        setValue(estimatedValueValue, (int) finance.getEstimatedValue());
+        setValue(weeklyRentValue, (int) finance.getActualRent());
+        setValue(estimatedWeeklyRentValue, (int) finance.getEstimatedRent());
         calculateValues();
     }
 
-    private void setValue(EditText editText, double value) {
+    private void setValue(EditText editText, int value) {
         if (value != 0) {
             editText.setText(String.valueOf(value));
         } else {
@@ -117,10 +122,10 @@ public class InvestmentSummaryView extends LinearLayout {
 
     private void calculateValues() {
         double yield = PropertyCalculator.calculateYield(finance);
-        yieldValue.setText(StringUtils.shortFormatYield(getContext(), yield));
+        yieldValue.setText(shortFormatYield(getContext(), yield));
 
         double lvr = PropertyCalculator.calculateLvr(finance);
-        lvrValue.setText(StringUtils.shortFormatLvr(getContext(), lvr));
+        lvrValue.setText(shortFormatLvr(getContext(), lvr));
 
         double valueChange = PropertyCalculator.calculateValueChange(finance);
         valueChangeValue.setText(StringUtils.formatChangedValue(getContext(), valueChange));
@@ -197,7 +202,12 @@ public class InvestmentSummaryView extends LinearLayout {
         purchasePriceValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setPurchasePrice(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
+                purchasePriceValue.removeTextChangedListener(this);
+                String numberFormatted = withCurrency(toFormattedNumberValue(charSequence.toString()));
+                purchasePriceValue.setText(numberFormatted);
+                purchasePriceValue.setSelection(numberFormatted.length()); //moves the pointer to end
+                purchasePriceValue.addTextChangedListener(this);
+                finance.setPurchasePrice(toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
                 notifyOnChangeListener();
             }
@@ -206,7 +216,12 @@ public class InvestmentSummaryView extends LinearLayout {
         loanAmountValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setLoanAmount(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
+                loanAmountValue.removeTextChangedListener(this);
+                String numberFormatted = withCurrency(toFormattedNumberValue(charSequence.toString()));
+                loanAmountValue.setText(numberFormatted);
+                loanAmountValue.setSelection(numberFormatted.length()); //moves the pointer to end
+                loanAmountValue.addTextChangedListener(this);
+                finance.setLoanAmount(toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
                 notifyOnChangeListener();
             }
@@ -215,7 +230,12 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedValueValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setEstimatedValue(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
+                estimatedValueValue.removeTextChangedListener(this);
+                String numberFormatted = withCurrency(toFormattedNumberValue(charSequence.toString()));
+                estimatedValueValue.setText(numberFormatted);
+                estimatedValueValue.setSelection(numberFormatted.length()); //moves the pointer to end
+                estimatedValueValue.addTextChangedListener(this);
+                finance.setEstimatedValue(toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
                 notifyOnChangeListener();
             }
@@ -224,7 +244,12 @@ public class InvestmentSummaryView extends LinearLayout {
         weeklyRentValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setActualRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
+                weeklyRentValue.removeTextChangedListener(this);
+                String numberFormatted = withCurrency(toFormattedNumberValue(charSequence.toString()));
+                weeklyRentValue.setText(numberFormatted);
+                weeklyRentValue.setSelection(numberFormatted.length()); //moves the pointer to end
+                weeklyRentValue.addTextChangedListener(this);
+                finance.setActualRent(toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
                 notifyOnChangeListener();
             }
@@ -233,7 +258,12 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedWeeklyRentValue.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                finance.setEstimatedRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
+                estimatedWeeklyRentValue.removeTextChangedListener(this);
+                String numberFormatted = withCurrency(toFormattedNumberValue(charSequence.toString()));
+                estimatedWeeklyRentValue.setText(numberFormatted);
+                estimatedWeeklyRentValue.setSelection(numberFormatted.length()); //moves the pointer to end
+                estimatedWeeklyRentValue.addTextChangedListener(this);
+                finance.setEstimatedRent(toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
                 notifyOnChangeListener();
             }
