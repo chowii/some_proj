@@ -23,6 +23,7 @@ import com.google.android.gms.location.places.Places;
 import com.soho.sohoapp.Dependencies;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.customviews.TokenizedSuburbAutoCompleteTextView;
+import com.soho.sohoapp.data.enums.RentPaymentFrequency;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.database.entities.Suburb;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
@@ -61,28 +62,49 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     private static final int RADIUS_MIN = 5;
     private static final int RADIUS_MAX = 1000;
     private static final int RADIUS_INCREMENT = 5;
+
     @BindView(R.id.rootView)
     RelativeLayout rootView;
+
     @BindView(R.id.autocomplete_suburb)
     TokenizedSuburbAutoCompleteTextView suburbsAutocompleteTextView;
+
     @BindView(R.id.textview_price_range)
     TextView priceRangeTextView;
+
+    @BindView(R.id.rent_frequency_radio_group)
+    RadioGroup rentFrequencyRadioGroup;
+
+    @BindView(R.id.leftOption)
+    RadioButton weeklyRadioButton;
+
+    @BindView(R.id.rightOption)
+    RadioButton monthlyRadioButton;
+
     @BindView(R.id.picker_from)
     HorizontalPicker priceFromPicker;
+
     @BindView(R.id.picker_to)
     HorizontalPicker priceToPicker;
+
     @BindView(R.id.rooms_selector)
     RoomsNumberPickerView roomsNumberPickerView;
+
     @BindView(R.id.property_status_radio_group)
     RadioGroup propertyStatusRadioGroup;
+
     @BindView(R.id.radio_button_only_active)
     RadioButton onlyActiveRadioButton;
+
     @BindView(R.id.number_picker_view_radius)
     NumberPickerView radiusPickerView;
+
     @BindView(R.id.ll_property_types)
     LinearLayout linearLayoutPropertyTypes;
+
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
     @BindView(R.id.scrollview_form)
     ScrollView scrollView;
 
@@ -106,7 +128,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         ButterKnife.bind(this, view);
         scrollView.setVisibility(View.GONE);
         presenter.startPresenting();
-        setupSuburbAutocompleteAdapter();
+        initView();
         return view;
     }
 
@@ -117,6 +139,12 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     }
 
     // MARK: - ================== General methods ==================
+
+    private void initView() {
+        setupSuburbAutocompleteAdapter();
+        weeklyRadioButton.setText(getString(R.string.filter_rent_weekly));
+        monthlyRadioButton.setText(getString(R.string.filter_rent_monthly));
+    }
 
     private void setupSuburbAutocompleteAdapter() {
         GoogleApiClient apiClient = new GoogleApiClient.Builder(getContext())
@@ -153,11 +181,20 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
                 (filterWithSuburbs.getMarketplaceFilter().getBathrooms()),
                 (filterWithSuburbs.getMarketplaceFilter().getCarspots()));
         roomsNumberPickerView.setPickerValueChangedListener(this);
-        propertyStatusRadioGroup.check(filterWithSuburbs.getMarketplaceFilter().getAllProperties() ? R.id.radio_button_all : R.id.radio_button_only_active);
+        propertyStatusRadioGroup.check(filterWithSuburbs.getMarketplaceFilter().getAllProperties()
+                ? R.id.radio_button_all
+                : R.id.radio_button_only_active);
         propertyStatusRadioGroup.setOnCheckedChangeListener(this);
         setupPropertyTypeSection(filterWithSuburbs, propertyTypes);
         scrollView.setVisibility(View.VISIBLE);
         copyChangesForSaleState(filterWithSuburbs.getMarketplaceFilter().isSaleFilter());
+        rentFrequencyRadioGroup.check(filterWithSuburbs.getMarketplaceFilter().getRentPaymentFrequency().equals(RentPaymentFrequency.MONTHLY)
+                ? R.id.rightOption
+                : R.id.leftOption);
+        rentFrequencyRadioGroup.setOnCheckedChangeListener(this);
+        rentFrequencyRadioGroup.setVisibility(filterWithSuburbs.getMarketplaceFilter().isSaleFilter()
+                ? View.GONE
+                : View.VISIBLE);
     }
 
     @Override
@@ -286,6 +323,12 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
                 break;
             case R.id.radio_button_only_active:
                 presenter.getCurrentFilter().getMarketplaceFilter().setAllProperties(false);
+                break;
+            case R.id.leftOption:
+                presenter.getCurrentFilter().getMarketplaceFilter().setRentPaymentFrequency(RentPaymentFrequency.WEEKLY);
+                break;
+            case R.id.rightOption:
+                presenter.getCurrentFilter().getMarketplaceFilter().setRentPaymentFrequency(RentPaymentFrequency.MONTHLY);
                 break;
             default:
                 break;

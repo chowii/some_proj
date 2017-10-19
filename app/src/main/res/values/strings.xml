@@ -422,6 +422,8 @@
     <string name="filters_saved_success_message">This filter has been saved.</string>
     <string name="filters_delete_saved_successful_message">Filter has been deleted.</string>
     <string name="filter_type_all">all</string>
+    <string name="filter_rent_weekly">Weekly</string>
+    <string name="filter_rent_monthly">Monthly</string>
     <!--Marketplace Filters end-->
 
     <!--IntExt start-->

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:paddingStart="@dimen/standard_padding_left"
+    android:paddingEnd="@dimen/standard_padding_right"
+    android:weightSum="2">
 
     <RadioButton
         android:id="@+id/leftOption"
@@ -19,22 +17,13 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:textColor="@color/primaryText"
-        tools:text="@string/test_text_short"/>
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        tools:text="@string/test_text_short"
         android:layout_weight="1"/>
-
     <RadioButton
         android:id="@+id/rightOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/primaryText"
-        tools:text="@string/test_text_short"/>
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        tools:text="@string/test_text_short"
         android:layout_weight="1"/>
 </RadioGroup>

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import com.soho.sohoapp.data.enums.MarketplaceFilterSaleType
+import com.soho.sohoapp.data.enums.RentPaymentFrequency
 import com.soho.sohoapp.extensions.toShortHand
 
 /**
@@ -17,6 +18,7 @@ data class MarketplaceFilter(
         @ColumnInfo(name = "is_current_filter")
         var isCurrentFilter:Boolean = false,
         var saleType:String = MarketplaceFilterSaleType.SALE,
+        var rentPaymentFrequency: String = RentPaymentFrequency.WEEKLY,
         var radius:Int = 25,
         var propertyTypes:List<String> = ArrayList(),
         var priceFromRent:Int = 0,
@@ -28,11 +30,19 @@ data class MarketplaceFilter(
         var carspots:Double = 0.0,
         var allProperties:Boolean = true ) {
 
+    companion object {
+        private val DEFAULT_RADIUS = 25
+        private val DEFAULT_BEDROOMS = 1.0
+    }
+
     @Ignore
-    constructor() :this(0, false, MarketplaceFilterSaleType.SALE, 25, ArrayList<String>(), 0, 0, 0, 0, 1.0, 0.0, 0.0, true)
+    constructor() :this(0, false, MarketplaceFilterSaleType.SALE, RentPaymentFrequency.WEEKLY, DEFAULT_RADIUS, ArrayList<String>(), 0, 0, 0, 0, DEFAULT_BEDROOMS, 0.0, 0.0, true)
 
     val isSaleFilter: Boolean
-        get() = saleType.equals( MarketplaceFilterSaleType.SALE)
+        get() = saleType == MarketplaceFilterSaleType.SALE
+
+    val isRentFilter: Boolean
+        get() = saleType == MarketplaceFilterSaleType.RENT
 
     val toPrice:Int
         get() = if(isSaleFilter) priceToBuy else priceToRent

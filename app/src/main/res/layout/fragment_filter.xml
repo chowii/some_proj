@@ -80,6 +80,10 @@
                 style="@style/FilterPropertyHeader"
                 tools:text="PRICE RANGE"/>
 
+            <include
+                android:id="@+id/rent_frequency_radio_group"
+                layout="@layout/item_sale_settings_radio_group"/>
+
             <com.wefika.horizontalpicker.HorizontalPicker
                 android:id="@+id/picker_from"
                 android:layout_width="match_parent"

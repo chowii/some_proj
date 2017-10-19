@@ -155,17 +155,28 @@ class MarketPlacePresenter implements
                 .put(FILTER_ALL_PROPERTIES, currentFilter.getMarketplaceFilter().getAllProperties())
                 .put(FILTER_BY_GOOGLE_PLACES, createGooglePlacesFilterParams());
 
+        if (currentFilter.getMarketplaceFilter().getPropertyTypes() != null && currentFilter.getMarketplaceFilter().getPropertyTypes().size() != 0)
+            params.put(FILTER_BY_PROPERTY_TYPE, currentFilter.getMarketplaceFilter().getPropertyTypes());
+        if (currentFilter.getMarketplaceFilter().isRentFilter())
+            updateForRentParams(params);
+        else if (currentFilter.getMarketplaceFilter().isSaleFilter())
+            updateForSaleParams(params);
+        return params;
+    }
+
+    private void updateForSaleParams(QueryHashMap params) {
         if (currentFilter.getMarketplaceFilter().getPriceFromBuy() != 0)
             params.put(FILTER_MIN_SALE_PRICE, currentFilter.getMarketplaceFilter().getPriceFromBuy());
         if (currentFilter.getMarketplaceFilter().getPriceToBuy() != 0)
             params.put(FILTER_MAX_SALE_PRICE, currentFilter.getMarketplaceFilter().getPriceToBuy());
+    }
+
+    private void updateForRentParams(QueryHashMap params) {
+        params.put(FILTER_RENT_FREQUENCY, currentFilter.getMarketplaceFilter().getRentPaymentFrequency());
         if (currentFilter.getMarketplaceFilter().getPriceFromRent() != 0)
             params.put(FILTER_MIN_RENT_PRICE, currentFilter.getMarketplaceFilter().getPriceFromRent());
         if (currentFilter.getMarketplaceFilter().getPriceToRent() != 0)
             params.put(FILTER_MAX_RENT_PRICE, currentFilter.getMarketplaceFilter().getPriceToRent());
-        if (currentFilter.getMarketplaceFilter().getPropertyTypes() != null && currentFilter.getMarketplaceFilter().getPropertyTypes().size() != 0)
-            params.put(FILTER_BY_PROPERTY_TYPE, currentFilter.getMarketplaceFilter().getPropertyTypes());
-        return params;
     }
 
     private QueryHashMap createGooglePlacesFilterParams() {
