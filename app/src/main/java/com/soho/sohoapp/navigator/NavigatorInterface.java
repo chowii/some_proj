@@ -86,33 +86,29 @@ public interface NavigatorInterface {
 
     void openHomeActivityDeepLinking(@NotNull Uri data);
 
-    void openLandingActivity();
-
-    void openLandingActivity(int flags);
-
     void openForgetPasswordActivity();
 
     void openSignUpActivity();
 
-    void showRegisterUserInfoActivity();
+    void openRegisterUserInfoActivity();
 
-    void showLandingActivity();
+    void openLandingActivity();
 
-    void startCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE);
+    void openCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE);
 
-    void startVerifyPhoneActivity();
+    void openVerifyPhoneActivity();
 
-    void startEnterPinActivity(String phoneNumber);
+    void openEnterPinActivity(String phoneNumber);
 
-    void startVerifyPhoneActivity(int flag);
+    void openVerifyPhoneActivity(int flag);
 
     void openSettingActivity();
 
-    void startAgentLicenseActivity(int flag);
+    void openAgentLicenseActivity(int flag);
 
     void openHelpActivity();
 
     void openExternalUrl(@Nullable Uri uri);
 
-    void showGallery(List<Image> images, int currentItemPos);
+    void openGallery(List<Image> images, int currentItemPos);
 }

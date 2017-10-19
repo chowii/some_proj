@@ -150,7 +150,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void showGallery(List<Image> images, int currentItemPos) {
+    public void openGallery(List<Image> images, int currentItemPos) {
         if (fragment != null) {
             fragment.startActivity(GalleryViewActivity.createIntent(fragment.getActivity()
                     , images, currentItemPos));
@@ -398,21 +398,6 @@ public class NavigatorImpl implements NavigatorInterface {
         }
     }
 
-    public void openLandingActivity() {
-        if (fragment != null) {
-            fragment.startActivity(LandingActivity.createIntent(fragment.getActivity()));
-        } else {
-            activity.startActivity(LandingActivity.createIntent(activity));
-        }
-    }
-
-    public void openLandingActivity(int flags) {
-        if (fragment != null) {
-            fragment.startActivity(LandingActivity.createIntent(fragment.getActivity(), flags));
-        } else {
-            activity.startActivity(LandingActivity.createIntent(activity, flags));
-        }
-    }
 
     @Override
     public void openForgetPasswordActivity() {
@@ -437,7 +422,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void showRegisterUserInfoActivity() {
+    public void openRegisterUserInfoActivity() {
         if (fragment != null) {
             Intent intent = RegisterUserInfoActivity.Companion.createIntent(fragment.getActivity());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -450,16 +435,20 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void showLandingActivity() {
+    public void openLandingActivity() {
         if (fragment != null) {
-            fragment.startActivity(LandingActivity.Companion.createIntent(fragment.getActivity()));
+            Intent intent = LandingActivity.Companion.createIntent(fragment.getActivity());
+            fragment.getActivity().finishAffinity();
+            fragment.startActivity(intent);
         } else {
-            activity.startActivity(LandingActivity.Companion.createIntent(activity));
+            Intent intent = LandingActivity.Companion.createIntent(activity);
+            activity.finishAffinity();
+            activity.startActivity(intent);
         }
     }
 
     @Override
-    public void startCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE) {
+    public void openCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (activity == null) {
             if (intent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
@@ -473,7 +462,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void startVerifyPhoneActivity() {
+    public void openVerifyPhoneActivity() {
         if (fragment != null) {
             fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext()));
         } else {
@@ -482,7 +471,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void startEnterPinActivity(String phoneNumber) {
+    public void openEnterPinActivity(String phoneNumber) {
         if (fragment != null) {
             Intent intent = EnterPinActivity.createIntent(fragment.getContext(), phoneNumber);
             fragment.getActivity().startActivity(intent);
@@ -493,7 +482,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void startVerifyPhoneActivity(int flag) {
+    public void openVerifyPhoneActivity(int flag) {
         if (fragment != null) {
             fragment.getActivity().startActivity(VerifyPhoneActivity.createIntent(fragment.getContext(), flag));
         } else {
@@ -511,7 +500,7 @@ public class NavigatorImpl implements NavigatorInterface {
     }
 
     @Override
-    public void startAgentLicenseActivity(int flag) {
+    public void openAgentLicenseActivity(int flag) {
         if (fragment != null) {
             fragment.getActivity().startActivity(VerifyAgentLicenseActivity.createIntent(fragment.getContext()));
         } else {

@@ -29,7 +29,7 @@ class VerifyPhonePresenter(private val interactable: VerifyPhoneContract.ViewInt
                         .doOnError { interactable.hideLoading()  }
                         .subscribe(
                                 {
-                                    navigator.startEnterPinActivity(phoneNumber)
+                                    navigator.openEnterPinActivity(phoneNumber)
                                     navigator.exitCurrentScreen()
                                 },
                                 {

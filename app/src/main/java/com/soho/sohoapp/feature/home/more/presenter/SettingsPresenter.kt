@@ -89,11 +89,11 @@ class SettingsPresenter(private val interactable: SettingsContract.ViewInteracta
     }
 
     private fun verifyPhone() {
-        navigatorImpl.startVerifyPhoneActivity(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        navigatorImpl.openVerifyPhoneActivity(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
     }
 
     private fun verifyLicense() {
-        navigatorImpl.startAgentLicenseActivity(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        navigatorImpl.openAgentLicenseActivity(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
     }
 
     private fun retrieveAccount() {

@@ -33,7 +33,7 @@ class ThrowableHandler {
                     HttpErrorType.PasswordReEnterRequired,
                     HttpErrorType.PasswordResetRequired,
                     HttpErrorType.ReloginRequired ->
-                        NavigatorImpl.newInstance(activity).showLandingActivity()
+                        NavigatorImpl.newInstance(activity).openLandingActivity()
                 }
             } else if (showInternetErrors && snackbarAnchorView != null) {
                 SohoSnackbar().showSnackbar(snackbarAnchorView, activity.getString(R.string.something_wrong_error))

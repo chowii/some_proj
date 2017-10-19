@@ -36,11 +36,11 @@ open class BaseFragment : Fragment() {
                 }
 
                 PasswordReEnterRequired,
-                PasswordResetRequired ->  NavigatorImpl.newInstance(this).showLandingActivity()
+                PasswordResetRequired ->  NavigatorImpl.newInstance(this).openLandingActivity()
 
                 ReloginRequired -> {
 //                    SharedPrefsHelper.getInstance().removeUserCredentials()
-                    NavigatorImpl.newInstance(this).showLandingActivity()
+                    NavigatorImpl.newInstance(this).openLandingActivity()
                 }
             }
         else if (showInternetErrors && coordinatorLayout != null)

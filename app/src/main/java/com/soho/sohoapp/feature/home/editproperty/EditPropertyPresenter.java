@@ -200,7 +200,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
 
     @Override
     public void onHeaderPhotoClicked(List<Image> images, int currentItem) {
-        navigator.showGallery(images, currentItem);
+        navigator.openGallery(images, currentItem);
     }
 
     @Override

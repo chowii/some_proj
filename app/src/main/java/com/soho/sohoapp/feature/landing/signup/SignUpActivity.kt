@@ -88,7 +88,7 @@ class SignUpActivity : AppCompatActivity() {
                             DEPENDENCIES.userPrefs.login(user)
                             loadingDialog?.dismiss()
                             //profile is incomplete cause we are signing up so we don't need to check
-                            NavigatorImpl.newInstance(this).showRegisterUserInfoActivity()
+                            NavigatorImpl.newInstance(this).openRegisterUserInfoActivity()
                         },
                         { throwable ->
                             DEPENDENCIES.logger.e("error", throwable)

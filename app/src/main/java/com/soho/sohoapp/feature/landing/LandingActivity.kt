@@ -131,7 +131,7 @@ class LandingActivity : AbsActivity() {
 
         val navigator = NavigatorImpl.newInstance(this)
         if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
-            navigator.showRegisterUserInfoActivity()
+            navigator.openRegisterUserInfoActivity()
         } else {
             navigator.openHomeActivity()
         }

@@ -195,21 +195,12 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
     @Override
     public void showManageTab() {
-        if (!isUserSignedIn()) {
-            navigator.openLandingActivity();
-        } else {
-            showFragment(PortfolioFragment.TAG);
-        }
+        showFragment(PortfolioFragment.TAG);
     }
 
     @Override
     public void showOffersTab() {
-        if (!isUserSignedIn()) {
-            navigator.openLandingActivity();
-        } else {
-            //todo: MoreFragment is here temporary. We need to show Offers tab
-            showFragment(ComingSoonFragment.TAG);
-        }
+        showFragment(ComingSoonFragment.TAG);
     }
 
     @Override
@@ -219,11 +210,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
     @Override
     public void showMoreTab() {
-        if (!isUserSignedIn()) {
-            navigator.openLandingActivity();
-        } else {
-            showFragment(MoreFragment.TAG);
-        }
+        showFragment(MoreFragment.TAG);
     }
 
     @Override
@@ -234,11 +221,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
     @OnClick(R.id.addProperty)
     void onAddPropertyClicked() {
-        if (!isUserSignedIn()) {
-            navigator.openLandingActivity();
-        } else {
-            presentable.onAddPropertyClicked();
-        }
+        presentable.onAddPropertyClicked();
     }
 
     private void showFragment(String fragmentTag) {

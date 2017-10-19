@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                         DEPENDENCIES.userPrefs.login(user)
                         val navigatorImpl = NavigatorImpl.newInstance(this)
                         if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
-                            navigatorImpl.showRegisterUserInfoActivity()
+                            navigatorImpl.openRegisterUserInfoActivity()
                         } else {
                             navigatorImpl.openHomeActivity()
                         }

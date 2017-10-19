@@ -167,7 +167,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
     @Override
     public void onHeaderPhotoClicked(List<Image> images, int currentItem) {
-        NavigatorImpl.newInstance(context).showGallery(images, currentItem);
+        NavigatorImpl.newInstance(context).openGallery(images, currentItem);
     }
 
     @Override
