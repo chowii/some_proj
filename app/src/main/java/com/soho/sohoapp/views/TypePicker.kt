@@ -49,6 +49,14 @@ class TypePicker : LinearLayout {
         this.listener = listener
     }
 
+    fun disable() {
+        icon.isEnabled = false
+        toLeft.isEnabled = false
+        toRight.isEnabled = false
+        text.setTextColor(resources.getColor(R.color.disabledText))
+        setBackgroundColor(resources.getColor(R.color.disabledBackground))
+    }
+
     @OnClick(R.id.to_left)
     fun toLeft() {
         currentItem -= 1

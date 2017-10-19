@@ -26,7 +26,8 @@
     <color name="greenButtonSelector">#22a45a</color>
     <color name="whiteSelector">#d2d2d2</color>
     <color name="whiteSemitransparent">#80ffffff</color>
-    <color name="lightBackground">#F6F6F6</color>
+    <color name="lightBackground">#F8F8F8</color>
+    <color name="disabledBackground">#F1F1F1</color>
 
     <color name="primaryText">@color/blackDarkPrimary</color>
     <color name="secondaryText">@color/greyDarkPrimary</color>
@@ -35,6 +36,7 @@
     <color name="darkBlueText">#1288FF</color>
     <color name="hintText">@color/greyLightPrimary</color>
     <color name="grayIcon">@color/greyLightPrimary</color>
+    <color name="disabledText">@color/secondaryText</color>
 
     <color name="propertyStateVerified">@color/primary</color>
     <color name="propertyStateNotCompleted">@color/orangePrimary</color>

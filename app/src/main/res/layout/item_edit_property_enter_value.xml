@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/primary_gray_text"
         android:textSize="14sp"
         tools:text="@string/test_text_short"/>
 
@@ -25,8 +25,8 @@
         android:hint="@string/edit_property_enter_value"
         android:inputType="number"
         android:maxLength="20"
-        android:textColor="@color/primaryText"
-        android:textColorHint="@color/blueText"
+        android:textColor="@color/primary_gray_text"
+        android:textColorHint="@color/blue_gray_text"
         android:textSize="14sp"/>
 
 </LinearLayout>

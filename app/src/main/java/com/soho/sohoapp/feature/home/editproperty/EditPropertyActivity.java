@@ -216,6 +216,12 @@ public class EditPropertyActivity extends AbsActivity implements
     }
 
     @Override
+    public void showToolbarActions() {
+        toolbar.getMenu().findItem(R.id.action_save).setVisible(true);
+        toolbar.getMenu().findItem(R.id.action_add_photo).setVisible(true);
+    }
+
+    @Override
     public void onPropertyAddressChanged(Location location) {
         presentable.onPropertyAddressChanged(location);
     }

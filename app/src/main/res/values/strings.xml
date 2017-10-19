@@ -143,6 +143,7 @@
     <string name="edit_property_sale_and_rent_settings">Sale &amp; Rent Settings:</string>
     <string name="edit_property_public">Public</string>
     <string name="edit_property_private">Private</string>
+    <string name="edit_property_archived">Archived</string>
     <string name="edit_property_verification">Verification</string>
     <string name="edit_property_finance_tracker_private">Finance Tracker (Private)</string>
     <string name="edit_property_yield">Yield</string>

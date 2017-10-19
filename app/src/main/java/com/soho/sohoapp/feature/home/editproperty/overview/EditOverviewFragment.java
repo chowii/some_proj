@@ -30,6 +30,7 @@ import com.soho.sohoapp.landing.BaseFragment;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.RequestCode;
 import com.soho.sohoapp.utils.DrawableUtils;
+import com.soho.sohoapp.utils.ViewUtils;
 import com.soho.sohoapp.views.TypePicker;
 
 import java.util.ArrayList;
@@ -71,6 +72,21 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
     @BindView(R.id.portfolioType)
     TextView txtPortfolioType;
+
+    @BindView(R.id.portfolio)
+    LinearLayout portfolioLayout;
+
+    @BindView(R.id.maskLayout)
+    LinearLayout maskLayout;
+
+    @BindView(R.id.maskDesc)
+    TextView maskDesc;
+
+    @BindView(R.id.portfolioDesc)
+    TextView portfolioDesc;
+
+    @BindView(R.id.propertyTypeLayout)
+    LinearLayout propertyTypeLayout;
 
     private EditOverviewContract.ViewPresentable presentable;
     private EditOverviewPresenter presenter;
@@ -271,6 +287,20 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     @Override
     public void showPortfolioTypes(@StringRes int portfolioType) {
         txtPortfolioType.setText(portfolioType);
+    }
+
+    @Override
+    public void disable() {
+        investmentSummary.disable();
+        propertyTypePicker.disable();
+        roomsSelector.disable();
+
+        ViewUtils.setDisabledBackground(getContext(), marketplaceState, verification, address,
+                maskLayout, propertyTypeLayout, portfolioLayout, txtRenovation);
+
+        ViewUtils.disableViews(marketplaceState, marketplaceStateDesc, verification,
+                verificationDesc, address, maskAddress, maskDesc,
+                portfolioLayout, portfolioDesc, txtRenovation);
     }
 
     @OnClick(R.id.marketplaceState)

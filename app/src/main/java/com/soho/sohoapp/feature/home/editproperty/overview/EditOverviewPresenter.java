@@ -168,7 +168,9 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
             view.showMarketplaceStateIndicator(ColorUtils.getPublicPropertyStateColor(property.getVerifications()));
             view.showVerificationSection();
         } else if (propertyListing.isArchived()) {
-            //todo: show label "Archived" and make it disabled
+            view.showMarketplaceState(R.string.edit_property_archived);
+            view.hideVerificationSection();
+            view.disable();
         }
     }
 

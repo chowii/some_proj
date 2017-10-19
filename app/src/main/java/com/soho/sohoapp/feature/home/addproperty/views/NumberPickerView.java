@@ -31,10 +31,11 @@ public class NumberPickerView extends LinearLayout {
 
     private static final double DEFAULT_MIN_VALUE = 0;
     private static final double DEFAULT_MAX_VALUE = 99;
-    private static final double  DEFAULT_STEP = 1;
+    private static final double DEFAULT_STEP = 1;
     private double minValue = DEFAULT_MIN_VALUE;
     private double maxValue = DEFAULT_MAX_VALUE;
     private double step = DEFAULT_STEP;
+    private boolean isDisabled = false;
 
     private double currentValue;
     private Listener listener;
@@ -81,6 +82,13 @@ public class NumberPickerView extends LinearLayout {
         icon.setImageResource(res);
     }
 
+    public void disable() {
+        isDisabled = true;
+        setBackgroundColor(getResources().getColor(R.color.disabledBackground));
+        decrease.setEnabled(false);
+        increase.setEnabled(false);
+    }
+
     @OnClick(R.id.decrease)
     void decrease() {
         currentValue -= step;
@@ -107,8 +115,8 @@ public class NumberPickerView extends LinearLayout {
     }
 
     private void validateButtons() {
-        decrease.setEnabled(currentValue != minValue);
-        increase.setEnabled(currentValue != maxValue);
+        decrease.setEnabled(currentValue != minValue && !isDisabled);
+        increase.setEnabled(currentValue != maxValue && !isDisabled);
     }
 
     private void initView() {

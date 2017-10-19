@@ -5,10 +5,12 @@
         android:id="@+id/action_add_photo"
         android:icon="@drawable/ic_photo_camera_white"
         android:title="@string/edit_property_add_photo"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_done_white"
         android:title="@string/edit_property_save"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
 </menu>

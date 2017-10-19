@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:drawablePadding="8dp"
         android:drawableStart="@drawable/ic_circle_state"
-        android:textColor="@color/primaryText"
+        android:textColor="@color/primary_gray_text"
         android:textSize="14sp"
         tools:text="@string/test_text_medium"/>
 </LinearLayout>

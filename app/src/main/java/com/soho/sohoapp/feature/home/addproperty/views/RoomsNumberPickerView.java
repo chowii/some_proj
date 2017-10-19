@@ -91,6 +91,13 @@ public class RoomsNumberPickerView extends LinearLayout {
         }
     }
 
+    public void disable() {
+        bedrooms.disable();
+        bathrooms.disable();
+        carspots.disable();
+        setBackgroundColor(getResources().getColor(R.color.disabledBackground));
+    }
+
     private void initView() {
         inflate(getContext(), R.layout.rooms_number_picker_view, this);
         ButterKnife.bind(this);

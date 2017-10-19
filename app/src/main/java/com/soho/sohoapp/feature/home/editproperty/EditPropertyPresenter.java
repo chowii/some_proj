@@ -71,6 +71,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                     property = result;
                     view.initTabs(property, propertyTypes);
                     initPropertyImages();
+                    showToolbarActionsIfNeeded();
                     Location address = result.getLocation();
                     if (address != null) {
                         view.showAddress1(address.getAddressLine1());
@@ -246,6 +247,12 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
             propertyImages.addAll(propertyImagesFromServer);
         }
         setPropertyImages(propertyImages, false);
+    }
+
+    private void showToolbarActionsIfNeeded() {
+        if (!property.getPropertyListingSafe().isArchived()) {
+            view.showToolbarActions();
+        }
     }
 }
 

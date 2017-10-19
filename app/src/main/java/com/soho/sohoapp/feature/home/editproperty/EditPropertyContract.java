@@ -74,5 +74,7 @@ interface EditPropertyContract {
         void showLoadingDialog();
 
         void hideLoadingDialog();
+
+        void showToolbarActions();
     }
 }

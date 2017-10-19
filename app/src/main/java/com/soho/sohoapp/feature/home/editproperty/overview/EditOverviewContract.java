@@ -96,5 +96,7 @@ public interface EditOverviewContract {
         void showPortfolioTypesDialog();
 
         void showPortfolioTypes(@StringRes int portfolioType);
+
+        void disable();
     }
 }

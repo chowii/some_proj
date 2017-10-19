@@ -18,6 +18,7 @@ import com.soho.sohoapp.utils.DateUtils;
 import com.soho.sohoapp.utils.PropertyCalculator;
 import com.soho.sohoapp.utils.StringUtils;
 import com.soho.sohoapp.utils.TextWatcherAdapter;
+import com.soho.sohoapp.utils.ViewUtils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -65,6 +66,9 @@ public class InvestmentSummaryView extends LinearLayout {
     @BindView(R.id.endDateOfRent)
     TextView endDateOfRent;
 
+    @BindView(R.id.endOfRentDesc)
+    TextView endOfRentDesc;
+
     @BindView(R.id.rented)
     RadioButton rented;
 
@@ -84,6 +88,11 @@ public class InvestmentSummaryView extends LinearLayout {
     private EditText estimatedWeeklyRentValue;
     private PropertyFinance finance;
     private OnPropertyFinanceChangedListener listener;
+    private TextView purchasePriceTitle;
+    private TextView loanAmountTitle;
+    private TextView estimatedValueTitle;
+    private TextView weeklyRentTitle;
+    private TextView estimatedWeeklyRentTitle;
 
     public InvestmentSummaryView(Context context) {
         super(context);
@@ -118,6 +127,21 @@ public class InvestmentSummaryView extends LinearLayout {
         } else {
             editText.setText("");
         }
+    }
+
+    public void disable() {
+        setBackgroundColor(getResources().getColor(R.color.disabledBackground));
+        rented.setTextColor(getDisabledTextColor());
+        notRented.setTextColor(getDisabledTextColor());
+        endOfRent.setBackgroundColor(getResources().getColor(R.color.disabledBackground));
+
+        ViewUtils.disableViews(rented, notRented, endOfRent, endOfRentDesc, endDateOfRent,
+                purchasePriceValue, loanAmountValue, estimatedValueValue, weeklyRentValue, estimatedWeeklyRentValue,
+                purchasePriceTitle, loanAmountTitle, estimatedValueTitle, weeklyRentTitle, estimatedWeeklyRentTitle);
+    }
+
+    private int getDisabledTextColor() {
+        return getResources().getColor(R.color.disabledText);
     }
 
     private void calculateValues() {
@@ -184,16 +208,16 @@ public class InvestmentSummaryView extends LinearLayout {
         TextView valueChangeDesc = ButterKnife.findById(valueChange, R.id.description);
         valueChangeDesc.setText(R.string.edit_property_value_change);
 
-        TextView purchasePriceTitle = ButterKnife.findById(purchasePrice, R.id.title);
+        purchasePriceTitle = ButterKnife.findById(purchasePrice, R.id.title);
         purchasePriceTitle.setText(R.string.edit_property_purchase_price);
-        TextView loanAmountTitle = ButterKnife.findById(loanAmount, R.id.title);
+        loanAmountTitle = ButterKnife.findById(loanAmount, R.id.title);
         loanAmountTitle.setText(R.string.edit_property_loan_amount);
-        TextView estimatedValueTitle = ButterKnife.findById(estimatedValue, R.id.title);
+        estimatedValueTitle = ButterKnife.findById(estimatedValue, R.id.title);
         estimatedValueTitle.setText(R.string.edit_property_estimated_value);
 
-        TextView weeklyRentTitle = ButterKnife.findById(weeklyRent, R.id.title);
+        weeklyRentTitle = ButterKnife.findById(weeklyRent, R.id.title);
         weeklyRentTitle.setText(R.string.edit_property_weekly_rent);
-        TextView estimatedWeeklyRentTitle = ButterKnife.findById(estimatedWeeklyRent, R.id.title);
+        estimatedWeeklyRentTitle = ButterKnife.findById(estimatedWeeklyRent, R.id.title);
         estimatedWeeklyRentTitle.setText(R.string.edit_property_estimated_weekly_rent);
     }
 
@@ -273,7 +297,9 @@ public class InvestmentSummaryView extends LinearLayout {
     private void initEndDateOfRent() {
         endOfRent.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date(finance.getLeasedToDate()));
+            if (finance.getLeasedToDate() != null) {
+                calendar.setTime(new Date(finance.getLeasedToDate()));
+            }
             DatePickerDialog datePicker = DatePickerDialog.newInstance((view1, year, monthOfYear, dayOfMonth) ->
                     {
                         long endDate = DateUtils.toTimeInMillis(year, monthOfYear, dayOfMonth);
