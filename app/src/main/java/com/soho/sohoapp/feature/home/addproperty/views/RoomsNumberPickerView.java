@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.addproperty.views;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -44,6 +45,7 @@ public class RoomsNumberPickerView extends LinearLayout {
     @Nullable
     private OnRoomsNumberChangedListener pickerValueChangedListener;
     private boolean isAnyValues;
+    private boolean showPlusSign = false;
 
     public RoomsNumberPickerView(Context context) {
         super(context);
@@ -121,7 +123,8 @@ public class RoomsNumberPickerView extends LinearLayout {
             carspots.setText(getResources().getString(R.string.rooms_picker_any_carspot));
             return;
         }
-        carspots.setText(getResources().getQuantityString(R.plurals.rooms_picker_carspots, (int) carspotsCount, (int) carspotsCount));
+        int stringRes = showPlusSign ? R.plurals.rooms_picker_carspots_with_plus : R.plurals.rooms_picker_carspots;
+        carspots.setText(getResources().getQuantityString(stringRes, (int) carspotsCount, (int) carspotsCount));
     }
 
     private void initBathroomsPicker() {
@@ -144,8 +147,9 @@ public class RoomsNumberPickerView extends LinearLayout {
             bathrooms.setText(getContext().getString(R.string.rooms_picker_any_bathroom));
             return;
         }
+        int stringRes = showPlusSign ? R.plurals.rooms_picker_bathrooms_with_plus : R.plurals.rooms_picker_bathrooms;
         bathrooms.setText(getResources()
-                .getQuantityString(R.plurals.rooms_picker_bathrooms, (int) bathsCount, (int) bathsCount));
+                .getQuantityString(stringRes, (int) bathsCount, (int) bathsCount));
     }
 
     private void initBedroomsPicker() {
@@ -173,7 +177,8 @@ public class RoomsNumberPickerView extends LinearLayout {
                 bedrooms.setText(getContext().getString(R.string.rooms_picker_studio));
                 break;
             default:
-                bedrooms.setText(getResources().getQuantityString(R.plurals.rooms_picker_bedrooms, (int) roomsCount, (int) roomsCount));
+                int stringRes = showPlusSign ? R.plurals.rooms_picker_bedrooms_with_plus : R.plurals.rooms_picker_bedrooms;
+                bedrooms.setText(getResources().getQuantityString(stringRes, (int) roomsCount, (int) roomsCount));
                 break;
         }
     }
@@ -198,6 +203,10 @@ public class RoomsNumberPickerView extends LinearLayout {
         carspots.setCurrentValue(CARSPOT_MIN_ANY);
         showCarspotsText(CARSPOT_MIN_ANY);
 
+    }
+
+    public void setShowPlusSign(boolean showPlusSign) {
+        this.showPlusSign = showPlusSign;
     }
 
     public interface OnRoomsNumberChangedListener {

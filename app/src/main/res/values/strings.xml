@@ -88,6 +88,18 @@
         <item quantity="one">%d Carspot</item>
         <item quantity="other">%d Carspots</item>
     </plurals>
+    <plurals name="rooms_picker_bedrooms_with_plus">
+        <item quantity="one">%d+ Bedroom</item>
+        <item quantity="other">%d+ Bedrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_bathrooms_with_plus">
+        <item quantity="one">%d+ Bathroom</item>
+        <item quantity="other">%d+ Bathrooms</item>
+    </plurals>
+    <plurals name="rooms_picker_carspots_with_plus">
+        <item quantity="one">%d+ Carspot</item>
+        <item quantity="other">%d+ Carspots</item>
+    </plurals>
     <plurals name="number_picker_kilometers">
         <item quantity="one">%d Km</item>
         <item quantity="other">%d Kms</item>
@@ -96,7 +108,7 @@
 
     <!--Portfolio screen start-->
     <string name="portfolio_owner">Owner</string>
-    <string name="portfolio_manager">Manager</string>
+    <string name="portfolio_agent">Agent</string>
     <string name="portfolio_requests">Requests</string>
     <string name="portfolio_add_property">+ Add a property</string>
     <plurals name="portfolio_properties_quantity">

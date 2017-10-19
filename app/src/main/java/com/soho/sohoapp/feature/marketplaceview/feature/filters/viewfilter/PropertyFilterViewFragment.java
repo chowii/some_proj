@@ -177,6 +177,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
         setupRadiusPicker(filterWithSuburbs);
         setupPricePickers(filterWithSuburbs);
         roomsNumberPickerView.setAnyValues();
+        roomsNumberPickerView.setShowPlusSign(true);
         roomsNumberPickerView.setValues((filterWithSuburbs.getMarketplaceFilter().getBedrooms()),
                 (filterWithSuburbs.getMarketplaceFilter().getBathrooms()),
                 (filterWithSuburbs.getMarketplaceFilter().getCarspots()));

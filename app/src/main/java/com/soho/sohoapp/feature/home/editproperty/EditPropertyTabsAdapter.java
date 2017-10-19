@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.connections.EditConnectionFragment;
 import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
@@ -40,9 +41,9 @@ class EditPropertyTabsAdapter extends FragmentPagerAdapter {
             case ITEM_ONE:
                 return EditOverviewFragment.newInstance(property, propertyTypes);
             case ITEM_TWO:
-                return EditConnectionFragment.newInstance();
+                return ComingSoonFragment.newInstance();
             case ITEM_THREE:
-                return EditConnectionFragment.newInstance();
+                return ComingSoonFragment.newInstance();
             default:
                 return null;
         }

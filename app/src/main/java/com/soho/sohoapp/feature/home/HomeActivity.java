@@ -267,5 +267,6 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
         addedFragmentsTags.add(MarketPlaceFragment.TAG);
         addedFragmentsTags.add(PortfolioFragment.TAG);
         addedFragmentsTags.add(MoreFragment.TAG);
+        addedFragmentsTags.add(ComingSoonFragment.TAG);
     }
 }
