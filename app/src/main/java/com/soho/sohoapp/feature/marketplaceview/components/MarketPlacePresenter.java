@@ -76,6 +76,7 @@ class MarketPlacePresenter implements
                                 {
                                     if (this.currentFilter == null) {
                                         this.currentFilter = new MarketplaceFilterWithSuburbs();
+                                        this.currentFilter.getMarketplaceFilter().setCurrentFilter(true);
                                         updateCurrentFilter();
                                         performFullRefresh();
                                         interactable.configureViewForFilter(this.currentFilter);
@@ -137,7 +138,7 @@ class MarketPlacePresenter implements
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                insertedRowId -> performFullRefresh(),
+                                insertedRowId -> retrieveFiltersAndPerformFullRefresh(),
                                 error -> interactable.showError(error))
         );
     }
