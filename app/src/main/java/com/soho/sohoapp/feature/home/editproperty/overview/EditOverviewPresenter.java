@@ -6,6 +6,7 @@ import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.PickerItem;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.extensions.ListExtKt;
@@ -149,6 +150,12 @@ public class EditOverviewPresenter implements AbsPresenter, EditOverviewContract
         property.getPropertyListingSafe().setState(PropertyStatus.ARCHIVED);
         view.showPortfolioTypes(R.string.edit_property_portfolio_type_archived);
         view.notifyActivityAboutPropertyStatusChanged(PropertyStatus.ARCHIVED);
+    }
+
+    @Override
+    public void onPropertyFinanceChanged(PropertyFinance finance) {
+        property.setPropertyFinance(finance);
+        view.notifyActivityAboutPropertyFinanceChanged(finance);
     }
 
     private void initPropertyListing(PropertyListing propertyListing) {

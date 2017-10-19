@@ -78,6 +78,7 @@ public class InvestmentSummaryView extends LinearLayout {
     private EditText weeklyRentValue;
     private EditText estimatedWeeklyRentValue;
     private PropertyFinance finance;
+    private OnPropertyFinanceChangedListener listener;
 
     public InvestmentSummaryView(Context context) {
         super(context);
@@ -87,6 +88,10 @@ public class InvestmentSummaryView extends LinearLayout {
     public InvestmentSummaryView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView();
+    }
+
+    public void setListener(OnPropertyFinanceChangedListener listener) {
+        this.listener = listener;
     }
 
     public void setPropertyFinance(@NonNull PropertyFinance finance) {
@@ -154,6 +159,7 @@ public class InvestmentSummaryView extends LinearLayout {
         estimatedWeeklyRent.setVisibility(VISIBLE);
         finance.setRented(false);
         calculateValues();
+        notifyOnChangeListener();
     }
 
     private void onRentedClicked() {
@@ -162,6 +168,7 @@ public class InvestmentSummaryView extends LinearLayout {
         endOfRent.setVisibility(VISIBLE);
         finance.setRented(true);
         calculateValues();
+        notifyOnChangeListener();
     }
 
     private void initTextFields() {
@@ -192,6 +199,7 @@ public class InvestmentSummaryView extends LinearLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 finance.setPurchasePrice(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
+                notifyOnChangeListener();
             }
         });
         loanAmountValue = ButterKnife.findById(loanAmount, R.id.value);
@@ -200,6 +208,7 @@ public class InvestmentSummaryView extends LinearLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 finance.setLoanAmount(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
+                notifyOnChangeListener();
             }
         });
         estimatedValueValue = ButterKnife.findById(estimatedValue, R.id.value);
@@ -208,6 +217,7 @@ public class InvestmentSummaryView extends LinearLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 finance.setEstimatedValue(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
+                notifyOnChangeListener();
             }
         });
         weeklyRentValue = ButterKnife.findById(weeklyRent, R.id.value);
@@ -216,6 +226,7 @@ public class InvestmentSummaryView extends LinearLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 finance.setActualRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
+                notifyOnChangeListener();
             }
         });
         estimatedWeeklyRentValue = ButterKnife.findById(estimatedWeeklyRent, R.id.value);
@@ -224,6 +235,7 @@ public class InvestmentSummaryView extends LinearLayout {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 finance.setEstimatedRent(StringExtKt.toDoubleOrDefault(charSequence.toString(), 0));
                 calculateValues();
+                notifyOnChangeListener();
             }
         });
     }
@@ -237,6 +249,7 @@ public class InvestmentSummaryView extends LinearLayout {
                         long endDate = DateUtils.toTimeInMillis(year, monthOfYear, dayOfMonth);
                         finance.setLeasedToDate(endDate);
                         endDateOfRent.setText(LongExtKt.toStringWithDisplayFormat(endDate));
+                        notifyOnChangeListener();
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -245,5 +258,15 @@ public class InvestmentSummaryView extends LinearLayout {
             Activity activity = ((Activity) getContext());
             datePicker.show(activity.getFragmentManager(), TAG_DATE_PICKER_DIALOG);
         });
+    }
+
+    private void notifyOnChangeListener() {
+        if (listener != null) {
+            listener.onPropertyFinanceChanged(finance);
+        }
+    }
+
+    public interface OnPropertyFinanceChangedListener {
+        void onPropertyFinanceChanged(PropertyFinance finance);
     }
 }

@@ -18,6 +18,7 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog;
@@ -242,6 +243,11 @@ public class EditPropertyActivity extends AbsActivity implements
     @Override
     public void onPropertyStatusChanged(String propertyStatus) {
         presentable.onPropertyStatusChanged(propertyStatus);
+    }
+
+    @Override
+    public void onPropertyFinanceChanged(PropertyFinance finance) {
+        presentable.onPropertyFinanceChanged(finance);
     }
 
     private void initToolbar() {

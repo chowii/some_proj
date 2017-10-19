@@ -7,6 +7,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
 import com.soho.sohoapp.navigator.RequestCode;
@@ -227,6 +228,11 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     @Override
     public void onPropertyStatusChanged(String propertyStatus) {
         property.getPropertyListingSafe().setState(propertyStatus);
+    }
+
+    @Override
+    public void onPropertyFinanceChanged(PropertyFinance finance) {
+        property.setPropertyFinance(finance);
     }
 
     private void initPropertyImages() {

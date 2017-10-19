@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 
@@ -41,6 +42,8 @@ interface EditPropertyContract {
         void onInvestmentStatusChanged(boolean isInvestment);
 
         void onPropertyStatusChanged(String propertyStatus);
+
+        void onPropertyFinanceChanged(PropertyFinance finance);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

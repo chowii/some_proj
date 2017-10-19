@@ -545,7 +545,11 @@ public final class Converter {
         QueryHashMap locationMap = new QueryHashMap();
         putLocation(locationMap, property.getLocation());
 
+        QueryHashMap financeMap = new QueryHashMap();
+        putPropertyFinance(financeMap, property.getPropertyFinance());
+
         return propertyMap.put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap)
+                .put(Keys.Property.PROPERTY_FINANCE_ATTRIBUTES, financeMap)
                 .put(Keys.Property.BEDROOMS, property.getBedrooms())
                 .put(Keys.Property.BATHROOMS, property.getBathrooms())
                 .put(Keys.Property.CARSPOTS, property.getCarspots())

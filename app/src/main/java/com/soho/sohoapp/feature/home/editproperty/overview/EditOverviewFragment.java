@@ -216,6 +216,11 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
     }
 
     @Override
+    public void notifyActivityAboutPropertyFinanceChanged(PropertyFinance finance) {
+        getEditPropertyListener().onPropertyFinanceChanged(finance);
+    }
+
+    @Override
     public void showMaskAddress(boolean isMaskAddress) {
         maskAddress.setChecked(isMaskAddress);
     }
@@ -302,6 +307,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         marketplaceStateDesc = ButterKnife.findById(marketplaceState, R.id.title);
         verificationDesc = ButterKnife.findById(verification, R.id.title);
         verificationDesc.setText(R.string.edit_property_verification);
+        investmentSummary.setListener(finance -> presentable.onPropertyFinanceChanged(finance));
         roomsSelector.setPickerValueChangedListener((bedrooms, bathrooms, carspots) -> {
             presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
         });
@@ -328,5 +334,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         void onInvestmentStatusChanged(boolean isInvestment);
 
         void onPropertyStatusChanged(String propertyStatus);
+
+        void onPropertyFinanceChanged(PropertyFinance finance);
     }
 }

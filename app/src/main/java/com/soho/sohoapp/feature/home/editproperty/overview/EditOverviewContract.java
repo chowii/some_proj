@@ -46,6 +46,8 @@ public interface EditOverviewContract {
         void onArchiveClicked();
 
         void onArchiveConfirmed();
+
+        void onPropertyFinanceChanged(PropertyFinance finance);
     }
 
     interface ViewInteractable {
@@ -78,6 +80,8 @@ public interface EditOverviewContract {
         void notifyActivityAboutInvestmentStatusChanged(boolean isInvestment);
 
         void notifyActivityAboutPropertyStatusChanged(String status);
+
+        void notifyActivityAboutPropertyFinanceChanged(PropertyFinance finance);
 
         void showMaskAddress(boolean isMaskAddress);
 
