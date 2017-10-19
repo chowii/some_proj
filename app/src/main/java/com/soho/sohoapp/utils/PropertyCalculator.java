@@ -10,22 +10,22 @@ public final class PropertyCalculator {
 
     public static double calculateYield(PropertyFinance finance) {
         double weeklyRent = finance.isRented() ? finance.getActualRent() : finance.getEstimatedRent();
-        if (weeklyRent == 0 || finance.getPurchasePrice() == 0) {
+        if (weeklyRent == 0 || finance.getEstimatedValue() == 0) {
             return 0;
         }
 
-        return ((weeklyRent * 52) / finance.getPurchasePrice()) * 100;
+        return ((weeklyRent * 52) / finance.getEstimatedValue()) * 100;
     }
 
     public static double calculateLvr(PropertyFinance finance) {
         double loanAmount = finance.getLoanAmount();
-        double price = finance.getPurchasePrice();
+        double estimatedValue = finance.getEstimatedValue();
 
-        if (loanAmount == 0 || price == 0) {
+        if (loanAmount == 0 || estimatedValue == 0) {
             return 0;
         }
 
-        return (loanAmount / price) * 100;
+        return (loanAmount / estimatedValue) * 100;
     }
 
     public static double calculateValueChange(PropertyFinance finance) {
