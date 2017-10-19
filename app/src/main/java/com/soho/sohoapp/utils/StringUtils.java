@@ -75,7 +75,10 @@ public final class StringUtils {
 
     public static String formatChangedValue(@NonNull Context context, double changedValue) {
         boolean isNegative = changedValue < 0;
-        String formattedChangedValue = IntExtKt.toShortHand((int)changedValue);
+        if (isNegative) {
+            changedValue = changedValue * -1;
+        }
+        String formattedChangedValue = IntExtKt.toShortHand((int) changedValue);
         String result;
         if (changedValue == 0) {
             result = context.getString(R.string.portfolio_changed_value_null);
