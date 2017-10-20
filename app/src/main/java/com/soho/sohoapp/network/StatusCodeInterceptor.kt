@@ -1,6 +1,6 @@
 package com.soho.sohoapp.network
 
-import android.util.Log
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -19,7 +19,7 @@ class StatusCodeInterceptor : Interceptor {
 
         val statusCode = response.code()
         if (statusCode < 200 || statusCode > 299 || response.body() == null) {
-            Log.d("TAG", "interceptStatusCode: " + statusCode)
+            DEPENDENCIES.logger.d("InterceptStatusCode: " + statusCode)
             handleErrorResponse(response)
         }
 
