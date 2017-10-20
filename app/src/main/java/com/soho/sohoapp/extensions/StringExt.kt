@@ -79,7 +79,12 @@ fun String.toFormattedNumberValue(): String {
  */
 fun String.abbreviatedMoneyValueToInt(): Int {
     return try {
-        val strippedString = this.filter { it.isDigit() }
+
+        val strippedString = this.filter {it.isDigit()
+                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_thousand)
+                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_million)
+                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_billion)
+        }
         when {
             strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
             strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true).toInt() * 1_000_000

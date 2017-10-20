@@ -482,35 +482,35 @@
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>
-        <item>$50k</item>
-        <item>$100k</item>
-        <item>$150k</item>
-        <item>$200k</item>
-        <item>$250k</item>
-        <item>$300k</item>
-        <item>$350k</item>
-        <item>$400k</item>
-        <item>$450k</item>
-        <item>$500k</item>
-        <item>$550k</item>
-        <item>$600k</item>
-        <item>$650k</item>
-        <item>$700k</item>
-        <item>$750k</item>
-        <item>$800k</item>
-        <item>$850k</item>
-        <item>$900k</item>
-        <item>$950k</item>
-        <item>$1m</item>
-        <item>$1.25m</item>
-        <item>$1.50m</item>
-        <item>$1.75m</item>
-        <item>$2m</item>
-        <item>$2.50m</item>
-        <item>$3m</item>
-        <item>$4m</item>
-        <item>$5m</item>
-        <item>$10m</item>
+        <item>$50K</item>
+        <item>$100K</item>
+        <item>$150K</item>
+        <item>$200K</item>
+        <item>$250K</item>
+        <item>$300K</item>
+        <item>$350K</item>
+        <item>$400K</item>
+        <item>$450K</item>
+        <item>$500K</item>
+        <item>$550K</item>
+        <item>$600K</item>
+        <item>$650K</item>
+        <item>$700K</item>
+        <item>$750K</item>
+        <item>$800K</item>
+        <item>$850K</item>
+        <item>$900K</item>
+        <item>$950K</item>
+        <item>$1M</item>
+        <item>$1.25M</item>
+        <item>$1.50M</item>
+        <item>$1.75M</item>
+        <item>$2M</item>
+        <item>$2.50M</item>
+        <item>$3M</item>
+        <item>$4M</item>
+        <item>$5M</item>
+        <item>$10M</item>
     </string-array>
 
     <string-array name="filter_rent_price_range">
@@ -534,23 +534,23 @@
         <item>$850</item>
         <item>$900</item>
         <item>$950</item>
-        <item>$1k</item>
-        <item>$1.1k</item>
-        <item>$1.2k</item>
-        <item>$1.3k</item>
-        <item>$1.4k</item>
-        <item>$1.5k</item>
-        <item>$1.6k</item>
-        <item>$1.7k</item>
-        <item>$1.8k</item>
-        <item>$1.9k</item>
-        <item>$2k</item>
-        <item>$2.5k</item>
-        <item>$3k</item>
-        <item>$3.5k</item>
-        <item>$4k</item>
-        <item>$4.5k</item>
-        <item>$5k</item>
+        <item>$1K</item>
+        <item>$1.1K</item>
+        <item>$1.2K</item>
+        <item>$1.3K</item>
+        <item>$1.4K</item>
+        <item>$1.5K</item>
+        <item>$1.6K</item>
+        <item>$1.7K</item>
+        <item>$1.8K</item>
+        <item>$1.9K</item>
+        <item>$2K</item>
+        <item>$2.5K</item>
+        <item>$3K</item>
+        <item>$3.5K</item>
+        <item>$4K</item>
+        <item>$4.5K</item>
+        <item>$5K</item>
     </string-array>
 
     <string-array name="country_code_options">
