@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.filters.viewfilter;
 
 
+import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.database.SohoDatabaseKt;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
@@ -39,7 +40,7 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
     }
 
     void addSuburbToDelete(Suburb suburb) {
-        if(suburbsToDelete == null)
+        if (suburbsToDelete == null)
             suburbsToDelete = new ArrayList<>();
         suburbsToDelete.add(suburb);
     }
@@ -50,15 +51,17 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
     }
 
     public void applyFilters() {
-        currentFilter.getMarketplaceFilter().setCurrentFilter(true);
-        compositeDisposable.add(SohoDatabaseKt.insertReactive(DEPENDENCIES.getDatabase(), currentFilter)
-                .map(insertedRowId -> DEPENDENCIES.getDatabase().suburbDao().removeAll(suburbsToDelete))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        insertedRowId -> interactable.finishApplyingFilters(),
-                        interactable::showError
-                ));
+        if (isValidData()) {
+            currentFilter.getMarketplaceFilter().setCurrentFilter(true);
+            compositeDisposable.add(SohoDatabaseKt.insertReactive(DEPENDENCIES.getDatabase(), currentFilter)
+                    .map(insertedRowId -> DEPENDENCIES.getDatabase().suburbDao().removeAll(suburbsToDelete))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            insertedRowId -> interactable.finishApplyingFilters(),
+                            interactable::showError
+                    ));
+        }
     }
 
     @Override
@@ -98,5 +101,16 @@ class PropertyFilterPresenter implements AbsPresenter, PropertyFilterContract.Vi
     @Override
     public void stopPresenting() {
         compositeDisposable.clear();
+    }
+
+    private boolean isValidData() {
+        boolean dataIsValid = true;
+        int fromPrice = currentFilter.getMarketplaceFilter().getFromPrice();
+        int toPrice = currentFilter.getMarketplaceFilter().getToPrice();
+        if (fromPrice != 0 && toPrice != 0 && fromPrice >= toPrice) {
+            interactable.showToastMessage(R.string.filter_not_valid_price_range);
+            dataIsValid = false;
+        }
+        return dataIsValid;
     }
 }

@@ -355,7 +355,6 @@
     <string name="rooms_item_carspot_text">Carspot</string>
     <string name="rooms_item_default_carspot_text">Any Carspot</string>
     <string name="inspection_times">Appointment only</string>
-    <!--Add Property screen end-->
 
     <!--todo-Julia shuffle in the specific section -->
     <string name="plus_sign" translatable="false">+</string>
@@ -393,7 +392,7 @@
     <string name="settings_account_verification_text">Account Verification</string>
     <string name="settings_edit_profile_text">Edit Profile</string>
 
-    <!--  Property Detail  -->
+    <!--  Property Details  -->
     <string name="property_state_inspection">Inspection</string>
     <string name="property_state_auction">Auction</string>
     <string name="property_detail_header_description">Description</string>
@@ -450,6 +449,7 @@
     <string name="filter_type_all">all</string>
     <string name="filter_rent_weekly">Weekly</string>
     <string name="filter_rent_monthly">Monthly</string>
+    <string name="filter_not_valid_price_range">Please select a valid price range</string>
     <!--Marketplace Filters end-->
 
     <!--IntExt start-->

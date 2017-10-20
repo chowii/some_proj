@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -217,6 +218,11 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
     @Override
     public void showSaveSuccessful() {
         showSnackBar(getString(R.string.filters_saved_success_message), rootView);
+    }
+
+    @Override
+    public void showToastMessage(int message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     // MARK: - ================== Setup related ==================
