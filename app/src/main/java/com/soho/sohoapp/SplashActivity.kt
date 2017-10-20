@@ -7,6 +7,8 @@ import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.navigator.NavigatorImpl
 
 
+
+
 class SplashActivity : AbsActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +18,9 @@ class SplashActivity : AbsActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         val navigator = NavigatorImpl.newInstance(this)
         if (!isUserSignedIn) {
-            navigator.openLandingActivity()
+            navigator.openLandingActivityFromSplash()
         } else {
             navigator.openHomeActivity()
         }
-        finish()
     }
 }

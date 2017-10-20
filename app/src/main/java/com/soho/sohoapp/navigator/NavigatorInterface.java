@@ -98,6 +98,8 @@ public interface NavigatorInterface {
 
     void openLandingActivity();
 
+    void openLandingActivityFromSplash();
+
     void openCameraIntentForResult(int CAMERA_INTENT_REQUEST_CODE);
 
     void openVerifyPhoneActivity();

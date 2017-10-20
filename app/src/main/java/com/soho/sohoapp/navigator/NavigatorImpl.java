@@ -379,12 +379,12 @@ public class NavigatorImpl implements NavigatorInterface {
     public void openHomeActivity() {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
-            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
+            fragment.getActivity().finishAffinity();
         } else {
             Intent intent = HomeActivity.createIntent(activity);
-            activity.finishAffinity();
             activity.startActivity(intent);
+            activity.finishAffinity();
         }
     }
 
@@ -392,12 +392,12 @@ public class NavigatorImpl implements NavigatorInterface {
     public void openHomeActivity(int flags) {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
-            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
+            fragment.getActivity().finishAffinity();
         } else {
             Intent intent = HomeActivity.createIntent(activity);
-            activity.finishAffinity();
             activity.startActivity(intent);
+            activity.finishAffinity();
         }
     }
 
@@ -405,13 +405,13 @@ public class NavigatorImpl implements NavigatorInterface {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
             intent.setData(data);
-            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
+            fragment.getActivity().finishAffinity();
         } else {
             Intent intent = HomeActivity.createIntent(activity);
             intent.setData(data);
-            activity.finishAffinity();
             activity.startActivity(intent);
+            activity.finishAffinity();
         }
     }
 
@@ -455,12 +455,29 @@ public class NavigatorImpl implements NavigatorInterface {
     public void openLandingActivity() {
         if (fragment != null) {
             Intent intent = LandingActivity.Companion.createIntent(fragment.getActivity());
-            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
+            fragment.getActivity().finishAffinity();
         } else {
             Intent intent = LandingActivity.Companion.createIntent(activity);
-            activity.finishAffinity();
             activity.startActivity(intent);
+            activity.finishAffinity();
+        }
+    }
+
+    @Override
+    public void openLandingActivityFromSplash() {
+        if (fragment != null) {
+            Intent intent = LandingActivity.Companion.createIntent(fragment.getActivity());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            fragment.startActivity(intent);
+            fragment.getActivity().finishAffinity();
+            fragment.getActivity().overridePendingTransition(0, 0);
+        } else {
+            Intent intent = LandingActivity.Companion.createIntent(activity);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            activity.startActivity(intent);
+            activity.finishAffinity();
+            activity.overridePendingTransition(0, 0);
         }
     }
 

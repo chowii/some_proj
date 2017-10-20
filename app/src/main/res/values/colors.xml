@@ -41,5 +41,6 @@
     <color name="propertyStateVerified">@color/primary</color>
     <color name="propertyStateNotCompleted">@color/orangePrimary</color>
     <color name="propertyStateNotVerified">@color/redPrimary</color>
+    <color name="bg_splash">#E1EBF7</color>
 
 </resources>

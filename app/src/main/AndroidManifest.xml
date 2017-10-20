@@ -27,6 +27,7 @@
 
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +37,8 @@
 
         <activity
             android:name=".feature.landing.LandingActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.landing.signup.SignUpActivity"
             android:screenOrientation="portrait" />
