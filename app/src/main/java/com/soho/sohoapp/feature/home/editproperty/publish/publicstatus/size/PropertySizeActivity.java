@@ -13,6 +13,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.enums.AreaMeasurement;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.extensions.ActivityExtKt;
 import com.soho.sohoapp.extensions.StringExtKt;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.navigator.NavigatorInterface;
@@ -97,6 +98,9 @@ public class PropertySizeActivity extends AbsActivity {
                 property.setLandSizeMeasurement(AreaMeasurement.SQFT);
             }
             property.setLandSize(StringExtKt.toIntOrDefault(area, 0));
+
+            ActivityExtKt.hideKeyboard(this);
+
             navigator.exitWithResultCodeOk(property);
         }
     }
