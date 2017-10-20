@@ -64,6 +64,19 @@ fun String.toDoubleOrDefault(default: Double): Double {
     }
 }
 
+/**
+ * Returns Int value of the string if it is possibly
+ * @return returns Int value of string
+ */
+fun String.toIntOrDefault(default: Int): Int {
+    return try {
+        this.trim().filter { it.isDigit() }.toInt()
+    } catch (e: NumberFormatException) {
+        DEPENDENCIES.logger.e("Exception during parsing string")
+        default
+    }
+}
+
 fun String.toFormattedNumberValue(): String {
     return try {
         NumberFormat.getNumberInstance().format(this.filter { it.isDigit() }.toLong())

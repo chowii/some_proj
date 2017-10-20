@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.rent;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.data.enums.AreaMeasurement;
 import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.data.enums.RentPaymentFrequency;
 import com.soho.sohoapp.data.models.Property;
@@ -70,6 +71,7 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
         }
 
         view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
+        initPropertySize();
     }
 
     @Override
@@ -129,7 +131,7 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
 
     @Override
     public void onPropertySizeClicked() {
-        view.showToastMessage(R.string.coming_soon);
+        navigator.openPropertySizeScreen(property, RequestCode.RENT_SETTINGS_PROPERTY_SIZE);
     }
 
     @Override
@@ -166,6 +168,12 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
         view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
     }
 
+    @Override
+    public void onPropertySizeChanged(Property property) {
+        this.property = property;
+        initPropertySize();
+    }
+
     private boolean isDataValid() {
         boolean dataIsValid = true;
         if (view.getRentTitle().isEmpty()) {
@@ -199,5 +207,18 @@ public class RentSettingsPresenter implements AbsPresenter, RentSettingsContract
                     view.showError(throwable);
                     view.hideLoadingDialog();
                 }));
+    }
+
+    private void initPropertySize() {
+        if (property.getLandSizeMeasurement() != null && property.getLandSize() > 0) {
+            switch (property.getLandSizeMeasurement()) {
+                case AreaMeasurement.SQM:
+                    view.showPropertySize(R.string.publish_property_size_in_sqm, property.getLandSize());
+                    break;
+                case AreaMeasurement.SQFT:
+                    view.showPropertySize(R.string.publish_property_size_in_sqft, property.getLandSize());
+                    break;
+            }
+        }
     }
 }

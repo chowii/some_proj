@@ -77,6 +77,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @BindView(R.id.description)
     TextView description;
 
+    @BindView(R.id.propertySize)
+    TextView txtPropertySize;
+
     @BindView(R.id.title)
     EditText title;
 
@@ -139,6 +142,9 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
                     break;
                 case RequestCode.SALE_SETTINGS_INSPECTION_TIME:
                     presentable.onInspectionTimesChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
+                case RequestCode.SALE_SETTINGS_PROPERTY_SIZE:
+                    presentable.onPropertySizeChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
                     break;
             }
         }
@@ -317,6 +323,11 @@ public class SaleAndAuctionSettingsActivity extends AbsActivity implements SaleA
     @Override
     public void showMaskAddress(boolean isMaskAddress) {
         this.isMaskAddress.setChecked(isMaskAddress);
+    }
+
+    @Override
+    public void showPropertySize(int measurement, int landSize) {
+        txtPropertySize.setText(getString(measurement, landSize));
     }
 
     @OnClick(R.id.description)

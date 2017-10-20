@@ -48,6 +48,8 @@ public interface Keys {
         String CARSPOTS = "carspots";
         String TYPE_OF_PROPERTY = "type_of_property";
         String IS_INVESTMENT = "is_investment";
+        String LAND_SIZE_MEASUREMENT = "land_size_measurement";
+        String LAND_SIZE = "land_size";
         String BEDROOMS_ATTRIBUTE = "property[bedrooms]";
         String BATHROOMS_ATTRIBUTE = "property[bathrooms]";
         String CARSPOTS_ATTRIBUTE = "property[carspots]";
@@ -133,7 +135,7 @@ public interface Keys {
         String FILTER_PER_PAGE = "per_page";
         String FILTER_PAGE = "page";
         double FILTER_STUDIO_SERVER_VALUE = 0.5;
-        double FILTER_BEDROOM_SERVER_VALUE= 0.0;
+        double FILTER_BEDROOM_SERVER_VALUE = 0.0;
     }
 
     interface Pagination {

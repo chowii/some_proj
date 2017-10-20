@@ -255,11 +255,13 @@
     <string name="publish_property_next">Next</string>
     <string name="publish_property_next_verification">Next: Verification</string>
     <string name="publish_property_property_status_updated">Property Status Updated</string>
-    <string name="publish_property_status_updated_desc" formatted="true">You\'ve successfully updated your property status</string>
+    <string name="publish_property_status_updated_desc">You\'ve successfully updated your property status</string>
     <string name="publish_property_status_discoverable">Discoverable</string>
     <string name="publish_property_status_for_sale">For Sale</string>
     <string name="publish_property_status_for_auction">For Auction</string>
     <string name="publish_property_status_for_rent">For Rent</string>
+    <string name="publish_property_size_in_sqm" formatted="true">%d sqm</string>
+    <string name="publish_property_size_in_sqft" formatted="true">%d sqft</string>
     <!--Publish property screens end-->
 
     <!--Inspection Time screen start-->
@@ -282,6 +284,17 @@
     <string name="inspection_time_confirm_deletion_no">Cancel</string>
     <string name="inspection_time_delete">Delete</string>
     <!--Inspection Time screen end-->
+
+    <!--Size of Property screen start-->
+    <string name="property_size_toolbar">Size of Property</string>
+    <string name="property_size_measurement">Select Measurement</string>
+    <string name="property_size_total_area">Enter Total Area</string>
+    <string name="property_size_measurement_sqm">Sqm</string>
+    <string name="property_size_measurement_sqft">Sqft</string>
+    <string name="property_size_area_hint">e.g 200</string>
+    <string name="property_size_save">Save</string>
+    <string name="property_size_area_not_valid">Please enter area</string>
+    <!--Size of Property screen end-->
 
     <!--Verification screen start-->
     <string name="verification_toolbar">Verification</string>

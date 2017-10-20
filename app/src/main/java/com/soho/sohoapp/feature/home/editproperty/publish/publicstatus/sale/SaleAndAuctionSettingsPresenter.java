@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.sale;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
+import com.soho.sohoapp.data.enums.AreaMeasurement;
 import com.soho.sohoapp.data.enums.PropertyStatus;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
@@ -59,6 +60,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
 
         view.showInspectionTimes(propertyListing.getInspectionTimesSafe().size());
         view.showMaskAddress(property.getLocationSafe().getMaskAddress());
+        initPropertySize();
 
         //init view
         if (PropertyStatus.AUCTION.equals(propertyListing.getState())) {
@@ -147,8 +149,7 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
 
     @Override
     public void onPropertySizeClicked() {
-        // todo: open Property Size screen
-        view.showToastMessage(R.string.coming_soon);
+        navigator.openPropertySizeScreen(property, RequestCode.SALE_SETTINGS_PROPERTY_SIZE);
     }
 
     @Override
@@ -210,6 +211,12 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
     public void onInspectionTimesChanged(Property property) {
         this.property = property;
         view.showInspectionTimes(property.getPropertyListingSafe().getInspectionTimesSafe().size());
+    }
+
+    @Override
+    public void onPropertySizeChanged(Property property) {
+        this.property = property;
+        initPropertySize();
     }
 
     @Override
@@ -305,6 +312,19 @@ public class SaleAndAuctionSettingsPresenter implements AbsPresenter, SaleAndAuc
             auctionDateCalendar.setTime(new Date(auctionTime));
             view.showAuctionTime(LongExtKt.toStringWithTimeFormat(auctionTime));
             view.showAuctionDate(LongExtKt.toStringWithDisplayFormat(auctionTime));
+        }
+    }
+
+    private void initPropertySize() {
+        if (property.getLandSizeMeasurement() != null && property.getLandSize() > 0) {
+            switch (property.getLandSizeMeasurement()) {
+                case AreaMeasurement.SQM:
+                    view.showPropertySize(R.string.publish_property_size_in_sqm, property.getLandSize());
+                    break;
+                case AreaMeasurement.SQFT:
+                    view.showPropertySize(R.string.publish_property_size_in_sqft, property.getLandSize());
+                    break;
+            }
         }
     }
 }

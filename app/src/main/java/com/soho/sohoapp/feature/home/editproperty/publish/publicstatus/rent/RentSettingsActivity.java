@@ -55,6 +55,9 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @BindView(R.id.availableFrom)
     TextView availableFrom;
 
+    @BindView(R.id.propertySize)
+    TextView txtPropertySize;
+
     @BindView(R.id.rentTitle)
     EditText rentTitle;
 
@@ -109,6 +112,9 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
                     break;
                 case RequestCode.RENT_SETTINGS_INSPECTION_TIME:
                     presentable.onInspectionTimesChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
+                    break;
+                case RequestCode.RENT_SETTINGS_PROPERTY_SIZE:
+                    presentable.onPropertySizeChanged(extras.getParcelable(NavigatorImpl.KEY_PROPERTY));
                     break;
             }
         }
@@ -218,6 +224,11 @@ public class RentSettingsActivity extends AbsActivity implements RentSettingsCon
     @Override
     public void showInspectionTimes(int inspectionTimesQuantity) {
         inspectionTime.setText(getString(R.string.publish_property_inspection_time_quantity, inspectionTimesQuantity));
+    }
+
+    @Override
+    public void showPropertySize(int measurement, int landSize) {
+        txtPropertySize.setText(getString(measurement, landSize));
     }
 
     @OnClick(R.id.description)

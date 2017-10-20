@@ -28,6 +28,7 @@ import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.inspectio
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.inspection.NewInspectionTimeActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.rent.RentSettingsActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.sale.SaleAndAuctionSettingsActivity;
+import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.size.PropertySizeActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.publicstatus.updated.PropertyStatusUpdatedActivity;
 import com.soho.sohoapp.feature.home.editproperty.verification.VerificationActivity;
 import com.soho.sohoapp.feature.home.editproperty.verification.ownership.OwnershipVerificationActivity;
@@ -115,6 +116,13 @@ public class NavigatorImpl implements NavigatorInterface {
         Intent intent = new Intent();
         intent.putExtra(KEY_PROPERTY, property);
         intent.putExtra(KEY_VERIFICATION_COMPLETED, verificationCompleted);
+        setResultAndExit(intent);
+    }
+
+    @Override
+    public void exitWithResultCodeOk(@NonNull Property property) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_PROPERTY, property);
         setResultAndExit(intent);
     }
 
@@ -292,6 +300,15 @@ public class NavigatorImpl implements NavigatorInterface {
                     NewInspectionTimeActivity.Companion.createIntent(fragment.getActivity(), inspectionTime, propertyId), requestCode);
         } else {
             activity.startActivityForResult(NewInspectionTimeActivity.Companion.createIntent(activity, inspectionTime, propertyId), requestCode);
+        }
+    }
+
+    @Override
+    public void openPropertySizeScreen(@NonNull Property property, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(PropertySizeActivity.createIntent(fragment.getActivity(), property), requestCode);
+        } else {
+            activity.startActivityForResult(PropertySizeActivity.createIntent(activity, property), requestCode);
         }
     }
 

@@ -34,6 +34,8 @@ public interface RentSettingsContract {
         void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
 
         void onInspectionTimesChanged(Property property);
+
+        void onPropertySizeChanged(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {
@@ -70,5 +72,7 @@ public interface RentSettingsContract {
         String getRentalPriceValue();
 
         void showInspectionTimes(int inspectionTimesQuantity);
+
+        void showPropertySize(int measurement, int landSize);
     }
 }

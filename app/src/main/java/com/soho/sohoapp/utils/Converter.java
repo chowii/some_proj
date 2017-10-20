@@ -519,16 +519,17 @@ public final class Converter {
 
     @NonNull
     public static QueryHashMap toMap(@NonNull Property property) {
-        QueryHashMap map = new QueryHashMap();
-        map.put(Keys.Property.DESCRIPTION, property.getDescription());
         QueryHashMap financeMap = new QueryHashMap();
         putPropertyFinance(financeMap, property.getPropertyFinance());
-        map.put(Keys.Property.PROPERTY_FINANCE_ATTRIBUTES, financeMap);
 
         QueryHashMap locationMap = new QueryHashMap();
         putLocation(locationMap, property.getLocation());
-        map.put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap);
-        return map;
+
+        return new QueryHashMap().put(Keys.Property.PROPERTY_LOCATION_ATTRIBUTES, locationMap)
+                .put(Keys.Property.PROPERTY_FINANCE_ATTRIBUTES, financeMap)
+                .put(Keys.Property.DESCRIPTION, property.getDescription())
+                .put(Keys.Property.LAND_SIZE_MEASUREMENT, property.getLandSizeMeasurement())
+                .put(Keys.Property.LAND_SIZE, property.getLandSize());
     }
 
     @NonNull

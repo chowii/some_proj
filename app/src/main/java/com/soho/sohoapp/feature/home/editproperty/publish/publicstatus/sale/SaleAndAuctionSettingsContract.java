@@ -50,6 +50,8 @@ public interface SaleAndAuctionSettingsContract {
         void onPropertyPublicStatusUpdated(Property property, boolean verificationCompleted);
 
         void onInspectionTimesChanged(Property property);
+
+        void onPropertySizeChanged(Property property);
     }
 
     interface ViewInteractable extends BaseViewInteractable {
@@ -108,5 +110,7 @@ public interface SaleAndAuctionSettingsContract {
         boolean isMaskAddress();
 
         void showMaskAddress(boolean isMaskAddress);
+
+        void showPropertySize(@StringRes int measurement, int landSize);
     }
 }

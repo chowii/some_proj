@@ -26,6 +26,8 @@ public interface NavigatorInterface {
 
     void exitWithResultCodeOk(@NonNull Property property, boolean verificationCompleted);
 
+    void exitWithResultCodeOk(@NonNull Property property);
+
     void exitWithResultCodeOk(@NonNull Location location);
 
     void exitWithResultCodeOk(InspectionTime inspectionTime, boolean inspectionTimeIsCreated);
@@ -65,6 +67,8 @@ public interface NavigatorInterface {
     void openInspectionTimeScreen(@NonNull Property property, int requestCode);
 
     void openNewInspectionTimeScreen(@Nullable InspectionTime inspectionTime, int propertyId, int requestCode);
+
+    void openPropertySizeScreen(@NonNull Property property, int requestCode);
 
     void openVerificationScreen(@NonNull Property property, int requestCode);
 

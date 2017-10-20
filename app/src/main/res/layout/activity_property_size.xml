@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/lightBackground"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="@string/property_size_toolbar"
+        app:titleTextColor="@color/white"/>
+
+    <TextView
+        style="@style/ListTextHeader"
+        android:text="@string/property_size_measurement"/>
+
+    <include
+        android:id="@+id/measurement"
+        layout="@layout/item_sale_settings_radio_group"/>
+
+    <TextView
+        style="@style/ListTextHeader"
+        android:text="@string/property_size_total_area"/>
+
+    <EditText
+        android:id="@+id/area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="@string/property_size_area_hint"
+        android:padding="16dp"
+        android:textSize="14sp"/>
+</LinearLayout>
