@@ -29,7 +29,7 @@ android {
         applicationId "com.soho.sohoapp"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,12 +39,14 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            ext.enableCrashlytics = true
             manifestPlaceholders = [api_key_crashlytics: "c1578fbecca8db659e13e4e0d630da441201b92d"]
         }
         release {
             minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //this api key belongs to Soho Soho Property Pty Ltd Fabric organization
             manifestPlaceholders = [api_key_crashlytics: "27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb"]

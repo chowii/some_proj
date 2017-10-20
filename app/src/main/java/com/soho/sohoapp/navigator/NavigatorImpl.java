@@ -362,11 +362,11 @@ public class NavigatorImpl implements NavigatorInterface {
     public void openHomeActivity() {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
         } else {
             Intent intent = HomeActivity.createIntent(activity);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.finishAffinity();
             activity.startActivity(intent);
         }
     }
@@ -375,11 +375,11 @@ public class NavigatorImpl implements NavigatorInterface {
     public void openHomeActivity(int flags) {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
         } else {
             Intent intent = HomeActivity.createIntent(activity);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.finishAffinity();
             activity.startActivity(intent);
         }
     }
@@ -388,12 +388,12 @@ public class NavigatorImpl implements NavigatorInterface {
         if (fragment != null) {
             Intent intent = HomeActivity.createIntent(fragment.getActivity());
             intent.setData(data);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            fragment.getActivity().finishAffinity();
             fragment.startActivity(intent);
         } else {
             Intent intent = HomeActivity.createIntent(activity);
             intent.setData(data);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.finishAffinity();
             activity.startActivity(intent);
         }
     }

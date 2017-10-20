@@ -24,6 +24,7 @@ allprojects {
     repositories {
         jcenter()
         google()
+        mavenCentral()
         maven { url "http://dl.bintray.com/outbound/maven" }
     }
     ext {

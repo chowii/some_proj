@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.home.more
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -87,7 +86,7 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
 
     private fun logoutUser() {
         DEPENDENCIES.userPrefs.logout()
-        NavigatorImpl.newInstance(this).openHomeActivity(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        NavigatorImpl.newInstance(this).openLandingActivity()
     }
 
     override fun showSupportActivity(user: User) {
