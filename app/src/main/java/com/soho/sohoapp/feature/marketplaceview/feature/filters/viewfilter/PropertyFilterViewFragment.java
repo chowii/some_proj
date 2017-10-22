@@ -258,7 +258,7 @@ public class PropertyFilterViewFragment extends BaseFragment implements Property
                 .getQuantityString(R.plurals.number_picker_kilometers, filterWithSuburbs.getMarketplaceFilter().getRadius(), filterWithSuburbs.getMarketplaceFilter().getRadius()));
         radiusPickerView.setListener(currentValue -> {
             presenter.getCurrentFilter().getMarketplaceFilter().setRadius((int) currentValue);
-            radiusPickerView.setText(getResources().getQuantityString(R.plurals.number_picker_kilometers, (int) currentValue, currentValue));
+            radiusPickerView.setText(getResources().getQuantityString(R.plurals.number_picker_kilometers, (int) currentValue, (int) currentValue));
         });
     }
 
