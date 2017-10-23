@@ -26,7 +26,7 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 public class PortfolioOwnerPresenter implements AbsPresenter, PortfolioListContract.ViewPresentable {
     private final PortfolioListContract.ViewInteractable view;
     private final Resources resources;
-    private NavigatorInterface navigator;
+    private final NavigatorInterface navigator;
     private final CompositeDisposable compositeDisposable;
 
     public PortfolioOwnerPresenter(PortfolioListContract.ViewInteractable view, NavigatorInterface navigator, Resources resources) {

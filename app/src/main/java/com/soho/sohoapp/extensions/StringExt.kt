@@ -93,10 +93,11 @@ fun String.toFormattedNumberValue(): String {
 fun String.abbreviatedMoneyValueToInt(): Int {
     return try {
 
-        val strippedString = this.filter {it.isDigit()
-                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_thousand)
-                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_million)
-                || it.toString() == getStringFromResource(R.string.int_ext_shorthand_billion)
+        val strippedString = this.filter {
+            it.isDigit()
+                    || it.toString() == getStringFromResource(R.string.int_ext_shorthand_thousand)
+                    || it.toString() == getStringFromResource(R.string.int_ext_shorthand_million)
+                    || it.toString() == getStringFromResource(R.string.int_ext_shorthand_billion)
         }
         when {
             strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
@@ -110,4 +111,4 @@ fun String.abbreviatedMoneyValueToInt(): Int {
 }
 
 //note useless to localize instead use Currency class with Locale
-fun String.withCurrency() = if (this.isNullOrEmpty()) this else "$" + this
+fun String.withCurrency() = if (this.isNullOrEmpty()) this else "$$this"

@@ -63,11 +63,10 @@ public class PortfolioListFragment extends BaseFragment implements PortfolioList
 
         switch (getMode()) {
             case OWNER:
-                presenter = new PortfolioOwnerPresenter(this, NavigatorImpl.newInstance(this)
-                        , getResources());
+                presenter = new PortfolioOwnerPresenter(this, NavigatorImpl.newInstance(this), getResources());
                 break;
             case MANAGER:
-                presenter = new PortfolioManagerPresenter(this, NavigatorImpl.newInstance(this));
+                presenter = new PortfolioManagerPresenter(this, NavigatorImpl.newInstance(this), getResources());
                 break;
             default:
                 throw new IllegalStateException();

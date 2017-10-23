@@ -146,7 +146,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        DEPENDENCIES.getLogger().d(item.getItemId() + "");
+        DEPENDENCIES.getLogger().d(String.valueOf(item.getItemId()));
         switch (item.getItemId()) {
             case R.id.home:
                 DEPENDENCIES.getLogger().d("Profile Image button clicked in settings");

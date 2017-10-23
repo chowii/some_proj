@@ -81,7 +81,7 @@ class VerifyPhoneActivity : AbsActivity(), VerifyPhoneContract.ViewInteractable 
         val localeCallingCode = phoneUtil.getCountryCodeForRegion(Locale.getDefault().country)
 
         val callingCodes = ArrayAdapter<String>(this,
-                R.layout.calling_codes_item, callingCodesSet.map { "+" + it })
+                R.layout.calling_codes_item, callingCodesSet.map { "+$it" })
         callingCodes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         callingCodesSpinner.adapter = callingCodes
         callingCodesSpinner.setSelection(callingCodesSet.indexOf(localeCallingCode))

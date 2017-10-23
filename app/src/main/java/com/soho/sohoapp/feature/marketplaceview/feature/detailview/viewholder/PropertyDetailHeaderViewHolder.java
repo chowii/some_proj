@@ -52,9 +52,9 @@ public class PropertyDetailHeaderViewHolder extends BaseViewHolder<PropertyDetai
         if (model.getPropertySize() > 0)
             propertySizeTextView.setText(model.getPropertySizeWithUnit());
         if (model.getPropertyState() != null && model.retrievePropertyType() != null) {
-            typeTextView.setText(StringUtils.capitalize(model.retrievePropertyType())
-                    + " | "
-                    + StringUtils.capitalize(model.getPropertyState()));
+            typeTextView.setText(String.format("%s | %s",
+                    StringUtils.capitalize(model.retrievePropertyType()),
+                    StringUtils.capitalize(model.getPropertyState())));
         }
         if (model.getRepresentingUser() != null) {
             userAvatarView.setVisibility(View.VISIBLE);

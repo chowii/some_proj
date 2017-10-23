@@ -41,7 +41,7 @@ public class CameraPicker {
 
     private File createImageFile() throws IOException {
         String timeStamp = DateUtils.getDateFormatForFileName();
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = String.format("JPEG_%s_", timeStamp);
         File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 

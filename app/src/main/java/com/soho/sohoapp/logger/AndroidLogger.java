@@ -15,7 +15,7 @@ public class AndroidLogger implements Logger {
             StackTraceElement[] elements = t.getStackTrace();
 
             String callerClassName = elements[1].getFileName();
-            Log.d(LOG_TAG, "[" + callerClassName + "] " + message);
+            Log.d(LOG_TAG, String.format("[%s] %s", callerClassName, message));
         }
     }
 
@@ -26,7 +26,7 @@ public class AndroidLogger implements Logger {
             StackTraceElement[] elements = t.getStackTrace();
 
             String callerClassName = elements[1].getFileName();
-            Log.w(LOG_TAG, "[" + callerClassName + "] " + message);
+            Log.w(LOG_TAG, String.format("[%s] %s", callerClassName, message));
         }
     }
 
@@ -37,7 +37,7 @@ public class AndroidLogger implements Logger {
             StackTraceElement[] elements = t.getStackTrace();
 
             String callerClassName = elements[1].getFileName();
-            Log.w(LOG_TAG, "[" + callerClassName + "] " + message, cause);
+            Log.w(LOG_TAG, String.format("[%s] %s", callerClassName, message), cause);
         }
     }
 
@@ -48,7 +48,7 @@ public class AndroidLogger implements Logger {
             StackTraceElement[] elements = t.getStackTrace();
 
             String callerClassName = elements[1].getFileName();
-            Log.e(LOG_TAG, "[" + callerClassName + "] " + message);
+            Log.e(LOG_TAG, String.format("[%s] %s", callerClassName, message));
         }
     }
 
@@ -59,7 +59,7 @@ public class AndroidLogger implements Logger {
             StackTraceElement[] elements = t.getStackTrace();
 
             String callerClassName = elements[1].getFileName();
-            Log.e(LOG_TAG, "[" + callerClassName + "] " + message, cause);
+            Log.e(LOG_TAG, String.format("[%s] %s", callerClassName, message), cause);
         }
     }
 

@@ -19,7 +19,7 @@ class StatusCodeInterceptor : Interceptor {
 
         val statusCode = response.code()
         if (statusCode < 200 || statusCode > 299 || response.body() == null) {
-            DEPENDENCIES.logger.d("InterceptStatusCode: " + statusCode)
+            DEPENDENCIES.logger.d("InterceptStatusCode: $statusCode")
             handleErrorResponse(response)
         }
 

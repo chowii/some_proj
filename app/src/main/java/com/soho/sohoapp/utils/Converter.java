@@ -444,7 +444,7 @@ public final class Converter {
             if (uri != null) {
                 RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
                 File file = new File(uri.getPath());
-                builder.addFormDataPart(Keys.User.AVATAR, file.getName() + ".jpg", imageRequestBody);
+                builder.addFormDataPart(Keys.User.AVATAR, String.format("%s.jpg", file.getName()), imageRequestBody);
 
             }
 //            Keys.User.INTENDED_INTENTIONS, intentions)

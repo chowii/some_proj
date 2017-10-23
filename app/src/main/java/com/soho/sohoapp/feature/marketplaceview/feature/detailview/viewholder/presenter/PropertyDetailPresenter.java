@@ -95,7 +95,8 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
 
                     descriptionList.addAll(addPropertyIfAuctioned(property));
                     descriptionList.addAll(addPropertyLocationImage(property.getLocation()));
-                    descriptionList.add(new HeaderItem<>("Last Updated: " + LongExtKt.toStringWithDisplayFormat(property.getUpdatedAt()), R.layout.item_header));
+                    descriptionList.add(new HeaderItem<>(String.format("Last Updated: %s",
+                            LongExtKt.toStringWithDisplayFormat(property.getUpdatedAt())), R.layout.item_header));
                     interactable.configureAdapter(descriptionList);
                     interactable.populateView(property);
                     interactable.setRefreshing(false);

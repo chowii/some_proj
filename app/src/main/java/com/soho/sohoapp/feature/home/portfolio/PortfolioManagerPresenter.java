@@ -1,5 +1,8 @@
 package com.soho.sohoapp.feature.home.portfolio;
 
+import android.content.res.Resources;
+
+import com.soho.sohoapp.R;
 import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.feature.common.SohoButton;
 import com.soho.sohoapp.feature.home.BaseModel;
@@ -21,12 +24,14 @@ import static com.soho.sohoapp.Dependencies.DEPENDENCIES;
 
 public class PortfolioManagerPresenter implements AbsPresenter, PortfolioListContract.ViewPresentable {
     private final PortfolioListContract.ViewInteractable view;
-    private NavigatorInterface navigator;
+    private final NavigatorInterface navigator;
+    private final Resources resources;
     private final CompositeDisposable compositeDisposable;
 
-    public PortfolioManagerPresenter(PortfolioListContract.ViewInteractable view, NavigatorInterface navigator) {
+    public PortfolioManagerPresenter(PortfolioListContract.ViewInteractable view, NavigatorInterface navigator, Resources resources) {
         this.view = view;
         this.navigator = navigator;
+        this.resources = resources;
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -69,9 +74,9 @@ public class PortfolioManagerPresenter implements AbsPresenter, PortfolioListCon
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(portfolioCategories -> {
                     List<BaseModel> dataList = new ArrayList<>();
-                    dataList.add(new Title("CLIENT PORTFOLIOS"));
+                    dataList.add(new Title(resources.getString(R.string.portfolio_client_portfolios_list_item)));
                     dataList.addAll(portfolioCategories);
-                    dataList.add(new SohoButton("+ Add property"));
+                    dataList.add(new SohoButton(resources.getString(R.string.portfolio_plus_property)));
                     view.setData(dataList);
                     view.hidePullToRefresh();
                 }, throwable -> {

@@ -127,6 +127,7 @@
     <string name="portfolio_changed_value_minus" formatted="true">-%s</string>
     <string name="portfolio_changed_value_plus" formatted="true">+%s</string>
     <string name="portfolio_portfolios_list_item">PORTFOLIOS</string>
+    <string name="portfolio_client_portfolios_list_item">CLIENT PORTFOLIOS</string>
     <string name="portfolio_plus_property">+ Add property</string>
     <!--Portfolio screen end-->
 
