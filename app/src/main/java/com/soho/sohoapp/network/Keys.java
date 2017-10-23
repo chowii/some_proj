@@ -161,4 +161,11 @@ public interface Keys {
         String ACTION_EDIT = "edit";
         String ACTION_VIEW = "view";
     }
+
+    interface PropertyFile {
+        String FILE_DOCUMENT_TYPE = "document_type";
+        String FILE_IS_COST = "is_cost";
+        String FILE_AMOUNT = "amount";
+        String FILE_ATTACHMENT = "attachment";
+    }
 }

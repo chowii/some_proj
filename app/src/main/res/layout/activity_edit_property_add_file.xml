@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBackground"
+    tools:context="com.soho.sohoapp.feature.home.editproperty.files.EditPropertyAddFileActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        app:titleTextColor="@color/white"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/standard_padding"/>
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/Button.Green.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/standard_padding"
+        android:text="@string/add_file_save"/>
+
+    <ScrollView
+        android:id="@+id/scrollview_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_save"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/white_seperated_item_background">
+
+                <ImageView
+                    android:id="@+id/iv_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bedroom_with_lamp"/>
+
+                <Button
+                    android:id="@+id/btn_add_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/standard_padding"
+                    android:text="@string/add_file"
+                    android:textColor="@color/primary"/>
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_file_type_of_document"/>
+
+            <Button
+                android:id="@+id/btn_file_type"
+                style="@style/Button.Thin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_seperated_item_background"
+                android:drawableEnd="@drawable/down_chevron"
+                android:gravity="start|center_vertical"
+                android:padding="@dimen/standard_padding"
+                tools:text="Utilities"/>
+
+            <com.soho.sohoapp.customviews.LabeledValueField
+                android:id="@+id/et_other"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/white_seperated_item_background"
+                app:title="Type"/>
+
+            <TextView
+                style="@style/ListTextHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_file_details"/>
+
+            <RadioGroup
+                android:id="@+id/rg_income_or_expense"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/white_seperated_item_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/standard_padding"
+                android:paddingStart="@dimen/standard_padding">
+
+                <RadioButton
+                    android:id="@+id/rb_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_file_income"
+                    android:textColor="@color/primaryText"/>
+
+                <RadioButton
+                    android:id="@+id/rb_expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_file_expense"
+                    android:textColor="@color/primaryText"/>
+            </RadioGroup>
+
+            <com.soho.sohoapp.customviews.LabeledValueField
+                android:id="@+id/et_amount"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/white_seperated_item_background"
+                app:inputType="numberDecimal"
+                app:title="Amount"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

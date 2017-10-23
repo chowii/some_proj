@@ -13,10 +13,12 @@ import com.soho.sohoapp.data.dtos.ImageResult;
 import com.soho.sohoapp.data.dtos.InspectionTimeResult;
 import com.soho.sohoapp.data.dtos.LocationResult;
 import com.soho.sohoapp.data.dtos.PhotoResult;
+import com.soho.sohoapp.data.dtos.PropertyFileResult;
 import com.soho.sohoapp.data.dtos.PropertyFinanceResult;
 import com.soho.sohoapp.data.dtos.PropertyListingResult;
 import com.soho.sohoapp.data.dtos.PropertyResult;
 import com.soho.sohoapp.data.dtos.PropertyUserResult;
+import com.soho.sohoapp.data.dtos.SohoOptionResult;
 import com.soho.sohoapp.data.dtos.UserResult;
 import com.soho.sohoapp.data.dtos.VerificationResult;
 import com.soho.sohoapp.data.models.Attachment;
@@ -27,9 +29,11 @@ import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Photo;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFile;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.data.models.PropertyListing;
 import com.soho.sohoapp.data.models.PropertyUser;
+import com.soho.sohoapp.data.models.SohoOption;
 import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.extensions.LongExtKt;
@@ -243,6 +247,28 @@ public final class Converter {
         return verifications;
     }
 
+    // MARK: - ================== PropertyFile ==================
+
+    @Nullable
+    public static PropertyFile toPropertyFile(@Nullable PropertyFileResult fileResult) {
+        if (fileResult == null) {
+            return null;
+        }
+        PropertyFile file = new PropertyFile();
+        file.setId(fileResult.getId());
+        if(fileResult.getName() != null) {
+            file.setName(fileResult.getName());
+        }
+        if(fileResult.getFileAttachment() != null) {
+            file.setFilePhoto(fileResult.getFileAttachment().getFileUrl());
+        }
+        file.setDocumentType(fileResult.getDocumentType());
+        file.setCost(fileResult.isCost());
+        file.setAmount(fileResult.getAmount());
+        file.setUpdatedAt(fileResult.getUpdatedAt());
+        return file;
+    }
+
     // MARK: - ================== Inspection Times ==================
     @Nullable
     public static InspectionTime toInspectionTime(@Nullable InspectionTimeResult result) {
@@ -389,6 +415,31 @@ public final class Converter {
         return photos;
     }
 
+    // MARK: - ================== Options ==================
+
+    @Nullable
+    private static SohoOption toOption(@NonNull SohoOptionResult optionResult) {
+        if (optionResult == null) {
+            return null;
+        }
+        SohoOption option = new SohoOption();
+        option.setKey(optionResult.getKey());
+        option.setLabel(optionResult.getLabel());
+        option.setCategory(optionResult.getCategory().getCategoryString());
+        return option;
+    }
+
+    @NonNull
+    public static List<SohoOption> toSohoOptions(@Nullable List<SohoOptionResult> optionResults) {
+        List<SohoOption> options = new ArrayList<>();
+        if (optionResults != null) {
+            for (SohoOptionResult optionResult : optionResults) {
+                options.add(toOption(optionResult));
+            }
+        }
+        return options;
+    }
+
     // MARK: - ================== Location ==================
 
     @Nullable
@@ -463,6 +514,22 @@ public final class Converter {
             checkNullBuilderValuesMap(builder, Keys.User.LAST_NAME, (String) values.get(Keys.User.LAST_NAME));
             checkNullBuilderValuesMap(builder, Keys.User.FIRST_NAME, (String) values.get(Keys.User.FIRST_NAME));
 
+            return builder.build();
+        });
+    }
+
+    public static Observable<RequestBody> toPropertyFileRequestBody(@NonNull FileHelper fileHelper, @NonNull PropertyFile propertyFile) {
+        return Observable.fromCallable(() -> {
+            MultipartBody.Builder builder = new MultipartBody.Builder();
+            Uri uri = propertyFile.getFileToUploadUri();
+            if (uri != null) {
+                RequestBody imageRequestBody = RequestBody.create(MediaType.parse(IMAGE_TYPE_JPEG), fileHelper.compressPhoto(uri));
+                File file = new File(uri.getPath());
+                builder.addFormDataPart(Keys.PropertyFile.FILE_ATTACHMENT, file.getName() + ".jpg", imageRequestBody);
+            }
+            checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_DOCUMENT_TYPE, propertyFile.getDocumentType());
+            checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_IS_COST, propertyFile.isCost().toString());
+            checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_AMOUNT, propertyFile.getAmount().toString());
             return builder.build();
         });
     }

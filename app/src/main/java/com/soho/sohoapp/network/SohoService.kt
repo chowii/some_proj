@@ -63,8 +63,22 @@ interface SohoService {
     @PUT("properties/{id}/")
     fun updateProperty(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyResult>
 
+    @POST("properties/{propertyId}/documents")
+    fun createPropertyFile(@Path("propertyId") propertyId: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+
+    @PUT("properties/{propertyId}/documents/{id}")
+    fun updatePropertyFile(@Path("propertyId") propertyId: Int, @Path("id") id: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+
     @PUT("properties/{id}/property_listing")
     fun updatePropertyListing(@Path("id") propertyId: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>
+
+    @POST("properties/{id}/property_listing/inspection_times")
+    fun createInspectionTime(@Path("id") propertyId: Int, @Body map: QueryHashMap): Observable<InspectionTimeResult>
+
+    @DELETE("properties/{property_id}/property_listing/inspection_times/{id}")
+    fun deleteInspectionTime(@Path("property_id") propertyId: Int, @Path("id") inspectionTimeId: Int): Observable<InspectionTimeResult>
+
+    // MARK: - ================== Options related ==================
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>
@@ -72,11 +86,8 @@ interface SohoService {
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>
 
-    @POST("properties/{id}/property_listing/inspection_times")
-    fun createInspectionTime(@Path("id") propertyId: Int, @Body map: QueryHashMap): Observable<InspectionTimeResult>
-
-    @DELETE("properties/{property_id}/property_listing/inspection_times/{id}")
-    fun deleteInspectionTime(@Path("property_id") propertyId: Int, @Path("id") inspectionTimeId: Int): Observable<InspectionTimeResult>
+    @GET("options/document_types")
+    fun getFileTypes(): Observable<List<SohoOptionResult>>
 
     // MARK: - ================== Portfolio Related ==================
 

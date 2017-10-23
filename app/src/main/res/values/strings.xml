@@ -493,6 +493,16 @@
     <string name="edit_account_pass_confirm_password">confirm password</string>
     <string name="edit_account_pass_save_changes">save changes</string>
     <string name="exception_paginated_adapter_override">You must override \'viewHolderFormItem(parent: ViewGroup, viewType: Int)\'.</string>
+    <string name="edit_property_file_add_file_title">Add File</string>
+    <string name="edit_property_edit_file_title">Edit File</string>
+    <string name="file_type_other">Other</string>
+    <string name="add_file_options">OPTIONS</string>
+    <string name="add_file_save">SAVE</string>
+    <string name="add_file">+ Add File</string>
+    <string name="add_file_type_of_document">TYPE OF DOCUMENT</string>
+    <string name="add_file_details">DETAILS</string>
+    <string name="add_file_income">Income</string>
+    <string name="add_file_expense">Expense</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

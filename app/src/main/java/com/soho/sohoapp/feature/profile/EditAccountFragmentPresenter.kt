@@ -86,7 +86,7 @@ class EditAccountFragmentPresenter(private val view: EditAccountContract.ViewInt
 
     private fun selectPhotoFromGallery() {
         cleanCameraDisposable()
-        permissionManager.requestStoragePermission(RequestCode.EDIT_ACCOUNT_PRESENTER_STORAGE)
+        galleryDisposable = permissionManager.requestStoragePermission(RequestCode.EDIT_ACCOUNT_PRESENTER_STORAGE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap { permissionEvent ->
                     if (permissionEvent.isPermissionGranted) {

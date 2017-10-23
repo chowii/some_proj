@@ -20,6 +20,8 @@ import com.elasticode.provider.callback.ElasticodeResponse;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.abs.AbsActivity;
+import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyAddFileActivity;
 import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;

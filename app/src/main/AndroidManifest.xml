@@ -116,6 +116,10 @@
             android:name=".feature.home.editproperty.publish.publicstatus.size.PropertySizeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".feature.home.editproperty.files.EditPropertyAddFileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".feature.home.editproperty.verification.VerificationActivity"
             android:screenOrientation="portrait" />
         <activity
