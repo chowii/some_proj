@@ -14,6 +14,7 @@ class Property : BasicProperty {
     var propertyListing: PropertyListing? = null
     var propertyFinance: PropertyFinance? = null
     var verifications: MutableList<Verification>? = null
+    var files: List<PropertyFile> = mutableListOf()
 
     constructor() : super()
 
@@ -27,6 +28,7 @@ class Property : BasicProperty {
         propertyListing = parcel.readParcelable(PropertyListing::class.java.classLoader)
         propertyFinance = parcel.readParcelable(PropertyFinance::class.java.classLoader)
         verifications = parcel.createTypedArrayList(Verification)
+        files = parcel.createTypedArrayList(PropertyFile)
     }
 
     fun getPropertyListingSafe() = propertyListing ?: PropertyListing()
@@ -48,6 +50,7 @@ class Property : BasicProperty {
         parcel.writeParcelable(propertyListing, flags)
         parcel.writeParcelable(propertyFinance, flags)
         parcel.writeTypedList(verifications)
+        parcel.writeTypedList(files)
     }
 
     override fun describeContents(): Int {

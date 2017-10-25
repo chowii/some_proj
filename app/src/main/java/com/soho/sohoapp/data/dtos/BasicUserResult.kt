@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
  */
 
 open class BasicUserResult {
+    @SerializedName("id")
+    var id: Int = 0
 
     @SerializedName("email")
     var email: String? = null

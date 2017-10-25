@@ -118,7 +118,9 @@
         <activity
             android:name=".feature.home.editproperty.files.EditPropertyAddFileActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".feature.home.editproperty.files.EditPropertyPreviewFileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".feature.home.editproperty.verification.VerificationActivity"
             android:screenOrientation="portrait" />

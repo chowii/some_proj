@@ -9,6 +9,7 @@ import android.os.Parcelable
 
 open class BasicUser() : Parcelable {
 
+    var id: Int = 0
     var email: String? = null
     var firstName: String? = null
     var lastName: String? = null
@@ -17,13 +18,13 @@ open class BasicUser() : Parcelable {
     var isProfileComplete: Boolean = false
 
     constructor(parcel: Parcel) : this() {
+        id = parcel.readInt()
         email = parcel.readString()
         firstName = parcel.readString()
         lastName = parcel.readString()
         dateOfBirth = parcel.readValue(Long::class.java.classLoader) as Long?
         avatar = parcel.readParcelable(Image::class.java.classLoader)
         isProfileComplete = parcel.readInt() == 1
-
     }
 
     fun fullName(): String {
@@ -40,6 +41,7 @@ open class BasicUser() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
         parcel.writeString(email)
         parcel.writeString(firstName)
         parcel.writeString(lastName)

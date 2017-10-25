@@ -64,15 +64,20 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                     return DEPENDENCIES.getSohoService().getProperty(view.getPropertyId());
                 })
                 .map(Converter::toProperty)
+                .switchMap(property -> {
+                    this.property = property;
+                    return DEPENDENCIES.getSohoService().getPropertyFiles(property.getId());
+                })
+                .map(Converter::toPropertyFiles)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result ->
+                .subscribe(propertyFiles ->
                 {
-                    property = result;
+                    property.setFiles(propertyFiles);
                     view.initTabs(property, propertyTypes);
                     initPropertyImages();
                     showToolbarActionsIfNeeded();
-                    Location address = result.getLocation();
+                    Location address = property.getLocation();
                     if (address != null) {
                         view.showAddress1(address.getAddressLine1());
                         view.showAddress2(address.getAddressLine2());
@@ -112,7 +117,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                             view.capturePhoto();
                         }
                         permissionDisposable.dispose();
-                    }, Throwable::printStackTrace);
+                    }, view::showError);
             compositeDisposable.add(permissionDisposable);
         }
     }

@@ -12,12 +12,15 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFile;
 import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.gallery.GalleryViewActivity;
 import com.soho.sohoapp.feature.home.HomeActivity;
 import com.soho.sohoapp.feature.home.addproperty.AddPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.EditPropertyActivity;
 import com.soho.sohoapp.feature.home.editproperty.archive.ArchiveConfirmationActivity;
+import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyAddFileActivity;
+import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyPreviewFileActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyDescriptionActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.PropertyStatusActivity;
 import com.soho.sohoapp.feature.home.editproperty.publish.privatestatus.PrivateStatusSettingsActivity;
@@ -62,6 +65,8 @@ public class NavigatorImpl implements NavigatorInterface {
     public static final String KEY_VERIFICATIONS_UPDATED = "KEY_VERIFICATIONS_UPDATED";
     public static final String KEY_INSPECTION_TIME = "KEY_INSPECTION_TIME";
     public static final String KEY_INSPECTION_TIME_IS_CREATED = "KEY_INSPECTION_TIME_IS_CREATED";
+    public static final String KEY_PROPERTY_FILE = "KEY_PROPERTY_FILE";
+    public static final String KEY_PROPERTY_FILE_DELETED = "KEY_PROPERTY_FILE_DELETED";
     private Activity activity;
     private Fragment fragment;
 
@@ -145,6 +150,14 @@ public class NavigatorImpl implements NavigatorInterface {
     public void exitWithResultCodeOk(String string) {
         Intent intent = new Intent();
         intent.putExtra(KEY_STRING, string);
+        setResultAndExit(intent);
+    }
+
+    @Override
+    public void exitWithResultCodeOk(PropertyFile propertyFile, boolean wasDeleted) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_PROPERTY_FILE, propertyFile);
+        intent.putExtra(KEY_PROPERTY_FILE_DELETED, wasDeleted);
         setResultAndExit(intent);
     }
 
@@ -327,6 +340,26 @@ public class NavigatorImpl implements NavigatorInterface {
             fragment.startActivityForResult(OwnershipVerificationActivity.Companion.createIntent(fragment.getActivity(), property), requestCode);
         } else {
             activity.startActivityForResult(OwnershipVerificationActivity.Companion.createIntent(activity, property), requestCode);
+        }
+    }
+
+    @Override
+    public void openEditPropertyAddFileScreen(Property property, PropertyFile propertyFile, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(EditPropertyAddFileActivity.Companion.createIntent(
+                    fragment.getActivity(), property, propertyFile), requestCode);
+        } else {
+            activity.startActivityForResult(EditPropertyAddFileActivity.Companion.createIntent(activity, property, propertyFile), requestCode);
+        }
+    }
+
+    @Override
+    public void openEditPropertyPreviewFileScreen(Property property, PropertyFile propertyFile, int requestCode) {
+        if (fragment != null) {
+            fragment.startActivityForResult(EditPropertyPreviewFileActivity.Companion.createIntent(
+                    fragment.getActivity(), property, propertyFile), requestCode);
+        } else {
+            activity.startActivityForResult(EditPropertyPreviewFileActivity.Companion.createIntent(activity, property, propertyFile), requestCode);
         }
     }
 

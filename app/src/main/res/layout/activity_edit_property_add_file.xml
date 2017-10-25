@@ -26,12 +26,13 @@
 
     <Button
         android:id="@+id/btn_save"
-        style="@style/Button.Green.Bold"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/standard_padding"
-        android:text="@string/add_file_save"/>
+        android:layout_margin="16dp"
+        android:text="@string/add_file_save"
+        android:textAllCaps="true"
+        android:theme="@style/MaterialButton.Green"/>
 
     <ScrollView
         android:id="@+id/scrollview_form"
@@ -130,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/white_seperated_item_background"
+                app:hint="@string/edit_property_enter_value"
                 app:inputType="numberDecimal"
                 app:title="Amount"/>
 

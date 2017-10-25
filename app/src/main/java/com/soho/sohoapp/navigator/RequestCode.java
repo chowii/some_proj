@@ -25,6 +25,9 @@ public final class RequestCode {
     public static final int PROPERTY_VERIFICATIONS_REQUEST_CODE = 64;
     public static final int SALE_SETTINGS_PROPERTY_SIZE = 65;
     public static final int RENT_SETTINGS_PROPERTY_SIZE = 66;
+    public static final int EDIT_PROPERTY_NEW_FILE = 70;
+    public static final int EDIT_PROPERTY_PREVIEW_FILE = 71;
+    public static final int EDIT_PROPERTY_PREVIEW_FILE_EDIT_MODE = 72;
 
     private RequestCode() {
         //utils class to hold constants

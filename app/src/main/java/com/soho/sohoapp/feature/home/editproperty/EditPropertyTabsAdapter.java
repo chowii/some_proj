@@ -10,7 +10,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
-import com.soho.sohoapp.feature.home.editproperty.connections.EditConnectionFragment;
+import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyFilesFragment;
 import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ class EditPropertyTabsAdapter extends FragmentPagerAdapter {
             case ITEM_TWO:
                 return ComingSoonFragment.newInstance();
             case ITEM_THREE:
-                return ComingSoonFragment.newInstance();
+                return EditPropertyFilesFragment.Companion.newInstance(property);
             default:
                 return null;
         }

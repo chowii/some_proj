@@ -14,6 +14,7 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.data.listdata.Displayable
 import com.soho.sohoapp.data.models.Attachment
 import com.soho.sohoapp.data.models.Property
+import com.soho.sohoapp.data.models.PropertyFile
 import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
@@ -127,6 +128,8 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
     private fun initView() {
         filesAdapter = OwnershipFilesAdapter(this.context)
         filesAdapter.setOnItemClickListener(object : OwnershipFilesAdapter.OnItemClickListener {
+
+            override fun onFileClicked(file: PropertyFile) {}
 
             override fun onAddFileClicked() {
                 presentable.onAddFileClicked()

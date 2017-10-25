@@ -256,10 +256,10 @@ public final class Converter {
         }
         PropertyFile file = new PropertyFile();
         file.setId(fileResult.getId());
-        if(fileResult.getName() != null) {
+        if (fileResult.getName() != null) {
             file.setName(fileResult.getName());
         }
-        if(fileResult.getFileAttachment() != null) {
+        if (fileResult.getFileAttachment() != null) {
             file.setFilePhoto(fileResult.getFileAttachment().getFileUrl());
         }
         file.setDocumentType(fileResult.getDocumentType());
@@ -267,6 +267,17 @@ public final class Converter {
         file.setAmount(fileResult.getAmount());
         file.setUpdatedAt(fileResult.getUpdatedAt());
         return file;
+    }
+
+    @NonNull
+    public static List<PropertyFile> toPropertyFiles(@Nullable List<PropertyFileResult> results) {
+        List<PropertyFile> propertyFiles = new ArrayList<>();
+        if (results != null) {
+            for (PropertyFileResult result : results) {
+                propertyFiles.add(toPropertyFile(result));
+            }
+        }
+        return propertyFiles;
     }
 
     // MARK: - ================== Inspection Times ==================
@@ -332,6 +343,7 @@ public final class Converter {
             return null;
         }
         BasicUser basicUser = new BasicUser();
+        basicUser.setId(result.getId());
         basicUser.setFirstName(result.getFirstName());
         basicUser.setLastName(result.getLastName());
         basicUser.setEmail(result.getEmail());
@@ -348,6 +360,7 @@ public final class Converter {
             return null;
         }
         User user = new User();
+        user.setId(result.getId());
         user.setFirstName(result.getFirstName());
         user.setLastName(result.getLastName());
         user.setEmail(result.getEmail());
@@ -528,8 +541,12 @@ public final class Converter {
                 builder.addFormDataPart(Keys.PropertyFile.FILE_ATTACHMENT, file.getName() + ".jpg", imageRequestBody);
             }
             checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_DOCUMENT_TYPE, propertyFile.getDocumentType());
-            checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_IS_COST, propertyFile.isCost().toString());
-            checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_AMOUNT, propertyFile.getAmount().toString());
+            if (propertyFile.isCost() != null) {
+                checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_IS_COST, propertyFile.isCost().toString());
+            }
+            if (propertyFile.getAmount() != null) {
+                checkNullBuilderValuesMap(builder, Keys.PropertyFile.FILE_AMOUNT, propertyFile.getAmount().toString());
+            }
             return builder.build();
         });
     }

@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.home.editproperty.files
 
 import android.net.Uri
+import android.support.annotation.StringRes
 import com.soho.sohoapp.data.models.PropertyFile
 import com.soho.sohoapp.data.models.SohoOption
 import com.soho.sohoapp.feature.BaseViewInteractable
@@ -36,6 +37,8 @@ interface EditPropertyAddFileContract {
         fun toggleSendingFileIndicator(sending: Boolean)
 
         fun fileSelected(uri: Uri)
+
+        fun showToastMessage(@StringRes message: Int)
 
     }
 }

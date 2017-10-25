@@ -31,9 +31,14 @@ public class ImageLoader {
         if (params.width > 0 && params.height > 0) {
             creator.resize(params.width, params.height);
         }
-        creator.placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
-                .error(params.placeHolder)
-                .into(params.imageView);
+        if (params.placeHolder != 0) {
+            creator.placeholder(AppCompatResources.getDrawable(context, params.placeHolder))
+                    .error(params.placeHolder);
+        }
+        if (params.centerCrop) {
+            creator.centerCrop();
+        }
+        creator.into(params.imageView);
     }
 
     public static class Params {
@@ -42,6 +47,7 @@ public class ImageLoader {
         Uri uri;
         int height;
         int width;
+        boolean centerCrop;
 
         @DrawableRes
         int placeHolder;
@@ -81,6 +87,11 @@ public class ImageLoader {
 
         public Params width(int width) {
             this.width = width;
+            return this;
+        }
+
+        public Params centerCrop(boolean centerCrop) {
+            this.centerCrop = centerCrop;
             return this;
         }
     }

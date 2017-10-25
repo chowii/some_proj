@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.home.editproperty.files
 
 import android.net.Uri
 import com.soho.sohoapp.Dependencies
+import com.soho.sohoapp.R
 import com.soho.sohoapp.data.enums.FileCostType
 import com.soho.sohoapp.data.models.Property
 import com.soho.sohoapp.data.models.PropertyFile
@@ -49,9 +50,11 @@ class EditPropertyAddFilePresenter(private var interactable: EditPropertyAddFile
     override fun getFileTypesList(): List<SohoOption> = fileTypes
 
     override fun onSaveClicked() {
-        currentFile.id?.let { currentFileId ->
-            updateCurrentFile(currentFileId)
-        } ?: createNewFile()
+        if (dataIsValid()) {
+            currentFile.id?.let { currentFileId ->
+                updateCurrentFile(currentFileId)
+            } ?: createNewFile()
+        }
     }
 
     override fun onBackClicked() {
@@ -76,19 +79,18 @@ class EditPropertyAddFilePresenter(private var interactable: EditPropertyAddFile
 
     private fun selectPhotoFromGallery() {
         cleanCameraDisposable()
-        galleryDisposable = permissionManager.requestStoragePermission(RequestCode.EDIT_ACCOUNT_PRESENTER_STORAGE)
+        galleryDisposable = rxGallery.toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap { permissionEvent ->
-                    if (permissionEvent.isPermissionGranted) {
-                        rxGallery.toObservable()
-                    } else
-                        Observable.empty<MutableList<Uri>>()
-                }.subscribe { photos ->
-            photos.firstOrNull()?.let { photoUri ->
-                currentFile.fileToUploadUri = photoUri
-                interactable.fileSelected(photoUri)
-            } ?: interactable.showError(Throwable())
-        }
+                .subscribe(
+                        { photos ->
+                            photos.firstOrNull()?.let { photoUri ->
+                                currentFile.fileToUploadUri = photoUri
+                                interactable.fileSelected(photoUri)
+                            }
+                        },
+                        {
+                            interactable.showError(it)
+                        })
     }
 
     private fun selectPhotoFromCamera() {
@@ -100,10 +102,14 @@ class EditPropertyAddFilePresenter(private var interactable: EditPropertyAddFile
                         rxCamera.toObservable()
                     } else
                         Observable.empty<Uri>()
-                }.subscribe { photoUri ->
-            currentFile.fileToUploadUri = photoUri
-            interactable.fileSelected(photoUri)
-        }
+                }.subscribe(
+                { photoUri ->
+                    currentFile.fileToUploadUri = photoUri
+                    interactable.fileSelected(photoUri)
+                },
+                {
+                    interactable.showError(it)
+                })
     }
 
     private fun cleanCameraDisposable() {
@@ -145,9 +151,9 @@ class EditPropertyAddFilePresenter(private var interactable: EditPropertyAddFile
                 .subscribeOn(Schedulers.newThread())
                 .map(Converter::toPropertyFile)
                 .subscribe(
-                        {
+                        { propertyFile ->
                             interactable.toggleSendingFileIndicator(false)
-                            navigator.exitCurrentScreen()
+                            navigator.exitWithResultCodeOk(propertyFile, false)
                         },
                         { throwable ->
                             interactable.toggleSendingFileIndicator(false)
@@ -166,14 +172,23 @@ class EditPropertyAddFilePresenter(private var interactable: EditPropertyAddFile
                 .subscribeOn(Schedulers.newThread())
                 .map(Converter::toPropertyFile)
                 .subscribe(
-                        {
+                        { propertyFile ->
                             interactable.toggleSendingFileIndicator(false)
-                            navigator.exitCurrentScreen()
+                            navigator.exitWithResultCodeOk(propertyFile, false)
                         },
                         { throwable ->
                             interactable.toggleSendingFileIndicator(false)
                             interactable.showError(throwable)
                         })
         )
+    }
+
+    private fun dataIsValid(): Boolean {
+        var dataIsValid = true
+        if (currentFile.fileToUploadUri == null && currentFile.filePhoto == null) {
+            interactable.showToastMessage(R.string.add_file_data_not_valid)
+            dataIsValid = false
+        }
+        return dataIsValid
     }
 }

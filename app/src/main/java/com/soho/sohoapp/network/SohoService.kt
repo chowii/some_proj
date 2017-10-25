@@ -63,11 +63,17 @@ interface SohoService {
     @PUT("properties/{id}/")
     fun updateProperty(@Path("id") id: Long, @Body map: QueryHashMap): Observable<PropertyResult>
 
-    @POST("properties/{propertyId}/documents")
-    fun createPropertyFile(@Path("propertyId") propertyId: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+    @GET("properties/{property_id}/documents")
+    fun getPropertyFiles(@Path("property_id") propertyId: Int): Observable<List<PropertyFileResult>>
 
-    @PUT("properties/{propertyId}/documents/{id}")
-    fun updatePropertyFile(@Path("propertyId") propertyId: Int, @Path("id") id: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+    @POST("properties/{property_id}/documents")
+    fun createPropertyFile(@Path("property_id") propertyId: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+
+    @PUT("properties/{property_id}/documents/{id}")
+    fun updatePropertyFile(@Path("property_id") propertyId: Int, @Path("id") id: Int, @Body requestBody: RequestBody): Observable<PropertyFileResult>
+
+    @DELETE("properties/{property_id}/documents/{id}")
+    fun deletePropertyFile(@Path("property_id") propertyId: Int, @Path("id") id: Int): Observable<PropertyFileResult>
 
     @PUT("properties/{id}/property_listing")
     fun updatePropertyListing(@Path("id") propertyId: Long, @Body map: QueryHashMap): Observable<PropertyListingResult>

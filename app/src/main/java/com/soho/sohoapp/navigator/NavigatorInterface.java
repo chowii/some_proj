@@ -7,6 +7,7 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyFile;
 import com.soho.sohoapp.data.models.Verification;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioCategory;
 import com.soho.sohoapp.feature.home.portfolio.data.PortfolioManagerCategory;
@@ -33,6 +34,8 @@ public interface NavigatorInterface {
     void exitWithResultCodeOk(InspectionTime inspectionTime, boolean inspectionTimeIsCreated);
 
     void exitWithResultCodeOk(String string);
+
+    void exitWithResultCodeOk(PropertyFile propertyFile, boolean wasDeleted);
 
     void openAddPropertyScreen();
 
@@ -73,6 +76,10 @@ public interface NavigatorInterface {
     void openVerificationScreen(@NonNull Property property, int requestCode);
 
     void openOwnershipVerificationScreen(Property property, int requestCode);
+
+    void openEditPropertyAddFileScreen(Property property, PropertyFile propertyFile, int requestCode);
+
+    void openEditPropertyPreviewFileScreen(Property property, PropertyFile propertyFile, int requestCode);
 
     void openAutocompleteAddressScreen(int requestCode);
 

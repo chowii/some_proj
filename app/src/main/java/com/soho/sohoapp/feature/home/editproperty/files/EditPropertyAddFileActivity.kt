@@ -175,13 +175,21 @@ class EditPropertyAddFileActivity : AbsActivity(),
     }
 
     override fun toggleSendingFileIndicator(sending: Boolean) {
-        if (sending) loadingDialog.show("") else loadingDialog.dismiss()
+        if (sending) loadingDialog.show(getString(R.string.common_loading)) else loadingDialog.dismiss()
     }
 
     override fun fileSelected(uri: Uri) {
-        imageViewFile.setImageURI(uri)
+        DEPENDENCIES.imageLoader.load(ImageLoader.Params.create()
+                .file(uri)
+                .view(imageViewFile)
+                .height(imageViewFile.height)
+                .width(imageViewFile.width)
+                .centerCrop(true))
     }
 
+    override fun showToastMessage(message: Int) {
+        showToast(message)
+    }
     // MARK: - ================== Listeners ==================
 
     @OnCheckedChanged(R.id.rb_expense, R.id.rb_income)
