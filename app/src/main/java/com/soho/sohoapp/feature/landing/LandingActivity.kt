@@ -108,8 +108,9 @@ class LandingActivity : AbsActivity() {
 
     private fun loginWithGooglePlus(data: Intent?) {
         val result = GoogleSignInApi.getSignInResultFromIntent(data)
-        if (result.isSuccess) {
-            compositeDisposable.add(Observable.just(result.signInAccount?.idToken)
+        val idToken = result.signInAccount?.idToken
+        if (result.isSuccess && idToken != null) {
+            compositeDisposable.add(Observable.just(idToken)
                     .switchMap {
                         DEPENDENCIES.sohoService.loginWithGoogle(it)
                     }

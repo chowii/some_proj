@@ -10,8 +10,8 @@
 
     <string name="key_elasticode_api">35spuf65pdlmtnwq8pfne0uz</string>
 
-    <string name="key_google_services_api">AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4</string>
     <string name="key_google_geo_api">AIzaSyBNUDd-PUuMzF68Wqcdbr9uNghPScnEXt4</string>
+    <!--it works only with the web client server id-->
     <string name="google_server_client_id" tools:ignore="TypographyDashes">929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com</string>
 
     <string name="key_zendesk_app_url">https://sohoapp.zendesk.com</string>
@@ -20,7 +20,7 @@
     <string name="zen_desk_outbound_private_key">c21e2c0f0f623d0e359d5b73bcee4cc3</string>
     <string name="url_terms_and_conditions">https://sohoapp.com/terms-and-conditions/</string>
 
-    <string name="firebase_gcm_sender_id">594812535923</string>
+    <string name="firebase_gcm_sender_id">929774443290</string>
 
 
     <string name="filter_view_sohoapp_home">deep linking home activity filter</string>

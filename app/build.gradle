@@ -41,15 +41,11 @@ android {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            ext.enableCrashlytics = true
-            manifestPlaceholders = [api_key_crashlytics: "c1578fbecca8db659e13e4e0d630da441201b92d"]
         }
         release {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //this api key belongs to Soho Soho Property Pty Ltd Fabric organization
-            manifestPlaceholders = [api_key_crashlytics: "27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb"]
         }
     }
 
@@ -86,11 +82,15 @@ android {
             dimension "default"
             resValue "string", "app_name", "Soho Dev"
             applicationIdSuffix ".dev"
+            //source https://stackoverflow.com/a/25704532
+            manifestPlaceholders = [api_key_crashlytics: "27bdc3cd5a4f0eb2353f5b7a78c9b6907c6f0cdb"]
         }
         production {
             dimension "default"
             signingConfig signingConfigs.release
             resValue "string", "app_name", "Soho"
+            //this api key belongs to Soho Soho Property Pty Ltd Fabric organization
+            manifestPlaceholders = [api_key_crashlytics: "c1578fbecca8db659e13e4e0d630da441201b92d"]
         }
     }
 
@@ -106,17 +106,18 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-core:11.4.2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    //Support Library
+    //firebase
+    implementation 'com.google.firebase:firebase-core:11.4.2'
 
     //todo facebook sdk uses custom tabs 25.3.1 which can cause runtime bugs
-
     //check fb update and possible solutions
+
+    //Support Library
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:support-v4:$support_version"
     implementation "com.android.support:design:$support_version"

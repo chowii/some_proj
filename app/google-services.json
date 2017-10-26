@@ -1,35 +1,39 @@
 {
   "project_info": {
-    "project_number": "594812535923",
-    "firebase_url": "https://sohoapp-232a4.firebaseio.com",
-    "project_id": "sohoapp-232a4",
-    "storage_bucket": "sohoapp-232a4.appspot.com"
+    "project_number": "929774443290",
+    "firebase_url": "https://soho-175508.firebaseio.com",
+    "project_id": "soho-175508",
+    "storage_bucket": "soho-175508.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:594812535923:android:a22fe8de59ab23b6",
+        "mobilesdk_app_id": "1:929774443290:android:b5f1bd488bf76d30",
         "android_client_info": {
-          "package_name": "com.soho.sohoapp"
+          "package_name": "com.soho.sohoapp.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "594812535923-rlv1p9oh7mroqghl6t2pf45rjefd8q1e.apps.googleusercontent.com",
+          "client_id": "929774443290-2b426hk5p3l3620dnuo1j9kfivl8l7gh.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "929774443290-jtnc19c97st52iat4j0fq19l3ktp5h70.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.soho.sohoapp",
+            "package_name": "com.soho.sohoapp.dev",
             "certificate_hash": "9a4b182aada2f52cec5bc57935d330866f2845fe"
           }
         },
         {
-          "client_id": "594812535923-lhosg8v9kogie94ka9ksmg5cdv559mdo.apps.googleusercontent.com",
+          "client_id": "929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBumZr4iZdByagiJ0kojPt5TdSQJL7yLT4"
+          "current_key": "AIzaSyCIzYz1BabcfDuv1u48zDsO7XOhP_z60lw"
         }
       ],
       "services": {
@@ -40,15 +44,14 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "594812535923-gf52gknbf9hlee4bmsrcdaso7t38mbif.apps.googleusercontent.com",
+              "client_id": "929774443290-8s5drko7toahao20ep6uqhukf5vhoh12.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.soho.sohoapp",
-                "app_store_id": "1246593945"
+                "bundle_id": "com.soho.sohoapp"
               }
             },
             {
-              "client_id": "594812535923-lhosg8v9kogie94ka9ksmg5cdv559mdo.apps.googleusercontent.com",
+              "client_id": "929774443290-2b426hk5p3l3620dnuo1j9kfivl8l7gh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -60,20 +63,24 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:594812535923:android:b5f1bd488bf76d30",
+        "mobilesdk_app_id": "1:929774443290:android:a22fe8de59ab23b6",
         "android_client_info": {
-          "package_name": "com.soho.sohoapp.dev"
+          "package_name": "com.soho.sohoapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "594812535923-lhosg8v9kogie94ka9ksmg5cdv559mdo.apps.googleusercontent.com",
+          "client_id": "929774443290-2b426hk5p3l3620dnuo1j9kfivl8l7gh.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBumZr4iZdByagiJ0kojPt5TdSQJL7yLT4"
+          "current_key": "AIzaSyCIzYz1BabcfDuv1u48zDsO7XOhP_z60lw"
         }
       ],
       "services": {
@@ -81,8 +88,20 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929774443290-8s5drko7toahao20ep6uqhukf5vhoh12.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.soho.sohoapp"
+              }
+            },
+            {
+              "client_id": "929774443290-2b426hk5p3l3620dnuo1j9kfivl8l7gh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
