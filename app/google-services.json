@@ -47,7 +47,8 @@
               "client_id": "929774443290-8s5drko7toahao20ep6uqhukf5vhoh12.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.soho.sohoapp"
+                "bundle_id": "com.soho.sohoapp",
+                "app_store_id": "1246593945"
               }
             },
             {
@@ -74,6 +75,14 @@
           "client_type": 3
         },
         {
+          "client_id": "929774443290-jit5db54565h3hhlaqe94ralhfr323c0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soho.sohoapp",
+            "certificate_hash": "c4b69bd66871d82d6526f2241e54d20129d644d1"
+          }
+        },
+        {
           "client_id": "929774443290-4qqsh5nqe94nosgq3oiheb8nkan7es5r.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -94,7 +103,8 @@
               "client_id": "929774443290-8s5drko7toahao20ep6uqhukf5vhoh12.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.soho.sohoapp"
+                "bundle_id": "com.soho.sohoapp",
+                "app_store_id": "1246593945"
               }
             },
             {

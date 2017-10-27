@@ -112,7 +112,7 @@ dependencies {
     })
 
     //firebase
-    implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation "com.google.firebase:firebase-core:$playServicesVersion"
 
     //todo facebook sdk uses custom tabs 25.3.1 which can cause runtime bugs
     //check fb update and possible solutions
