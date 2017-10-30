@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -258,7 +259,9 @@ public class EditPropertyActivity extends AbsActivity implements
 
     private void initToolbar() {
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
-        toolbar.setNavigationOnClickListener(view -> presentable.onBackClicked());
+        toolbar.setNavigationOnClickListener(view -> {
+            showDiscardConfirmationDialog();
+        });
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_add_photo:
@@ -270,6 +273,24 @@ public class EditPropertyActivity extends AbsActivity implements
             }
             return false;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDiscardConfirmationDialog();
+    }
+
+    private void showDiscardConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setMessage(R.string.dialog_want_save)
+                .setPositiveButton(R.string.edit_property_save, (dialogInterface, i) -> {
+                    presentable.onSaveClicked();
+                })
+                .setNegativeButton(R.string.discard, (dialogInterface, i) -> {
+                    presentable.onBackClicked();
+                })
+                .show();
     }
 
     private void initView() {

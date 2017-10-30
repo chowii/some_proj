@@ -64,22 +64,17 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
     }
 
+    private var availableLocales: List<String> = Locale.getAvailableLocales()
+            .map { it.displayCountry }
+            .filter { !it.isNullOrBlank() }
+            .distinctBy { it }
+            .sorted()
+
     private fun initView() {
         edit_photo_tv.setOnClickListener {
             presenter.onEditPhotoClick()
         }
 
-        val availableLocales = Locale.getAvailableLocales()
-                .map { it.displayCountry }
-                .filter { !it.isNullOrBlank() }
-                .distinctBy { it }
-                .sorted()
-        val dataAdapter = ArrayAdapter<String>(this.context,
-                android.R.layout.simple_spinner_item, availableLocales)
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        country_spinner.adapter = dataAdapter
-        val localeCountry = Locale.getDefault().displayCountry
-        country_spinner.setSelection(availableLocales.indexOf(localeCountry))
         country_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -137,8 +132,14 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         }
 
         update_btn.setOnClickListener(updateProfile)
-        change_password_tv.setOnClickListener{presenter.onChangePasswordClick()}
+        change_password_tv.setOnClickListener { presenter.onChangePasswordClick() }
 
+        val dataAdapter = ArrayAdapter<String>(this.context,
+                android.R.layout.simple_spinner_item, availableLocales)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        country_spinner.adapter = dataAdapter
+
+        country_spinner.setSelection(availableLocales.indexOf(user.country))
     }
 
     override fun showPickedDate(calendarPicked: Calendar) {

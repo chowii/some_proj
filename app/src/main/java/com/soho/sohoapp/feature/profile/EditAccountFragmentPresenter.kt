@@ -72,6 +72,7 @@ class EditAccountFragmentPresenter(private val view: EditAccountContract.ViewInt
                         { user ->
                             DEPENDENCIES.userPrefs.login(user)
                             view.hideLoading()
+                            navigator.exitCurrentScreen()
                         },
                         {
                             view.hideLoading()

@@ -92,20 +92,35 @@ fun String.toFormattedNumberValue(): String {
  */
 fun String.abbreviatedMoneyValueToInt(): Int {
     return try {
-
         val strippedString = this.filter {
             it.isDigit()
+                    || it == '.'// note we keep the "." cause it's defined infilter_buy_price_range
+                    // this is a specific format and not geo localised as in IntExtKt.toShortHand()
                     || it.toString() == getStringFromResource(R.string.int_ext_shorthand_thousand)
                     || it.toString() == getStringFromResource(R.string.int_ext_shorthand_million)
                     || it.toString() == getStringFromResource(R.string.int_ext_shorthand_billion)
         }
         when {
-            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true).toInt() * 1_000
-            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true).toInt() * 1_000_000
-            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_billion), true) -> strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_billion), "", true).toInt() * 1_000_000_000
-            else -> strippedString.toInt()
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_thousand), true) ->
+                (strippedString
+                        .replace(getStringFromResource(R.string.int_ext_shorthand_thousand), "", true)
+                        .toDouble() * 1_000)
+                        .toInt()
+
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_million), true) ->
+                (strippedString.
+                        replace(getStringFromResource(R.string.int_ext_shorthand_million), "", true)
+                        .toDouble() * 1_000_000)
+                        .toInt()
+
+            strippedString.contains(getStringFromResource(R.string.int_ext_shorthand_billion), true) ->
+                (strippedString.replace(getStringFromResource(R.string.int_ext_shorthand_billion), "", true)
+                        .toDouble() * 1_000_000_000)
+                        .toInt()
+            else -> strippedString.toDouble().toInt()
         }
     } catch (exception: NumberFormatException) {
+        DEPENDENCIES.logger.e("abbreviatedMoneyValueToInt", exception)
         0
     }
 }

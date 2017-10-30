@@ -116,6 +116,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
         headerItem.setBathroom(property.getBathrooms());
         headerItem.setCarspot(property.getCarspots());
         headerItem.setPropertySize(property.getLandSize());
+        headerItem.setLandSizeMeasurament(property.getLandSizeMeasurement());
         headerItem.applyPropertyTypeChange(property.getType());
         headerItem.setPropertyState(property.getState());
         headerItem.setRepresentingUser(property.getRepresentingUser());

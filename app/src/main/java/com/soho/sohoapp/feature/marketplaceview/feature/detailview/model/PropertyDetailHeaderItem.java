@@ -19,7 +19,7 @@ public class PropertyDetailHeaderItem implements BaseModel {
     private double bathroom;
     private double carspot;
     private int propertySize;
-    private String sizeUnit;
+    private String landSizeMeasurament;
     private String propertyType;
     private String propertyState;
     private PropertyUser representingUser;
@@ -27,47 +27,62 @@ public class PropertyDetailHeaderItem implements BaseModel {
     private static String PROPERTY_DEFAULT_TEXT = getStringFromResource(R.string.property_detail_header_no_header_text);
 
     @Override
-    public int getItemViewType() { return R.layout.item_property_detail_header; }
+    public int getItemViewType() {
+        return R.layout.item_property_detail_header;
+    }
 
-    public String getHeader() { return header == null ? PROPERTY_DEFAULT_TEXT : header; }
+    public String getHeader() {
+        return header == null ? PROPERTY_DEFAULT_TEXT : header;
+    }
 
     public void setHeader(String header) {
         if (header == null) this.header = PROPERTY_DEFAULT_TEXT;
         else this.header = header;
     }
 
-    public double getBathroom() { return bathroom; }
+    public void setLandSizeMeasurament(String landSizeMeasurament) {
+        this.landSizeMeasurament = landSizeMeasurament;
+    }
 
-    public void setBathroom(double bathroom) { this.bathroom = (bathroom); }
+    public double getBathroom() {
+        return bathroom;
+    }
 
-    public double getBedroom() { return bedroom; }
+    public void setBathroom(double bathroom) {
+        this.bathroom = (bathroom);
+    }
 
-    public void setBedroom(double bedroom) { this.bedroom = bedroom; }
+    public double getBedroom() {
+        return bedroom;
+    }
 
-    public double getCarspot() { return carspot; }
+    public void setBedroom(double bedroom) {
+        this.bedroom = bedroom;
+    }
 
-    public void setCarspot(double carspot) { this.carspot = carspot; }
+    public double getCarspot() {
+        return carspot;
+    }
 
-    public int getPropertySize() { return propertySize; }
+    public void setCarspot(double carspot) {
+        this.carspot = carspot;
+    }
+
+    public int getPropertySize() {
+        return propertySize;
+    }
 
     public void setPropertySize(int propertySize) {
         if (propertySize < 0) this.propertySize = 0;
         else this.propertySize = propertySize;
     }
 
-    public String getSizeUnit() { return sizeUnit == null ? " \u33A1" : sizeUnit; }
-
-    public void setSizeUnit(String sizeUnit) {
-        if (sizeUnit == null) sizeUnit = "";
-        else this.sizeUnit = sizeUnit;
-    }
-
-    public String getPropertySizeWithUnit(){
+    public String getPropertySizeWithUnit() {
         return String.format(
                 Locale.getDefault(),
                 getStringFromResource(R.string.integer_space_string_format_string),
                 propertySize,
-                getSizeUnit()
+                landSizeMeasurament
         );
     }
 
@@ -75,7 +90,9 @@ public class PropertyDetailHeaderItem implements BaseModel {
         this.propertyType = propertyType;
     }
 
-    public String retrievePropertyType() { return propertyType == null ? "Unknown" : propertyType; }
+    public String retrievePropertyType() {
+        return propertyType == null ? getStringFromResource(R.string.unknown) : propertyType;
+    }
 
     public String getPropertyState() {
         return propertyState;
