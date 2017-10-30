@@ -69,6 +69,8 @@ public class EditPropertyActivity extends AbsActivity implements
     private GalleryPicker galleryPicker;
     private View loadingView;
     private LoadingDialog loadingDialog;
+    private boolean isEdited;
+    private boolean editedEnabled;
 
     @NonNull
     public static Intent createIntent(@NonNull Context context, int propertyId) {
@@ -225,43 +227,58 @@ public class EditPropertyActivity extends AbsActivity implements
     @Override
     public void onPropertyAddressChanged(Location location) {
         presentable.onPropertyAddressChanged(location);
+        setIsEdited();
     }
 
     @Override
     public void onRoomsNumberChanged(double bedrooms, double bathrooms, double carspots) {
         presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
+        setIsEdited();
     }
 
     @Override
     public void onPropertyTypeChanged(String type) {
         presentable.onPropertyTypeChanged(type);
+        setIsEdited();
     }
 
     @Override
     public void onRenovationChanged(String renovation) {
         presentable.onRenovationChanged(renovation);
+        setIsEdited();
     }
 
     @Override
     public void onInvestmentStatusChanged(boolean isInvestment) {
         presentable.onInvestmentStatusChanged(isInvestment);
+        setIsEdited();
     }
 
     @Override
     public void onPropertyStatusChanged(String propertyStatus) {
         presentable.onPropertyStatusChanged(propertyStatus);
+        setIsEdited();
     }
 
     @Override
     public void onPropertyFinanceChanged(PropertyFinance finance) {
         presentable.onPropertyFinanceChanged(finance);
+        setIsEdited();
+    }
+
+    @Override
+    public void onPropertyChangedEnabled() {
+        editedEnabled = true;
+    }
+
+    public void setIsEdited() {
+        if (editedEnabled)
+            this.isEdited = true;
     }
 
     private void initToolbar() {
         toolbar.inflateMenu(R.menu.edit_property_toolbar);
-        toolbar.setNavigationOnClickListener(view -> {
-            showDiscardConfirmationDialog();
-        });
+        toolbar.setNavigationOnClickListener(view -> showDiscardConfirmationDialog());
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_add_photo:
@@ -281,16 +298,20 @@ public class EditPropertyActivity extends AbsActivity implements
     }
 
     private void showDiscardConfirmationDialog() {
-        new AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setMessage(R.string.dialog_want_save)
-                .setPositiveButton(R.string.edit_property_save, (dialogInterface, i) -> {
-                    presentable.onSaveClicked();
-                })
-                .setNegativeButton(R.string.discard, (dialogInterface, i) -> {
-                    presentable.onBackClicked();
-                })
-                .show();
+        if (isEdited) {
+            new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setMessage(R.string.dialog_want_save)
+                    .setPositiveButton(R.string.edit_property_save, (dialogInterface, i) -> {
+                        presentable.onSaveClicked();
+                    })
+                    .setNegativeButton(R.string.discard, (dialogInterface, i) -> {
+                        presentable.onBackClicked();
+                    })
+                    .show();
+        } else {
+            presentable.onBackClicked();
+        }
     }
 
     private void initView() {

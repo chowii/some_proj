@@ -113,6 +113,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
 
         presenter = new EditOverviewPresenter(this, NavigatorImpl.newInstance(this));
         presenter.startPresenting(savedInstanceState != null);
+        getEditPropertyListener().onPropertyChangedEnabled();
         return view;
     }
 
@@ -338,9 +339,8 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         verificationDesc = ButterKnife.findById(verification, R.id.title);
         verificationDesc.setText(R.string.edit_property_verification);
         investmentSummary.setListener(finance -> presentable.onPropertyFinanceChanged(finance));
-        roomsSelector.setPickerValueChangedListener((bedrooms, bathrooms, carspots) -> {
-            presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots);
-        });
+        roomsSelector.setPickerValueChangedListener((bedrooms, bathrooms, carspots) ->
+                presentable.onRoomsNumberChanged(bedrooms, bathrooms, carspots));
     }
 
     @Nullable
@@ -366,5 +366,7 @@ public class EditOverviewFragment extends BaseFragment implements EditOverviewCo
         void onPropertyStatusChanged(String propertyStatus);
 
         void onPropertyFinanceChanged(PropertyFinance finance);
+
+        void onPropertyChangedEnabled();
     }
 }
