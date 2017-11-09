@@ -2,7 +2,11 @@ package com.soho.sohoapp.feature.landing
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
+import android.view.View
+import android.view.View.GONE
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API
@@ -31,7 +35,7 @@ class LandingActivity : AbsActivity() {
 
 
     private val facebookManager by lazy { FacebookManager(this) }
-    private val googleSigninOptions by lazy {
+    private val googleSignInOptions by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken(getString(R.string.google_server_client_id))
@@ -43,7 +47,7 @@ class LandingActivity : AbsActivity() {
                         /* OnConnectionFailedListener */) {
                     DEPENDENCIES.logger.e("google api client connection failed")
                 }
-                .addApi(GOOGLE_SIGN_IN_API, googleSigninOptions)
+                .addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build()
     }
     private val compositeDisposable by lazy { CompositeDisposable() }
@@ -54,6 +58,12 @@ class LandingActivity : AbsActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         ButterKnife.bind(this)
+
+        // Google+ is returning a null intent when we try to signIn  in android 4.x
+        // couldn't find any documentation regarding this issue so we remove the button at runtime
+        if (SDK_INT <= LOLLIPOP) {
+            findViewById<View>(R.id.google_plus_login_btn).visibility = GONE
+        }
     }
 
     override fun onDestroy() {
@@ -65,7 +75,8 @@ class LandingActivity : AbsActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         facebookManager.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_GOOGLE_PLUS) {
+//        if (data!= null && requestCode == RC_GOOGLE_PLUS) {
+        if (data != null && requestCode == RC_GOOGLE_PLUS) {
             loginWithGooglePlus(data)
         }
     }
@@ -106,7 +117,7 @@ class LandingActivity : AbsActivity() {
         facebookManager.login()
     }
 
-    private fun loginWithGooglePlus(data: Intent?) {
+    private fun loginWithGooglePlus(data: Intent) {
         val result = GoogleSignInApi.getSignInResultFromIntent(data)
         val idToken = result.signInAccount?.idToken
         if (result.isSuccess && idToken != null) {
