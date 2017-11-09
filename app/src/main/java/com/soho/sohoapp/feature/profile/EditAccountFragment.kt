@@ -105,7 +105,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
             val params = ImageLoader.Params.create()
                     .url(user.avatar?.smallImageUrl!!)
                     .view(user_avatar_iv)
-                    .placeHolder(R.drawable.ph_avatar_profile)
+                    .placeHolder(R.drawable.ic_account_circle_gray)
             imageLoader.load(params)
         }
 

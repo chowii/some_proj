@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_toStartOf="@id/center_space"
-                android:background="@drawable/ph_avatar_profile" /><!--for the CircleImageView the placeholder
+                android:background="@drawable/ic_account_circle_gray_drawable" /><!--for the CircleImageView the placeholder
                                                             won't work, we need to set it as background-->
             <TextView
                 android:id="@+id/edit_photo_tv"

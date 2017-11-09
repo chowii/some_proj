@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyConnections;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.feature.BaseViewInteractable;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
@@ -69,7 +70,7 @@ interface EditPropertyContract {
 
         void showAddress2(String address);
 
-        void initTabs(Property property, ArrayList<PropertyType> propertyTypes);
+        void initTabs(Property property, PropertyConnections connections, ArrayList<PropertyType> propertyTypes);
 
         void showLoadingDialog();
 

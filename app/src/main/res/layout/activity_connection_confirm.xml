@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:title="@string/connection_confirm_toolbar"
+        app:titleTextColor="@color/white"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_house_with_mobile"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="@color/primaryText"
+        android:textSize="14sp"
+        tools:text="@string/test_text_medium"/>
+
+    <TextView
+        android:id="@+id/role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:textColor="@color/primaryText"
+        android:textSize="14sp"
+        tools:text="@string/test_text_short"/>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="14dp"
+        android:textColor="@color/greenText"
+        android:textSize="14sp"
+        tools:text="@string/test_text_medium"/>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/connection_confirm"
+        android:textAllCaps="true"
+        android:theme="@style/MaterialButton.Green"/>
+</LinearLayout>

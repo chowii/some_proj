@@ -7,6 +7,7 @@ import com.soho.sohoapp.abs.AbsPresenter;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyConnections;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
 import com.soho.sohoapp.navigator.NavigatorInterface;
@@ -36,6 +37,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
     private final List<Image> propertyImages;
     private final ArrayList<PropertyType> propertyTypes;
     private final CompositeDisposable compositeDisposable;
+    private final PropertyConnections propertyConnections;
     private Disposable permissionDisposable;
     private Property property;
 
@@ -49,6 +51,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
         this.permissionManager = permissionManager;
         propertyImages = new ArrayList<>();
         propertyTypes = new ArrayList<>();
+        propertyConnections = new PropertyConnections();
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -66,6 +69,12 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                 .map(Converter::toProperty)
                 .switchMap(property -> {
                     this.property = property;
+                    return DEPENDENCIES.getSohoService().getPropertyConnections(property.getId());
+                })
+                .map(Converter::toPropertyConnections)
+                .switchMap(connections -> {
+                    this.propertyConnections.getUsers().addAll(connections.getUsers());
+                    this.propertyConnections.getRequests().addAll(connections.getRequests());
                     return DEPENDENCIES.getSohoService().getPropertyFiles(property.getId());
                 })
                 .map(Converter::toPropertyFiles)
@@ -74,7 +83,7 @@ public class EditPropertyPresenter implements AbsPresenter, EditPropertyContract
                 .subscribe(propertyFiles ->
                 {
                     property.setFiles(propertyFiles);
-                    view.initTabs(property, propertyTypes);
+                    view.initTabs(property, propertyConnections, propertyTypes);
                     initPropertyImages();
                     showToolbarActionsIfNeeded();
                     Location address = property.getLocation();

@@ -177,6 +177,48 @@
     <string name="edit_property_portfolio_type_archived">Archived</string>
     <!--Edit property screen end-->
 
+    <!--Connection screen start-->
+    <string name="connection_add_new">Add Connection</string>
+    <string name="connection_owner_name" formatted="true">%s (Owner)</string>
+    <string name="connection_agent_name" formatted="true">%s (Agent)</string>
+    <string name="connection_guest_name" formatted="true">%s (Guest)</string>
+    <string name="connection_add_pending">Pending</string>
+    <string name="connection_invited">Has been invited to connect</string>
+    <string name="connection_connected_parties">Connected Parties</string>
+    <string name="connection_delete">Delete</string>
+    <string name="connection_revoke">Revoke</string>
+    <string name="connection_leave">Leave</string>
+    <string name="connection_confirm_deletion" formatted="true">Are you sure you want to remove %s as a connection?</string>
+    <string name="connection_confirm_unknown_deletion">Are you sure you want to remove this connection?</string>
+    <string name="connection_confirmation">Confirmation</string>
+    <string name="connection_confirm_deletion_yes">Remove</string>
+    <string name="connection_confirm_deletion_no">Cancel</string>
+    <!--Connection screen end-->
+
+    <!--New Connection screen start-->
+    <string name="new_connection_toolbar">Add A Connection</string>
+    <string name="new_connection_role">Connection Role</string>
+    <string name="new_connection_role_desc">Role of Connection</string>
+    <string name="new_connection_details">Connection Details</string>
+    <string name="new_connection_first_name">First Name..</string>
+    <string name="new_connection_email">Email..</string>
+    <string name="new_connection_send_invite">Send Invite</string>
+    <string name="new_connection_role_not_selected">Please select connection role</string>
+    <string name="new_connection_full_name_empty">Please provide a name</string>
+    <string name="new_connection_email_empty">Please provide an email</string>
+    <string name="new_connection_email_not_valid">Email is not valid</string>
+    <!--New Connection screen end-->
+
+    <!--Connection Confirm screen start-->
+    <string name="connection_confirm">Confirm</string>
+    <string name="connection_confirm_toolbar">Add A Connection</string>
+    <string name="connection_confirm_name" formatted="true">Add %s</string>
+    <string name="connection_confirm_role" formatted="true">as %s to</string>
+    <string name="connection_confirm_role_owner">Owner</string>
+    <string name="connection_confirm_role_agent">Agent</string>
+    <string name="connection_confirm_role_guest">Guest</string>
+    <!--Connection Confirm screen end-->
+
     <!--Add Property File screen start-->
     <string name="add_file_options">OPTIONS</string>
     <string name="add_file_save">SAVE</string>

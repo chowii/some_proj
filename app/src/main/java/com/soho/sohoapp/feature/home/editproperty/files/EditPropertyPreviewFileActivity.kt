@@ -48,8 +48,7 @@ class EditPropertyPreviewFileActivity : AbsActivity(), EditPropertyPreviewFileCo
         ButterKnife.bind(this)
 
         initToolbar()
-        presenter = EditPropertyPreviewFilePresenter(this,
-                NavigatorImpl.newInstance(this))
+        presenter = EditPropertyPreviewFilePresenter(this, NavigatorImpl.newInstance(this))
         presenter.startPresenting(savedInstanceState != null)
     }
 

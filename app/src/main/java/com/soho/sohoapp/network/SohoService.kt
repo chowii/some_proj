@@ -84,10 +84,27 @@ interface SohoService {
     @DELETE("properties/{property_id}/property_listing/inspection_times/{id}")
     fun deleteInspectionTime(@Path("property_id") propertyId: Int, @Path("id") inspectionTimeId: Int): Observable<InspectionTimeResult>
 
+    // MARK: - ================== Connections related ==================
+
+    @POST("properties/{property_id}/property_users")
+    fun inviteUserToProperty(@Path("property_id") propertyId: Int, @Body map: QueryHashMap): Observable<ConnectionRequestResult>
+
+    @GET("properties/{property_id}/connections")
+    fun getPropertyConnections(@Path("property_id") propertyId: Int): Observable<ConnectionsResult>
+
+    @DELETE("properties/{property_id}/property_user_requests/{id}/revoke")
+    fun revokeConnectionRequest(@Path("property_id") propertyId: Int, @Path("id") requestId: Int): Observable<ConnectionRequestResult>
+
+    @DELETE("properties/{property_id}/property_users/{id}")
+    fun removeUserFromProperty(@Path("property_id") propertyId: Int, @Path("id") userId: Int): Observable<PropertyUserResult>
+
     // MARK: - ================== Options related ==================
 
     @GET("options/property_user_roles")
     fun getPropertyUserRoles(): Observable<List<PropertyUserRolesResult>>
+
+    @GET("options/property_user_roles")
+    fun getPropertyUserRoles(@Query("property_id") propertyId: Int): Observable<List<PropertyUserRolesResult>>
 
     @GET("options/property_types")
     fun getPropertyTypes(): Observable<List<PropertyTypesResult>>

@@ -19,6 +19,7 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyConnections;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.dialogs.LoadingDialog;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
@@ -196,11 +197,12 @@ public class EditPropertyActivity extends AbsActivity implements
     }
 
     @Override
-    public void initTabs(Property property, ArrayList<PropertyType> propertyTypes) {
+    public void initTabs(Property property, PropertyConnections connections, ArrayList<PropertyType> propertyTypes) {
         EditPropertyTabsAdapter adapter = new EditPropertyTabsAdapter(this,
                 getSupportFragmentManager(),
                 property,
-                propertyTypes);
+                propertyTypes,
+                connections);
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setAdapter(adapter);
         appBarLayout.setExpanded(true, true);

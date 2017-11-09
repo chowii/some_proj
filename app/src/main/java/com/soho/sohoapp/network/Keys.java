@@ -18,6 +18,7 @@ public interface Keys {
         String FIRST_NAME = "first_name";
         String LAST_NAME = "last_name";
         String COUNTRY = "country";
+        String ROLE = "role";
         String INTENDE_ROLE = "intended_role";
         String INTENDED_INTENTIONS = "intended_intentions";
         String INTENDED_INTENTIONS_ARRAY_MULTIPART = "intended_intentions[]";
@@ -36,6 +37,7 @@ public interface Keys {
     interface Role {
         String USER = "user";
         String AGENT = "agent";
+        String GUEST = "guest";
     }
 
     interface Property {

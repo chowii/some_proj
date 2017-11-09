@@ -8,8 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
+import com.soho.sohoapp.data.models.PropertyConnections;
 import com.soho.sohoapp.feature.home.addproperty.data.PropertyType;
+import com.soho.sohoapp.feature.home.editproperty.connections.EditConnectionFragment;
 import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyFilesFragment;
 import com.soho.sohoapp.feature.home.editproperty.overview.EditOverviewFragment;
 
@@ -24,15 +25,18 @@ class EditPropertyTabsAdapter extends FragmentPagerAdapter {
     private final Context context;
     private final Property property;
     private final ArrayList<PropertyType> propertyTypes;
+    private final PropertyConnections connections;
 
     public EditPropertyTabsAdapter(@NonNull Context context,
                                    @NonNull FragmentManager fm,
                                    @NonNull Property property,
-                                   @NonNull ArrayList<PropertyType> propertyTypes) {
+                                   @NonNull ArrayList<PropertyType> propertyTypes,
+                                   @NonNull PropertyConnections connections) {
         super(fm);
         this.context = context;
         this.property = property;
         this.propertyTypes = propertyTypes;
+        this.connections = connections;
     }
 
     @Override
@@ -41,7 +45,7 @@ class EditPropertyTabsAdapter extends FragmentPagerAdapter {
             case ITEM_ONE:
                 return EditOverviewFragment.newInstance(property, propertyTypes);
             case ITEM_TWO:
-                return ComingSoonFragment.newInstance();
+                return EditConnectionFragment.Companion.newInstance(property, connections);
             case ITEM_THREE:
                 return EditPropertyFilesFragment.Companion.newInstance(property);
             default:

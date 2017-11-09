@@ -106,7 +106,7 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
             val params = ImageLoader.Params.create()
                     .url(user.avatar?.smallImageUrl!!)
                     .view(userAvatarIv)
-                    .placeHolder(R.drawable.ph_avatar_profile)
+                    .placeHolder(R.drawable.ic_account_circle_gray)
             imageLoader.load(params)
         }
     }

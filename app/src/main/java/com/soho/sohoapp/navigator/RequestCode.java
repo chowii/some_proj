@@ -28,6 +28,8 @@ public final class RequestCode {
     public static final int EDIT_PROPERTY_NEW_FILE = 70;
     public static final int EDIT_PROPERTY_PREVIEW_FILE = 71;
     public static final int EDIT_PROPERTY_PREVIEW_FILE_EDIT_MODE = 72;
+    public static final int EDIT_PROPERTY_NEW_CONNECTION = 73;
+    public static final int NEW_CONNECTION_CONFIRM = 74;
 
     private RequestCode() {
         //utils class to hold constants

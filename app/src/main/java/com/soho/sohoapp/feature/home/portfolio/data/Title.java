@@ -1,9 +1,10 @@
 package com.soho.sohoapp.feature.home.portfolio.data;
 
 import com.soho.sohoapp.R;
+import com.soho.sohoapp.data.listdata.Displayable;
 import com.soho.sohoapp.feature.home.BaseModel;
 
-public class Title implements BaseModel {
+public class Title implements BaseModel, Displayable{
     private String title;
 
     public Title(String title) {

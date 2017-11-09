@@ -25,7 +25,7 @@ class User : BasicUser {
     constructor(parcel: Parcel) : super(parcel) {
         authenticationToken = parcel.readString()
         country = parcel.readString()
-        parcel.readTypedList(verifications, Verification.CREATOR)
+        verifications = parcel.createTypedArrayList(Verification)
         parcel.readStringArray(intentions.toTypedArray())
         role = parcel.readString()
         agentsLicenseNumber = parcel.readString()

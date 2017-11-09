@@ -17,7 +17,7 @@
             android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:background="@drawable/ph_avatar_profile" /><!--for the CircleImageView the placeholder
+            android:background="@drawable/ic_account_circle_gray_drawable" /><!--for the CircleImageView the placeholder
                                                             won't work, we need to set it as background-->
 
         <LinearLayout
@@ -64,8 +64,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/bg_primary_color"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
+            android:paddingBottom="2dp"
+            android:paddingEnd="6dp"
+            android:paddingStart="6dp"
             android:text="@string/settings_more_add_property"
             android:textColor="@android:color/white" />
     </RelativeLayout>

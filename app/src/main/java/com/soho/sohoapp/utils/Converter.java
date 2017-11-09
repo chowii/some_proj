@@ -9,6 +9,8 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.dtos.AttachmentResult;
 import com.soho.sohoapp.data.dtos.BasicPropertyResult;
 import com.soho.sohoapp.data.dtos.BasicUserResult;
+import com.soho.sohoapp.data.dtos.ConnectionRequestResult;
+import com.soho.sohoapp.data.dtos.ConnectionsResult;
 import com.soho.sohoapp.data.dtos.ImageResult;
 import com.soho.sohoapp.data.dtos.InspectionTimeResult;
 import com.soho.sohoapp.data.dtos.LocationResult;
@@ -24,11 +26,13 @@ import com.soho.sohoapp.data.dtos.VerificationResult;
 import com.soho.sohoapp.data.models.Attachment;
 import com.soho.sohoapp.data.models.BasicProperty;
 import com.soho.sohoapp.data.models.BasicUser;
+import com.soho.sohoapp.data.models.ConnectionRequest;
 import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Photo;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.PropertyConnections;
 import com.soho.sohoapp.data.models.PropertyFile;
 import com.soho.sohoapp.data.models.PropertyFinance;
 import com.soho.sohoapp.data.models.PropertyListing;
@@ -383,6 +387,45 @@ public final class Converter {
         return user;
     }
 
+    @Nullable
+    public static PropertyConnections toPropertyConnections(@Nullable ConnectionsResult result) {
+        if (result == null) {
+            return null;
+        }
+        PropertyConnections connections = new PropertyConnections();
+
+        List<PropertyUser> users = new ArrayList<>();
+        for (PropertyUserResult userResult : result.getUsers()) {
+            users.add(toPropertyUser(userResult));
+        }
+        connections.setUsers(users);
+
+        List<ConnectionRequest> requests = new ArrayList<>();
+        for (ConnectionRequestResult requestResult : result.getRequests()) {
+            requests.add(toConnectionRequest(requestResult));
+        }
+        connections.setRequests(requests);
+
+        return connections;
+    }
+
+    @Nullable
+    public static ConnectionRequest toConnectionRequest(@Nullable ConnectionRequestResult result) {
+        if (result == null) {
+            return null;
+        }
+        ConnectionRequest request = new ConnectionRequest();
+        request.setId(result.getId());
+        request.setRole(result.getRole());
+        request.setState(result.getState());
+        request.setPropertyId(result.getPropertyId());
+        request.setUserDetails(toBasicUser(result.getUserDetails()));
+        if (!isEmpty(result.getUpdatedAt())) {
+            request.setUpdatedAt(StringExtKt.toDateLongWithIso8601DateTimeFormat(result.getUpdatedAt()));
+        }
+        return request;
+    }
+
     // MARK: - ================== Photo ==================
 
     @Nullable
@@ -555,6 +598,17 @@ public final class Converter {
         if (value != null) {
             builder.addFormDataPart(key, value);
         }
+    }
+
+    @NonNull
+    public static QueryHashMap toMap(@NonNull PropertyUser user) {
+        QueryHashMap map = new QueryHashMap()
+                .put(Keys.User.ROLE, user.getRole());
+        if (user.getUserDetails() != null) {
+            map.put(Keys.User.FIRST_NAME, user.getUserDetails().getFirstName())
+                    .put(Keys.User.EMAIL, user.getUserDetails().getEmail());
+        }
+        return map;
     }
 
     @NonNull
