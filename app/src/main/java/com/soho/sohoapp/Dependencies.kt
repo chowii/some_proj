@@ -37,6 +37,8 @@ enum class Dependencies {
         imageLoader = ImageLoader(context)
         logger = AndroidLogger()
         eventBus = AndroidEventBus()
-        database = Room.databaseBuilder(context, SohoDatabase::class.java, DB_NAME).build()
+        database = Room.databaseBuilder(context, SohoDatabase::class.java, DB_NAME)
+                .addMigrations(SohoDatabase.migration1to2)
+                .build()
     }
 }

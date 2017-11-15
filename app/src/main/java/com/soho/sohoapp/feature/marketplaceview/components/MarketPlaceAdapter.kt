@@ -6,7 +6,6 @@ import android.view.ViewGroup
 
 import com.soho.sohoapp.R
 import com.soho.sohoapp.data.models.BasicProperty
-import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.utils.PaginatedAdapter
 import com.soho.sohoapp.utils.PaginatedAdapterListener
 

@@ -6,10 +6,8 @@ import com.soho.sohoapp.data.models.BasicProperty;
 import com.soho.sohoapp.data.models.PaginationInformation;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.BaseViewInteractable;
-import com.soho.sohoapp.feature.home.BaseModel;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by chowii on 14/8/17.
@@ -31,6 +29,8 @@ interface MarketPlaceContract {
         void fetchNextPage(int page);
 
         void saleTypeChanged(String saleType);
+
+        void showOrderDialog(String saleType);
     }
 
     interface ViewInteractable extends BaseViewInteractable {

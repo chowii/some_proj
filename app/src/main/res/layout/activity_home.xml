@@ -22,8 +22,8 @@
 
         <Button
             android:id="@+id/addProperty"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/fab_home_dim"
+            android:layout_height="@dimen/fab_home_dim"
             android:layout_gravity="center"
             android:theme="@style/CircularButton.Green"
             android:background="@drawable/circle_green"

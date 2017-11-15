@@ -132,12 +132,29 @@ public interface Keys {
         String FILTER_BY_BATHROOM_COUNT = "by_bathroom_count";
         String FILTER_BY_CARSPOT_COUNT = "by_carspot_count";
         String FILTER_BY_PROPERTY_TYPE = "by_property_types";
+        String FILTER_BY_ORDER = "by_order";
+        String FILTER_DIRECTION = "direction";
+        String FILTER_COLUMN = "column";
         String FILTER_BY_LISTING_TYPE = "by_listing_type";
         String FILTER_ALL_PROPERTIES = "all_properties";
         String FILTER_PER_PAGE = "per_page";
         String FILTER_PAGE = "page";
         double FILTER_STUDIO_SERVER_VALUE = 0.5;
         double FILTER_BEDROOM_SERVER_VALUE = 0.0;
+
+    }
+
+    interface OrderBy {
+        String SALE_VALUE = "property_finances.estimated_value";
+        String RENT = "property_finances.estimated_rent";
+        String CREATED_AT = "properties.created_at";
+        String UPDATED_AT = "properties.updated_at";
+        String LISTED_AT = "properties.listed_at";
+    }
+
+    interface OrderDirection {
+        String ASCENDING = "asc";
+        String DESCENDING = "desc";
     }
 
     interface Pagination {

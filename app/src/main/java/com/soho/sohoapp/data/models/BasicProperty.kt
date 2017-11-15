@@ -23,8 +23,8 @@ open class BasicProperty() : BaseModel, Parcelable {
     var type: String? = null
     var isInvestment: Boolean = false
     var isFavourite: Boolean = false
-    var rentPrice: Int = 0
-    var salePrice: Int = 0
+    @Deprecated("use property finance instead") var rentPrice: Int = 0
+    @Deprecated("use property finance instead") var salePrice: Int = 0
     var updatedAt: Long? = null
     var bedrooms: Double= 0.0
     var bathrooms: Double = 0.0

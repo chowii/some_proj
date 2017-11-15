@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.marketplaceview.components;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import com.soho.sohoapp.R;
 import com.soho.sohoapp.data.enums.MarketplaceFilterSaleType;
 import com.soho.sohoapp.data.models.BasicProperty;
 import com.soho.sohoapp.data.models.PaginationInformation;
+import com.soho.sohoapp.database.entities.MarketplaceFilter;
 import com.soho.sohoapp.database.entities.MarketplaceFilterWithSuburbs;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceContract.ViewPresentable;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.PropertyDetailActivity;
@@ -44,6 +49,8 @@ public class MarketPlaceFragment extends BaseFragment implements
         PaginatedAdapterListener<BasicProperty> {
 
     public static final String TAG = "MarketPlaceFragment";
+    private @MarketplaceFilterSaleType
+    String saleType = MarketplaceFilterSaleType.SALE;
 
     public static MarketPlaceFragment newInstance() {
         MarketPlaceFragment fragment = new MarketPlaceFragment();
@@ -67,10 +74,18 @@ public class MarketPlaceFragment extends BaseFragment implements
     @BindView(R.id.text_price_range)
     TextView priceRangeTextView;
 
+    @BindView(R.id.order_selector_btn)
+    TextView orderByTextView;
+
     @OnClick(R.id.ll_search_bar)
     public void onSearchTextClicked(View view) {
         Intent filterIntent = new Intent(getActivity(), PropertyFilterActivity.class);
         startActivityForResult(filterIntent, FILTER_ACTIVITY_REQUEST_CODE);
+    }
+
+    @OnClick(R.id.order_selector_btn)
+    public void onClickOrderSelector() {
+        presenter.showOrderDialog(saleType);
     }
 
     private MarketPlacePresenter presenter;
@@ -85,7 +100,7 @@ public class MarketPlaceFragment extends BaseFragment implements
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
         ButterKnife.bind(this, view);
         configureSwipeLayout();
-        presenter = new MarketPlacePresenter(this);
+        presenter = new MarketPlacePresenter(this, this.getContext());
         presenter.createPresentation();
         presenter.startPresenting();
         return view;
@@ -138,8 +153,9 @@ public class MarketPlaceFragment extends BaseFragment implements
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        presenter.saleTypeChanged(getString(R.string.marketplace_buy_tab)
-                .equalsIgnoreCase(tab.getText().toString()) ? MarketplaceFilterSaleType.SALE : MarketplaceFilterSaleType.RENT);
+        saleType = getString(R.string.marketplace_buy_tab)
+                .equalsIgnoreCase(tab.getText().toString()) ? MarketplaceFilterSaleType.SALE : MarketplaceFilterSaleType.RENT;
+        presenter.saleTypeChanged(saleType);
     }
 
     @Override
@@ -177,9 +193,10 @@ public class MarketPlaceFragment extends BaseFragment implements
 
     @Override
     public void configureViewForFilter(MarketplaceFilterWithSuburbs currentFilter) {
-        tabLayout.getTabAt(currentFilter.getMarketplaceFilter().isSaleFilter() ? 0 : 1).select();
+        MarketplaceFilter marketplaceFilter = currentFilter.getMarketplaceFilter();
+        tabLayout.getTabAt(marketplaceFilter.isSaleFilter() ? 0 : 1).select();
         priceRangeTextView.setText(
-                currentFilter.getMarketplaceFilter().priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
+                marketplaceFilter.priceRangeDisplayString(getString(R.string.filters_search_bar_display_format),
                         getString(R.string.dollar_format),
                         getString(R.string.filters_price_any))
         );
@@ -187,6 +204,18 @@ public class MarketPlaceFragment extends BaseFragment implements
                 getString(R.string.filters_multiple_suburbs_format),
                 getString(R.string.filters_all_suburbs))
         );
+//        sort by label
+        String orderByText = getString(R.string.market_order_by_text_view_text);
+        @SuppressWarnings("ConstantConditions")
+        String orderByHumanReadable = getString(OrderPropertyDialog.getSealedClass(marketplaceFilter.getOrderByType()
+                , marketplaceFilter.getOrderDirection()).getStringRes());
+
+        String orderType = orderByText + orderByHumanReadable;
+        Spannable spannable = new SpannableString(orderType);
+        spannable.setSpan(new ForegroundColorSpan(Color.GREEN), orderByText.length()
+                , (orderByText + orderByHumanReadable).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        orderByTextView.setText(spannable, TextView.BufferType.SPANNABLE);
     }
 
     // MARK: - ================== PaginatedAdapterListener<BasicProperty> ==================

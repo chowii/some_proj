@@ -18,6 +18,12 @@
     <string name="marketplace_buy_tab">Buy</string>
     <string name="marketplace_rent_tab">Rent</string>
     <string name="market_place_search_box_all_suburbs">All suburbs</string>
+    <string name="market_order_newest_to_oldest">Newest to oldest</string>
+    <string name="market_order_oldest_to_newest">Oldest to newest</string>
+    <string name="market_order_low_to_high">Low to high</string>
+    <string name="market_order_high_to_low">High to low</string>
+    <string name="market_order_order_by_title">order by</string>
+    <string name="market_order_by_text_view_text">order by |\ </string>
 
     <!--Common strings start-->
     <string name="common_loading">Loading..</string>

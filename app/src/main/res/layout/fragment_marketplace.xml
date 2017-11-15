@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:background="@color/lightGreyBackground"
-                android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGreyBackground"
+    android:orientation="vertical">
 
-    <include layout="@layout/tab_layout"/>
+    <include layout="@layout/tab_layout" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
@@ -16,45 +15,59 @@
         android:layout_below="@id/tabs">
 
         <android.support.v7.widget.RecyclerView
-            android:paddingTop="@dimen/marketplace_search_height"
-            android:clipToPadding="false"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/marketplace_search_height" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/ll_search_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/marketplace_search_height"
-        android:gravity="center_vertical"
+        android:layout_below="@id/tabs"
         android:background="@drawable/shadow_marketplace_search_bar_layer"
         android:clickable="true"
-        android:layout_below="@id/tabs"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tab_browse"
+            android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            android:paddingEnd="15dp"/>
+            android:src="@drawable/tab_browse" />
 
         <TextView
             android:id="@+id/text_suburbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="All Suburbs"/>
+            tools:text="All Suburbs" />
 
         <TextView
             android:id="@+id/text_price_range"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            tools:text="Any - Any"/>
+            android:paddingStart="15dp"
+            tools:text="Any - Any" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/order_selector_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/fab_home_dim_plus"
+        android:background="@color/white"
+        android:elevation="3dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="12sp"
+        tools:targetApi="lollipop"
+        tools:text="@string/market_order_by_text_view_text" />
 </RelativeLayout>
