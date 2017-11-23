@@ -154,6 +154,9 @@ class RegisterUserInfoActivity : AbsActivity() {
                 country = availableLocales[pos]
             }
         }
+        DEPENDENCIES.userPrefs.user?.firstName.let { nameEditText.setText(it)}
+        DEPENDENCIES.userPrefs.user?.lastName.let { lastNameEditText.setText(it)}
+
         registerButton.checkEnableDisableAlpha(conditionsMet)
     }
 

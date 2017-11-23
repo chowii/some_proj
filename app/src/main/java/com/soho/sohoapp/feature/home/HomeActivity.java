@@ -15,13 +15,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.elasticode.model.ElasticodeSessionParams;
 import com.elasticode.provider.Elasticode;
 import com.elasticode.provider.callback.ElasticodeResponse;
+import com.soho.sohoapp.BuildConfig;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.abs.AbsActivity;
-import com.soho.sohoapp.data.models.Property;
-import com.soho.sohoapp.feature.home.editproperty.files.EditPropertyAddFileActivity;
 import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
@@ -31,7 +31,6 @@ import com.soho.sohoapp.navigator.NavigatorImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Observer;
 
 import butterknife.BindView;
@@ -77,6 +76,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
             e.printStackTrace();
         }
         Elasticode elasticode = Elasticode.getInstance(this, apiKey, elasticodeObserver);
+        elasticode.setSessionParams(new ElasticodeSessionParams(!BuildConfig.DEBUG, this));
         elasticode.ready();
 
         navigator = NavigatorImpl.newInstance(this);
@@ -127,20 +127,17 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
     }
 
 
-    private Observer elasticodeObserver = new Observer() {
-        @Override
-        public void update(Observable observable, Object data) {
-            if (data instanceof ElasticodeResponse) {
-                ElasticodeResponse response = (ElasticodeResponse) data;
-                if (response.getError() != null) {
-                    // In case of error
-                } else {
-                    switch (response.getType()) {
-                        case ON_LAUNCH_DISPLAYED:
-                            Boolean didApeared = ((Boolean) response.getAdditionalData());
-                            break;
-                        // put here all types (ElasticodeResponseType) which you want to handle
-                    }
+    private Observer elasticodeObserver = (observable, data) -> {
+        if (data instanceof ElasticodeResponse) {
+            ElasticodeResponse response = (ElasticodeResponse) data;
+            if (response.getError() != null) {
+                // In case of error
+            } else {
+                switch (response.getType()) {
+                    case ON_LAUNCH_DISPLAYED:
+                        Boolean didApeared = ((Boolean) response.getAdditionalData());
+                        break;
+                    // put here all types (ElasticodeResponseType) which you want to handle
                 }
             }
         }

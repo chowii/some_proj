@@ -370,7 +370,7 @@
 
     <!--Verification screen start-->
     <string name="verification_toolbar">Verification</string>
-    <string name="verification_description">Complete a quick 2 step verification process in order to publish your properties in the network.\n\nTo ensure thq quality of the marketplace we take reasonable steps to qualify each property that is listed in our marketplace</string>
+    <string name="verification_description">Complete a quick 2 step verification process in order to publish your properties in the network.\n\nTo ensure the quality of the marketplace we take reasonable steps to qualify each property that is listed in our marketplace</string>
     <string name="verification_process">Verification process</string>
     <string name="verification_photo_id">Photo ID Check</string>
     <string name="verification_ownership_proof">Proof of Ownership</string>
