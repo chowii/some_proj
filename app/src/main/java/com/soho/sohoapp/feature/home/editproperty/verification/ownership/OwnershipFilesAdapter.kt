@@ -18,7 +18,7 @@ import com.soho.sohoapp.data.models.PropertyFile
 import com.soho.sohoapp.imageloader.ImageLoader
 import java.io.File
 
-class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class OwnershipFilesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val imageLoader = DEPENDENCIES.imageLoader
     private lateinit var listener: OnItemClickListener
     private val TYPE_ATTACHMENT = 0
@@ -27,10 +27,13 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
     private val TYPE_UNDEFINED = 100
     private var displayableList = mutableListOf<Displayable>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = when (viewType) {
-        TYPE_ATTACHMENT, TYPE_FILE -> FileHolder(LayoutInflater.from(context).inflate(R.layout.item_file, parent, false))
-        TYPE_ADD_FILE -> AddFileHolder(LayoutInflater.from(context).inflate(R.layout.item_add_file, parent, false))
-        else -> null
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
+        val context = parent?.context
+        return when (viewType) {
+            TYPE_ATTACHMENT, TYPE_FILE -> FileHolder(LayoutInflater.from(context).inflate(R.layout.item_file, parent, false))
+            TYPE_ADD_FILE -> AddFileHolder(LayoutInflater.from(context).inflate(R.layout.item_add_file, parent, false))
+            else -> null
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
@@ -49,8 +52,8 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
         fileHolder.deleteBtn.visibility = View.GONE
 
         imageLoader.load(ImageLoader.Params.create()
-                .height(calculateImageSize())
-                .width(calculateImageSize())
+                .height(calculateImageSize(holder.itemView.context))
+                .width(calculateImageSize(holder.itemView.context))
                 .centerCrop(true)
                 .view(holder.photo)
                 .placeHolder(R.drawable.bc_add_new_file)
@@ -85,7 +88,7 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
                 .view(fileHolder.photo)
                 .placeHolder(file.holder)
 
-        val imageSize = calculateImageSize()
+        val imageSize = calculateImageSize(holder.itemView.context)
         params.height(imageSize)
                 .width(imageSize)
                 .centerCrop(true)
@@ -100,7 +103,7 @@ class OwnershipFilesAdapter(val context: Context) : RecyclerView.Adapter<Recycle
         }
     }
 
-    private fun calculateImageSize(): Int {
+    private fun calculateImageSize(context: Context): Int {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val point = Point()
         wm.defaultDisplay.getSize(point)

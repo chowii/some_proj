@@ -30,14 +30,14 @@ class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInter
     private val attachmentsFromServer = mutableListOf<Displayable>()
     private val displayableList = mutableListOf<Displayable>()
     private val compositeDisposable = CompositeDisposable()
-    private lateinit var property: Property
+    private var property: Property? = null
     private var permissionDisposable: Disposable? = null
 
     override fun startPresenting(fromConfigChanges: Boolean) {
         view.setPresentable(this)
         property = view.getProperty()
 
-        val ownershipVerification = property.verifications?.find { VerificationType.PROPERTY == it.type }
+        val ownershipVerification = property?.verifications?.find { VerificationType.PROPERTY == it.type }
         ownershipVerification?.let {
             attachmentsFromServer.addAll(it.attachments)
         }
@@ -110,13 +110,13 @@ class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInter
             view.showValidationMessage(R.string.verification_ownership_validation_error)
         } else {
             view.showLoadingDialog()
-            addAttachments(newAttachments).mergeWith(removeAttachments(removedAttachments))
-                    .filter { it.isPresent }
-                    .takeLast(1)
-                    .map { optionalResult -> Converter.toVerification(optionalResult.get()) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
+            addAttachments(newAttachments)?.mergeWith(removeAttachments(removedAttachments))
+                    ?.filter { it.isPresent }
+                    ?.takeLast(1)
+                    ?.map { optionalResult -> Converter.toVerification(optionalResult.get()) }
+                    ?.subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+                    ?.subscribe(
                             { property ->
                                 view.hideLoadingDialog()
                                 property?.let { verifications ->
@@ -130,23 +130,27 @@ class OwnershipFilesPresenter(private val view: OwnershipFilesContract.ViewInter
         }
     }
 
-    private fun addAttachments(newAttachments: List<Attachment>): Observable<Optional<VerificationResult>> {
+    private fun addAttachments(newAttachments: List<Attachment>): Observable<Optional<VerificationResult>>? {
         if (newAttachments.isEmpty()) {
             return Observable.just(Optional.empty())
         }
-        return Converter.toImageRequestBody(fileHelper, newAttachments, property.id)
+        return property?.id?.let {
+            Converter.toImageRequestBody(fileHelper, newAttachments, it)
                 .switchMap<VerificationResult> { requestBody ->
                     DEPENDENCIES.sohoService.sendPropertyVerificationAttachments(requestBody)
                 }
                 .map { verificationResult -> Optional.of(verificationResult) }
+        }
     }
 
-    private fun removeAttachments(removedAttachments: List<Attachment>): Observable<Optional<VerificationResult>> {
+    private fun removeAttachments(removedAttachments: List<Attachment>): Observable<Optional<VerificationResult>>? {
         if (removedAttachments.isEmpty()) {
             return Observable.just(Optional.empty())
         }
-        val map = Converter.toMap(removedAttachments, property.id)
-        return DEPENDENCIES.sohoService.deletePropertyVerificationAttachments(map)
+        val map = property?.id?.let { Converter.toMap(removedAttachments, it) }
+        return map?.let {
+            DEPENDENCIES.sohoService.deletePropertyVerificationAttachments(it)
                 .map { verificationResult -> Optional.of(verificationResult) }
+        }
     }
 }

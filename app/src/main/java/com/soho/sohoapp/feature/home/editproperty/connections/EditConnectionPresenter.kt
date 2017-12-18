@@ -27,13 +27,15 @@ class EditConnectionPresenter(private val view: EditConnectionContract.ViewInter
 
     override fun startPresenting(fromConfigChanges: Boolean) {
         view.setPresentable(this)
-        val currentRole = view.getPropertyFromExtras().propertyUsers?.find(
+        val currentRole = view.getPropertyFromExtras()?.propertyUsers?.find(
                 { it.userDetails?.id == Dependencies.DEPENDENCIES.userPrefs.user?.id })?.role ?: PropertyUserRole.GUEST
         view.setUserCurrentRole(currentRole)
         val connections = view.getConnectionsFromExtras()
         displayableList.add(Title(resources.getString(R.string.connection_connected_parties)))
-        displayableList.addAll(connections.users)
-        displayableList.addAll(connections.requests)
+        connections?.apply {
+            displayableList.addAll(users)
+            displayableList.addAll(requests)
+        }
         view.setData(displayableList)
     }
 
@@ -68,37 +70,41 @@ class EditConnectionPresenter(private val view: EditConnectionContract.ViewInter
 
     private fun removeUserFromProperty(userId: Int) {
         view.showLoadingDialog()
-        compositeDisposable.add(
-                DEPENDENCIES.sohoService.removeUserFromProperty(view.getPropertyFromExtras().id, userId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    view.hideLoadingDialog()
-                                    positionToDelete?.let { view.removeItemFromList(it) }
-                                },
-                                {
-                                    view.hideLoadingDialog()
-                                    view.notifyDataSetChanged()
-                                    view.showError(it)
-                                }))
+        view.getPropertyFromExtras()?.id?.let {
+            compositeDisposable.add(
+                    DEPENDENCIES.sohoService.removeUserFromProperty(it, userId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        view.hideLoadingDialog()
+                                        positionToDelete?.let { view.removeItemFromList(it) }
+                                    },
+                                    {
+                                        view.hideLoadingDialog()
+                                        view.notifyDataSetChanged()
+                                        view.showError(it)
+                                    }))
+        }
     }
 
     private fun revokeConnectionRequest(requestId: Int) {
         view.showLoadingDialog()
-        compositeDisposable.add(
-                DEPENDENCIES.sohoService.revokeConnectionRequest(view.getPropertyFromExtras().id, requestId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    view.hideLoadingDialog()
-                                    positionToDelete?.let { view.removeItemFromList(it) }
-                                },
-                                {
-                                    view.hideLoadingDialog()
-                                    view.notifyDataSetChanged()
-                                    view.showError(it)
-                                }))
+        view.getPropertyFromExtras()?.id?.let {
+            compositeDisposable.add(
+                    DEPENDENCIES.sohoService.revokeConnectionRequest(it, requestId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        view.hideLoadingDialog()
+                                        positionToDelete?.let { view.removeItemFromList(it) }
+                                    },
+                                    {
+                                        view.hideLoadingDialog()
+                                        view.notifyDataSetChanged()
+                                        view.showError(it)
+                                    }))
+        }
     }
 }

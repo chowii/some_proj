@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="endpoint">http://app.sohoapp-staging.com.stg.sohoapp.anchor.net.au/api/</string>
+    <string name="endpoint">http://staging.sohoapp.com/api/</string>
 
     <string name="provider_authorities">com.soho.sohoapp.dev.fileprovider</string>
 

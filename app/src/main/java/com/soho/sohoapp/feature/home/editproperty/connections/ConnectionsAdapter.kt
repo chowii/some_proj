@@ -18,7 +18,7 @@ import com.soho.sohoapp.data.models.PropertyUser
 import com.soho.sohoapp.feature.home.portfolio.data.Title
 import com.soho.sohoapp.imageloader.ImageLoader
 
-class ConnectionsAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ConnectionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TYPE_HEADER = 0
     private val TYPE_USER = 1
@@ -29,28 +29,33 @@ class ConnectionsAdapter(private val context: Context) : RecyclerView.Adapter<Re
     private var displayableList = mutableListOf<Displayable>()
     private var currentUserId = DEPENDENCIES.userPrefs.user?.id
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = when (viewType) {
-        TYPE_HEADER -> HeaderHolder(LayoutInflater.from(context).inflate(R.layout.item_title, parent, false))
-        TYPE_USER -> UserHolder(LayoutInflater.from(context).inflate(R.layout.item_user_connection, parent, false))
-        TYPE_REQUEST -> RequestHolder(LayoutInflater.from(context).inflate(R.layout.item_request_connection, parent, false))
-        else -> null
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        when (getItemViewType(position)) {
-            TYPE_USER -> initUserItem(position, holder)
-            TYPE_REQUEST -> initRequestItem(position, holder)
-            TYPE_HEADER -> initHeaderItem(position, holder)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
+        val context = parent?.context
+        return when (viewType) {
+            TYPE_HEADER -> HeaderHolder(LayoutInflater.from(context).inflate(R.layout.item_title, parent, false))
+            TYPE_USER -> UserHolder(LayoutInflater.from(context).inflate(R.layout.item_user_connection, parent, false))
+            TYPE_REQUEST -> RequestHolder(LayoutInflater.from(context).inflate(R.layout.item_request_connection, parent, false))
+            else -> null
         }
     }
 
-    private fun initHeaderItem(position: Int, holder: RecyclerView.ViewHolder?) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        holder?.apply {
+            when (getItemViewType(position)) {
+                TYPE_USER -> initUserItem(position, holder, itemView.context)
+                TYPE_REQUEST -> initRequestItem(position, holder, itemView.context)
+                TYPE_HEADER -> initHeaderItem(position, holder, itemView.context)
+            }
+        }
+    }
+
+    private fun initHeaderItem(position: Int, holder: RecyclerView.ViewHolder?, context: Context) {
         val header = displayableList[position] as Title
         val headerHolder = holder as HeaderHolder
         headerHolder.title.text = header.title
     }
 
-    private fun initRequestItem(position: Int, holder: RecyclerView.ViewHolder?) {
+    private fun initRequestItem(position: Int, holder: RecyclerView.ViewHolder?, context: Context) {
         val request = displayableList[position] as ConnectionRequest
         val requestHolder = holder as RequestHolder
         val params = ImageLoader.Params.create()
@@ -70,7 +75,7 @@ class ConnectionsAdapter(private val context: Context) : RecyclerView.Adapter<Re
         }
     }
 
-    private fun initUserItem(position: Int, holder: RecyclerView.ViewHolder?) {
+    private fun initUserItem(position: Int, holder: RecyclerView.ViewHolder?, context: Context) {
         val user = displayableList[position] as PropertyUser
         val userHolder = holder as UserHolder
         val params = ImageLoader.Params.create()

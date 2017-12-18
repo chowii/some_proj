@@ -17,8 +17,8 @@ interface EditConnectionContract {
 
     interface ViewInteractable : BaseViewInteractable {
         fun setPresentable(presentable: ViewPresentable)
-        fun getPropertyFromExtras(): Property
-        fun getConnectionsFromExtras(): PropertyConnections
+        fun getPropertyFromExtras(): Property?
+        fun getConnectionsFromExtras(): PropertyConnections?
         fun setData(data: List<Displayable>)
         fun showConfirmationDialog(name: String?)
         fun removeItemFromList(position: Int)

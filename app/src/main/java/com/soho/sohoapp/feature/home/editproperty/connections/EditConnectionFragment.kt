@@ -81,9 +81,9 @@ class EditConnectionFragment : BaseFragment(), EditConnectionContract.ViewIntera
         this.presentable = presentable
     }
 
-    override fun getPropertyFromExtras(): Property = arguments.getParcelable(KEY_PROPERTY)
+    override fun getPropertyFromExtras(): Property? = arguments?.getParcelable(KEY_PROPERTY)
 
-    override fun getConnectionsFromExtras(): PropertyConnections = arguments.getParcelable(KEY_CONNECTIONS)
+    override fun getConnectionsFromExtras(): PropertyConnections? = arguments?.getParcelable(KEY_CONNECTIONS)
 
     override fun setData(data: List<Displayable>) {
         connectionsAdapter.setData(data)
@@ -105,12 +105,14 @@ class EditConnectionFragment : BaseFragment(), EditConnectionContract.ViewIntera
         } else {
             getString(R.string.connection_confirm_deletion, name)
         }
-        AlertDialog.Builder(context).setMessage(message)
+        context?.let {
+            AlertDialog.Builder(it).setMessage(message)
                 .setTitle(R.string.connection_confirmation)
                 .setPositiveButton(R.string.connection_confirm_deletion_yes, dialogClickListener)
                 .setNegativeButton(R.string.connection_confirm_deletion_no, dialogClickListener)
                 .setCancelable(false)
                 .show()
+        }
     }
 
     override fun removeItemFromList(position: Int) {
@@ -140,7 +142,7 @@ class EditConnectionFragment : BaseFragment(), EditConnectionContract.ViewIntera
     }
 
     private fun initView() {
-        connectionsAdapter = ConnectionsAdapter(this.context)
+        connectionsAdapter = ConnectionsAdapter()
 
         val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, object : RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {

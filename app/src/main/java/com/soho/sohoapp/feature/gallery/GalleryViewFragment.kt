@@ -28,7 +28,7 @@ class GalleryViewFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
@@ -37,11 +37,11 @@ class GalleryViewFragment : BaseFragment() {
     private fun initView() {
         gallery_pager.adapter = GalleryImageViewPager(gallery_pager.context)
                 .apply {
-                    val images = arguments.getParcelableArray(GalleryViewActivity.KEY_IMAGES_EXTRA)
-                            .map { it as Image }
-                    dataSet = images
+                    val images = arguments?.getParcelableArray(GalleryViewActivity.KEY_IMAGES_EXTRA)
+                            ?.map { it as Image }
+                    dataSet = images.orEmpty()
 
                 }
-        gallery_pager.currentItem = arguments.getInt(GalleryViewActivity.KEY_CURRENT_POS, 0)
+        gallery_pager.currentItem = arguments?.getInt(GalleryViewActivity.KEY_CURRENT_POS, 0) ?: 0
     }
 }

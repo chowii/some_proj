@@ -34,8 +34,9 @@ class EditPropertyFilesFragment : BaseFragment(), EditPropertyFilesContact.ViewI
         private const val ITEMS_IN_LINE = 3
 
         fun newInstance(property: Property) = EditPropertyFilesFragment().apply {
-            arguments = Bundle()
-            arguments.putParcelable(KEY_PROPERTY, property)
+            arguments = Bundle().apply {
+                putParcelable(KEY_PROPERTY, property)
+            }
         }
     }
 
@@ -77,14 +78,14 @@ class EditPropertyFilesFragment : BaseFragment(), EditPropertyFilesContact.ViewI
         this.presentable = presentable
     }
 
-    override fun getPropertyFromExtras(): Property = arguments.getParcelable(KEY_PROPERTY)
+    override fun getPropertyFromExtras(): Property? = arguments?.getParcelable(KEY_PROPERTY)
 
     override fun setFileList(fileList: List<Displayable>) {
         filesAdapter.setData(fileList)
     }
 
     private fun initView() {
-        filesAdapter = OwnershipFilesAdapter(this.context)
+        filesAdapter = OwnershipFilesAdapter()
         filesAdapter.setOnItemClickListener(object : OwnershipFilesAdapter.OnItemClickListener {
 
             override fun onFileClicked(file: PropertyFile) {

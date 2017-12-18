@@ -33,7 +33,7 @@ import java.util.*
 class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable {
 
     private lateinit var presentable: EditAccountContract.ViewPresentable
-    private lateinit var presenter: EditAccountFragmentPresenter
+    private var presenter: EditAccountFragmentPresenter? = null
     private lateinit var user: User
 
     companion object {
@@ -48,18 +48,18 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         return inflater.inflate(R.layout.fragment_edit_account, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter = EditAccountFragmentPresenter(this, arguments.getParcelable(KEY_BUNDLE_USER)
-                , NavigatorImpl.newInstance(this)
-                , RxGallery.gallery(this.activity, false, RxGallery.MimeType.IMAGE)
-                , RxGallery.photoCapture(this.activity)
-                , PermissionManagerImpl.newInstance(this.activity)
-                , AddPhotoDialog(this.activity)
-                , FileHelper.newInstance(this.activity))
-        presenter.startPresenting(false)
-
+        activity?.let {
+            presenter = EditAccountFragmentPresenter(this, arguments?.getParcelable(KEY_BUNDLE_USER)
+                    , NavigatorImpl.newInstance(this)
+                    , RxGallery.gallery(it, false, RxGallery.MimeType.IMAGE)
+                    , RxGallery.photoCapture(it)
+                    , PermissionManagerImpl.newInstance(it)
+                    , AddPhotoDialog(it)
+                    , FileHelper.newInstance(it))
+            presenter?.startPresenting(false)
+        }
         initView()
 
     }
@@ -72,7 +72,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
     private fun initView() {
         edit_photo_tv.setOnClickListener {
-            presenter.onEditPhotoClick()
+            presenter?.onEditPhotoClick()
         }
 
         country_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -118,7 +118,9 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         }
 
         dob_et.setOnClickListener {
-            presenter.showDatePickerDialog(activity.fragmentManager, calendar)
+            activity?.fragmentManager?.let {
+                presenter?.showDatePickerDialog(it, calendar)
+            }
         }
         renting_cb.isChecked = user.isRenting()
         renting_cb.setOnCheckedChangeListener(checkBoxIntention)
@@ -132,7 +134,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
         }
 
         update_btn.setOnClickListener(updateProfile)
-        change_password_tv.setOnClickListener { presenter.onChangePasswordClick() }
+        change_password_tv.setOnClickListener { presenter?.onChangePasswordClick() }
 
         val dataAdapter = ArrayAdapter<String>(this.context,
                 android.R.layout.simple_spinner_item, availableLocales)
@@ -157,7 +159,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
             put(Keys.User.LAST_NAME, last_name_et.text.toString())
             put(Keys.User.FIRST_NAME, name_et.text.toString())
         }
-        presenter.updaterUserProfile(values)
+        presenter?.updaterUserProfile(values)
     }
 
 
@@ -180,7 +182,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
     override fun showAvatar(picUri: Uri) {
         user_avatar_iv.setImageURI(picUri)
-        presenter.cleanCameraDisposable()
+        presenter?.cleanCameraDisposable()
     }
 
     private lateinit var loadingDialog: LoadingDialog
