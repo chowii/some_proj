@@ -62,6 +62,9 @@ class LoginActivity : AppCompatActivity() {
                     Keys.User.PASSWORD to passwordEditText.text.toString()
             )
             disposable = DEPENDENCIES.sohoService.loginUser(map)
+//                    .zipWith(DEPENDENCIES.sohoService.getTwilioToken(), BiFunction(s: UserResult, TwilioToken)
+//
+//                    )
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .map(Converter::toUser)

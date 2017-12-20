@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.soho.sohoapp.R;
-import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
+import com.soho.sohoapp.feature.chat.ChatChannelFragment;
 
 public class PortfolioTabsAdapter extends FragmentPagerAdapter {
 
@@ -31,7 +31,7 @@ public class PortfolioTabsAdapter extends FragmentPagerAdapter {
             case ITEM_TWO:
                 return PortfolioListFragment.newInstance(PortfolioListFragment.Mode.MANAGER);
             case ITEM_THREE:
-                return ComingSoonFragment.newInstance();
+                return ChatChannelFragment.newInstance();
             default:
                 return null;
         }

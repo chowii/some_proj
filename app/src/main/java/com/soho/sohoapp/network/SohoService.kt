@@ -1,6 +1,7 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.dtos.*
+import com.soho.sohoapp.feature.chat.adapter.TwilioToken
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
@@ -146,6 +147,9 @@ interface SohoService {
 
     @PUT("verifications/property")
     fun deletePropertyVerificationAttachments(@Body map: QueryHashMap): Observable<VerificationResult>
+
+    @GET("twilio/get_token")
+    fun getTwilioToken(@QueryMap map: QueryHashMap): Observable<TwilioToken>
 }
 
 
