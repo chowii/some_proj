@@ -149,7 +149,7 @@ interface SohoService {
     fun deletePropertyVerificationAttachments(@Body map: QueryHashMap): Observable<VerificationResult>
 
     @GET("twilio/get_token")
-    fun getTwilioToken(@QueryMap map: QueryHashMap): Observable<TwilioToken>
+    fun getTwilioToken(@Query("device_id") id: String): Observable<TwilioToken>
 }
 
 

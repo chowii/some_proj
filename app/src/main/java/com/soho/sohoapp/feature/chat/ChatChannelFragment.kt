@@ -21,7 +21,6 @@ import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
 import com.soho.sohoapp.feature.chat.model.ChatChannel
-import com.soho.sohoapp.utils.QueryHashMap
 import com.twilio.chat.CallbackListener
 import com.twilio.chat.ChatClient
 import com.twilio.chat.ErrorInfo
@@ -37,7 +36,7 @@ class ChatChannelFragment : Fragment() {
     companion object {
 
         @JvmField
-        val TAG: String = this::class.java.name
+        val TAG: String = "ChatChannelFragment"
 
         @JvmStatic
         fun newInstance() = ChatChannelFragment()
@@ -50,34 +49,14 @@ class ChatChannelFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_coming_soon, container, false)
         ButterKnife.bind(this, view)
-
         toolbar.title = getString(R.string.message_title)
 
         val chatBuilder = ChatClient.Properties.Builder().createProperties()
-        swipeRefreshLayout.isRefreshing = true
-        val map = QueryHashMap()
-        map.put("device_id", "test")
-        Dependencies.DEPENDENCIES.sohoService.getTwilioToken(map)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { twilio ->
-                            context?.let {
-                                createChatClient(it, twilio.accessToken, chatBuilder)
-                                Log.d("LOG_TAG---", "load: " + twilio.accessToken)
-
-                                swipeRefreshLayout.setOnRefreshListener {
-                                    createChatClient(it, twilio.accessToken, chatBuilder)
-                                    Log.d("LOG_TAG---", "refresh: " + twilio.accessToken)
-                                }
-                            }
-
-                        },
-                        {
-                            Log.d("LOG_TAG---", "error: " + it.message)
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                )
+        context?.let {
+            val accessToken = Dependencies.DEPENDENCIES.userPrefs.twilioToken
+            createChatClient(it, accessToken, chatBuilder)
+            swipeRefreshLayout.setOnRefreshListener { createChatClient(it, accessToken, chatBuilder) }
+        }
         return view
     }
 
@@ -85,6 +64,7 @@ class ChatChannelFragment : Fragment() {
     lateinit var adapter: ChatChannelAdapter
 
     private fun createChatClient(it: Context, token: String, chatBuilder: ChatClient.Properties) {
+        swipeRefreshLayout.isRefreshing = true
 
         ChatClient.create(it, token, chatBuilder, object : CallbackListener<ChatClient>() {
             override fun onSuccess(client: ChatClient?) {

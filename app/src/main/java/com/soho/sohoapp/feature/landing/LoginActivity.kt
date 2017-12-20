@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.landing
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -62,14 +63,15 @@ class LoginActivity : AppCompatActivity() {
                     Keys.User.PASSWORD to passwordEditText.text.toString()
             )
             disposable = DEPENDENCIES.sohoService.loginUser(map)
-//                    .zipWith(DEPENDENCIES.sohoService.getTwilioToken(), BiFunction(s: UserResult, TwilioToken)
-//
-//                    )
+                    .map(Converter::toUser)
+                    .switchMap {
+                        DEPENDENCIES.userPrefs.login(it)
+                        DEPENDENCIES.sohoService.getTwilioToken(Build.getRadioVersion())
+                    }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .map(Converter::toUser)
-                    .subscribe({ user ->
-                        DEPENDENCIES.userPrefs.login(user)
+                    .subscribe({
+                        DEPENDENCIES.userPrefs.twilioToken = it.accessToken
                         val navigatorImpl = NavigatorImpl.newInstance(this)
                         if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
                             navigatorImpl.openRegisterUserInfoActivity()
@@ -77,14 +79,16 @@ class LoginActivity : AppCompatActivity() {
                             navigatorImpl.openHomeActivity()
                         }
                         loadingDialog?.dismiss()
+
                     },
-                            { throwable ->
+                            { throwable: Throwable ->
                                 loadingDialog?.dismiss()
                                 throwable.printStackTrace()
                                 AlertDialog.Builder(this).setMessage(getString(R.string.error_occurred)).show()
                                 DEPENDENCIES.logger.e("Error during login", throwable)
                             }
                     )
+
         }
     }
 

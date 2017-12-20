@@ -22,7 +22,7 @@ import com.soho.sohoapp.BuildConfig;
 import com.soho.sohoapp.R;
 import com.soho.sohoapp.SohoApplication;
 import com.soho.sohoapp.abs.AbsActivity;
-import com.soho.sohoapp.feature.comingsoon.ComingSoonFragment;
+import com.soho.sohoapp.feature.chat.ChatChannelFragment;
 import com.soho.sohoapp.feature.home.more.MoreFragment;
 import com.soho.sohoapp.feature.home.portfolio.PortfolioFragment;
 import com.soho.sohoapp.feature.marketplaceview.components.MarketPlaceFragment;
@@ -199,7 +199,7 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
 
     @Override
     public void showOffersTab() {
-        showFragment(ComingSoonFragment.TAG);
+        showFragment(ChatChannelFragment.TAG);
     }
 
     @Override
@@ -254,8 +254,8 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
                 return PortfolioFragment.newInstance();
             case MoreFragment.TAG:
                 return MoreFragment.Companion.newInstance();
-            case ComingSoonFragment.TAG:
-                return ComingSoonFragment.Companion.newInstance();
+            case ChatChannelFragment.TAG:
+                return ChatChannelFragment.Companion.newInstance();
             default:
                 return null;
         }
@@ -266,6 +266,6 @@ public class HomeActivity extends AbsActivity implements HomeContract.ViewIntera
         addedFragmentsTags.add(MarketPlaceFragment.TAG);
         addedFragmentsTags.add(PortfolioFragment.TAG);
         addedFragmentsTags.add(MoreFragment.TAG);
-        addedFragmentsTags.add(ComingSoonFragment.TAG);
+        addedFragmentsTags.add(ChatChannelFragment.TAG);
     }
 }
