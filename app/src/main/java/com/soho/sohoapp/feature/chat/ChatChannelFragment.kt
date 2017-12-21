@@ -41,7 +41,7 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
     lateinit var presenter: ChatChannelContract.ViewPresentable
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_coming_soon, container, false)
+        val view = inflater.inflate(R.layout.fragment_chat_channel, container, false)
         ButterKnife.bind(this, view)
         toolbar.title = getString(R.string.message_title)
 
