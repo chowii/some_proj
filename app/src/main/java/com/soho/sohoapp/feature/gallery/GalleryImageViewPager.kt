@@ -56,7 +56,7 @@ class GalleryImageViewPager(val context: Context) : PagerAdapter() {
         return view === `object`
     }
 
-    override fun getItemPosition(`object`: Any?): Int {
+    override fun getItemPosition(`object`: Any): Int {
         return PagerAdapter.POSITION_NONE
     }
 

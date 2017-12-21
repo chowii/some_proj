@@ -1,5 +1,6 @@
 package com.soho.sohoapp.landing
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,7 @@ open class BaseFragment : Fragment() {
     fun handleError(t: Throwable) = handleError(t, true, null)
 
     fun handleError(t: Throwable, showInternetErrors: Boolean, coordinatorLayout: FrameLayout?) {
-        ThrowableHandler.showError(t, showInternetErrors, coordinatorLayout, view, activity)
+        ThrowableHandler.showError(t, showInternetErrors, coordinatorLayout, view, activity as Activity)
     }
 
     fun showSnackBar(message: String, view:View?) {

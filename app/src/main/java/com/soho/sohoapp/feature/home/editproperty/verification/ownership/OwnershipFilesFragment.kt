@@ -41,8 +41,9 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
         private val ITEMS_IN_LINE = 3
 
         fun newInstance(property: Property) = OwnershipFilesFragment().apply {
-            arguments = Bundle()
-            arguments.putParcelable(KEY_PROPERTY, property)
+            arguments = Bundle().apply {
+                putParcelable(KEY_PROPERTY, property)
+            }
         }
     }
 
@@ -51,11 +52,13 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
         ButterKnife.bind(this, view)
 
         initView()
-        presenter = OwnershipFilesPresenter(this,
-                NavigatorImpl.newInstance(this),
-                PermissionManagerImpl.newInstance(this.context),
-                FileHelper.newInstance(this.context))
-        presenter.startPresenting(savedInstanceState != null)
+        context?.let {
+            presenter = OwnershipFilesPresenter(this,
+                    NavigatorImpl.newInstance(this),
+                    PermissionManagerImpl.newInstance(this.context),
+                    FileHelper.newInstance(it))
+            presenter.startPresenting(savedInstanceState != null)
+        }
         return view
     }
 
@@ -82,19 +85,20 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
         filesAdapter.setData(fileList)
     }
 
-    override fun getProperty(): Property = arguments.getParcelable<Property>(KEY_PROPERTY)
+    override fun getProperty(): Property? = arguments?.getParcelable(KEY_PROPERTY)
 
     override fun showAddPhotoDialog() {
-        val addPhotoDialog = AddPhotoDialog(this.context)
-        addPhotoDialog.show(object : AddPhotoDialog.OnItemClickedListener {
-            override fun onTakeNewPhotoClicked() {
-                presentable.onTakeNewPhotoClicked()
-            }
+        context?.let {
+            AddPhotoDialog(it).show(object : AddPhotoDialog.OnItemClickedListener {
+                override fun onTakeNewPhotoClicked() {
+                    presentable.onTakeNewPhotoClicked()
+                }
 
-            override fun onChooseFromGalleryClicked() {
-                presentable.onChooseFromGalleryClicked()
-            }
-        })
+                override fun onChooseFromGalleryClicked() {
+                    presentable.onChooseFromGalleryClicked()
+                }
+            })
+        }
     }
 
     override fun capturePhoto() {
@@ -126,7 +130,7 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
     }
 
     private fun initView() {
-        filesAdapter = OwnershipFilesAdapter(this.context)
+        filesAdapter = OwnershipFilesAdapter()
         filesAdapter.setOnItemClickListener(object : OwnershipFilesAdapter.OnItemClickListener {
 
             override fun onFileClicked(file: PropertyFile) {}

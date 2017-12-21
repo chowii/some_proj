@@ -42,7 +42,7 @@ class EnterPinFragment : BaseFragment(), EnterPinFragmentContract.ViewInteractab
         return inflater.inflate(R.layout.fragment_enter_pin, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = EnterPinFragmentPresenter(this, NavigatorImpl.newInstance(this)
                 , Dependencies.DEPENDENCIES)
@@ -71,7 +71,7 @@ class EnterPinFragment : BaseFragment(), EnterPinFragmentContract.ViewInteractab
         })
 
         resend_confirmation_tv.setOnClickListener {
-            presenter.resendPin(arguments.getString(EnterPinActivity.EXTRA_PHONE_NUMBER))
+            arguments?.getString(EnterPinActivity.EXTRA_PHONE_NUMBER)?.let { presenter.resendPin(it) }
         }
 
         enter_pin_btn.setOnClickListener { presenter.checkPin(pin_view.text.toString()) }

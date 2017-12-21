@@ -11,14 +11,14 @@ import com.soho.sohoapp.navigator.RequestCode
 class EditPropertyFilesPresenter(private val view: EditPropertyFilesContact.ViewInteractable,
                                  private val navigator: NavigatorInterface) : AbsPresenter, EditPropertyFilesContact.ViewPresentable {
 
-    private lateinit var property: Property
+    private var property: Property? = null
     private val displayableList = mutableListOf<Displayable>()
 
     override fun startPresenting(fromConfigChanges: Boolean) {
         view.setPresentable(this)
         property = view.getPropertyFromExtras()
         displayableList.add(AddFile())
-        displayableList.addAll(property.files)
+        property?.files?.let { displayableList.addAll(it) }
         view.setFileList(displayableList)
     }
 

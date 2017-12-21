@@ -21,7 +21,7 @@ interface OwnershipFilesContract {
     interface ViewInteractable : BaseViewInteractable {
         fun setPresentable(presentable: ViewPresentable)
         fun setFileList(fileList: List<Displayable>)
-        fun getProperty(): Property
+        fun getProperty(): Property?
         fun pickImageFromGallery()
         fun capturePhoto()
         fun showAddPhotoDialog()

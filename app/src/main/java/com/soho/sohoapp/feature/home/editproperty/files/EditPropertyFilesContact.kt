@@ -15,7 +15,7 @@ interface EditPropertyFilesContact {
 
     interface ViewInteractable : BaseViewInteractable {
         fun setPresentable(presentable: ViewPresentable)
-        fun getPropertyFromExtras(): Property
+        fun getPropertyFromExtras(): Property?
         fun setFileList(fileList: List<Displayable>)
     }
 }

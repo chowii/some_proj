@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.home.more.presenter
 import android.content.Context
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.SohoApplication
 import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.feature.home.more.contract.MoreContract
 import com.soho.sohoapp.feature.home.more.model.MoreItem
@@ -15,7 +16,12 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by chowii on 10/09/17.
  */
-class MorePresenter(private val interactable: MoreContract.ViewInteractable, private val context: Context, private val absActivity: AbsActivity, private val navigator: NavigatorImpl) : MoreContract.ViewPresentable {
+class MorePresenter(
+        private val interactable: MoreContract.ViewInteractable,
+        private val context: Context? = SohoApplication.getContext(),
+        private val absActivity: AbsActivity,
+        private val navigator: NavigatorImpl
+) : MoreContract.ViewPresentable {
 
     val compositeDisposable = CompositeDisposable()
 
@@ -72,5 +78,5 @@ class MorePresenter(private val interactable: MoreContract.ViewInteractable, pri
         compositeDisposable.clear()
     }
 
-    fun getString(res: Int): String = context.getString(res)
+    fun getString(res: Int): String = context?.getString(res).orEmpty()
 }
