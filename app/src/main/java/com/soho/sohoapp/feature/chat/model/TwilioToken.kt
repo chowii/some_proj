@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.chat.adapter
+package com.soho.sohoapp.feature.chat.model
 
 import com.google.gson.annotations.SerializedName
 

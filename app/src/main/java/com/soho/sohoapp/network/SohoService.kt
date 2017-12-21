@@ -1,7 +1,7 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.dtos.*
-import com.soho.sohoapp.feature.chat.adapter.TwilioToken
+import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult

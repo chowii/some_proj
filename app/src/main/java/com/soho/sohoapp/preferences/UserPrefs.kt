@@ -53,6 +53,9 @@ class UserPrefs(context: Context) {
         Outbound.logout()
     }
 
+    val isUserLoggedIn: Boolean
+        get() = user != null && authToken.isNotBlank()
+
     companion object {
         private val SHARED_PREFS_NAME = "Soho-userPrefs"
     }

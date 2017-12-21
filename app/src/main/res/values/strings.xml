@@ -569,6 +569,18 @@
     <string name="file_type_other">Other</string>
     <string name="message_title">Messages</string>
 
+    <!-- Enquire Property -->
+    <string name="property_detail_enquire_button">ENQUIRE</string>
+    <string name="submit_button_text">Submit</string>
+    <string name="enquiry_indication_of_price_text">Get an indication of price</string>
+    <string name="enquiry_contract_of_sale_text">Obtain the contract of sale</string>
+    <string name="enquiry_inspect_property_text">Inspect property</string>
+    <string name="enquiry_contacted_about_similar_property_text">Be contacted about similar property</string>
+    <string name="other_text">Other</string>
+    <string name="enquire_header_text">I WOULD LIKE TO</string>
+    <string name="comment_text">Comment</string>
+    <string name="comments_text">Comments</string>
+
     <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50K</item>

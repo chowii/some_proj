@@ -149,6 +149,10 @@
             android:name=".feature.home.more.verifyNumber.EnterPinActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.marketplaceview.feature.EnquireActivity"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".feature.gallery.GalleryViewActivity" />
         <activity
             android:name=".notifications.NotificationsActivityHandler"

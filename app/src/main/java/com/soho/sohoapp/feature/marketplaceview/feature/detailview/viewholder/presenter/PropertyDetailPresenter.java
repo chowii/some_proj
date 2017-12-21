@@ -11,6 +11,7 @@ import com.soho.sohoapp.data.models.Image;
 import com.soho.sohoapp.data.models.InspectionTime;
 import com.soho.sohoapp.data.models.Location;
 import com.soho.sohoapp.data.models.Property;
+import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.extensions.LongExtKt;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailDescriptionItem;
@@ -21,6 +22,7 @@ import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.co
 import com.soho.sohoapp.feature.marketplaceview.feature.filters.fitlermodel.HeaderItem;
 import com.soho.sohoapp.navigator.NavigatorImpl;
 import com.soho.sohoapp.network.ApiClient;
+import com.soho.sohoapp.preferences.UserPrefs;
 import com.soho.sohoapp.utils.Converter;
 
 import java.util.ArrayList;
@@ -99,6 +101,7 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                             LongExtKt.toStringWithDisplayFormat(property.getUpdatedAt())), R.layout.item_header));
                     interactable.configureAdapter(descriptionList);
                     interactable.populateView(property);
+                    configureEnquireButton(property);
                     interactable.setRefreshing(false);
                 }, throwable -> {
                     DEPENDENCIES.getLogger().e("throwable: " + throwable.toString(), throwable);
@@ -106,6 +109,23 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
                     interactable.showError(throwable);
                 });
 
+    }
+
+    private void configureEnquireButton(Property property) {
+        UserPrefs userPrefs = DEPENDENCIES.getUserPrefs();
+        User user = userPrefs.getUser();
+        int ownerId = 0;
+        int agentId = 0;
+        if (property.getOwner() != null) property.getOwner().getId();
+        if (property.getAgent() != null) property.getAgent().getId();
+
+        boolean isUserProperty = user.getId() == ownerId;
+        boolean isAgentProperty = user.getId() != agentId;
+
+        if (userPrefs.isUserLoggedIn() && isUserProperty && isAgentProperty)
+            interactable.hideEnquireButton();
+        else
+            interactable.showEnquireButton();
     }
 
     @NonNull

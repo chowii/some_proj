@@ -23,6 +23,8 @@ public interface PropertyDetailContract {
     interface ViewInteractable extends BaseViewInteractable {
         void configureAdapter(List<BaseModel> model);
         void populateView(Property property);
+        void showEnquireButton();
+        void hideEnquireButton();
         void setRefreshing(boolean isRefreshing);
     }
 
