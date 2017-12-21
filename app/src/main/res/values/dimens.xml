@@ -12,5 +12,5 @@
     <dimen name="inner_layout_padding">15dp</dimen>
     <dimen name="marketplace_search_height">80dp</dimen>
     <dimen name="fab_home_dim">50dp</dimen>
-    <dimen name="fab_home_dim_plus">60dp</dimen>
+    <dimen name="fab_home_dim_plus">10dp</dimen>
 </resources>
