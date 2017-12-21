@@ -52,11 +52,13 @@ class OwnershipFilesFragment : BaseFragment(), OwnershipFilesContract.ViewIntera
         ButterKnife.bind(this, view)
 
         initView()
-        presenter = OwnershipFilesPresenter(this,
-                NavigatorImpl.newInstance(this),
-                PermissionManagerImpl.newInstance(this.context),
-                FileHelper.newInstance(context))
-        presenter.startPresenting(savedInstanceState != null)
+        context?.let {
+            presenter = OwnershipFilesPresenter(this,
+                    NavigatorImpl.newInstance(this),
+                    PermissionManagerImpl.newInstance(this.context),
+                    FileHelper.newInstance(it))
+            presenter.startPresenting(savedInstanceState != null)
+        }
         return view
     }
 

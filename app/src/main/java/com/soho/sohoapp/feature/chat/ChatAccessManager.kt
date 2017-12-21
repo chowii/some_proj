@@ -9,12 +9,14 @@ import com.twilio.accessmanager.AccessManager
  */
 class ChatAccessManager: AccessManager.Listener, AccessManager.TokenUpdateListener {
     override fun onTokenExpired(accessManager: AccessManager) {
+        accessManager.updateToken(accessManager.token)
         Dependencies.DEPENDENCIES.userPrefs.twilioToken = accessManager.token
         Log.e("LOG_TAG---", "onTokenExpired: ")
     }
 
     override fun onTokenWillExpire(accessManager: AccessManager) {
-//        accessManager.updateToken(accessManager.)
+        accessManager.updateToken(accessManager.token)
+        Dependencies.DEPENDENCIES.userPrefs.twilioToken = accessManager.token
         Log.e("LOG_TAG---", "onTokenWillExpire: ")
     }
 

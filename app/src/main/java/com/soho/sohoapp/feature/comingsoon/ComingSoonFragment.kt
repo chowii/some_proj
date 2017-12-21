@@ -19,6 +19,6 @@ class ComingSoonFragment : Fragment() {
         fun newInstance() = ComingSoonFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-            inflater.inflate(R.layout.fragment_comming_soon, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater
+            .inflate(R.layout.fragment_comming_soon, container, false)
 }

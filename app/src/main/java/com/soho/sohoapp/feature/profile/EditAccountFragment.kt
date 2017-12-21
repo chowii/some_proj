@@ -33,7 +33,7 @@ import java.util.*
 class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable {
 
     private lateinit var presentable: EditAccountContract.ViewPresentable
-    private var presenter: EditAccountFragmentPresenter? = null
+    private lateinit var presenter: EditAccountFragmentPresenter
     private lateinit var user: User
 
     companion object {
@@ -58,7 +58,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
                     , PermissionManagerImpl.newInstance(it)
                     , AddPhotoDialog(it)
                     , FileHelper.newInstance(it))
-            presenter?.startPresenting(false)
+            presenter.startPresenting(false)
         }
         initView()
 
@@ -119,7 +119,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
         dob_et.setOnClickListener {
             activity?.fragmentManager?.let {
-                presenter?.showDatePickerDialog(it, calendar)
+                presenter.showDatePickerDialog(it, calendar)
             }
         }
         renting_cb.isChecked = user.isRenting()

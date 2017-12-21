@@ -29,14 +29,16 @@ class ConnectionsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var displayableList = mutableListOf<Displayable>()
     private var currentUserId = DEPENDENCIES.userPrefs.user?.id
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
-        val context = parent?.context
-        return when (viewType) {
-            TYPE_HEADER -> HeaderHolder(LayoutInflater.from(context).inflate(R.layout.item_title, parent, false))
-            TYPE_USER -> UserHolder(LayoutInflater.from(context).inflate(R.layout.item_user_connection, parent, false))
-            TYPE_REQUEST -> RequestHolder(LayoutInflater.from(context).inflate(R.layout.item_request_connection, parent, false))
-            else -> null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+        parent.context?.let {
+            return when (viewType) {
+                TYPE_HEADER -> HeaderHolder(LayoutInflater.from(it).inflate(R.layout.item_title, parent, false))
+                TYPE_USER -> UserHolder(LayoutInflater.from(it).inflate(R.layout.item_user_connection, parent, false))
+                TYPE_REQUEST -> RequestHolder(LayoutInflater.from(it).inflate(R.layout.item_request_connection, parent, false))
+                else -> null
+            }
         }
+        return null
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
