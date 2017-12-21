@@ -16,6 +16,7 @@ public interface PropertyDetailContract {
     interface ViewPresentable{
         void startPresenting();
         void retrieveProperty(int id);
+        void onEnquiry();
         void stopPresenting();
         void onHeaderPhotoClicked(List<Image> images, int currentItem);
     }

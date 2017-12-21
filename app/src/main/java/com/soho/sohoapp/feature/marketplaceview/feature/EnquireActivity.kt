@@ -9,13 +9,20 @@ import android.widget.CheckBox
 import android.widget.EditText
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.soho.sohoapp.R
+import com.soho.sohoapp.data.models.Property
 
 /**
  * Created by chowii on 21/12/17.
  */
 
 class EnquireActivity : AppCompatActivity() {
+
+    companion object {
+        @JvmField
+        val PROPERTY_ENQUIRY_INTENT_EXTRA = this::class.java.`package`.name + ".property"
+    }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
     @BindView(R.id.price_check_box) lateinit var priceCheckBox: CheckBox
@@ -26,11 +33,20 @@ class EnquireActivity : AppCompatActivity() {
     @BindView(R.id.comments_edit_text) lateinit var commentsEditText: EditText
     @BindView(R.id.submit_enquire_button) lateinit var submitButton: Button
 
+    @OnClick(R.id.submit_enquire_button)
+    fun onSubmitClick() {
+        //TODO Go to or create chat channel
+    }
+
+    private lateinit var property: Property
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enquire)
         ButterKnife.bind(this)
         configureToolbar()
+
+        property = intent.extras[PROPERTY_ENQUIRY_INTENT_EXTRA] as Property
 
         priceCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
@@ -40,11 +56,11 @@ class EnquireActivity : AppCompatActivity() {
             if (isChecked)
                 toggleCheckedState(false, isChecked, false, false, false, false)
         }
-        inspectCheckBox.setOnCheckedChangeListener { button, isChecked ->
+        inspectCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 toggleCheckedState(false, false, isChecked, false, false, false)
         }
-        contractCheckBox.setOnCheckedChangeListener { button, isChecked ->
+        contractCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 toggleCheckedState(false, false, false, isChecked, false, false)
         }

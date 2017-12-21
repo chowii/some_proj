@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
@@ -14,6 +15,7 @@ import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.data.models.User;
 import com.soho.sohoapp.extensions.LongExtKt;
 import com.soho.sohoapp.feature.home.BaseModel;
+import com.soho.sohoapp.feature.marketplaceview.feature.EnquireActivity;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailDescriptionItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyDetailHeaderItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
@@ -126,6 +128,13 @@ public class PropertyDetailPresenter implements PropertyDetailContract.ViewPrese
             interactable.hideEnquireButton();
         else
             interactable.showEnquireButton();
+    }
+
+    @Override
+    public void onEnquiry() {
+        Intent intent = new Intent(context, EnquireActivity.class);
+        intent.putExtra(EnquireActivity.PROPERTY_ENQUIRY_INTENT_EXTRA, property);
+        context.startActivity(intent);
     }
 
     @NonNull

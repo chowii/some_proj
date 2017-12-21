@@ -22,7 +22,6 @@ import com.soho.sohoapp.abs.AbsActivity;
 import com.soho.sohoapp.data.models.Property;
 import com.soho.sohoapp.feature.home.BaseModel;
 import com.soho.sohoapp.feature.home.editproperty.ImageHeaderViewPager;
-import com.soho.sohoapp.feature.marketplaceview.feature.EnquireActivity;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.model.PropertyHostTimeItem;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.contract.PropertyDetailContract;
 import com.soho.sohoapp.feature.marketplaceview.feature.detailview.viewholder.presenter.PropertyDetailPresenter;
@@ -73,8 +72,7 @@ public class PropertyDetailActivity extends AbsActivity
 
     @OnClick(R.id.enquire_button)
     public void onEnquireButtonClick() {
-        Intent intent = new Intent(this, EnquireActivity.class);
-        startActivity(intent);
+        presenter.onEnquiry();
     }
 
     ImageHeaderViewPager pagerAdapter;
