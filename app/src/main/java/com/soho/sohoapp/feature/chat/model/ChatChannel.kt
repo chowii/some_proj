@@ -14,7 +14,7 @@ import io.reactivex.Observable
 /**
  * Created by chowii on 19/12/17.
  */
-class ChatChannel(val chatChannel: Channel?) : BaseModel {
+class ChatChannel(private val chatChannel: Channel?) : BaseModel {
 
     override fun getItemViewType() = R.layout.item_chat_channel
 
@@ -27,7 +27,6 @@ class ChatChannel(val chatChannel: Channel?) : BaseModel {
 
 
     init {
-
         property = Gson().fromJson<ChatAttributes>(chatChannel?.attributes.toString(), object : TypeToken<ChatAttributes>() {}.type)
         propertyId = property?.chatProperty?.id
         property?.chatProperty?.maskedAddress?.let {
@@ -36,7 +35,7 @@ class ChatChannel(val chatChannel: Channel?) : BaseModel {
             else
                 property?.chatProperty?.fullAddress
         }
-        getLastMessage()
+        getLastMessageObservable()
     }
 
     fun getLastMessageObservable(): Observable<List<Message?>> {
@@ -54,20 +53,6 @@ class ChatChannel(val chatChannel: Channel?) : BaseModel {
                 }
             })
         }
-    }
-
-    fun getLastMessage() {
-        chatChannel?.messages?.getLastMessages(1, object : CallbackListener<List<Message?>>() {
-            override fun onSuccess(messageList: List<Message?>) {
-                Log.d("LOG_TAG---", "getlastmessage: " + messageList.size)
-                lastMessage = messageList.firstOrNull()
-            }
-
-            override fun onError(errorInfo: ErrorInfo?) {
-                Log.d("LOG_TAG---", "error: " + errorInfo?.message);
-                super.onError(errorInfo)
-            }
-        })
     }
 
 }

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.soho.sohoapp.R
+import com.soho.sohoapp.extensions.durationFromNowAsString
 import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.chat.viewholder.ChatChannelViewHolder
 
@@ -32,8 +33,8 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<ChatChannel
                     subscribedChannels[position]?.let {
                         addressTextView.text = it.propertyAddress
                         nameTextView.text = it.lastMessage?.messageBody ?: "No Messages"
+                        timeTextView.text = it.lastMessage?.timeStampAsDate?.durationFromNowAsString()
                         messageTextView.text = it.property?.chatAttributes?.conversionUsers?.get(1) ?: "No User"
-                        timeTextView.text = it.lastMessage?.timeStamp
                     }
 
                 }
