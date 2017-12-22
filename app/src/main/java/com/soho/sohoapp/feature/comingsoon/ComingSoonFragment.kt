@@ -10,14 +10,13 @@ import com.soho.sohoapp.R
  * Created by mariolopez on 16/10/17.
  */
 class ComingSoonFragment : Fragment() {
+
     companion object {
         @JvmField
         val TAG: String = "ComingSoon"
 
         @JvmStatic
-        fun newInstance(): ComingSoonFragment {
-            return ComingSoonFragment()
-        }
+        fun newInstance() = ComingSoonFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater

@@ -1,9 +1,12 @@
 package com.soho.sohoapp.extensions
 
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
+import com.soho.sohoapp.R
+import com.soho.sohoapp.SohoApplication
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Calendar.*
 
 /**
  * Created by Jovan on 18/9/17.
@@ -49,3 +52,30 @@ fun Date.toStringWithFormat(stringFormat: String): String {
         return ""
     }
 }
+
+fun Date.durationFromNow(): Date {
+    val durationLong = System.currentTimeMillis() - this.time
+    return Date(durationLong)
+}
+
+fun Date.durationFromNowAsString(): String {
+    val duration = this.durationFromNow()
+    Calendar.getInstance().let {
+        it.time = duration
+        return when {
+            it[DAY_OF_YEAR] < 1 -> getHourDuration(it[HOUR])
+            it[DAY_OF_YEAR] < 29 -> getDayDuration(it[MONTH])
+            else -> getMonthDuration(it[MONTH])
+        }
+    }
+}
+
+private fun getMonthDuration(month: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.month, month, month)
+
+private fun getDayDuration(month: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.month, month, month)
+
+private fun getHourDuration(hour: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.hour, hour, hour)
+

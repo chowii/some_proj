@@ -8,6 +8,7 @@ import io.outbound.sdk.Outbound
 
 class UserPrefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
+    private val twilioTokenKey = this::class.java.`package`.name
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     var authToken: String
@@ -25,7 +26,6 @@ class UserPrefs(context: Context) {
             prefs.edit()?.putBoolean("FirstInstall", value)?.apply()
         }
         get() = prefs.getBoolean("FirstInstall", false)
-
 
     fun login(user: User?) {
 
@@ -49,6 +49,7 @@ class UserPrefs(context: Context) {
     fun logout() {
         DEPENDENCIES.userPrefs.authToken = ""
         DEPENDENCIES.userPrefs.user = null
+        DEPENDENCIES.userPrefs.twilioToken = ""
         Outbound.logout()
     }
 
@@ -58,5 +59,11 @@ class UserPrefs(context: Context) {
 
     var isProfileComplete: Boolean = false
         get() = user?.isProfileComplete.orFalse()
+
+    var twilioToken: String
+        get() = prefs.getString(twilioTokenKey, "")
+        set(value) {
+            prefs.edit()?.putString(twilioTokenKey, value)?.apply()
+        }
 
 }

@@ -72,7 +72,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
     private fun initView() {
         edit_photo_tv.setOnClickListener {
-            presenter.onEditPhotoClick()
+            presenter?.onEditPhotoClick()
         }
 
         country_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

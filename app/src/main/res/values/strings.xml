@@ -567,6 +567,11 @@
     <string name="edit_property_file_add_file_title">Add File</string>
     <string name="edit_property_edit_file_title">Edit File</string>
     <string name="file_type_other">Other</string>
+    <string name="message_title">Messages</string>
+
+    <!--Messages-->
+    <string name="chat_item_no_message_text">No Messages</string>
+    <string name="chat_item_no_user_text">No User</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

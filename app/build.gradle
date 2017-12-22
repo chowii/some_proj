@@ -27,7 +27,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.soho.sohoapp"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 7
         versionName "1.0.4"
@@ -229,6 +229,11 @@ dependencies {
     //PinView
     implementation "com.chaos.view:pinview:$pin_view_version"
     implementation project(':outbound-sdk')
+
+    //Twilio
+    compile 'com.twilio:chat-android:2.0.1'
+    compile 'com.twilio:accessmanager-android:0.1.0'
+
 }
 //this needs to be at the bottom
 apply plugin: 'com.google.gms.google-services'
