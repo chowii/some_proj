@@ -150,6 +150,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".feature.chat.ChatConversationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".feature.marketplaceview.feature.EnquireActivity"
             android:screenOrientation="portrait" />
 

@@ -2,7 +2,6 @@ package com.soho.sohoapp.feature.chat.presenter
 
 import android.content.Context
 import android.util.Log
-import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.feature.chat.ChatAccessManager
 import com.soho.sohoapp.feature.chat.adapter.ChatClientListenerAdapter
@@ -21,6 +20,8 @@ import io.reactivex.schedulers.Schedulers
 class ChatChannelPresenter(private val context: Context?,
                            private val interactor: ChatChannelContract.ViewInteractable
 ) : ChatChannelContract.ViewPresentable {
+
+    private var chatAccessManager: ChatAccessManager? = null
 
     override fun startPresenting() {
         interactor.showLoading()
@@ -53,16 +54,6 @@ class ChatChannelPresenter(private val context: Context?,
                 override fun onError(errorInfo: ErrorInfo?) {
                     Log.d("LOG_TAG---", "Twilio error: " + errorInfo?.message)
                     super.onError(errorInfo)
-                    Dependencies.DEPENDENCIES.sohoService.getTwilioToken("test")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Dependencies.DEPENDENCIES.userPrefs.twilioToken = it.accessToken
-                                        getChatChannelList()
-                                    },
-                                    { interactor.showError(it) }
-                            )
                     interactor.showError(Throwable("Access Token expired"))
                     interactor.hideLoading()
                 }
@@ -96,8 +87,12 @@ class ChatChannelPresenter(private val context: Context?,
         }
     }
 
+    override fun stopPresenting() {
+        chatAccessManager?.clearDisposable()
+    }
+
     private fun addAccessTokenManager() {
-        val chatAccessManager = ChatAccessManager()
+        chatAccessManager = ChatAccessManager()
         val accessManager = AccessManager(DEPENDENCIES.userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
     }

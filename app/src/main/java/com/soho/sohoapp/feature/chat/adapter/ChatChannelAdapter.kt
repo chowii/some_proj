@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.chat.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.extensions.durationFromNowAsString
 import com.soho.sohoapp.feature.chat.model.ChatChannel
@@ -11,7 +12,8 @@ import com.soho.sohoapp.feature.chat.viewholder.ChatChannelViewHolder
 /**
  * Created by chowii on 19/12/17.
  */
-class ChatChannelAdapter(private val subscribedChannels: MutableList<ChatChannel?>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatChannelAdapter(private val subscribedChannels: MutableList<ChatChannel?>,
+                         private val onChatChannelClick: (String, Int, Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = subscribedChannels.size
 
@@ -30,13 +32,25 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<ChatChannel
         when (holder) {
             is ChatChannelViewHolder -> {
                 holder.apply {
-                    subscribedChannels[position]?.let {
-                        addressTextView.text = it.propertyAddress
-                        nameTextView.text = it.lastMessage?.messageBody ?: "No Messages"
-                        timeTextView.text = it.lastMessage?.timeStampAsDate?.durationFromNowAsString()
-                        messageTextView.text = it.property?.chatAttributes?.conversionUsers?.get(1) ?: "No User"
-                    }
+                    subscribedChannels[position]?.let { chatChannel ->
+                        addressTextView.text = chatChannel.propertyAddress
+                        nameTextView.text = chatChannel.lastMessage?.messageBody ?: "No Messages"
+                        timeTextView.text = chatChannel.lastMessage?.timeStampAsDate?.durationFromNowAsString()
+                        messageTextView.text = chatChannel.property?.chatAttributes?.conversionUsers?.get(1) ?: "No User"
+                        itemView.setOnClickListener {
+                            val userId = Dependencies.DEPENDENCIES.userPrefs.user?.id
+                            val chatType = if (userId == 0)
+                                "user"
+                            else
+                                "property"
+                            val resourseId = if (userId == 0)
+                                chatChannel.propertyId
+                            else
+                                userId
 
+                            onChatChannelClick.invoke(chatType, resourseId ?: 0, chatChannel.propertyId ?: 0)
+                        }
+                    }
                 }
             }
         }

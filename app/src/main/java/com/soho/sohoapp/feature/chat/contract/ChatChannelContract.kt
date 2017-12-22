@@ -14,6 +14,8 @@ interface ChatChannelContract {
 
         fun getChatChannelList()
 
+        fun stopPresenting()
+
     }
 
     interface ViewInteractable : BaseViewInteractable {

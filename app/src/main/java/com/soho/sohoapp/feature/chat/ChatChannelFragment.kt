@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -45,7 +46,7 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         ButterKnife.bind(this, view)
         toolbar.title = getString(R.string.message_title)
 
-        adapter = ChatChannelAdapter(mutableListOf())
+        adapter = ChatChannelAdapter(mutableListOf(), onChatChannelClicked())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         swipeRefreshLayout.setOnRefreshListener { presenter.getChatChannelList() }
@@ -57,7 +58,7 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
 
 
     override fun showError(throwable: Throwable) {
-        view?.let { Snackbar.make(it, throwable.message?:"Error occurred", Snackbar.LENGTH_SHORT).show() }
+        view?.let { Snackbar.make(it, throwable.message ?: "Error occurred", Snackbar.LENGTH_SHORT).show() }
     }
 
     override fun showLoading() {
@@ -77,4 +78,17 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         swipeRefreshLayout.isRefreshing = false
     }
 
+    private fun onChatChannelClicked(): (String, Int, Int) -> Unit {
+        return { chatType, resourceId, propertyId ->
+            activity?.
+                    startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
+                        //                        putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+                    })
+        }
+    }
+
+    override fun onDestroyView() {
+        presenter.stopPresenting()
+        super.onDestroyView()
+    }
 }
