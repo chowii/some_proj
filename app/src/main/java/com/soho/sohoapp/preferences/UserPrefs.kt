@@ -8,7 +8,8 @@ import io.outbound.sdk.Outbound
 
 class UserPrefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
-    private val twilioTokenKey = this::class.java.`package`.name
+    private val twilioTokenKey = this::class.java.`package`.name + ".twilioToken"
+    private val twilioUserKey = this::class.java.`package`.name + ".twilioUser"
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     var authToken: String
@@ -67,6 +68,12 @@ class UserPrefs(context: Context) {
         get() = prefs.getString(twilioTokenKey, "")
         set(value) {
             prefs.edit()?.putString(twilioTokenKey, value)?.apply()
+        }
+
+    var twilioUser: String
+        get() = prefs.getString(twilioUserKey, "")
+        set(value) {
+            prefs.edit()?.putString(twilioUserKey, value)?.apply()
         }
 
 }
