@@ -16,6 +16,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
+import com.soho.sohoapp.feature.chat.chatconversation.ChatConversationActivity
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
 import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.chat.presenter.ChatChannelPresenter
@@ -78,12 +79,11 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun onChatChannelClicked(): (String, Int, Int) -> Unit {
-        return { chatType, resourceId, propertyId ->
-            activity?.
-                    startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
-                        //                        putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
-                    })
+    private fun onChatChannelClicked(): (String) -> Unit {
+        return {
+            activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
+                putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+            })
         }
     }
 
