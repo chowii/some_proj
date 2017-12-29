@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/soho_logo_tagline" />
 
     <TextView
         android:id="@+id/header"
+        style="@style/TextView.Message.Large.Center.HyperLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Test Header"
-        style="@style/TextView.Message.Large.Center.HyperLink"
         android:layout_centerInParent="true"
-        />
+        tools:text="Test Header" />
 
     <TextView
-        android:layout_below="@id/header"
         android:id="@+id/subheader"
+        style="@style/TextView.SubTitle.Center.Grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Test SubHeader"
-        style="@style/TextView.SubTitle.Center.Grey"
+        android:layout_below="@id/header"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/inner_layout_padding"
-        />
+        tools:text="Test SubHeader" />
 
     <Button
+        android:id="@+id/redirect_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Test Redirect"
-        android:theme="@style/MaterialButton.Green"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/inner_layout_padding"
-        />
+        android:theme="@style/MaterialButton.Green"
+        tools:text="Test Redirect" />
 
 </RelativeLayout>

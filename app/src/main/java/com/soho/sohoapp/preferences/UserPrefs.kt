@@ -51,6 +51,7 @@ class UserPrefs(context: Context) {
         DEPENDENCIES.userPrefs.authToken = ""
         DEPENDENCIES.userPrefs.user = null
         DEPENDENCIES.userPrefs.twilioToken = ""
+        DEPENDENCIES.userPrefs.twilioUser = ""
         Outbound.logout()
     }
 

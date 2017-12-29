@@ -581,6 +581,11 @@
     <string name="comment_text">Comment</string>
     <string name="comments_text">Comments</string>
 
+    <!-- Messages -->
+    <string name="empty_state_chat_message">You have not made or received any enquires. Visit the marketplace to view properties, and make enquires</string>
+    <string name="empty_state_chat_title">No enquires</string>
+    <string name="empty_state_chat_button_text">Enquiry</string>
+
     <string-array name="filter_buy_price_range">
         <item>Any</item>
         <item>$50K</item>
