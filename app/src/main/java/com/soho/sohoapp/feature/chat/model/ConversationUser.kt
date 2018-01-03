@@ -27,7 +27,7 @@ class ConversationUser {
     val lastMessageSentAt: Int? = null
 
     @SerializedName("user_twilio_id")
-    val userTwilioId: Int? = null
+    val userTwilioId: String? = null
 
     @SerializedName("user")
     val user: BasicUser? = null

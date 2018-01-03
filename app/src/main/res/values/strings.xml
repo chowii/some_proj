@@ -585,6 +585,8 @@
     <string name="empty_state_chat_message">You have not made or received any enquires. Visit the marketplace to view properties, and make enquires</string>
     <string name="empty_state_chat_title">No enquires</string>
     <string name="empty_state_chat_button_text">Enquiry</string>
+    <string name="enquiry_interested_in">Interested in:</string>
+    <string name="enquiry_message_format">%s %s\\n\\n\\\"%s\\\" \\n</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

@@ -187,4 +187,12 @@ public interface Keys {
         String FILE_AMOUNT = "amount";
         String FILE_ATTACHMENT = "attachment";
     }
+
+    interface PropertyEnquire {
+        String RESOURCE_ID = "resource_id";
+        String PROPERTY_ID = "property_id";
+        String CHAT_TYPE = "chat_type";
+        String CHAT_PROPERTY = "property";
+        String CHAT_USER = "USER";
+    }
 }
