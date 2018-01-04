@@ -16,8 +16,8 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
 
     override fun getItemViewType() = R.layout.item_chat_channel
 
-    var property: ChatAttributes? = null
-    var lastMessage: Message? = null
+    var property: ChatAttributes = Gson().fromJson<ChatAttributes>(chatChannel?.attributes.toString(), object : TypeToken<ChatAttributes>() {}.type)
+    var messageList: List<Message> = listOf()
 
     var propertyId: Int? = null
     var propertyAddress: String? = null
@@ -25,25 +25,21 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
 
 
     init {
-        property = Gson().fromJson<ChatAttributes>(chatChannel?.attributes.toString(), object : TypeToken<ChatAttributes>() {}.type)
-        propertyId = property?.chatProperty?.id
-        property?.chatProperty?.maskedAddress?.let {
+        propertyId = property.chatProperty.id
+        property.chatProperty.maskedAddress.let {
             propertyAddress = if (it.isNotBlank())
                 it
             else
-                property?.chatProperty?.fullAddress
+                property.chatProperty.fullAddress
         }
-        users = property?.chatConversation?.conversionUsers
+        users = property.chatConversation.conversionUsers
         getLastMessageObservable()
     }
 
-    fun getLastMessageObservable(): Observable<List<Message?>> {
+    fun getLastMessageObservable(): Observable<List<Message>> {
         return Observable.create {
-            chatChannel?.messages?.getLastMessages(1, object : CallbackListener<List<Message?>>() {
-                override fun onSuccess(messageList: List<Message?>) {
-                    lastMessage = messageList.firstOrNull()
-                    it.onNext(messageList)
-                }
+            chatChannel?.messages?.getLastMessages(1, object : CallbackListener<List<Message>>() {
+                override fun onSuccess(messageList: List<Message>) = it.onNext(messageList)
             })
         }
     }

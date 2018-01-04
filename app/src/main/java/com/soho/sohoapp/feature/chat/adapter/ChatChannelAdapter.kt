@@ -35,9 +35,11 @@ class ChatChannelAdapter(
                     subscribedChannels[position]?.let { chatChannel ->
                         val context = itemView.context
                         addressTextView.text = chatChannel.propertyAddress
-                        nameTextView.text = chatChannel.lastMessage?.messageBody ?: context.getString(R.string.chat_item_no_message_text)
-                        timeTextView.text = chatChannel.lastMessage?.timeStampAsDate?.durationFromNowAsString()
-                        messageTextView.text = chatChannel.property?.chatConversation?.conversionUsers?.get(1) ?: context.getString(R.string.chat_item_no_user_text)
+                        chatChannel.messageList.firstOrNull ().let {
+                            nameTextView.text = it?.messageBody ?: context.getString(R.string.chat_item_no_message_text)
+                            timeTextView.text = it?.timeStampAsDate?.durationFromNowAsString()
+                        }
+                        messageTextView.text = chatChannel.property.chatConversation.conversionUsers[1]
                         itemView.setOnClickListener { onItemClickListener.invoke(chatChannel) }
                     }
                 }

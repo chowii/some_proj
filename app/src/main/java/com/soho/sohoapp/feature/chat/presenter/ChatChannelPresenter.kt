@@ -66,7 +66,7 @@ class ChatChannelPresenter(private val context: Context?,
     private fun addSubscribedChannelListToAdapter(client: ChatClient) {
         client.channels.subscribedChannels?.let { channelList ->
 
-            val chatChannel = channelList.map { ChatChannel(it) }.sortedBy { it.lastMessage?.timeStampAsDate?.time }
+            val chatChannel = channelList.map { ChatChannel(it) }.sortedBy { it.messageList?.firstOrNull()?.timeStampAsDate?.time }
             chatChannel.map { chat ->
 
                compositeDisposable.add(chat.getLastMessageObservable()
@@ -74,7 +74,7 @@ class ChatChannelPresenter(private val context: Context?,
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 {
-                                    chat.lastMessage = it.firstOrNull()
+                                    chat.messageList = it
                                     view.updateChannelList(chat)
                                     view.hideLoading()
                                 },
@@ -87,7 +87,7 @@ class ChatChannelPresenter(private val context: Context?,
     }
 
     private fun addAccessTokenManager() {
-        val chatAccessManager = ChatAccessManager()
+        val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
         val accessManager = AccessManager(DEPENDENCIES.userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
     }
