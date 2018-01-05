@@ -11,6 +11,7 @@ import com.soho.sohoapp.feature.chat.adapter.ChatClientListenerAdapter
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
 import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.common.model.EmptyDataSet
+import com.soho.sohoapp.preferences.UserPrefs
 import com.twilio.accessmanager.AccessManager
 import com.twilio.chat.ChatClient
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,14 +22,12 @@ import io.reactivex.schedulers.Schedulers
  * Created by chowii on 21/12/17.
  */
 class ChatChannelPresenter(private val context: Context?,
-                           private val interactor: ChatChannelContract.ViewInteractable,
-                           private val chatBuilder: ChatClient.Properties
+                           private val view: ChatChannelContract.ViewInteractable,
+                           private val userPrefs: UserPrefs
 ) : ChatChannelContract.ViewPresentable {
 
-    private var chatAccessManager: ChatAccessManager? = null
-
     override fun startPresenting() {
-        interactor.showLoading()
+        view.showLoading()
         getChatChannelList()
     }
 
@@ -36,7 +35,6 @@ class ChatChannelPresenter(private val context: Context?,
 
     override fun getChatChannelList() {
 
-        val twilioToken = DEPENDENCIES.userPrefs.twilioToken
         context?.let {
 
             TwilioChatManager.getChatClient(it)
@@ -50,7 +48,7 @@ class ChatChannelPresenter(private val context: Context?,
                                             // Client is now ready for business, start working
                                             addAccessTokenManager()
 
-                                            addSubscribedChannelListToAdapter(client, it)
+                                            addSubscribedChannelListToAdapter(it, client)
                                         }
                                     }
                                 })
@@ -58,18 +56,18 @@ class ChatChannelPresenter(private val context: Context?,
                             },
                             { errorInfo ->
                                 Log.d("LOG_TAG---", "Twilio error: " + errorInfo?.message)
-                                interactor.showError(Throwable("Access Token expired"))
-                                interactor.hideLoading()
+                                view.showError(Throwable("Access Token expired"))
+                                view.hideLoading()
                             })
         }
 
     }
 
-    private fun addSubscribedChannelListToAdapter(client: ChatClient, context: Context) {
+    private fun addSubscribedChannelListToAdapter(context: Context, client: ChatClient) {
         client.channels.subscribedChannels?.let { channelList ->
 
             if (channelList.isEmpty()) {
-                interactor.run {
+                view.run {
                     updateChannelList(
                             EmptyDataSet(
                                     getString(context, R.string.empty_state_chat_title),
@@ -90,12 +88,12 @@ class ChatChannelPresenter(private val context: Context?,
                             .subscribe(
                                     {
                                         chat.messageList = it
-                                        interactor.updateChannelList(chat)
-                                        interactor.hideLoading()
+                                        view.updateChannelList(chat)
+                                        view.hideLoading()
                                     },
                                     {
                                         Log.d("LOG_TAG---", "message error: " + it.message)
-                                        interactor.hideLoading()
+                                        view.hideLoading()
                                     }))
                 }
             }
@@ -107,7 +105,7 @@ class ChatChannelPresenter(private val context: Context?,
 
     private fun addAccessTokenManager() {
         val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
-        val accessManager = AccessManager(DEPENDENCIES.userPrefs.twilioToken, chatAccessManager)
+        val accessManager = AccessManager(userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
     }
 

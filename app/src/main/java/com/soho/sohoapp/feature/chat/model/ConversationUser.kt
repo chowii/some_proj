@@ -6,30 +6,30 @@ import com.soho.sohoapp.data.models.BasicUser
 /**
  * Created by chowii on 22/12/17.
  */
-class ConversationUser {
+data class ConversationUser (
 
     @SerializedName("id")
-    val id: Int? = null
+    val id: Int,
 
     @SerializedName("conversation_id")
-    val conversationId: Int? = null
+    val conversationId: Int,
 
     @SerializedName("user_id")
-    val userId: Int? = null
+    val userId: Int,
 
     @SerializedName("member_sid")
-    val memberSid: String? = null
+    val memberSid: String,
 
     @SerializedName("last_message")
-    val lastMessage: String? = null
+    val lastMessage: String,
 
     @SerializedName("last_message_sent_at")
-    val lastMessageSentAt: Int? = null
+    val lastMessageSentAt: Int,
 
     @SerializedName("user_twilio_id")
-    val userTwilioId: String? = null
+    val userTwilioId: String,
 
     @SerializedName("user")
-    val user: BasicUser? = null
+    val user: BasicUser
 
-}
+)

@@ -24,7 +24,7 @@ import com.twilio.chat.Message
 class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.ViewInteractable {
 
     companion object {
-        val CHAT_CHANNEL_SID_INTENT_EXTRA = this::class.java.`package`.name
+        val CHAT_CHANNEL_SID_INTENT_EXTRA = this::class.java.`package`.name + ".chat_channel_sid"
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar

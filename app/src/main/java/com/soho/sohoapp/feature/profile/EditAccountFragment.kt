@@ -159,7 +159,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
             put(Keys.User.LAST_NAME, last_name_et.text.toString())
             put(Keys.User.FIRST_NAME, name_et.text.toString())
         }
-        presenter?.updaterUserProfile(values)
+        presenter.updaterUserProfile(values)
     }
 
 
@@ -182,7 +182,7 @@ class EditAccountFragment : BaseFragment(), EditAccountContract.ViewInteractable
 
     override fun showAvatar(picUri: Uri) {
         user_avatar_iv.setImageURI(picUri)
-        presenter?.cleanCameraDisposable()
+        presenter.cleanCameraDisposable()
     }
 
     private lateinit var loadingDialog: LoadingDialog

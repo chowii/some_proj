@@ -20,5 +20,5 @@ class ComingSoonFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater
-            .inflate(R.layout.fragment_comming_soon, container, false)
+            .inflate(R.layout.fragment_coming_soon, container, false)
 }

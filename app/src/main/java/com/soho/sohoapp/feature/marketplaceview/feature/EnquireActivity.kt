@@ -138,7 +138,7 @@ class EnquireActivity : AppCompatActivity() {
     }
 
     private fun configureToolbar() {
-        toolbar.title = "Enquire"
+        toolbar.title = getString(R.string.enquire_title)
         setSupportActionBar(toolbar)
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)

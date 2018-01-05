@@ -6,49 +6,48 @@ import com.twilio.chat.*
  * Created by chowii on 20/12/17.
  */
 open class ChatClientListenerAdapter : ChatClientListener{
-    override fun onChannelDeleted(p0: Channel?) {
-
+    override fun onChannelDeleted(channel: Channel?) {
     }
 
-    override fun onClientSynchronization(p0: ChatClient.SynchronizationStatus) {
+    override fun onClientSynchronization(status: ChatClient.SynchronizationStatus) {
     }
 
     override fun onNotificationSubscribed() {
     }
 
-    override fun onUserSubscribed(p0: User?) {
+    override fun onUserSubscribed(user: User?) {
     }
 
-    override fun onChannelUpdated(p0: Channel?, p1: Channel.UpdateReason?) {
+    override fun onChannelUpdated(channel: Channel?, p1: Channel.UpdateReason?) {
     }
 
-    override fun onNotificationFailed(p0: ErrorInfo?) {
+    override fun onNotificationFailed(errorInfo: ErrorInfo?) {
     }
 
-    override fun onChannelJoined(p0: Channel?) {
+    override fun onChannelJoined(channel: Channel?) {
     }
 
-    override fun onChannelAdded(p0: Channel?) {
+    override fun onChannelAdded(channel: Channel?) {
     }
 
-    override fun onChannelSynchronizationChange(p0: Channel?) {
+    override fun onChannelSynchronizationChange(channel: Channel?) {
     }
 
     override fun onNotification(p0: String?, p1: String?) {
     }
 
-    override fun onUserUnsubscribed(p0: User?) {
+    override fun onUserUnsubscribed(user: User?) {
     }
 
-    override fun onChannelInvited(p0: Channel?) {
+    override fun onChannelInvited(channel: Channel?) {
     }
 
-    override fun onConnectionStateChange(p0: ChatClient.ConnectionState?) {
+    override fun onConnectionStateChange(connectionState: ChatClient.ConnectionState?) {
     }
 
-    override fun onError(p0: ErrorInfo?) {
+    override fun onError(error: ErrorInfo?) {
     }
 
-    override fun onUserUpdated(p0: User?, p1: User.UpdateReason?) {
+    override fun onUserUpdated(user: User?, updateReason: User.UpdateReason?) {
     }
 }

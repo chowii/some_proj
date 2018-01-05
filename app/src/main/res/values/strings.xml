@@ -589,6 +589,7 @@
     <string name="enquiry_message_format">%s %s\\n\\n\\\"%s\\\" \\n</string>
     <string name="chat_item_no_message_text">No Messages</string>
     <string name="chat_item_no_user_text">No User</string>
+    <string name="enquire_title">Enquire</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

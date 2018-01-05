@@ -24,8 +24,6 @@ class TwilioChatManager {
         fun getChatClient(context: Context): Observable<ChatClient> {
 
             return Observable.create { emission ->
-                Log.d("LOG_TAG---", "twilioChatClient is null: ${chatClient == null}")
-
                 chatClient?.let {
                     emission.onNext(it)
                     return@create
@@ -49,7 +47,6 @@ class TwilioChatManager {
 
         fun getChatConversation(channelSid: String): Observable<Channel> {
             return Observable.create { emission ->
-                Log.d("LOG_TAG---", "twilioChatChannel is null: ${chatConversation == null}")
 
                 chatClient?.channels?.getChannel(channelSid, object : CallbackListener<Channel>() {
                     override fun onSuccess(channel: Channel) {
