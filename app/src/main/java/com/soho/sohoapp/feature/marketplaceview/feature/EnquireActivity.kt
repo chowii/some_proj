@@ -44,7 +44,6 @@ class EnquireActivity : AppCompatActivity() {
 
     @OnClick(R.id.submit_enquire_button)
     fun onSubmitClick() {
-        //TODO Go to or create chat channel
         val userId = DEPENDENCIES.userPrefs.user?.id ?: 0
         val chatType = if (userId != 0) CHAT_PROPERTY else CHAT_USER
         val conversationMap = hashMapOf(
