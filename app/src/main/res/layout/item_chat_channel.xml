@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="match_parent"
@@ -20,8 +19,7 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         style="@style/TextView.SubTitle.Dark"
-        android:drawableEnd="@drawable/ic_chevron_left"
-        android:text="test" />
+        android:drawableEnd="@drawable/ic_chevron_left" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,8 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="4dp"
-            style="@style/TextView.SubTitle.Dark"
-            android:text="test" />
+            style="@style/TextView.SubTitle.Dark" />
 
         <TextView
             android:id="@+id/time_text_view"
@@ -44,11 +41,9 @@
             android:layout_weight="1"
             android:padding="4dp"
             android:gravity="end"
-            style="@style/TextView.SubTitle.Dark"
-            android:text="test" />
+            style="@style/TextView.SubTitle.Dark" />
 
     </LinearLayout>
-
 
     <View
         android:layout_width="match_parent"

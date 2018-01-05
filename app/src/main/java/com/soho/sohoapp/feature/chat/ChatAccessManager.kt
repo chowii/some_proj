@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.feature.chat.model.TwilioToken
+import com.soho.sohoapp.preferences.UserPrefs
 import com.twilio.accessmanager.AccessManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by chowii on 20/12/17.
  */
-class ChatAccessManager : AccessManager.Listener, AccessManager.TokenUpdateListener {
+class ChatAccessManager(private val userPrefs: UserPrefs): AccessManager.Listener, AccessManager.TokenUpdateListener {
 
     private var twilioTokenDisposable: Observable<TwilioToken> = Dependencies.DEPENDENCIES.sohoService
             .getTwilioToken(Build.getRadioVersion())

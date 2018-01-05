@@ -14,13 +14,15 @@ import com.soho.sohoapp.feature.common.model.EmptyDataSet
 import com.twilio.accessmanager.AccessManager
 import com.twilio.chat.ChatClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by chowii on 21/12/17.
  */
 class ChatChannelPresenter(private val context: Context?,
-                           private val interactor: ChatChannelContract.ViewInteractable
+                           private val interactor: ChatChannelContract.ViewInteractable,
+                           private val chatBuilder: ChatClient.Properties
 ) : ChatChannelContract.ViewPresentable {
 
     private var chatAccessManager: ChatAccessManager? = null
@@ -30,7 +32,11 @@ class ChatChannelPresenter(private val context: Context?,
         getChatChannelList()
     }
 
+    private val compositeDisposable = CompositeDisposable()
+
     override fun getChatChannelList() {
+
+        val twilioToken = DEPENDENCIES.userPrefs.twilioToken
         context?.let {
 
             TwilioChatManager.getChatClient(it)
@@ -65,32 +71,32 @@ class ChatChannelPresenter(private val context: Context?,
             if (channelList.isEmpty()) {
                 interactor.run {
                     updateChannelList(
-                                EmptyDataSet(
-                                        getString(context, R.string.empty_state_chat_title),
-                                        getString(context, R.string.empty_state_chat_message),
-                                        getString(context, R.string.empty_state_chat_button_text))
+                            EmptyDataSet(
+                                    getString(context, R.string.empty_state_chat_title),
+                                    getString(context, R.string.empty_state_chat_message),
+                                    getString(context, R.string.empty_state_chat_button_text))
                     )
                     hideLoading()
                 }
             } else {
 
-                val chatChannel = channelList.map { ChatChannel(it) }.sortedBy { it.lastMessage?.timeStampAsDate?.time }
+                val chatChannel = channelList.map { ChatChannel(it) }.sortedBy { it.messageList.firstOrNull()?.timeStampAsDate?.time }
 
                 chatChannel.map { chat ->
 
-                    chat.getLastMessageObservable()
+                    compositeDisposable.add(chat.getLastMessageObservable()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     {
-                                        chat.lastMessage = it.firstOrNull()
+                                        chat.messageList = it
                                         interactor.updateChannelList(chat)
                                         interactor.hideLoading()
                                     },
                                     {
                                         Log.d("LOG_TAG---", "message error: " + it.message)
                                         interactor.hideLoading()
-                                    })
+                                    }))
                 }
             }
         }
@@ -98,13 +104,14 @@ class ChatChannelPresenter(private val context: Context?,
 
     private fun getString(context: Context, @StringRes res: Int) = context.getString(res)
 
-    override fun stopPresenting() {
-        chatAccessManager?.clearDisposable()
-    }
 
     private fun addAccessTokenManager() {
-        chatAccessManager = ChatAccessManager()
+        val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
         val accessManager = AccessManager(DEPENDENCIES.userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
+    }
+
+    override fun stopPresenting() {
+        compositeDisposable.clear()
     }
 }

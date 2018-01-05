@@ -3,7 +3,6 @@ package com.soho.sohoapp.feature.chat.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import com.soho.sohoapp.R
 import com.soho.sohoapp.extensions.durationFromNowAsString
 import com.soho.sohoapp.feature.chat.model.ChatChannel
@@ -21,17 +20,13 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
 
     override fun getItemCount() = subscribedChannels.size
 
-    override fun getItemViewType(position: Int) = subscribedChannels[position]?.itemViewType ?: 0
+    override fun getItemViewType(position: Int) = R.layout.item_chat_channel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-        val itemView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_channel, parent, false)
 
         return when (viewType) {
             R.layout.item_chat_channel -> ChatChannelViewHolder(itemView)
-            R.layout.item_empty_dataset -> EmptyDataSetViewHolder(
-                    itemView,
-                    { Toast.makeText(parent.context, "Button Pressed", Toast.LENGTH_SHORT).show() }
-            )
             else -> null
         }
     }
@@ -45,12 +40,12 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                             .map { it as ChatChannel }[position]
                             .let { chatChannel: ChatChannel ->
                                 addressTextView.text = chatChannel.propertyAddress
-                                nameTextView.text = chatChannel.lastMessage?.messageBody ?: "No Messages"
-                                timeTextView.text = chatChannel.lastMessage?.timeStampAsDate?.durationFromNowAsString()
-                                messageTextView.text = chatChannel.property?.chatAttributes?.conversionUsers?.get(1) ?: "No User"
-                                itemView.setOnClickListener {
-                                    chatChannel.lastMessage?.channelSid?.let { it1 -> onChatChannelClick.invoke(it1) }
+                                chatChannel.messageList.firstOrNull()?.let { message ->
+                                    nameTextView.text = message.messageBody ?: "No Messages"
+                                    timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
+                                    itemView.setOnClickListener { onChatChannelClick.invoke(message.channelSid) }
                                 }
+                                messageTextView.text = chatChannel.property.chatConversation.conversionUsers?.firstOrNull()?: "No User"
                             }
                 }
             }

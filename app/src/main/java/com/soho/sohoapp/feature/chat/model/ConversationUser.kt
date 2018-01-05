@@ -21,7 +21,7 @@ class ConversationUser {
     val memberSid: String? = null
 
     @SerializedName("last_message")
-    val lastMessage: Int? = null
+    val lastMessage: String? = null
 
     @SerializedName("last_message_sent_at")
     val lastMessageSentAt: Int? = null

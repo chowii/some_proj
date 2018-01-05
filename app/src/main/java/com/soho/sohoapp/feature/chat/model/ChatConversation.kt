@@ -11,7 +11,7 @@ class ChatConversation {
     val id: Int? = null
 
     @SerializedName("conversation_users")
-    val conversionUsers: MutableList<ConversationUser>? = null
+    val conversionUsers: ConversationUser? = null
 
     @SerializedName("channel_sid")
     val channelSid: String? = null

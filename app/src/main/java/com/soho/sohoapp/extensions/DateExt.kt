@@ -60,30 +60,24 @@ fun Date.durationFromNow(): Date {
     return Date(durationLong)
 }
 
-
 fun Date.durationFromNowAsString(): String {
     val duration = this.durationFromNow()
     Calendar.getInstance().let {
         it.time = duration
-        val time = when {
-            it[Calendar.DAY_OF_YEAR] < 1 -> getHourDuration(it)
-            it[DAY_OF_YEAR] < 29 -> getDayDuration(it)
-            else -> getMonthDuration(it)
+        return when {
+            it[DAY_OF_YEAR] < 1 -> getHourDuration(it[HOUR])
+            it[DAY_OF_YEAR] < 29 -> getDayDuration(it[MONTH])
+            else -> getMonthDuration(it[MONTH])
         }
-        return time
     }
 }
 
-private fun getMonthDuration(it: Calendar) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.month, it[MONTH], it[MONTH])
+private fun getMonthDuration(month: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.month, month, month)
 
-private fun getDayDuration(calendar: Calendar) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.month, calendar[MONTH], calendar[MONTH])
+private fun getDayDuration(month: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.month, month, month)
 
-private fun getHourDuration(calendar: Calendar): String {
-    val time = calendar[HOUR]
-    return if (time < 0)
-        calendar.get(MINUTE).toString()
-    else
-        time.toString()
-}
+private fun getHourDuration(hour: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.hour, hour, hour)
+
