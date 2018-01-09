@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.soho.sohoapp.Dependencies
@@ -62,7 +61,7 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
     }
 
     override fun showError(throwable: Throwable) {
-        view?.let { Snackbar.make(it, throwable.message ?: "Error occurred", Snackbar.LENGTH_SHORT).show() }
+        view?.let { Snackbar.make(it, throwable.message ?: getString(R.string.error_occurred), Snackbar.LENGTH_SHORT).show() }
     }
 
     override fun showLoading() {
@@ -74,20 +73,14 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         adapter.notifyDataSetChanged()
     }
 
-    override fun onChannelSelected() {
-        Toast.makeText(context, "Channel Selected", Toast.LENGTH_SHORT).show()
-    }
-
     override fun hideLoading() {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun onChatChannelClicked(): (String) -> Unit {
-        return {
-            activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
-                putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
-            })
-        }
+    private fun onChatChannelClicked(): (String) -> Unit = {
+        activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+        })
     }
 
     override fun onDestroyView() {

@@ -3,6 +3,7 @@ package com.soho.sohoapp
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.soho.sohoapp.database.SohoDatabase
+import com.soho.sohoapp.feature.chat.TwilioChatManager
 import com.soho.sohoapp.imageloader.ImageLoader
 import com.soho.sohoapp.logger.AndroidLogger
 import com.soho.sohoapp.logger.Logger
@@ -30,6 +31,9 @@ enum class Dependencies {
     lateinit var database: SohoDatabase
         private set
 
+    lateinit var twilioManager: TwilioChatManager
+        private set
+
     val sohoService: SohoService = ApiClient.getService()
 
     fun init(context: Context) {
@@ -40,5 +44,6 @@ enum class Dependencies {
         database = Room.databaseBuilder(context, SohoDatabase::class.java, DB_NAME)
                 .addMigrations(SohoDatabase.migration1to2)
                 .build()
+        twilioManager = TwilioChatManager().initChatClient(context, userPrefs)
     }
 }

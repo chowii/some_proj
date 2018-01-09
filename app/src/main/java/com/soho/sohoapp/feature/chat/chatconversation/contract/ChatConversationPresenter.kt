@@ -2,7 +2,7 @@ package com.soho.sohoapp.feature.chat.chatconversation.contract
 
 import android.content.Context
 import android.util.Log
-import com.soho.sohoapp.feature.chat.TwilioChatManager
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -23,10 +23,7 @@ class ChatConversationPresenter(private val context: Context?,
     }
 
     override fun getChatConversation() {
-        TwilioChatManager.getChatConversation(conversationId)
-                .switchMap {
-                    TwilioChatManager.getLastMessageList(numberOfLastMessages)
-                }
+        DEPENDENCIES.twilioManager.getLastMessageList(conversationId, numberOfLastMessages)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

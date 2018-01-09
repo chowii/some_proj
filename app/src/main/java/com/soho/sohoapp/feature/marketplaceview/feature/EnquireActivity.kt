@@ -16,7 +16,6 @@ import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.data.models.Property
 import com.soho.sohoapp.dialogs.LoadingDialog
-import com.soho.sohoapp.feature.chat.TwilioChatManager
 import com.soho.sohoapp.feature.chat.chatconversation.ChatConversationActivity
 import com.soho.sohoapp.network.Keys.PropertyEnquire.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,31 +53,20 @@ class EnquireActivity : AppCompatActivity() {
         val loading = LoadingDialog(this)
         loading.show("Loading messages")
         DEPENDENCIES.sohoService.getConversation(conversationMap)
+                .switchMap { DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            TwilioChatManager.sendMessageToChannel(it.channelSid.orEmpty(), enquiryMessage())
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(
-                                            {
-                                                startActivity(Intent(this, ChatConversationActivity::class.java).apply {
-                                                    putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it.channelSid)
-                                                })
-                                                loading.dismiss()
-                                                Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
-                                            },
-                                            {
-                                                Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
-                                                Log.d("LOG_TAG---", "onSubmitClick error: " + it.message)
-                                                loading.dismiss()
-                                            }
-                                    )
+                            startActivity(Intent(this, ChatConversationActivity::class.java).apply {
+                                putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it.channelSid)
+                            })
+                            loading.dismiss()
+                            Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
                         },
                         {
                             Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
-                            Log.d("LOG_TAG---", "Twilio error: " + it.message)
+                            Log.d("LOG_TAG---", "onSubmitClick error: " + it.message)
                             loading.dismiss()
                         }
                 )

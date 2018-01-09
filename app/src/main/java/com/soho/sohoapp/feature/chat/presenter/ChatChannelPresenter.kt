@@ -6,7 +6,6 @@ import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.ChatAccessManager
-import com.soho.sohoapp.feature.chat.TwilioChatManager
 import com.soho.sohoapp.feature.chat.adapter.ChatClientListenerAdapter
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
 import com.soho.sohoapp.feature.chat.model.ChatChannel
@@ -34,32 +33,28 @@ class ChatChannelPresenter(private val context: Context?,
     private val compositeDisposable = CompositeDisposable()
 
     override fun getChatChannelList() {
+        DEPENDENCIES.twilioManager.chatObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { client ->
+                            client.setListener(object : ChatClientListenerAdapter() {
+                                override fun onClientSynchronization(status: ChatClient.SynchronizationStatus) {
+                                    if (status == ChatClient.SynchronizationStatus.COMPLETED) {
+                                        // Client is now ready for business, start working
+                                        addAccessTokenManager()
 
-        context?.let {
-
-            TwilioChatManager.getChatClient(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { client ->
-                                client.setListener(object : ChatClientListenerAdapter() {
-                                    override fun onClientSynchronization(status: ChatClient.SynchronizationStatus) {
-                                        if (status == ChatClient.SynchronizationStatus.COMPLETED) {
-                                            // Client is now ready for business, start working
-                                            addAccessTokenManager()
-
-                                            addSubscribedChannelListToAdapter(it, client)
-                                        }
+                                        context?.let { addSubscribedChannelListToAdapter(it, client) }
                                     }
-                                })
-
-                            },
-                            { errorInfo ->
-                                Log.d("LOG_TAG---", "Twilio error: " + errorInfo?.message)
-                                view.showError(Throwable("Access Token expired"))
-                                view.hideLoading()
+                                }
                             })
-        }
+
+                        },
+                        { errorInfo ->
+                            Log.d("LOG_TAG---", "Twilio error: " + errorInfo?.message)
+                            view.showError(Throwable("Access Token expired"))
+                            view.hideLoading()
+                        })
 
     }
 
