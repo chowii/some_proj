@@ -21,7 +21,7 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
 
     var propertyId: Int? = null
     var propertyAddress: String? = null
-    var users: MutableList<String>? = mutableListOf()
+    var users: List<String> = mutableListOf()
 
 
     init {
@@ -32,7 +32,7 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
             else
                 property.chatProperty.fullAddress
         }
-        users = property.chatConversation.conversionUsers
+        users = property.chatConversation.conversionUsers.orEmpty()
         getLastMessageObservable()
     }
 

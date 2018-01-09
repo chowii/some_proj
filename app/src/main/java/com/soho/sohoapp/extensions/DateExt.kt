@@ -19,6 +19,7 @@ sealed class DateFormat {
     class Iso8601DateTime : DateFormat()
     class MonthAbbreviationFormat : DateFormat()
     class DateDisplayFormat : DateFormat()
+    class DateTimeShort : DateFormat()
     class TimeFormat : DateFormat()
 
 }
@@ -29,6 +30,7 @@ fun DateFormat.stringFormat(): String {
         is DateFormat.MonthAbbreviationFormat -> "dd MMM yyyy"
         is DateFormat.DateDisplayFormat -> "dd/MM/yy"
         is DateFormat.TimeFormat -> "h:mma"
+        is DateFormat.DateTimeShort -> "MMM dd, h:mm a"
     }
     return format
 }

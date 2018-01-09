@@ -1,4 +1,4 @@
-package com.soho.sohoapp.feature.chat
+package com.soho.sohoapp.feature.chat.adapter
 
 import com.twilio.chat.*
 

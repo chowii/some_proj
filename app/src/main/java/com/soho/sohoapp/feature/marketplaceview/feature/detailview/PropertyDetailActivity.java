@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.soho.sohoapp.R;
@@ -31,6 +32,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by chowii on 31/8/17.
@@ -62,6 +67,14 @@ public class PropertyDetailActivity extends AbsActivity
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.enquire_button)
+    Button enquireButton;
+
+    @OnClick(R.id.enquire_button)
+    public void onEnquireButtonClick() {
+        presenter.onEnquiry();
+    }
+
     ImageHeaderViewPager pagerAdapter;
     public static final String EXTRA_PROPERTY_ID = "property_id";
     PropertyDetailPresenter presenter;
@@ -90,6 +103,16 @@ public class PropertyDetailActivity extends AbsActivity
         presenter = new PropertyDetailPresenter(this,this);
         presenter.startPresenting();
         presenter.retrieveProperty(id);
+    }
+
+    @Override
+    public void showEnquireButton() {
+        enquireButton.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hideEnquireButton() {
+        enquireButton.setVisibility(GONE);
     }
 
     @Override

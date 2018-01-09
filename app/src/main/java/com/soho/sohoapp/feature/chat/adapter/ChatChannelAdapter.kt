@@ -7,13 +7,16 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.extensions.durationFromNowAsString
 import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.chat.viewholder.ChatChannelViewHolder
+import com.soho.sohoapp.feature.common.model.EmptyDataSet
+import com.soho.sohoapp.feature.common.viewholder.EmptyDataSetViewHolder
+import com.soho.sohoapp.feature.home.BaseModel
 
 /**
  * Created by chowii on 19/12/17.
  */
-class ChatChannelAdapter(
-        private val subscribedChannels: MutableList<ChatChannel?>,
-        private val onItemClickListener: (ChatChannel) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>,
+                         private val onChatChannelClick: (String) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = subscribedChannels.size
 
@@ -32,23 +35,29 @@ class ChatChannelAdapter(
         when (holder) {
             is ChatChannelViewHolder -> {
                 holder.apply {
-                    subscribedChannels[position]?.let { chatChannel ->
-                        val context = itemView.context
-                        addressTextView.text = chatChannel.propertyAddress
-                        chatChannel.messageList.firstOrNull ().let {
-                            nameTextView.text = it?.messageBody ?: context.getString(R.string.chat_item_no_message_text)
-                            timeTextView.text = it?.timeStampAsDate?.durationFromNowAsString()
-                        }
-                        messageTextView.text = chatChannel.property.chatConversation.conversionUsers[1]
-                        itemView.setOnClickListener { onItemClickListener.invoke(chatChannel) }
-                    }
+                    subscribedChannels
+                            .filter { it is ChatChannel }
+                            .map { it as ChatChannel }[position]
+                            .let { chatChannel: ChatChannel ->
+                                addressTextView.text = chatChannel.propertyAddress
+                                chatChannel.messageList.firstOrNull()?.let { message ->
+                                    nameTextView.text = message.messageBody ?: "No Messages"
+                                    timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
+                                    itemView.setOnClickListener { onChatChannelClick.invoke(message.channelSid) }
+                                }
+                                messageTextView.text = chatChannel.property.chatConversation.conversionUsers?.firstOrNull()?: "No User"
+                            }
                 }
             }
+            is EmptyDataSetViewHolder -> holder.onBindViewHolder(subscribedChannels[position] as EmptyDataSet)
         }
     }
 
-    fun appendToMessageList(messageList: ChatChannel?) {
+
+    fun appendToMessageList(messageList: BaseModel?) {
         subscribedChannels.add(messageList)
     }
+
+    fun refreshDataSet() = subscribedChannels.clear()
 
 }

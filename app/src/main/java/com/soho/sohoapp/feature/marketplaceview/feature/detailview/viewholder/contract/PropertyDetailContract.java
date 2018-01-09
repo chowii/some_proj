@@ -16,6 +16,7 @@ public interface PropertyDetailContract {
     interface ViewPresentable{
         void startPresenting();
         void retrieveProperty(int id);
+        void onEnquiry();
         void stopPresenting();
         void onHeaderPhotoClicked(List<Image> images, int currentItem);
     }
@@ -23,6 +24,8 @@ public interface PropertyDetailContract {
     interface ViewInteractable extends BaseViewInteractable {
         void configureAdapter(List<BaseModel> model);
         void populateView(Property property);
+        void showEnquireButton();
+        void hideEnquireButton();
         void setRefreshing(boolean isRefreshing);
     }
 

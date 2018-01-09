@@ -1,7 +1,8 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.dtos.*
-import com.soho.sohoapp.feature.chat.adapter.TwilioToken
+import com.soho.sohoapp.feature.chat.model.ChatConversation
+import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
 import com.soho.sohoapp.network.results.PropertyTypesResult
@@ -150,6 +151,9 @@ interface SohoService {
 
     @GET("twilio/get_token")
     fun getTwilioToken(@Query("device_id") id: String): Observable<TwilioToken>
+
+    @GET("twilio/conversations")
+    fun getConversation(@QueryMap conversationMap: HashMap<String, Any>): Observable<ChatConversation>
 }
 
 

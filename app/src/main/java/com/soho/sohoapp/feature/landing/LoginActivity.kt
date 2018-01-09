@@ -72,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         DEPENDENCIES.userPrefs.twilioToken = it.accessToken
+                        DEPENDENCIES.userPrefs.twilioUser = it.userIdentity
+
                         val navigatorImpl = NavigatorImpl.newInstance(this)
                         if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
                             navigatorImpl.openRegisterUserInfoActivity()

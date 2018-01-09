@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.chat.contract
 
 import com.soho.sohoapp.feature.BaseViewInteractable
-import com.soho.sohoapp.feature.chat.model.ChatChannel
+import com.soho.sohoapp.feature.home.BaseModel
 
 /**
  * Created by chowii on 21/12/17.
@@ -22,7 +22,7 @@ interface ChatChannelContract {
 
         fun showLoading()
 
-        fun updateChannelList(chat: ChatChannel)
+        fun updateChannelList(baseList: BaseModel)
 
         fun hideLoading()
 

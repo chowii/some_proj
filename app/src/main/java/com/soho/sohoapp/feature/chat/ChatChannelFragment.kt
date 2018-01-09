@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -10,15 +11,15 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
+import com.soho.sohoapp.feature.chat.chatconversation.ChatConversationActivity
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
-import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.chat.presenter.ChatChannelPresenter
-import com.twilio.chat.ChatClient
+import com.soho.sohoapp.feature.home.BaseModel
 
 /**
  * Created by mariolopez on 16/10/17.
@@ -46,37 +47,40 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         ButterKnife.bind(this, view)
         toolbar.title = getString(R.string.message_title)
 
-        adapter = ChatChannelAdapter(mutableListOf(), onItemClick())
+        adapter = ChatChannelAdapter(mutableListOf(), onChatChannelClicked())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-        swipeRefreshLayout.setOnRefreshListener { presenter.getChatChannelList() }
+        swipeRefreshLayout.setOnRefreshListener {
+            presenter.getChatChannelList()
+            adapter.refreshDataSet()
+        }
 
-        presenter = ChatChannelPresenter(context, this, ChatClient.Properties.Builder().createProperties())
+        presenter = ChatChannelPresenter(context, this, Dependencies.DEPENDENCIES.userPrefs)
         presenter.startPresenting()
         return view
     }
 
     override fun showError(throwable: Throwable) {
-        view?.let { Snackbar.make(it, throwable.message?:"Error occurred", Snackbar.LENGTH_SHORT).show() }
+        view?.let { Snackbar.make(it, throwable.message ?: getString(R.string.error_occurred), Snackbar.LENGTH_SHORT).show() }
     }
 
     override fun showLoading() {
         swipeRefreshLayout.isRefreshing = true
     }
 
-    override fun updateChannelList(chat: ChatChannel) {
-        adapter.appendToMessageList(chat)
+    override fun updateChannelList(baseList: BaseModel) {
+        adapter.appendToMessageList(baseList)
         adapter.notifyDataSetChanged()
-    }
-
-    private fun onItemClick(): (chatChannel: ChatChannel) -> Unit {
-        return {
-            Toast.makeText(context, "Channel ${it.property} Selected", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun hideLoading() {
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    private fun onChatChannelClicked(): (String) -> Unit = {
+        activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+        })
     }
 
     override fun onDestroyView() {

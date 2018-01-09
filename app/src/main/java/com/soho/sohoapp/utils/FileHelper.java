@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.soho.sohoapp.SohoApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
@@ -21,8 +24,8 @@ public class FileHelper {
         this.context = context;
     }
 
-    public static FileHelper newInstance(@NonNull Context context) {
-        return new FileHelper(context);
+    public static FileHelper newInstance(@Nullable Context context) {
+        return context == null ? new FileHelper(SohoApplication.getContext()) : new FileHelper(context);
     }
 
     public byte[] compressPhoto(@NonNull Uri uri) {

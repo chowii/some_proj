@@ -11,6 +11,6 @@ data class ChatAttributes(
         val chatProperty: ChatProperty,
 
         @SerializedName("conversation")
-        val chatConversation: ChatConversation
+        val chatConversation: LastMessageChatConversation
 
 )
