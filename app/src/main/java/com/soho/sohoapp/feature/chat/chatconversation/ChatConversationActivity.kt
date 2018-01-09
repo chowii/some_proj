@@ -25,6 +25,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     companion object {
         val CHAT_CHANNEL_SID_INTENT_EXTRA = this::class.java.`package`.name + ".chat_channel_sid"
+        val CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA = this::class.java.`package`.name + ".chat_channel_participant"
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
@@ -34,6 +35,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     @BindView(R.id.recyclerView) lateinit var recyclerView: RecyclerView
 
     private lateinit var channelSid: String
+    private lateinit var participant: String
 
     private lateinit var presenter: ChatConversationPresenter
 
@@ -41,7 +43,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_chat_conversation)
         ButterKnife.bind(this)
+        swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
+        participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
         presenter = ChatConversationPresenter(this, this, channelSid)
         presenter.startPresenting()
         configureToolbar()
@@ -52,6 +56,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
+            title = participant
         }
     }
 
@@ -64,8 +69,12 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     }
 
     override fun configureAdapter(messageList: List<Message>) {
-        recyclerView.adapter = ChatConversationAdapter(messageList)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+        recyclerView.apply {
+            val chatConversationAdapter = ChatConversationAdapter(messageList)
+            adapter = chatConversationAdapter
+            layoutManager = LinearLayoutManager(this@ChatConversationActivity)
+            smoothScrollToPosition(chatConversationAdapter.itemCount)
+        }
     }
 
     override fun hideLoading() {

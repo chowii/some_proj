@@ -29,11 +29,11 @@
             android:id="@+id/attach_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="0.5"
             android:background="@color/greenText"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_gravity="center"
             app:srcCompat="@drawable/ic_add_white" />
 
         <EditText
@@ -41,17 +41,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            android:hint="Write a message"/>
+            android:hint="@string/chat_conversation_write_a_message_hint" />
 
         <ImageView
             android:id="@+id/send_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="0.5"
             android:background="@color/greenText"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_gravity="center"
             app:srcCompat="@drawable/ic_add_white" />
 
     </LinearLayout>

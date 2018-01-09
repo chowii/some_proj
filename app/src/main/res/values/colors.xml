@@ -7,6 +7,7 @@
     <color name="redPrimary">#D71D34</color>
     <color name="greyLightPrimary">#BEBABA</color>
     <color name="greyDarkPrimary">#888888</color>
+    <color name="greyLightSecondary">#DDDDDD</color>
     <color name="blueLightPrimary">#888888</color>
     <color name="blackLightPrimary">#111111</color>
     <color name="orangePrimary">#F58A18</color>

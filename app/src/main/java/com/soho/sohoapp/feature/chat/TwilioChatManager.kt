@@ -6,6 +6,7 @@ import com.soho.sohoapp.preferences.UserPrefs
 import com.twilio.chat.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import io.reactivex.subjects.BehaviorSubject
 
 /**
@@ -44,6 +45,7 @@ class TwilioChatManager {
 
                         messages.getLastMessages(numberOfLastMessages, object : CallbackListener<List<Message>>() {
                             override fun onSuccess(messageList: List<Message>) {
+                                messageList.map { }
                                 emitter.onNext(messageList)
                             }
 
@@ -78,6 +80,46 @@ class TwilioChatManager {
                 }
             })
         }
+    }
+
+    fun getChatMessages(numberOfLastMessages: Int): Observable<List<Message>> {
+        return Observable.create { emitter ->
+
+            chatClient.channels.getUserChannelsList(object : CallbackListener<Paginator<ChannelDescriptor>>() {
+                override fun onSuccess(paginator: Paginator<ChannelDescriptor>) {
+                    if (paginator.hasNextPage())
+                        paginator.requestNextPage(object : CallbackListener<Paginator<ChannelDescriptor>>() {
+                            override fun onSuccess(channelPaginator: Paginator<ChannelDescriptor>) {
+                                channelPaginator.requestNextPage(object : CallbackListener<Paginator<ChannelDescriptor>>() {
+                                    override fun onSuccess(channelPaginator: Paginator<ChannelDescriptor>) {
+                                        channelPaginator.items.map {
+                                            getMessageList(it, emitter, numberOfLastMessages)
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    else
+                        paginator.items.map { getMessageList(it, emitter, numberOfLastMessages) }
+                }
+
+                override fun onError(errorInfo: ErrorInfo) {
+                    super.onError(errorInfo)
+                }
+            })
+        }
+    }
+
+    private fun getMessageList(it: ChannelDescriptor, emmitter: ObservableEmitter<List<Message>>, numberOfLastMessages: Int) {
+        it.getChannel(object : CallbackListener<Channel>() {
+            override fun onSuccess(channel: Channel) {
+                channel.messages.getLastMessages(numberOfLastMessages, object : CallbackListener<List<Message>>() {
+                    override fun onSuccess(list: List<Message>) {
+                        emmitter.onNext(list)
+                    }
+                })
+            }
+        })
     }
 }
 

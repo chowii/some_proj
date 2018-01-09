@@ -25,6 +25,8 @@ class ChatChannelPresenter(private val context: Context?,
                            private val userPrefs: UserPrefs
 ) : ChatChannelContract.ViewPresentable {
 
+    private val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
+
     override fun startPresenting() {
         view.showLoading()
         getChatChannelList()
@@ -99,12 +101,12 @@ class ChatChannelPresenter(private val context: Context?,
 
 
     private fun addAccessTokenManager() {
-        val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
         val accessManager = AccessManager(userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
     }
 
     override fun stopPresenting() {
         compositeDisposable.clear()
+        chatAccessManager.clearDisposable()
     }
 }

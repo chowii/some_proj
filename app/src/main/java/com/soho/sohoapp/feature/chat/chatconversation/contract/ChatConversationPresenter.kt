@@ -23,7 +23,7 @@ class ChatConversationPresenter(private val context: Context?,
     }
 
     override fun getChatConversation() {
-        DEPENDENCIES.twilioManager.getLastMessageList(conversationId, numberOfLastMessages)
+        DEPENDENCIES.twilioManager.getChatMessages(numberOfLastMessages)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

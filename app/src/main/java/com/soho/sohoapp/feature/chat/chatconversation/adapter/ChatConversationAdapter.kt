@@ -3,6 +3,8 @@ package com.soho.sohoapp.feature.chat.chatconversation.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.BindView
@@ -32,14 +34,30 @@ class ChatConversationAdapter(private val messageList: List<Message>) : Recycler
         holder.apply {
             messageList[position].apply {
                 if (author == DEPENDENCIES.userPrefs.twilioUser) {
+                    showAuthorText()
                     messageEndTextView.text = messageBody
                     messageStampEndTextView.text = timeStampAsDate.toStringWithFormat(DateFormat.DateTimeShort().stringFormat())
                 } else {
-                    messageStartTextView.text = messageList[position].messageBody
+                    showOtherText()
+                    messageStartTextView.text = messageBody
                     messageStampStartTextView.text = timeStampAsDate.toStringWithFormat(DateFormat.DateTimeShort().stringFormat())
                 }
             }
         }
+    }
+
+    private fun ChatConversationViewHolder.showAuthorText() {
+        messageStartTextView.visibility = GONE
+        messageStampStartTextView.visibility = GONE
+        messageEndTextView.visibility = VISIBLE
+        messageStampEndTextView.visibility = VISIBLE
+    }
+
+    private fun ChatConversationViewHolder.showOtherText() {
+        messageStartTextView.visibility = VISIBLE
+        messageStampStartTextView.visibility = VISIBLE
+        messageEndTextView.visibility = GONE
+        messageStampEndTextView.visibility = GONE
     }
 
     class ChatConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

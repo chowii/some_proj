@@ -8,17 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/message_start_text_view"
-            style="@style/Button.Green"
+            style="@style/Button.Grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:padding="10dp"
-            android:text="@string/add_file_data_not_valid" />
+            android:textStyle="normal"
+            tools:text="@string/chat_conversation_placeholder_text" />
 
         <TextView
             android:id="@+id/message_stamp_start_text_view"
@@ -28,7 +28,8 @@
             android:layout_gravity="bottom"
             android:gravity="bottom"
             android:layout_margin="5dp"
-            tools:text="@string/add_file_data_not_valid" />
+            android:textSize="10sp"
+            tools:text="@string/chat_conversation_placeholder_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,7 +47,8 @@
             android:layout_gravity="bottom"
             android:gravity="bottom"
             android:layout_margin="5dp"
-            android:text="@string/add_file_data_not_valid" />
+            android:textSize="10sp"
+            tools:text="@string/chat_conversation_placeholder_text" />
 
         <TextView
             android:id="@+id/message_end_text_view"
@@ -55,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:padding="10dp"
-            android:text="@string/add_file_data_not_valid" />
+            tools:text="@string/chat_conversation_placeholder_text" />
 
     </LinearLayout>
 

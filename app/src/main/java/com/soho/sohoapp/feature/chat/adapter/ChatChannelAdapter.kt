@@ -15,7 +15,7 @@ import com.soho.sohoapp.feature.home.BaseModel
  * Created by chowii on 19/12/17.
  */
 class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>,
-                         private val onChatChannelClick: (String) -> Unit
+                         private val onChatChannelClick: (String, String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = subscribedChannels.size
@@ -43,9 +43,13 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                                 chatChannel.messageList.firstOrNull()?.let { message ->
                                     nameTextView.text = message.messageBody ?: "No Messages"
                                     timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
-                                    itemView.setOnClickListener { onChatChannelClick.invoke(message.channelSid) }
+                                    itemView.setOnClickListener {
+                                        onChatChannelClick.invoke(
+                                                message.channelSid,
+                                                chatChannel.property.chatConversation.conversionUsers.lastOrNull()?.trim().orEmpty())
+                                    }
                                 }
-                                messageTextView.text = chatChannel.property.chatConversation.conversionUsers?.firstOrNull()?: "No User"
+                                messageTextView.text = chatChannel.property.chatConversation.conversionUsers.firstOrNull()?: "No User"
                             }
                 }
             }

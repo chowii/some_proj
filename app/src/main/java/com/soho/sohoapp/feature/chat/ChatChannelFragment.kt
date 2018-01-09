@@ -77,9 +77,10 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun onChatChannelClicked(): (String) -> Unit = {
+    private fun onChatChannelClicked(): (String, String) -> Unit = { sid, participant ->
         activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
-            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, sid)
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, participant)
         })
     }
 
