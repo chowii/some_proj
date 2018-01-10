@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <plurals name="minute">
+        <item quantity="one">%d Minute ago</item>
+        <item quantity="other">%d Minutes ago</item>
+    </plurals>
+
     <plurals name="hour">
         <item quantity="one">%d Hour ago</item>
         <item quantity="other">%d Hours ago</item>

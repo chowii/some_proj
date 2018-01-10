@@ -22,6 +22,10 @@ interface ChatChannelContract {
 
         fun showLoading()
 
+        fun onChannelUpdated(updatedChannelList: List<BaseModel>)
+
+        fun onChannelDeleted(updatedChannelList: List<BaseModel>)
+
         fun updateChannelList(baseList: BaseModel)
 
         fun hideLoading()

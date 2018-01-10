@@ -11,7 +11,7 @@ data class ChatConversation (
     val id: Int,
 
     @SerializedName("conversation_users")
-    val conversionUsers: ConversationUser,
+    val conversionUsers: List<ConversationUser>,
 
     @SerializedName("channel_sid")
     val channelSid: String,

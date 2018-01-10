@@ -586,10 +586,12 @@
     <string name="empty_state_chat_title">No enquires</string>
     <string name="empty_state_chat_button_text">Enquiry</string>
     <string name="enquiry_interested_in">Interested in:</string>
-    <string name="enquiry_message_format">%s %s\\n\\n\\\"%s\\\" \\n</string>
+    <string name="enquiry_message_format">%s %s\n \n\"%s\" \n</string>
     <string name="chat_item_no_message_text">No Messages</string>
     <string name="chat_item_no_user_text">No User</string>
     <string name="enquire_title">Enquire</string>
+    <string name="chat_channel_no_messages_text">No Messages</string>
+    <string name="chat_channel_no_user_text">No User</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

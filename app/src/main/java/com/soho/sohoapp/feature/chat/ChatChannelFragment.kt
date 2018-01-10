@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.soho.sohoapp.Dependencies
@@ -71,6 +72,19 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
     override fun updateChannelList(baseList: BaseModel) {
         adapter.appendToMessageList(baseList)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onChannelUpdated(updatedChannelList: List<BaseModel>) {
+        onChannelChanged(updatedChannelList)
+    }
+
+    override fun onChannelDeleted(updatedChannelList: List<BaseModel>) = onChannelChanged(updatedChannelList)
+
+    private fun onChannelChanged(updatedChannelList: List<BaseModel>) {
+        adapter.apply {
+            updateChannelList(updatedChannelList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun hideLoading() {

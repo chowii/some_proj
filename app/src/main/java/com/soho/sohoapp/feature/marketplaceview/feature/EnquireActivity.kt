@@ -62,7 +62,6 @@ class EnquireActivity : AppCompatActivity() {
                                 putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it.channelSid)
                             })
                             loading.dismiss()
-                            Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
                         },
                         {
                             Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()

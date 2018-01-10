@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.chat.adapter
 
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -41,11 +42,14 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                             .let { chatChannel: ChatChannel ->
                                 addressTextView.text = chatChannel.propertyAddress
                                 chatChannel.messageList.firstOrNull()?.let { message ->
-                                    nameTextView.text = message.messageBody ?: "No Messages"
-                                    timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
                                     itemView.setOnClickListener { onChatChannelClick.invoke(message.channelSid) }
+                                    timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
+                                    messageTextView.text = message.messageBody
+                                            ?: getString(R.string.chat_channel_no_messages_text, this)
                                 }
-                                messageTextView.text = chatChannel.property.chatConversation.conversionUsers?.firstOrNull()?: "No User"
+                                nameTextView.text = chatChannel.property.chatConversation.conversionUsers
+                                                .firstOrNull()
+                                                ?: getString(R.string.chat_channel_no_user_text, this)
                             }
                 }
             }
@@ -53,11 +57,17 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
         }
     }
 
+    private fun getString(@StringRes res: Int, holder: RecyclerView.ViewHolder) = holder.itemView.context.getString(res)
 
     fun appendToMessageList(messageList: BaseModel?) {
         subscribedChannels.add(messageList)
     }
 
     fun refreshDataSet() = subscribedChannels.clear()
+
+    fun updateChannelList(updatedChannelList: List<BaseModel>) {
+        subscribedChannels.clear()
+        subscribedChannels.addAll(updatedChannelList)
+    }
 
 }
