@@ -4,10 +4,13 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
+import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_PERMISSION
+import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE
 import com.soho.sohoapp.permission.PermissionManagerImpl
+import com.soho.sohoapp.utils.DateUtils
 import com.soho.sohoapp.utils.FileHelper
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -17,6 +20,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.util.*
 
 /**
  * Created by chowii on 22/12/17.
@@ -56,7 +60,10 @@ class ChatConversationPresenter(private val context: Context,
                             Observable.empty<Uri>()
                     }.subscribe(
                     { uploadGalleryImageFromIntent(it) },
-                    { Log.d("LOG_TAG---", "${it.message}: ") }
+                    {
+                        view.showError(it)
+                        Log.d("LOG_TAG---", "${it.message}: ")
+                    }
             ))
         }
     }
@@ -106,7 +113,14 @@ class ChatConversationPresenter(private val context: Context,
     private fun createMultipart(byteArray: ByteArray) = MultipartBody.Builder()
             .apply {
                 setType(MultipartBody.FORM)
-                addFormDataPart("file", "soho", createRequestBody(byteArray))
+                addFormDataPart(
+                        CHAT_ATTACH_IMAGE,
+                        String.format(
+                                Locale.getDefault(),
+                                context.getString(R.string.photo_filename_format),
+                                DateUtils.getDateFormatForFileName()),
+                        createRequestBody(byteArray)
+                )
             }
 
     private fun createRequestBody(data: ByteArray?) = RequestBody.create(

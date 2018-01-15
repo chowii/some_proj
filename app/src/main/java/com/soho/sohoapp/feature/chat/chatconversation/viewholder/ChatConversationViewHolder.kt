@@ -3,7 +3,6 @@ package com.soho.sohoapp.feature.chat.chatconversation.viewholder
 import android.view.View
 import android.widget.TextView
 import butterknife.BindView
-import butterknife.ButterKnife
 import com.soho.sohoapp.BaseViewHolder
 import com.soho.sohoapp.R
 import com.soho.sohoapp.extensions.DateFormat
@@ -22,16 +21,10 @@ class ChatConversationViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(i
     @BindView(R.id.message_stamp_start_text_view) lateinit var messageStampStartTextView: TextView
     @BindView(R.id.message_stamp_end_text_view) lateinit var messageStampEndTextView: TextView
 
-    init {
-        ButterKnife.bind(this, itemView)
-    }
-
     private lateinit var userPrefs: UserPrefs
 
     override fun onBindViewHolder(model: ChatMessage?) {
-
         model?.let { message ->
-
             message.message.apply {
                 if (author == userPrefs.twilioUser) {
                     showAuthorText()

@@ -46,8 +46,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         @JvmField
         val CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA = packageName + ".chat_channel_participant"
 
-        @JvmStatic
-        private val CAMERA_REQUEST_CODE: Int = 122
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar

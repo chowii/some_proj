@@ -594,6 +594,7 @@
     <string name="enquire_title">Enquire</string>
     <string name="chat_channel_no_messages_text">No Messages</string>
     <string name="chat_channel_no_user_text">No User</string>
+    <string name="photo_filename_format">JPEG_%s_</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

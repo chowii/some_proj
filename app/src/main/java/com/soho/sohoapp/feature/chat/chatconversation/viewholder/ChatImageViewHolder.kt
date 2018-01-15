@@ -10,7 +10,7 @@ import butterknife.BindView
 import com.soho.sohoapp.BaseViewHolder
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.model.ChatMessage
-import com.soho.sohoapp.network.Keys
+import com.soho.sohoapp.network.Keys.ChatImage
 import com.soho.sohoapp.preferences.UserPrefs
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -82,7 +82,7 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
 
         String.format(
                 Locale.getDefault(),
-                Keys.ChatImage.CHAT_ATTACHMENT_ENDPOINT_FORMAT,
+                ChatImage.CHAT_ATTACHMENT_ENDPOINT_FORMAT,
                 conversationId,
                 attachmentId,
                 authToken
