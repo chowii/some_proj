@@ -47,4 +47,5 @@ class ChatConversationAdapter(private var messageList: MutableList<ChatMessage>,
         this.messageList.add(message)
     }
 
+
 }

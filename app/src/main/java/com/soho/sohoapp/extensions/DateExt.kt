@@ -61,13 +61,14 @@ fun Date.durationFromNow(): Date {
 }
 
 fun Date.durationFromNowAsString(): String {
+    val adjustIndex = 1
     val duration = this.durationFromNow()
     Calendar.getInstance().let {
         it.time = duration
         return when {
-            it[DAY_OF_YEAR] < 1 -> getHourDuration(it[HOUR])
-            it[DAY_OF_YEAR] < 29 -> getDayDuration(it[MONTH])
-            else -> getMonthDuration(it[MONTH])
+            it[DAY_OF_YEAR] < 2 -> getHourDuration(it)
+            it[DAY_OF_YEAR] < 29 -> getDayDuration(it[DAY_OF_YEAR].minus(adjustIndex))
+            else -> getMonthDuration(it[MONTH].plus(adjustIndex))
         }
     }
 }
@@ -75,9 +76,32 @@ fun Date.durationFromNowAsString(): String {
 private fun getMonthDuration(month: Int) = SohoApplication.getContext()
         .resources.getQuantityString(R.plurals.month, month, month)
 
-private fun getDayDuration(month: Int) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.month, month, month)
+private fun getDayDuration(days: Int) = SohoApplication.getContext()
+        .resources.getQuantityString(R.plurals.day, days, days)
 
-private fun getHourDuration(hour: Int) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.hour, hour, hour)
+private fun getHourDuration(hour: Calendar): String = when {
+    hour[HOUR_OF_DAY] < 2 -> SohoApplication.getContext()
+            .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
+
+    else -> SohoApplication.getContext()
+            .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
+}
+
+fun Date.currentUtcDateTimeStamp(): String {
+    val c = Calendar.getInstance()
+    c.timeInMillis = System.currentTimeMillis()
+    c.timeZone = TimeZone.getDefault()
+    return String.format(
+            Locale.getDefault(),
+            "%s_%s_%s %s:%s:%s.%s",
+            c.get(Calendar.YEAR),
+            c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
+            c.get(Calendar.DAY_OF_MONTH),
+            Calendar.HOUR,
+            Calendar.MINUTE,
+            Calendar.SECOND,
+            Calendar.MILLISECOND
+    )
+
+}
 

@@ -43,10 +43,10 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
     private fun showImage(model: ChatMessage) {
         val imageView = if (userPrefs.twilioUser == model.message.author) {
             showAuthorImage()
-            chatStartImageView
+            chatEndImageView
         } else {
             showParticipantImage()
-            chatEndImageView
+            chatStartImageView
         }
 
         val size = resizeImage(model)

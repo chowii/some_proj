@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.facebook.internal.Mutable
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
@@ -71,6 +72,19 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
     override fun updateChannelList(baseList: BaseModel) {
         adapter.appendToMessageList(baseList)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onChannelUpdated(updatedChannelList: MutableList<BaseModel>) {
+        onChannelChanged(updatedChannelList)
+    }
+
+    override fun onChannelDeleted(updatedChannelList: MutableList<BaseModel>) = onChannelChanged(updatedChannelList)
+
+    private fun onChannelChanged(updatedChannelList: MutableList<BaseModel>) {
+        adapter.apply {
+            updateChannelList(updatedChannelList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun hideLoading() {

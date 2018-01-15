@@ -2,7 +2,9 @@ package com.soho.sohoapp.feature.chat.chatconversation
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -17,13 +19,16 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.extensions.currentUtcDateTimeStamp
 import com.soho.sohoapp.feature.chat.chatconversation.adapter.ChatConversationAdapter
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationContract
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationPresenter
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
+import com.soho.sohoapp.network.Keys
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 
 /**
@@ -34,7 +39,7 @@ import io.reactivex.schedulers.Schedulers
 class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.ViewInteractable {
 
     companion object {
-        private  val packageName =  this::class.java.`package`.name
+        private val packageName = this::class.java.`package`.name
 
         @JvmField
         val CHAT_CHANNEL_SID_INTENT_EXTRA = packageName + ".chat_channel_sid"
@@ -44,6 +49,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
         @JvmStatic
         private val GALLERY_REQUEST_CODE: Int = 121
+
+        @JvmStatic
+        private val CAMERA_REQUEST_CODE: Int = 122
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
@@ -56,7 +64,19 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         val photoDialog = AddPhotoDialog(this)
         photoDialog.show(object : AddPhotoDialog.OnItemClickedListener {
             override fun onTakeNewPhotoClicked() {
-                ContextCompat.checkSelfPermission(this@ChatConversationActivity, Manifest.permission.CAMERA)
+                val cameraPremission = ContextCompat.checkSelfPermission(this@ChatConversationActivity, Manifest.permission.CAMERA)
+                if (cameraPremission == PackageManager.PERMISSION_GRANTED) {
+                    val s = Intent().apply {
+                        action = MediaStore.ACTION_IMAGE_CAPTURE
+                        putExtra(
+                                MediaStore.EXTRA_OUTPUT,
+                                Keys.ChatImage.createUri(Date().currentUtcDateTimeStamp(), this@ChatConversationActivity)
+                                )
+                    }
+                    if (s.resolveActivity(packageManager) != null) {
+                        startActivityForResult(s, CAMERA_REQUEST_CODE)
+                    }
+                }
             }
 
             override fun onChooseFromGalleryClicked() {
@@ -137,8 +157,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         when (resultCode) {
             RESULT_OK -> when (requestCode) {
                 GALLERY_REQUEST_CODE -> {
-                    presenter.uploadImageFromIntent(data)
+                    presenter.uploadGalleryImageFromIntent(data.data)
                 }
+                CAMERA_REQUEST_CODE -> presenter.uploadGalleryImageFromIntent(data.data)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

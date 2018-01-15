@@ -1,5 +1,10 @@
 package com.soho.sohoapp.network;
 
+import android.content.Context;
+import android.net.Uri;
+
+import java.io.File;
+
 public interface Keys {
 
     interface More {
@@ -196,7 +201,11 @@ public interface Keys {
         String CHAT_USER = "USER";
     }
 
-    interface ChatImage {
-        String CHAT_ATTACHMENT_ENDPOINT_FORMAT = "http://staging.sohoapp.com/api/twilio/conversations/%d/attachments/%d?authorization=%s";
+    abstract class ChatImage {
+        public static String CHAT_ATTACHMENT_ENDPOINT_FORMAT = "http://staging.sohoapp.com/api/twilio/conversations/%d/attachments/%d?authorization=%s";
+
+        public static Uri createUri(String filename, Context context) {
+            return Uri.fromFile(new File(context.getExternalCacheDir(), filename));
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.chat.chatconversation.contract
 
 import android.content.Intent
+import android.net.Uri
 import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 
@@ -15,7 +16,7 @@ interface ChatConversationContract {
 
         fun getChatConversation()
 
-        fun uploadImageFromIntent(intent: Intent)
+        fun uploadGalleryImageFromIntent(uri: Uri)
 
         fun stopPresenting()
 

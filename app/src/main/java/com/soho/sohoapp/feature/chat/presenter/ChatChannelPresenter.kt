@@ -6,13 +6,16 @@ import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.ChatAccessManager
+import com.soho.sohoapp.feature.chat.adapter.ChatChannelListenerAdapter
 import com.soho.sohoapp.feature.chat.adapter.ChatClientListenerAdapter
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
 import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.common.model.EmptyDataSet
 import com.soho.sohoapp.preferences.UserPrefs
 import com.twilio.accessmanager.AccessManager
+import com.twilio.chat.Channel
 import com.twilio.chat.ChatClient
+import com.twilio.chat.Message
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -75,7 +78,7 @@ class ChatChannelPresenter(private val context: Context?,
                 }
             } else {
 
-                val chatChannel = channelList.map { ChatChannel(it) }.sortedBy { it.messageList.firstOrNull()?.timeStampAsDate?.time }
+                val chatChannel = configureChatChannel(channelList, true)
 
                 chatChannel.map { chat ->
 
@@ -97,10 +100,35 @@ class ChatChannelPresenter(private val context: Context?,
         }
     }
 
+    private fun configureChatChannel(channelList: MutableList<Channel>, addListener: Boolean = false) = channelList
+            .map { channel ->
+                if (addListener) {
+                    addChannelListener(channel, channelList)
+                }
+                ChatChannel(channel)
+            }.sortedBy { it.messageList.firstOrNull()?.timeStampAsDate?.time }
+
+    private fun addChannelListener(channel: Channel, channelList: MutableList<Channel>) {
+        channel.addListener(object : ChatChannelListenerAdapter() {
+            override fun onMessageAdded(message: Message?) = onChannelChange()
+
+
+            override fun onMessageDeleted(message: Message?) = onChannelChange()
+
+
+            private fun onChannelChange() {
+                val updatedChannelList = configureChatChannel(channelList, false)
+                view.onChannelUpdated(updatedChannelList.toMutableList())
+            }
+
+        })
+    }
+
     private fun getString(context: Context, @StringRes res: Int) = context.getString(res)
 
 
     private fun addAccessTokenManager() {
+        val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
         val accessManager = AccessManager(userPrefs.twilioToken, chatAccessManager)
         accessManager.addTokenUpdateListener(chatAccessManager)
     }

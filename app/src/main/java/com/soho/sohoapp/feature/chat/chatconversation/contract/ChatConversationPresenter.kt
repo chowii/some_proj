@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.chat.chatconversation.contract
 
 import android.content.Context
-import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.feature.chat.model.ChatConversation
@@ -54,8 +54,8 @@ class ChatConversationPresenter(private val context: Context,
                 )
     }
 
-    override fun uploadImageFromIntent(intent: Intent) {
-        val imageByteArray = FileHelper.newInstance(context).compressPhoto(intent.data)
+    override fun uploadGalleryImageFromIntent(uri: Uri) {
+        val imageByteArray = FileHelper.newInstance(context).compressPhoto(uri)
 
         val chatId = conversationList.find { it.channelSid == channelSid }
         DEPENDENCIES.sohoService.attachToChat(createMultipart(imageByteArray).build(), chatId?.id ?: 0)
