@@ -157,7 +157,10 @@ interface SohoService {
     fun getConversation(@QueryMap conversationMap: HashMap<String, Any>): Observable<ChatConversation>
 
     @POST("twilio/conversations/{conversation_id}/attachments")
-    fun attachToChat(@Body builder: RequestBody, @Path("conversation_id") conversationId: Int): Observable<ChatAttachmentRequest>
+    fun attachToChat(
+            @Body builder: RequestBody,
+            @Path("conversation_id") conversationId: Int
+    ): Observable<ChatAttachmentRequest>
 
     @GET("twilio/conversations/all")
     fun getAllConversations(): Observable<List<ChatConversation>>
