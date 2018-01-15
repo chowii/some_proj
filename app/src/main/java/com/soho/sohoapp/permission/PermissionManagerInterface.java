@@ -8,4 +8,8 @@ public interface PermissionManagerInterface {
     boolean hasStoragePermission();
 
     Observable<PermissionEvent> requestStoragePermission(int requestCode);
+
+    boolean hasCameraPermission();
+
+    Observable<PermissionEvent> requestCameraPermission(int requestCode);
 }

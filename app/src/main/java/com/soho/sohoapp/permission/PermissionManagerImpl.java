@@ -29,4 +29,14 @@ public class PermissionManagerImpl implements PermissionManagerInterface {
     public Observable<PermissionEvent> requestStoragePermission(int requestCode) {
         return PermissionActivity.start(context, Permission.WRITE_EXTERNAL_STORAGE, requestCode);
     }
+
+    @Override
+    public boolean hasCameraPermission() {
+        return PermissionActivity.hasPermission(context, Permission.CAMERA);
+    }
+
+    @Override
+    public Observable<PermissionEvent> requestCameraPermission(int requestCode) {
+        return PermissionActivity.start(context, Permission.CAMERA, requestCode);
+    }
 }

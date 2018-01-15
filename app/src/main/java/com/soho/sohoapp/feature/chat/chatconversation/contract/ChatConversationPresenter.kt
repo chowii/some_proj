@@ -6,7 +6,11 @@ import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_PERMISSION
+import com.soho.sohoapp.permission.PermissionManagerImpl
 import com.soho.sohoapp.utils.FileHelper
+import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,7 +23,10 @@ import okhttp3.RequestBody
  */
 class ChatConversationPresenter(private val context: Context,
                                 private val view: ChatConversationContract.ViewInteractable,
-                                private val channelSid: String) : ChatConversationContract.ViewPresenter {
+                                private val channelSid: String,
+                                private val rxCamera: Maybe<Uri>,
+                                private val permissionManager: PermissionManagerImpl
+) : ChatConversationContract.ViewPresenter {
 
     private val compositeDisposable = CompositeDisposable()
     private val numberOfLastMessages = 35
@@ -31,8 +38,31 @@ class ChatConversationPresenter(private val context: Context,
         getChatConversation()
     }
 
+    override fun pickImageFromGallery() {
+        view.pickImage()
+    }
+
+    override fun takeImageWithCamera() {
+        if (permissionManager.hasCameraPermission()) {
+            view.captureImage()
+        } else {
+            compositeDisposable.add(permissionManager.requestCameraPermission(CHAT_CAMERA_PERMISSION)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .flatMap {
+                        if (it.isPermissionGranted) {
+                            view.captureImage()
+                            rxCamera.toObservable()
+                        } else
+                            Observable.empty<Uri>()
+                    }.subscribe(
+                    { uploadGalleryImageFromIntent(it) },
+                    { Log.d("LOG_TAG---", "${it.message}: ") }
+            ))
+        }
+    }
+
     override fun getChatConversation() {
-        DEPENDENCIES.sohoService.getAllConversations()
+        compositeDisposable.add(DEPENDENCIES.sohoService.getAllConversations()
                 .switchMap {
                     conversationList = it
                     chatConversation = it.find { it.channelSid == channelSid }
@@ -51,14 +81,14 @@ class ChatConversationPresenter(private val context: Context,
                             view.showError(it)
                             view.hideLoading()
                         }
-                )
+                ))
     }
 
     override fun uploadGalleryImageFromIntent(uri: Uri) {
         val imageByteArray = FileHelper.newInstance(context).compressPhoto(uri)
 
         val chatId = conversationList.find { it.channelSid == channelSid }
-        DEPENDENCIES.sohoService.attachToChat(createMultipart(imageByteArray).build(), chatId?.id ?: 0)
+        compositeDisposable.add(DEPENDENCIES.sohoService.attachToChat(createMultipart(imageByteArray).build(), chatId?.id ?: 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -69,7 +99,7 @@ class ChatConversationPresenter(private val context: Context,
                         {
                             Log.d("LOG_TAG---", "send media: ${it.message} ")
                         }
-                )
+                ))
     }
 
 

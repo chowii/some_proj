@@ -1,6 +1,5 @@
 package com.soho.sohoapp.feature.chat.chatconversation.contract
 
-import android.content.Intent
 import android.net.Uri
 import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.chat.model.ChatMessage
@@ -13,6 +12,10 @@ interface ChatConversationContract {
     interface ViewPresenter {
 
         fun startPresenting()
+
+        fun pickImageFromGallery()
+
+        fun takeImageWithCamera()
 
         fun getChatConversation()
 
@@ -27,6 +30,10 @@ interface ChatConversationContract {
         fun showLoading()
 
         fun configureAdapter(messageList: MutableList<ChatMessage>)
+
+        fun pickImage()
+
+        fun captureImage()
 
         fun hideLoading()
 

@@ -1,12 +1,9 @@
 package com.soho.sohoapp.feature.chat.chatconversation
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -17,18 +14,20 @@ import android.widget.EditText
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.marchinram.rxgallery.RxGallery
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
-import com.soho.sohoapp.extensions.currentUtcDateTimeStamp
 import com.soho.sohoapp.feature.chat.chatconversation.adapter.ChatConversationAdapter
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationContract
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationPresenter
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
-import com.soho.sohoapp.network.Keys
+import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
+import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
+import com.soho.sohoapp.permission.PermissionManagerImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import java.io.File
 
 
 /**
@@ -48,9 +47,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         val CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA = packageName + ".chat_channel_participant"
 
         @JvmStatic
-        private val GALLERY_REQUEST_CODE: Int = 121
-
-        @JvmStatic
         private val CAMERA_REQUEST_CODE: Int = 122
     }
 
@@ -63,28 +59,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     fun onAttachClick() {
         val photoDialog = AddPhotoDialog(this)
         photoDialog.show(object : AddPhotoDialog.OnItemClickedListener {
-            override fun onTakeNewPhotoClicked() {
-                val cameraPremission = ContextCompat.checkSelfPermission(this@ChatConversationActivity, Manifest.permission.CAMERA)
-                if (cameraPremission == PackageManager.PERMISSION_GRANTED) {
-                    val s = Intent().apply {
-                        action = MediaStore.ACTION_IMAGE_CAPTURE
-                        putExtra(
-                                MediaStore.EXTRA_OUTPUT,
-                                Keys.ChatImage.createUri(Date().currentUtcDateTimeStamp(), this@ChatConversationActivity)
-                                )
-                    }
-                    if (s.resolveActivity(packageManager) != null) {
-                        startActivityForResult(s, CAMERA_REQUEST_CODE)
-                    }
-                }
-            }
+            override fun onTakeNewPhotoClicked() = presenter.takeImageWithCamera()
 
-            override fun onChooseFromGalleryClicked() {
-                val galleryIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                    type = "image/*"
-                }
-                this@ChatConversationActivity.startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
-            }
+            override fun onChooseFromGalleryClicked() = presenter.pickImageFromGallery()
         })
     }
 
@@ -111,6 +88,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     private lateinit var presenter: ChatConversationPresenter
     private val chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs)
 
+    private var camera: CameraPicker? = null
+    private var gallery: GalleryPicker? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_conversation)
@@ -118,7 +98,13 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
         participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
-        presenter = ChatConversationPresenter(this, this, channelSid)
+        presenter = ChatConversationPresenter(
+                this,
+                this,
+                channelSid,
+                RxGallery.photoCapture(this),
+                PermissionManagerImpl.newInstance(this)
+        )
         presenter.startPresenting()
         configureToolbar()
     }
@@ -153,16 +139,20 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        when (resultCode) {
-            RESULT_OK -> when (requestCode) {
-                GALLERY_REQUEST_CODE -> {
-                    presenter.uploadGalleryImageFromIntent(data.data)
-                }
-                CAMERA_REQUEST_CODE -> presenter.uploadGalleryImageFromIntent(data.data)
-            }
-        }
+    override fun pickImage() {
+        gallery = GalleryPicker(this@ChatConversationActivity)
+        gallery?.choosePhoto { presenter.uploadGalleryImageFromIntent(it) }
+    }
+
+    override fun captureImage() {
+        camera = CameraPicker(this@ChatConversationActivity)
+        camera?.takePhoto { presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it))) }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        camera?.onActivityResult(requestCode, resultCode)
+        gallery?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {

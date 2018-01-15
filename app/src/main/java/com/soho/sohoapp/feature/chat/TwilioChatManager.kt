@@ -87,7 +87,6 @@ class TwilioChatManager {
                 override fun onSuccess(channel: Channel) {
                     channel.messages.getLastMessages(numberOfLastMessages, object : CallbackListener<MutableList<Message>>() {
                         override fun onSuccess(messageList: MutableList<Message>) {
-
                             emitter.onNext(messageList)
                         }
 
