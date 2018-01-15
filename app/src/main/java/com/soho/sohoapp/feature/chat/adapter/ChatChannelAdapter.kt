@@ -46,7 +46,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                                     itemView.setOnClickListener {
                                         onChatChannelClick.invoke(
                                                 message.channelSid,
-                                                chatChannel.property.chatConversation.conversionUsers.lastOrNull()?.trim().orEmpty())
+                                                chatChannel.property.chatConversation.conversionUsers.firstOrNull()?.trim().orEmpty())
                                     }
                                 }
                                 messageTextView.text = chatChannel.property.chatConversation.conversionUsers.firstOrNull()?: "No User"

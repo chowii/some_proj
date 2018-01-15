@@ -195,4 +195,8 @@ public interface Keys {
         String CHAT_PROPERTY = "property";
         String CHAT_USER = "USER";
     }
+
+    interface ChatImage {
+        String CHAT_ATTACHMENT_ENDPOINT_FORMAT = "http://staging.sohoapp.com/api/twilio/conversations/%d/attachments/%d?authorization=%s";
+    }
 }
