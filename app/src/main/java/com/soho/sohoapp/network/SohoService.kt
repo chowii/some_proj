@@ -1,6 +1,7 @@
 package com.soho.sohoapp.network
 
 import com.soho.sohoapp.data.dtos.*
+import com.soho.sohoapp.feature.chat.model.ChatAttachmentRequest
 import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
@@ -154,6 +155,15 @@ interface SohoService {
 
     @GET("twilio/conversations")
     fun getConversation(@QueryMap conversationMap: HashMap<String, Any>): Observable<ChatConversation>
+
+    @POST("twilio/conversations/{conversation_id}/attachments")
+    fun attachToChat(
+            @Body builder: RequestBody,
+            @Path("conversation_id") conversationId: Int
+    ): Observable<ChatAttachmentRequest>
+
+    @GET("twilio/conversations/all")
+    fun getAllConversations(): Observable<List<ChatConversation>>
 }
 
 

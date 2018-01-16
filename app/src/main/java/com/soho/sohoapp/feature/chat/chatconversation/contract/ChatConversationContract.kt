@@ -1,7 +1,8 @@
 package com.soho.sohoapp.feature.chat.chatconversation.contract
 
+import android.net.Uri
 import com.soho.sohoapp.feature.BaseViewInteractable
-import com.twilio.chat.Message
+import com.soho.sohoapp.feature.chat.model.ChatMessage
 
 /**
  * Created by chowii on 22/12/17.
@@ -12,7 +13,15 @@ interface ChatConversationContract {
 
         fun startPresenting()
 
+        fun pickImageFromGallery()
+
+        fun takeImageWithCamera()
+
         fun getChatConversation()
+
+        fun uploadGalleryImageFromIntent(uri: Uri)
+
+        fun cleanImageDisposable()
 
         fun stopPresenting()
 
@@ -22,7 +31,11 @@ interface ChatConversationContract {
 
         fun showLoading()
 
-        fun configureAdapter(messageList: List<Message>)
+        fun configureAdapter(messageList: MutableList<ChatMessage>)
+
+        fun pickImage()
+
+        fun captureImage()
 
         fun hideLoading()
 

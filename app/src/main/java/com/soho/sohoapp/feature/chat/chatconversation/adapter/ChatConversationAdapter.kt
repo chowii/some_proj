@@ -1,58 +1,55 @@
 package com.soho.sohoapp.feature.chat.chatconversation.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
-import com.soho.sohoapp.extensions.DateFormat
-import com.soho.sohoapp.extensions.stringFormat
-import com.soho.sohoapp.extensions.toStringWithFormat
-import com.twilio.chat.Message
+import com.soho.sohoapp.feature.chat.chatconversation.viewholder.ChatConversationViewHolder
+import com.soho.sohoapp.feature.chat.chatconversation.viewholder.ChatImageViewHolder
+import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.preferences.UserPrefs
 
 /**
  * Created by chowii on 28/12/17.
  */
-class ChatConversationAdapter(private val messageList: List<Message>) : RecyclerView.Adapter<ChatConversationAdapter.ChatConversationViewHolder>() {
+class ChatConversationAdapter(
+        private var messageList: MutableList<ChatMessage>,
+        private val userPrefs: UserPrefs,
+        val displayMetrics: DisplayMetrics
+) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = messageList.size
 
-    override fun getItemViewType(position: Int): Int = R.layout.item_chat_conversation
+    override fun getItemViewType(position: Int): Int = if (messageList[position].chatAttachment != null) {
+        R.layout.item_chat_image
+    } else {
+        R.layout.item_chat_conversation
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ChatConversationViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         val itemView = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
-        return ChatConversationViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: ChatConversationViewHolder, position: Int) {
-        holder.apply {
-            messageList[position].apply {
-                if (author == DEPENDENCIES.userPrefs.twilioUser) {
-                    messageEndTextView.text = messageBody
-                    messageStampEndTextView.text = timeStampAsDate.toStringWithFormat(DateFormat.DateTimeShort().stringFormat())
-                } else {
-                    messageStartTextView.text = messageList[position].messageBody
-                    messageStampStartTextView.text = timeStampAsDate.toStringWithFormat(DateFormat.DateTimeShort().stringFormat())
-                }
-            }
+        return when(viewType) {
+            R.layout.item_chat_conversation -> ChatConversationViewHolder(itemView)
+            R.layout.item_chat_image -> ChatImageViewHolder(itemView)
+            else -> null
         }
     }
 
-    class ChatConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        @BindView(R.id.message_start_text_view) lateinit var messageStartTextView: TextView
-        @BindView(R.id.message_end_text_view) lateinit var messageEndTextView: TextView
-        @BindView(R.id.message_stamp_start_text_view) lateinit var messageStampStartTextView: TextView
-        @BindView(R.id.message_stamp_end_text_view) lateinit var messageStampEndTextView: TextView
-
-        init {
-            ButterKnife.bind(this, itemView)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is ChatConversationViewHolder -> holder.onBindViewHolder(messageList[position], userPrefs)
+            is ChatImageViewHolder -> holder.onBindViewHolder(messageList[position], userPrefs)
         }
+    }
 
+    internal fun updatedMessageList(messageList: MutableList<ChatMessage>) {
+        this.messageList = messageList
+    }
+
+    internal fun appendMessage(message: ChatMessage) {
+        this.messageList.add(message)
     }
 
 }

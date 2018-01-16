@@ -79,5 +79,26 @@ class TwilioChatManager {
             })
         }
     }
+
+    fun getChatMessages(conversationId: String, numberOfLastMessages: Int): Observable<MutableList<Message>> {
+        return Observable.create { emitter ->
+
+            chatClient.channels.getChannel(conversationId, object : CallbackListener<Channel>() {
+                override fun onSuccess(channel: Channel) {
+                    channel.messages.getLastMessages(numberOfLastMessages, object : CallbackListener<MutableList<Message>>() {
+                        override fun onSuccess(messageList: MutableList<Message>) {
+                            emitter.onNext(messageList)
+                        }
+
+                        override fun onError(errorInfo: ErrorInfo) {
+                            emitter.onError(Throwable(errorInfo.message))
+                            super.onError(errorInfo)
+                        }
+                    })
+                }
+            })
+        }
+    }
+
 }
 

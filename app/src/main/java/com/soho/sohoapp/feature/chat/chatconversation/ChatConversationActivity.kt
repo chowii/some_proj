@@ -1,5 +1,7 @@
 package com.soho.sohoapp.feature.chat.chatconversation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.widget.SwipeRefreshLayout
@@ -7,14 +9,27 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.DisplayMetrics
 import android.view.MenuItem
+import android.widget.EditText
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
+import com.marchinram.rxgallery.RxGallery
+import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.chatconversation.adapter.ChatConversationAdapter
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationContract
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationPresenter
-import com.twilio.chat.Message
+import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
+import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
+import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
+import com.soho.sohoapp.permission.PermissionManagerImpl
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.io.File
+
 
 /**
  * Created by chowii on 22/12/17.
@@ -24,27 +39,80 @@ import com.twilio.chat.Message
 class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.ViewInteractable {
 
     companion object {
-        val CHAT_CHANNEL_SID_INTENT_EXTRA = this::class.java.`package`.name + ".chat_channel_sid"
+        private val packageName = this::class.java.`package`.name
+
+        @JvmField
+        val CHAT_CHANNEL_SID_INTENT_EXTRA = packageName + ".chat_channel_sid"
+
+        @JvmField
+        val CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA = packageName + ".chat_channel_participant"
+
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
-
     @BindView(R.id.swipeRefresh) lateinit var swipeRefreshLayout: SwipeRefreshLayout
-
     @BindView(R.id.recyclerView) lateinit var recyclerView: RecyclerView
+    @BindView(R.id.message_edit_text) lateinit var messageEditText: EditText
+
+    @OnClick(R.id.attach_button)
+    fun onAttachClick() {
+        val photoDialog = AddPhotoDialog(this)
+        photoDialog.show(object : AddPhotoDialog.OnItemClickedListener {
+            override fun onTakeNewPhotoClicked() = presenter.takeImageWithCamera()
+
+            override fun onChooseFromGalleryClicked() = presenter.pickImageFromGallery()
+        })
+    }
+
+    @OnClick(R.id.send_button)
+    fun onSendClick() {
+        if (messageEditText.text.isNullOrBlank())
+            DEPENDENCIES.twilioManager.sendMessageToChannel(channelSid, messageEditText.text.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            { appendMessageToView(ChatMessage(it, null)) },
+                            { DEPENDENCIES.logger.e(it.message, it) })
+    }
+
+    private fun appendMessageToView(it: ChatMessage) {
+        messageEditText.text.clear()
+        chatConversationAdapter.appendMessage(it)
+        chatConversationAdapter.notifyDataSetChanged()
+        recyclerView.smoothScrollToPosition(chatConversationAdapter.itemCount)
+    }
 
     private lateinit var channelSid: String
-
+    private lateinit var participant: String
     private lateinit var presenter: ChatConversationPresenter
+    private lateinit var chatConversationAdapter: ChatConversationAdapter
+
+    private var camera: CameraPicker? = null
+    private var gallery: GalleryPicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_chat_conversation)
+        setContentView(R.layout.activity_chat_conversation)
         ButterKnife.bind(this)
+        initAdapter()
+        swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
-        presenter = ChatConversationPresenter(this, this, channelSid)
+        participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
+        presenter = ChatConversationPresenter(
+                this,
+                this,
+                channelSid,
+                RxGallery.photoCapture(this),
+                PermissionManagerImpl.newInstance(this)
+        )
         presenter.startPresenting()
         configureToolbar()
+    }
+
+    private fun initAdapter() {
+        val displayMetrics = DisplayMetrics()
+        this@ChatConversationActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs, displayMetrics)
     }
 
     private fun configureToolbar() {
@@ -52,6 +120,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
+            title = participant
         }
     }
 
@@ -63,13 +132,33 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         swipeRefreshLayout.isRefreshing = true
     }
 
-    override fun configureAdapter(messageList: List<Message>) {
-        recyclerView.adapter = ChatConversationAdapter(messageList)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+    override fun configureAdapter(messageList: MutableList<ChatMessage>) {
+        recyclerView.apply {
+            chatConversationAdapter.updatedMessageList(messageList)
+            adapter = chatConversationAdapter
+            layoutManager = LinearLayoutManager(this@ChatConversationActivity, LinearLayoutManager.VERTICAL, false)
+            smoothScrollToPosition(chatConversationAdapter.itemCount)
+        }
     }
 
     override fun hideLoading() {
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun pickImage() {
+        gallery = GalleryPicker(this@ChatConversationActivity)
+        gallery?.choosePhoto { presenter.uploadGalleryImageFromIntent(it) }
+    }
+
+    override fun captureImage() {
+        camera = CameraPicker(this@ChatConversationActivity)
+        camera?.takePhoto { presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it))) }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        camera?.onActivityResult(requestCode, resultCode)
+        gallery?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {

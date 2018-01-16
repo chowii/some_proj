@@ -16,7 +16,7 @@ import com.soho.sohoapp.feature.home.BaseModel
  * Created by chowii on 19/12/17.
  */
 class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>,
-                         private val onChatChannelClick: (String) -> Unit
+                         private val onChatChannelClick: (String, String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = subscribedChannels.size
@@ -42,14 +42,23 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                             .let { chatChannel: ChatChannel ->
                                 addressTextView.text = chatChannel.propertyAddress
                                 chatChannel.messageList.firstOrNull()?.let { message ->
-                                    itemView.setOnClickListener { onChatChannelClick.invoke(message.channelSid) }
+                                    itemView.setOnClickListener {
+                                        onChatChannelClick.invoke(
+                                                message.channelSid,
+                                                chatChannel.property
+                                                        .chatConversation
+                                                        .conversionUsers
+                                                        .firstOrNull()
+                                                        ?: getString(R.string.chat_channel_no_user_text, holder)
+                                        )
+                                    }
                                     timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
                                     messageTextView.text = message.messageBody
                                             ?: getString(R.string.chat_channel_no_messages_text, this)
                                 }
                                 nameTextView.text = chatChannel.property.chatConversation.conversionUsers
-                                                .firstOrNull()
-                                                ?: getString(R.string.chat_channel_no_user_text, this)
+                                        .firstOrNull()
+                                        ?: getString(R.string.chat_channel_no_user_text, this)
                             }
                 }
             }

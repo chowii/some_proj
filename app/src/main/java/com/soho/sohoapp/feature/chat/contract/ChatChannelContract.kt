@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.chat.contract
 
+import com.facebook.internal.Mutable
 import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.home.BaseModel
 
@@ -22,9 +23,9 @@ interface ChatChannelContract {
 
         fun showLoading()
 
-        fun onChannelUpdated(updatedChannelList: List<BaseModel>)
+        fun onChannelUpdated(updatedChannelList: MutableList<BaseModel>)
 
-        fun onChannelDeleted(updatedChannelList: List<BaseModel>)
+        fun onChannelDeleted(updatedChannelList: MutableList<BaseModel>)
 
         fun updateChannelList(baseList: BaseModel)
 

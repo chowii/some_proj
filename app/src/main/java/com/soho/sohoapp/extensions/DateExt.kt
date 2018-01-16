@@ -68,7 +68,7 @@ fun Date.durationFromNowAsString(): String {
         return when {
             it[DAY_OF_YEAR] < 2 -> getHourDuration(it)
             it[DAY_OF_YEAR] < 29 -> getDayDuration(it[DAY_OF_YEAR].minus(adjustIndex))
-           else -> getMonthDuration(it[MONTH].plus(adjustIndex))
+            else -> getMonthDuration(it[MONTH].plus(adjustIndex))
         }
     }
 }
@@ -81,9 +81,27 @@ private fun getDayDuration(days: Int) = SohoApplication.getContext()
 
 private fun getHourDuration(hour: Calendar): String = when {
     hour[HOUR_OF_DAY] < 2 -> SohoApplication.getContext()
-                .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
+            .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
 
     else -> SohoApplication.getContext()
             .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
+}
+
+fun Date.currentUtcDateTimeStamp(format: String): String {
+    val c = Calendar.getInstance()
+    c.timeInMillis = System.currentTimeMillis()
+    c.timeZone = TimeZone.getDefault()
+    return String.format(
+            Locale.getDefault(),
+            format,
+            c.get(Calendar.YEAR),
+            c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
+            c.get(Calendar.DAY_OF_MONTH),
+            Calendar.HOUR,
+            Calendar.MINUTE,
+            Calendar.SECOND,
+            Calendar.MILLISECOND
+    )
+
 }
 

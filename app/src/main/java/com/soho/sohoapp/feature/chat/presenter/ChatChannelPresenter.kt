@@ -28,6 +28,8 @@ class ChatChannelPresenter(private val context: Context?,
                            private val userPrefs: UserPrefs
 ) : ChatChannelContract.ViewPresentable {
 
+    private val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
+
     override fun startPresenting() {
         view.showLoading()
         getChatChannelList()
@@ -116,7 +118,7 @@ class ChatChannelPresenter(private val context: Context?,
 
             private fun onChannelChange() {
                 val updatedChannelList = configureChatChannel(channelList, false)
-                view.onChannelUpdated(updatedChannelList)
+                view.onChannelUpdated(updatedChannelList.toMutableList())
             }
 
         })
@@ -133,5 +135,6 @@ class ChatChannelPresenter(private val context: Context?,
 
     override fun stopPresenting() {
         compositeDisposable.clear()
+        chatAccessManager.clearDisposable()
     }
 }

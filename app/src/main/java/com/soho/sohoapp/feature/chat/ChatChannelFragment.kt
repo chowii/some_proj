@@ -11,9 +11,9 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.facebook.internal.Mutable
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
@@ -74,13 +74,13 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         adapter.notifyDataSetChanged()
     }
 
-    override fun onChannelUpdated(updatedChannelList: List<BaseModel>) {
+    override fun onChannelUpdated(updatedChannelList: MutableList<BaseModel>) {
         onChannelChanged(updatedChannelList)
     }
 
-    override fun onChannelDeleted(updatedChannelList: List<BaseModel>) = onChannelChanged(updatedChannelList)
+    override fun onChannelDeleted(updatedChannelList: MutableList<BaseModel>) = onChannelChanged(updatedChannelList)
 
-    private fun onChannelChanged(updatedChannelList: List<BaseModel>) {
+    private fun onChannelChanged(updatedChannelList: MutableList<BaseModel>) {
         adapter.apply {
             updateChannelList(updatedChannelList)
             notifyDataSetChanged()
@@ -91,9 +91,10 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun onChatChannelClicked(): (String) -> Unit = {
+    private fun onChatChannelClicked(): (String, String) -> Unit = { sid, participant ->
         activity?.startActivity(Intent(activity, ChatConversationActivity::class.java).apply {
-            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it)
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, sid)
+            putExtra(ChatConversationActivity.CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, participant)
         })
     }
 
