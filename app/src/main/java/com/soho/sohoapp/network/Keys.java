@@ -204,9 +204,5 @@ public interface Keys {
     abstract class ChatImage {
         public static String CHAT_ATTACHMENT_ENDPOINT_FORMAT = "http://staging.sohoapp.com/api/twilio/conversations/%d/attachments/%d?authorization=%s";
         public static String CHAT_ATTACH_IMAGE = "file";
-
-        public static Uri createUri(String filename, Context context) {
-            return Uri.fromFile(new File(context.getExternalCacheDir(), filename));
-        }
     }
 }

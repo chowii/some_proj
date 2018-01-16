@@ -21,6 +21,8 @@ interface ChatConversationContract {
 
         fun uploadGalleryImageFromIntent(uri: Uri)
 
+        fun cleanImageDisposable()
+
         fun stopPresenting()
 
     }

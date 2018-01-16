@@ -2,6 +2,7 @@ package com.soho.sohoapp.feature.chat.chatconversation.viewholder
 
 import android.content.res.Resources
 import android.support.v7.widget.CardView
+import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -28,13 +29,8 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
 
     private lateinit var userPrefs: UserPrefs
 
-    private var widthPx: Float
     private var widthDp: Float = itemView.context.resources.configuration.screenWidthDp.toFloat()
-    private var density: Float = Resources.getSystem().displayMetrics.density
-
-    init {
-        widthPx = widthDp * density
-    }
+    private var widthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, widthDp, Resources.getSystem().displayMetrics)
 
     override fun onBindViewHolder(model: ChatMessage) {
         showImage(model)
@@ -97,13 +93,13 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
             val dimen = getCurrentDimenRatio(imageWidth, widthPx)
             val minimumScreenToImageRatio = 0.60f
 
-            val newWidth = imageFile?.width?.times(minimumScreenToImageRatio)
+            val newWidth = widthPx.times(minimumScreenToImageRatio)
             val newHeight: Float?
             return if (dimen > minimumScreenToImageRatio) {
-                newHeight = newWidth?.div(aspectRatio)
-                Pair(newWidth?.toInt() ?: 0, newHeight?.toInt() ?: 0)
+                newHeight = newWidth.div(aspectRatio)
+                Pair(newWidth.toInt(), newHeight.toInt())
             } else {
-                Pair(imageFile?.width?.toInt() ?: 0, imageFile?.height?.toInt() ?: 0)
+                Pair(imageFile?.width?.toInt() ?: 1, imageFile?.height?.toInt() ?: 1)
             }
         }
     }

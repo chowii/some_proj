@@ -87,13 +87,13 @@ private fun getHourDuration(hour: Calendar): String = when {
             .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
 }
 
-fun Date.currentUtcDateTimeStamp(): String {
+fun Date.currentUtcDateTimeStamp(format: String): String {
     val c = Calendar.getInstance()
     c.timeInMillis = System.currentTimeMillis()
     c.timeZone = TimeZone.getDefault()
     return String.format(
             Locale.getDefault(),
-            "%s_%s_%s %s:%s:%s.%s",
+            format,
             c.get(Calendar.YEAR),
             c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
             c.get(Calendar.DAY_OF_MONTH),

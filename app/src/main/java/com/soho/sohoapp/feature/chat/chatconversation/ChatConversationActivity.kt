@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.widget.EditText
 import butterknife.BindView
@@ -84,7 +85,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     private lateinit var channelSid: String
     private lateinit var participant: String
     private lateinit var presenter: ChatConversationPresenter
-    private val chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs)
+    private lateinit var chatConversationAdapter: ChatConversationAdapter
 
     private var camera: CameraPicker? = null
     private var gallery: GalleryPicker? = null
@@ -93,6 +94,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_conversation)
         ButterKnife.bind(this)
+        initAdapter()
         swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
         participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
@@ -105,6 +107,12 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         )
         presenter.startPresenting()
         configureToolbar()
+    }
+
+    private fun initAdapter() {
+        val displayMetrics = DisplayMetrics()
+        this@ChatConversationActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs, displayMetrics)
     }
 
     private fun configureToolbar() {

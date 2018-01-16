@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.chat.chatconversation.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.soho.sohoapp.R
@@ -12,7 +13,11 @@ import com.soho.sohoapp.preferences.UserPrefs
 /**
  * Created by chowii on 28/12/17.
  */
-class ChatConversationAdapter(private var messageList: MutableList<ChatMessage>, private val userPrefs: UserPrefs) :
+class ChatConversationAdapter(
+        private var messageList: MutableList<ChatMessage>,
+        private val userPrefs: UserPrefs,
+        val displayMetrics: DisplayMetrics
+) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = messageList.size

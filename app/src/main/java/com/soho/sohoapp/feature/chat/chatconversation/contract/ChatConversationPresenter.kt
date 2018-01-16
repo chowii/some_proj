@@ -33,6 +33,7 @@ class ChatConversationPresenter(private val context: Context,
 ) : ChatConversationContract.ViewPresenter {
 
     private val compositeDisposable = CompositeDisposable()
+    private val imageDisposable = CompositeDisposable()
     private val numberOfLastMessages = 35
     private var conversationList: List<ChatConversation> = arrayListOf()
     private var chatConversation: ChatConversation? = null
@@ -50,7 +51,8 @@ class ChatConversationPresenter(private val context: Context,
         if (permissionManager.hasCameraPermission()) {
             view.captureImage()
         } else {
-            compositeDisposable.add(permissionManager.requestCameraPermission(CHAT_CAMERA_PERMISSION)
+            cleanImageDisposable()
+            imageDisposable.add(permissionManager.requestCameraPermission(CHAT_CAMERA_PERMISSION)
                     .observeOn(AndroidSchedulers.mainThread())
                     .flatMap {
                         if (it.isPermissionGranted) {
@@ -59,7 +61,10 @@ class ChatConversationPresenter(private val context: Context,
                         } else
                             Observable.empty<Uri>()
                     }.subscribe(
-                    { uploadGalleryImageFromIntent(it) },
+                    {
+                        imageDisposable.clear()
+                        uploadGalleryImageFromIntent(it)
+                    },
                     {
                         view.showError(it)
                         Log.d("LOG_TAG---", "${it.message}: ")
@@ -109,7 +114,6 @@ class ChatConversationPresenter(private val context: Context,
                 ))
     }
 
-
     private fun createMultipart(byteArray: ByteArray) = MultipartBody.Builder()
             .apply {
                 setType(MultipartBody.FORM)
@@ -127,6 +131,10 @@ class ChatConversationPresenter(private val context: Context,
             MediaType.parse("image/jpeg"),
             data
     )
+
+    override fun cleanImageDisposable() {
+        imageDisposable.clear()
+    }
 
     override fun stopPresenting() {
         compositeDisposable.clear()
