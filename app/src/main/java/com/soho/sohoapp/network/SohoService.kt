@@ -162,8 +162,8 @@ interface SohoService {
             @Path("conversation_id") conversationId: Int
     ): Observable<ChatAttachmentRequest>
 
-    @GET("twilio/conversations/all")
-    fun getAllConversations(): Observable<List<ChatConversation>>
+    @GET("twilio/conversations/channel_sids/{channel_sid}")
+    fun getChatConversation(@Path("channel_sid") channelSid: String): Observable<ChatConversation>
 }
 
 

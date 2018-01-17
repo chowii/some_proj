@@ -11,7 +11,11 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.DisplayMetrics
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -26,6 +30,9 @@ import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
 import com.soho.sohoapp.permission.PermissionManagerImpl
+import com.soho.sohoapp.utils.TextWatcherAdapter
+import com.squareup.picasso.Picasso
+import com.twilio.chat.Member
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
@@ -53,6 +60,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     @BindView(R.id.swipeRefresh) lateinit var swipeRefreshLayout: SwipeRefreshLayout
     @BindView(R.id.recyclerView) lateinit var recyclerView: RecyclerView
     @BindView(R.id.message_edit_text) lateinit var messageEditText: EditText
+    @BindView(R.id.participant_name) lateinit var participantName: TextView
+    @BindView(R.id.typing_indicator) lateinit var typeIndicator: TextView
+    @BindView(R.id.user_avatar_iv) lateinit var userAvatarImageView: ImageView
 
     @OnClick(R.id.attach_button)
     fun onAttachClick() {
@@ -107,6 +117,16 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         )
         presenter.startPresenting()
         configureToolbar()
+        configureMessageEditText()
+    }
+
+    private fun configureMessageEditText() {
+        messageEditText.addTextChangedListener(object : TextWatcherAdapter() {
+            override fun onTextChanged(charSequence: CharSequence?, i: Int, i1: Int, i2: Int) {
+                presenter.startedTyping()
+                super.onTextChanged(charSequence, i, i1, i2)
+            }
+        })
     }
 
     private fun initAdapter() {
@@ -120,7 +140,16 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            title = participant
+            participantName.text = participant
+        }
+    }
+
+    override fun showAvatar(url: String?) {
+        url?.let {
+            Picasso.with(this)
+                    .load(url)
+                    .placeholder(R.drawable.ic_account_circle_gray)
+                    .into(userAvatarImageView)
         }
     }
 
@@ -153,6 +182,20 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     override fun captureImage() {
         camera = CameraPicker(this@ChatConversationActivity)
         camera?.takePhoto { presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it))) }
+    }
+
+    override fun appendMessage(message: ChatMessage) = chatConversationAdapter.let {
+        it.appendMessage(message)
+        it.notifyDataSetChanged()
+        recyclerView.scrollToPosition(it.itemCount - 1)
+    }
+
+    override fun typingStarted(member: Member) = typeIndicator.let {
+        it.visibility = VISIBLE
+    }
+
+    override fun typingEnded(member: Member) = typeIndicator.let {
+        it.visibility = GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
