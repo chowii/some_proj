@@ -42,7 +42,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                             .map { it as ChatChannel }[position]
                             .let { chatChannel: ChatChannel ->
                                 addressTextView.text = chatChannel.propertyAddress
-                                configureUnconsumedMessages(chatChannel.unconsumedCount, this)
+                                configureUnconsumedMessages(chatChannel.isUnconsumed, this)
                                 chatChannel.messageList.firstOrNull()?.let { message ->
                                     itemView.setOnClickListener {
                                         onChatChannelClick.invoke(
@@ -53,9 +53,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                                                         .firstOrNull()
                                                         ?: getString(R.string.chat_channel_no_user_text, holder)
                                         )
-                                        chatChannel.unconsumedCount = false
-                                        notifyDataSetChanged()
-                                        chatChannel.setConsumed()
+                                        setChannelConsumed(chatChannel)
                                     }
                                     timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
                                     messageTextView.text = message.messageBody
@@ -69,6 +67,14 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
             }
             is EmptyDataSetViewHolder -> holder.onBindViewHolder(subscribedChannels[position] as EmptyDataSet)
         }
+    }
+
+    private fun setChannelConsumed(chatChannel: ChatChannel) {
+        chatChannel.apply {
+            isUnconsumed = false
+            setChannelAsConsumed()
+        }
+        notifyDataSetChanged()
     }
 
     private fun configureUnconsumedMessages(

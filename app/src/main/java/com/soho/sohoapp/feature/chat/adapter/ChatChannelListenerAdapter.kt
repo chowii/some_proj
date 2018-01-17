@@ -18,7 +18,7 @@ open class ChatChannelListenerAdapter : ChannelListener {
     override fun onMessageAdded(message: Message) {
     }
 
-    override fun onMessageDeleted(message: Message?) {
+    override fun onMessageDeleted(message: Message) {
     }
 
     override fun onMemberAdded(member: Member?) {
