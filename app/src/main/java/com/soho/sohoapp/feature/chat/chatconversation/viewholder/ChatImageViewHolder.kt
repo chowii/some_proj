@@ -46,7 +46,6 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
 
         val imageView = if (isUserAuthor) {
             showAuthorImage()
-            endProgressBar.isIndeterminate = true
             chatEndImageView
         } else {
             showParticipantImage()
