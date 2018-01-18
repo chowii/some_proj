@@ -42,6 +42,11 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
         return Observable.create {
             chatChannel?.messages?.getLastMessages(1, object : CallbackListener<List<Message>>() {
                 override fun onSuccess(messageList: List<Message>) = it.onNext(messageList)
+
+                override fun onError(errorInfo: ErrorInfo?) {
+                    it.onError(Throwable(errorInfo?.message))
+                    super.onError(errorInfo)
+                }
             })
         }
     }

@@ -1,10 +1,11 @@
 package com.soho.sohoapp.feature.chat.model
 
 import android.support.annotation.LayoutRes
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.home.BaseModel
+import com.soho.sohoapp.network.TwilioMessageTypeAdapterFactory
 import com.twilio.chat.Message
 
 /**
@@ -21,9 +22,13 @@ class ChatMessage(
     init {
         chatAttachment =
                 try {
-                    Gson().fromJson<TwilioMessageAttachment>(
-                            message.attributes.toString(),
-                            object : TypeToken<TwilioMessageAttachment>() {}.type)
+                    GsonBuilder()
+                            .registerTypeAdapterFactory(TwilioMessageTypeAdapterFactory())
+                            .create()
+                            .fromJson(
+                                    message.attributes.toString(),
+                                    object : TypeToken<TwilioMessageAttachment?>() {}.type
+                            )
                 } catch (e: Exception) {
                     e.message
                     null
