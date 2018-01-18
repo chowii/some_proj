@@ -1,10 +1,5 @@
 package com.soho.sohoapp.network;
 
-import android.content.Context;
-import android.net.Uri;
-
-import java.io.File;
-
 public interface Keys {
 
     interface More {

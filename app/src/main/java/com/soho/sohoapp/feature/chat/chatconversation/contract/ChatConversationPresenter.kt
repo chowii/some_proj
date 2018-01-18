@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.feature.chat.TwilioChatManager
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelListenerAdapter
 import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
@@ -32,6 +33,7 @@ class ChatConversationPresenter(private val context: Context,
                                 private val view: ChatConversationContract.ViewInteractable,
                                 private val channelSid: String,
                                 private val rxCamera: Maybe<Uri>,
+                                private val twilioManager: TwilioChatManager,
                                 private val permissionManager: PermissionManagerImpl
 ) : ChatConversationContract.ViewPresenter {
 
@@ -43,7 +45,7 @@ class ChatConversationPresenter(private val context: Context,
     override fun startPresenting() {
         view.showLoading()
         getChatConversation()
-        DEPENDENCIES.twilioManager.initChannel(channelSid)
+        twilioManager.initChannel(channelSid)
     }
 
     override fun pickImageFromGallery() {
@@ -98,7 +100,7 @@ class ChatConversationPresenter(private val context: Context,
                 .switchMap {
                     chatConversation = it
                     view.showAvatar(it.conversionUsers[1].user.avatar?.imageUrl)
-                    DEPENDENCIES.twilioManager.getChatMessages(channelSid, numberOfLastMessages)
+                    twilioManager.getChatMessages(channelSid, numberOfLastMessages)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

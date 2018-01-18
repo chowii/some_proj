@@ -113,6 +113,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
                 this,
                 channelSid,
                 RxGallery.photoCapture(this),
+                DEPENDENCIES.twilioManager,
                 PermissionManagerImpl.newInstance(this)
         )
         presenter.startPresenting()

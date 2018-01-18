@@ -86,14 +86,14 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
             timeTextView.setTypeface(null, Typeface.BOLD)
             addressTextView.setTypeface(null, Typeface.BOLD)
             messageTextView.setTypeface(null, Typeface.BOLD)
-        }
-    else
+        } else {
         chatChannelViewHolder.apply {
             nameTextView.setTypeface(null, Typeface.NORMAL)
             timeTextView.setTypeface(null, Typeface.NORMAL)
             addressTextView.setTypeface(null, Typeface.NORMAL)
             messageTextView.setTypeface(null, Typeface.NORMAL)
         }
+    }
 
     private fun getString(@StringRes res: Int, holder: RecyclerView.ViewHolder) = holder.itemView.context.getString(res)
 

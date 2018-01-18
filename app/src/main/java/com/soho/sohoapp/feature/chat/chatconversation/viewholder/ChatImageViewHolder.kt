@@ -79,19 +79,19 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
     private fun showParticipantImage() {
         chatEndImageView.visibility = GONE
         cardEnd.visibility = GONE
-        endProgressBar.isIndeterminate = false
+        endProgressBar.visibility = GONE
         chatStartImageView.visibility = VISIBLE
         cardStart.visibility = VISIBLE
-        startProgressBar.isIndeterminate = true
+        startProgressBar.visibility = VISIBLE
     }
 
     private fun showAuthorImage() {
         chatStartImageView.visibility = GONE
         cardStart.visibility = GONE
-        endProgressBar.isIndeterminate = true
+        endProgressBar.visibility = GONE
         chatEndImageView.visibility = VISIBLE
         cardEnd.visibility = VISIBLE
-        startProgressBar.isIndeterminate = false
+        startProgressBar.visibility = VISIBLE
     }
 
     private fun getImageUrl(model: ChatMessage): String = model.let {
@@ -136,6 +136,8 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
     fun onBindViewHolder(model: ChatMessage, userPrefs: UserPrefs) {
         this.userPrefs = userPrefs
         isUserAuthor = userPrefs.twilioUser == model.message.author
+        startProgressBar.isIndeterminate = true
+        endProgressBar.isIndeterminate = true
         onBindViewHolder(model)
     }
 }
