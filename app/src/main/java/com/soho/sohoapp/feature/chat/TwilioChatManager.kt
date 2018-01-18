@@ -15,6 +15,9 @@ class TwilioChatManager {
 
     private val chatBehaviourSubject: BehaviorSubject<ChatClient> = BehaviorSubject.create()
     var chatObservable: Observable<ChatClient> = chatBehaviourSubject.toFlowable(BackpressureStrategy.ERROR).toObservable()
+
+    private val channelBehaviourSubject: BehaviorSubject<Channel> = BehaviorSubject.create()
+    private var channel: Channel? = null
     private lateinit var chatClient: ChatClient
 
     fun initChatClient(context: Context, userPrefs: UserPrefs): TwilioChatManager {
@@ -35,6 +38,21 @@ class TwilioChatManager {
         }
         return this
     }
+
+    fun initChannel(channelSid: String) {
+        chatClient.channels.getChannel(channelSid, object : CallbackListener<Channel>() {
+            override fun onSuccess(channel: Channel) {
+                this@TwilioChatManager.channel = channel
+                channelBehaviourSubject.onNext(channel)
+            }
+
+            override fun onError(errorInfo: ErrorInfo?) {
+                channelBehaviourSubject.onError(Throwable(errorInfo?.message))
+                super.onError(errorInfo)
+            }
+        })
+    }
+
 
     fun getLastMessageList(channelSid: String, numberOfLastMessages: Int): Observable<List<Message>> {
         return Observable.create { emitter ->
@@ -98,6 +116,25 @@ class TwilioChatManager {
                 }
             })
         }
+    }
+
+    fun updateToken(token: String) : Observable<Boolean> {
+        return Observable.create {
+            chatClient.updateToken(token, object : StatusListener() {
+                override fun onSuccess() {
+                    it.onNext(true)
+                }
+
+                override fun onError(errorInfo: ErrorInfo?) {
+                    it.onError(Throwable(errorInfo?.message))
+                    super.onError(errorInfo)
+                }
+            })
+        }
+    }
+
+    fun notifyTypeStarted() {
+        channel?.typing()
     }
 
 }

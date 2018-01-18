@@ -5,6 +5,8 @@ import android.net.Uri
 import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
+import com.soho.sohoapp.feature.chat.TwilioChatManager
+import com.soho.sohoapp.feature.chat.adapter.ChatChannelListenerAdapter
 import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_PERMISSION
@@ -12,6 +14,8 @@ import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE
 import com.soho.sohoapp.permission.PermissionManagerImpl
 import com.soho.sohoapp.utils.DateUtils
 import com.soho.sohoapp.utils.FileHelper
+import com.twilio.chat.Member
+import com.twilio.chat.Message
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,18 +33,19 @@ class ChatConversationPresenter(private val context: Context,
                                 private val view: ChatConversationContract.ViewInteractable,
                                 private val channelSid: String,
                                 private val rxCamera: Maybe<Uri>,
+                                private val twilioManager: TwilioChatManager,
                                 private val permissionManager: PermissionManagerImpl
 ) : ChatConversationContract.ViewPresenter {
 
     private val compositeDisposable = CompositeDisposable()
     private val imageDisposable = CompositeDisposable()
     private val numberOfLastMessages = 35
-    private var conversationList: List<ChatConversation> = arrayListOf()
     private var chatConversation: ChatConversation? = null
 
     override fun startPresenting() {
         view.showLoading()
         getChatConversation()
+        twilioManager.initChannel(channelSid)
     }
 
     override fun pickImageFromGallery() {
@@ -74,17 +79,37 @@ class ChatConversationPresenter(private val context: Context,
     }
 
     override fun getChatConversation() {
-        compositeDisposable.add(DEPENDENCIES.sohoService.getAllConversations()
+
+        val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
+            override fun onMessageAdded(message: Message) {
+                view.appendMessage(ChatMessage(message, chatConversation))
+                super.onMessageAdded(message)
+            }
+
+            override fun onTypingStarted(member: Member) {
+                view.typingStarted(member)
+                super.onTypingStarted(member)
+            }
+
+            override fun onTypingEnded(member: Member) {
+                view.typingEnded(member)
+                super.onTypingEnded(member)
+            }
+        }
+        compositeDisposable.add(DEPENDENCIES.sohoService.getChatConversation(channelSid)
                 .switchMap {
-                    conversationList = it
-                    chatConversation = it.find { it.channelSid == channelSid }
-                    DEPENDENCIES.twilioManager.getChatMessages(chatConversation?.channelSid.orEmpty(), numberOfLastMessages)
+                    chatConversation = it
+                    view.showAvatar(it.conversionUsers[1].user.avatar?.imageUrl)
+                    twilioManager.getChatMessages(channelSid, numberOfLastMessages)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            val messageList = it.map { ChatMessage(it, chatConversation) }.toMutableList()
+                            val messageList = it.map { message ->
+                                message.channel.addListener(channelChangeListener)
+                                ChatMessage(message, chatConversation)
+                            }.toMutableList()
                             view.configureAdapter(messageList)
                             view.hideLoading()
                         },
@@ -99,21 +124,22 @@ class ChatConversationPresenter(private val context: Context,
     override fun uploadGalleryImageFromIntent(uri: Uri) {
         val imageByteArray = FileHelper.newInstance(context).compressPhoto(uri)
 
-        val chatId = conversationList.find { it.channelSid == channelSid }
-        compositeDisposable.add(DEPENDENCIES.sohoService.attachToChat(createMultipart(imageByteArray).build(), chatId?.id ?: 0)
+        compositeDisposable.add(DEPENDENCIES.sohoService.attachToChat(
+                createMultipart(imageByteArray).build(),
+                chatConversation?.id ?: 0
+        )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
+                        { view.hideLoading() },
                         {
-                            //TODO append media message to chat
-                            it.file
-                        },
-                        {
+                            view.hideLoading()
                             Log.d("LOG_TAG---", "send media: ${it.message} ")
                         }
                 ))
     }
 
+    override fun startedTyping() = DEPENDENCIES.twilioManager.notifyTypeStarted()
 
     private fun createMultipart(byteArray: ByteArray) = MultipartBody.Builder()
             .apply {

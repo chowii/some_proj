@@ -9,22 +9,22 @@ import com.twilio.chat.Message
  * Created by chowii on 5/1/18.
  */
 open class ChatChannelListenerAdapter : ChannelListener {
-    override fun onMemberDeleted(member: Member?) {
+    override fun onMemberDeleted(member: Member) {
     }
 
-    override fun onTypingEnded(member: Member?) {
+    override fun onTypingEnded(member: Member) {
     }
 
-    override fun onMessageAdded(message: Message?) {
+    override fun onMessageAdded(message: Message) {
     }
 
-    override fun onMessageDeleted(message: Message?) {
+    override fun onMessageDeleted(message: Message) {
     }
 
     override fun onMemberAdded(member: Member?) {
     }
 
-    override fun onTypingStarted(member: Member?) {
+    override fun onTypingStarted(member: Member) {
     }
 
     override fun onSynchronizationChanged(channel: Channel?) {

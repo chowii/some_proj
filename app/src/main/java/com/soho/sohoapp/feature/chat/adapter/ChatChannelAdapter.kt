@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.chat.adapter
 
+import android.graphics.Typeface
 import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -41,6 +42,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                             .map { it as ChatChannel }[position]
                             .let { chatChannel: ChatChannel ->
                                 addressTextView.text = chatChannel.propertyAddress
+                                configureUnconsumedMessages(chatChannel.isUnconsumed, this)
                                 chatChannel.messageList.firstOrNull()?.let { message ->
                                     itemView.setOnClickListener {
                                         onChatChannelClick.invoke(
@@ -51,6 +53,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                                                         .firstOrNull()
                                                         ?: getString(R.string.chat_channel_no_user_text, holder)
                                         )
+                                        setChannelMessageAsRead(chatChannel)
                                     }
                                     timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
                                     messageTextView.text = message.messageBody
@@ -63,6 +66,32 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                 }
             }
             is EmptyDataSetViewHolder -> holder.onBindViewHolder(subscribedChannels[position] as EmptyDataSet)
+        }
+    }
+
+    private fun setChannelMessageAsRead(chatChannel: ChatChannel) {
+        chatChannel.apply {
+            isUnconsumed = false
+            setChannelAsRead()
+        }
+        notifyDataSetChanged()
+    }
+
+    private fun configureUnconsumedMessages(
+            unconsumedCount: Boolean,
+            chatChannelViewHolder: ChatChannelViewHolder
+    ) = if (unconsumedCount)
+        chatChannelViewHolder.apply {
+            nameTextView.setTypeface(null, Typeface.BOLD)
+            timeTextView.setTypeface(null, Typeface.BOLD)
+            addressTextView.setTypeface(null, Typeface.BOLD)
+            messageTextView.setTypeface(null, Typeface.BOLD)
+        } else {
+        chatChannelViewHolder.apply {
+            nameTextView.setTypeface(null, Typeface.NORMAL)
+            timeTextView.setTypeface(null, Typeface.NORMAL)
+            addressTextView.setTypeface(null, Typeface.NORMAL)
+            messageTextView.setTypeface(null, Typeface.NORMAL)
         }
     }
 

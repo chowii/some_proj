@@ -16,6 +16,7 @@ import com.twilio.accessmanager.AccessManager
 import com.twilio.chat.Channel
 import com.twilio.chat.ChatClient
 import com.twilio.chat.Message
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -77,26 +78,44 @@ class ChatChannelPresenter(private val context: Context?,
                     hideLoading()
                 }
             } else {
-
-                val chatChannel = configureChatChannel(channelList, true)
-
-                chatChannel.map { chat ->
-
-                    compositeDisposable.add(chat.getLastMessageObservable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        chat.messageList = it
-                                        view.updateChannelList(chat)
-                                        view.hideLoading()
-                                    },
-                                    {
-                                        Log.d("LOG_TAG---", "message error: " + it.message)
-                                        view.hideLoading()
-                                    }))
-                }
+                makeChannelList(channelList, true)
             }
+        }
+    }
+
+    private fun makeChannelList(channelList: MutableList<Channel>, addListener: Boolean = false): List<Boolean> {
+        val chatChannel = configureChatChannel(channelList, addListener)
+
+        val chatChannelList = mutableListOf<ChatChannel>()
+
+        return chatChannel.map { chat ->
+
+            compositeDisposable.add(chat.getLastMessageObservable()
+                    .switchMap {
+                        chat.messageList = it
+                        chat.getUnconsumedMessageCount()
+                    }
+                    .switchMap {
+                        chat.isUnconsumed = it > 0
+                        chatChannelList.add(chat)
+                        Observable.create<List<ChatChannel>> { it.onNext(chatChannelList) }
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                val updatedChannelList = it.sortedByDescending {
+                                    it.messageList.firstOrNull()
+                                            ?.timeStampAsDate
+                                            ?.time
+                                }
+                                view.onChannelUpdated(updatedChannelList.toMutableList())
+                                view.hideLoading()
+                            },
+                            {
+                                Log.d("LOG_TAG---", "message error: " + it.message)
+                                view.hideLoading()
+                            }))
         }
     }
 
@@ -106,19 +125,17 @@ class ChatChannelPresenter(private val context: Context?,
                     addChannelListener(channel, channelList)
                 }
                 ChatChannel(channel)
-            }.sortedBy { it.messageList.firstOrNull()?.timeStampAsDate?.time }
+            }
+
 
     private fun addChannelListener(channel: Channel, channelList: MutableList<Channel>) {
         channel.addListener(object : ChatChannelListenerAdapter() {
-            override fun onMessageAdded(message: Message?) = onChannelChange()
+            override fun onMessageAdded(message: Message) {
+                makeChannelList(channelList)
+            }
 
-
-            override fun onMessageDeleted(message: Message?) = onChannelChange()
-
-
-            private fun onChannelChange() {
-                val updatedChannelList = configureChatChannel(channelList, false)
-                view.onChannelUpdated(updatedChannelList.toMutableList())
+            override fun onMessageDeleted(message: Message) {
+                makeChannelList(channelList)
             }
 
         })

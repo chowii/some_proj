@@ -2,17 +2,20 @@ package com.soho.sohoapp.feature.chat.chatconversation.viewholder
 
 import android.content.res.Resources
 import android.support.v7.widget.CardView
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.ProgressBar
 import butterknife.BindView
 import com.soho.sohoapp.BaseViewHolder
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.network.Keys.ChatImage
 import com.soho.sohoapp.preferences.UserPrefs
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -26,8 +29,11 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
     @BindView(R.id.image_card_end) lateinit var cardEnd: CardView
     @BindView(R.id.chat_start_image_view) lateinit var chatStartImageView: ImageView
     @BindView(R.id.chat_end_image_view) lateinit var chatEndImageView: ImageView
+    @BindView(R.id.chat_start_progress_bar) lateinit var startProgressBar : ProgressBar
+    @BindView(R.id.chat_end_progress_bar) lateinit var endProgressBar : ProgressBar
 
     private lateinit var userPrefs: UserPrefs
+    private var isUserAuthor: Boolean = false
 
     private var widthDp: Float = itemView.context.resources.configuration.screenWidthDp.toFloat()
     private var widthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, widthDp, Resources.getSystem().displayMetrics)
@@ -37,7 +43,8 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
     }
 
     private fun showImage(model: ChatMessage) {
-        val imageView = if (userPrefs.twilioUser == model.message.author) {
+
+        val imageView = if (isUserAuthor) {
             showAuthorImage()
             chatEndImageView
         } else {
@@ -54,21 +61,36 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
                 .centerInside()
                 .resize(size.first, size.second)
                 .onlyScaleDown()
-                .into(imageView)
+                .into(imageView, object : Callback {
+                    override fun onSuccess() {
+                        if (isUserAuthor)
+                            endProgressBar.visibility = GONE
+                        else
+                            startProgressBar.visibility = GONE
+                    }
+
+                    override fun onError() {
+                        Log.d("LOG_TAG---", "error loading image: ")
+                    }
+                })
     }
 
     private fun showParticipantImage() {
         chatEndImageView.visibility = GONE
         cardEnd.visibility = GONE
+        endProgressBar.visibility = GONE
         chatStartImageView.visibility = VISIBLE
         cardStart.visibility = VISIBLE
+        startProgressBar.visibility = VISIBLE
     }
 
     private fun showAuthorImage() {
         chatStartImageView.visibility = GONE
         cardStart.visibility = GONE
+        endProgressBar.visibility = GONE
         chatEndImageView.visibility = VISIBLE
         cardEnd.visibility = VISIBLE
+        startProgressBar.visibility = VISIBLE
     }
 
     private fun getImageUrl(model: ChatMessage): String = model.let {
@@ -112,6 +134,9 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
 
     fun onBindViewHolder(model: ChatMessage, userPrefs: UserPrefs) {
         this.userPrefs = userPrefs
+        isUserAuthor = userPrefs.twilioUser == model.message.author
+        startProgressBar.isIndeterminate = true
+        endProgressBar.isIndeterminate = true
         onBindViewHolder(model)
     }
 }

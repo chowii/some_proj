@@ -1,10 +1,13 @@
 package com.soho.sohoapp.preferences
 
 import android.content.Context
+import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.data.models.User
 import com.soho.sohoapp.utils.orFalse
 import io.outbound.sdk.Outbound
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class UserPrefs(context: Context) {
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
@@ -48,10 +51,19 @@ class UserPrefs(context: Context) {
     }
 
     fun logout() {
-        DEPENDENCIES.userPrefs.authToken = ""
-        DEPENDENCIES.userPrefs.user = null
-        DEPENDENCIES.userPrefs.twilioToken = ""
-        DEPENDENCIES.userPrefs.twilioUser = ""
+        DEPENDENCIES.userPrefs.apply {
+            authToken = ""
+            user = null
+            twilioToken = ""
+            twilioUser = ""
+        }
+        DEPENDENCIES.twilioManager.chatObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { it.shutdown() },
+                        { Log.d("LOG_TAG---", "${it.message}: ") }
+                )
         Outbound.logout()
     }
 
