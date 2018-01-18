@@ -26,16 +26,20 @@ import com.soho.sohoapp.feature.chat.chatconversation.adapter.ChatConversationAd
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationContract
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationPresenter
 import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.feature.chat.model.PendingMessage
+import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
 import com.soho.sohoapp.permission.PermissionManagerImpl
+import com.soho.sohoapp.utils.DateUtils
 import com.soho.sohoapp.utils.TextWatcherAdapter
 import com.squareup.picasso.Picasso
 import com.twilio.chat.Member
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
+import java.util.*
 
 
 /**
@@ -155,18 +159,21 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     }
 
     override fun showError(throwable: Throwable) {
-        Snackbar.make(findViewById(android.R.id.content), throwable.message ?: "Error occurred", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(findViewById(android.R.id.content), throwable.message
+                ?: "Error occurred", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {
         swipeRefreshLayout.isRefreshing = true
     }
 
-    override fun configureAdapter(messageList: MutableList<ChatMessage>) {
+    override fun configureAdapter(messageList: MutableList<out BaseModel>) {
         recyclerView.apply {
             chatConversationAdapter.updatedMessageList(messageList)
             adapter = chatConversationAdapter
-            layoutManager = LinearLayoutManager(this@ChatConversationActivity, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager = LinearLayoutManager(this@ChatConversationActivity, LinearLayoutManager.VERTICAL, false)
+            linearLayoutManager.stackFromEnd = true
+            layoutManager = linearLayoutManager
             smoothScrollToPosition(chatConversationAdapter.itemCount)
         }
     }
@@ -177,16 +184,43 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     override fun pickImage() {
         gallery = GalleryPicker(this@ChatConversationActivity)
-        gallery?.choosePhoto { presenter.uploadGalleryImageFromIntent(it) }
+        gallery?.choosePhoto {
+            val fileName = String.format(
+                    Locale.getDefault(),
+                    getString(R.string.photo_filename_format),
+                    DateUtils.getDateFormatForFileName())
+
+            showPendingImage(fileName)
+            presenter.uploadGalleryImageFromIntent(
+                    it,
+                    fileName
+            )
+        }
     }
 
     override fun captureImage() {
         camera = CameraPicker(this@ChatConversationActivity)
-        camera?.takePhoto { presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it))) }
+        camera?.takePhoto {
+            val fileName = String.format(
+                    Locale.getDefault(),
+                    getString(R.string.photo_filename_format),
+                    DateUtils.getDateFormatForFileName())
+
+            showPendingImage(fileName)
+            presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it)), fileName)
+        }
     }
 
-    override fun appendMessage(message: ChatMessage) = chatConversationAdapter.let {
-        it.appendMessage(message)
+    private fun showPendingImage(fileName: String) {
+        chatConversationAdapter.apply {
+            appendMessage(PendingMessage(fileName))
+            notifyDataSetChanged()
+            recyclerView.scrollToPosition(itemCount - 1)
+        }
+    }
+
+    override fun updateImageMessage(message: ChatMessage) = chatConversationAdapter.let {
+        it.updateImageMessage(message)
         it.notifyDataSetChanged()
         recyclerView.scrollToPosition(it.itemCount - 1)
     }

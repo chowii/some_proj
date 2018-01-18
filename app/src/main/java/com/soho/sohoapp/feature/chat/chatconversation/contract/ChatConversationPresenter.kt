@@ -11,6 +11,7 @@ import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_PERMISSION
 import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE
+import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE_FILE_NAME
 import com.soho.sohoapp.permission.PermissionManagerImpl
 import com.soho.sohoapp.utils.DateUtils
 import com.soho.sohoapp.utils.FileHelper
@@ -49,11 +50,13 @@ class ChatConversationPresenter(private val context: Context,
     }
 
     override fun pickImageFromGallery() {
+        view.showLoading()
         view.pickImage()
     }
 
     override fun takeImageWithCamera() {
         if (permissionManager.hasCameraPermission()) {
+            view.showLoading()
             view.captureImage()
         } else {
             cleanImageDisposable()
@@ -66,15 +69,22 @@ class ChatConversationPresenter(private val context: Context,
                         } else
                             Observable.empty<Uri>()
                     }.subscribe(
-                    {
-                        imageDisposable.clear()
-                        uploadGalleryImageFromIntent(it)
-                    },
-                    {
-                        view.showError(it)
-                        Log.d("LOG_TAG---", "${it.message}: ")
-                    }
-            ))
+                            {
+                                imageDisposable.clear()
+                                view.showLoading()
+                                uploadGalleryImageFromIntent(
+                                        it,
+                                        String.format(
+                                                Locale.getDefault(),
+                                                context.getString(R.string.photo_filename_format),
+                                                DateUtils.getDateFormatForFileName())
+                                )
+                            },
+                            {
+                                view.showError(it)
+                                Log.d("LOG_TAG---", "${it.message}: ")
+                            }
+                    ))
         }
     }
 
@@ -82,7 +92,7 @@ class ChatConversationPresenter(private val context: Context,
 
         val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
             override fun onMessageAdded(message: Message) {
-                view.appendMessage(ChatMessage(message, chatConversation))
+                view.updateImageMessage(ChatMessage(message, chatConversation))
                 super.onMessageAdded(message)
             }
 
@@ -121,17 +131,20 @@ class ChatConversationPresenter(private val context: Context,
                 ))
     }
 
-    override fun uploadGalleryImageFromIntent(uri: Uri) {
+    override fun uploadGalleryImageFromIntent(uri: Uri, filename: String) {
         val imageByteArray = FileHelper.newInstance(context).compressPhoto(uri)
 
         compositeDisposable.add(DEPENDENCIES.sohoService.attachToChat(
-                createMultipart(imageByteArray).build(),
+                createMultipart(imageByteArray, filename).build(),
                 chatConversation?.id ?: 0
         )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { view.hideLoading() },
+                        {
+                            Log.d("LOG_TAG---", "${it.originalFilename}: ")
+                            view.hideLoading()
+                        },
                         {
                             view.hideLoading()
                             Log.d("LOG_TAG---", "send media: ${it.message} ")
@@ -141,16 +154,17 @@ class ChatConversationPresenter(private val context: Context,
 
     override fun startedTyping() = DEPENDENCIES.twilioManager.notifyTypeStarted()
 
-    private fun createMultipart(byteArray: ByteArray) = MultipartBody.Builder()
+    private fun createMultipart(byteArray: ByteArray, filename: String) = MultipartBody.Builder()
             .apply {
                 setType(MultipartBody.FORM)
                 addFormDataPart(
                         CHAT_ATTACH_IMAGE,
-                        String.format(
-                                Locale.getDefault(),
-                                context.getString(R.string.photo_filename_format),
-                                DateUtils.getDateFormatForFileName()),
+                        filename,
                         createRequestBody(byteArray)
+                )
+                addFormDataPart(
+                        CHAT_ATTACH_IMAGE_FILE_NAME,
+                        filename
                 )
             }
 

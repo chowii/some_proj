@@ -118,7 +118,7 @@ class TwilioChatManager {
         }
     }
 
-    fun updateToken(token: String) : Observable<Boolean> {
+    fun updateToken(token: String): Observable<Boolean> {
         return Observable.create {
             chatClient.updateToken(token, object : StatusListener() {
                 override fun onSuccess() {
