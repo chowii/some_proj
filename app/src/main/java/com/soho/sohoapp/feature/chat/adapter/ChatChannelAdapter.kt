@@ -53,7 +53,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
                                                         .firstOrNull()
                                                         ?: getString(R.string.chat_channel_no_user_text, holder)
                                         )
-                                        setChannelConsumed(chatChannel)
+                                        setChannelMessageAsRead(chatChannel)
                                     }
                                     timeTextView.text = message.timeStampAsDate?.durationFromNowAsString()
                                     messageTextView.text = message.messageBody
@@ -69,10 +69,10 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
         }
     }
 
-    private fun setChannelConsumed(chatChannel: ChatChannel) {
+    private fun setChannelMessageAsRead(chatChannel: ChatChannel) {
         chatChannel.apply {
             isUnconsumed = false
-            setChannelAsConsumed()
+            setChannelAsRead()
         }
         notifyDataSetChanged()
     }

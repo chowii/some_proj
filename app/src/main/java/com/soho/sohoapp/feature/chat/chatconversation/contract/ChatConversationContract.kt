@@ -41,6 +41,8 @@ interface ChatConversationContract {
 
         fun updateImageMessage(message: ChatMessage)
 
+        fun appendMessage(message: ChatMessage)
+
         fun pickImage()
 
         fun captureImage()

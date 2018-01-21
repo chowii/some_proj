@@ -225,6 +225,12 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         recyclerView.scrollToPosition(it.itemCount - 1)
     }
 
+    override fun appendMessage(message: ChatMessage) = chatConversationAdapter.let {
+        it.appendMessage(message)
+        it.notifyDataSetChanged()
+        recyclerView.scrollToPosition(it.itemCount - 1)
+    }
+
     override fun typingStarted(member: Member) = typeIndicator.let {
         it.visibility = VISIBLE
     }

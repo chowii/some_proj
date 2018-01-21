@@ -51,7 +51,7 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
         }
     }
 
-    fun setChannelAsConsumed() {
+    fun setChannelAsRead() {
         chatChannel?.messages?.setAllMessagesConsumed()
     }
 

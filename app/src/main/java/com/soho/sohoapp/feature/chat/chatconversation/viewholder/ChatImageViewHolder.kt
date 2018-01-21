@@ -25,18 +25,12 @@ import java.util.*
 
 class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView) {
 
-    @BindView(R.id.image_card_start)
-    lateinit var cardStart: CardView
-    @BindView(R.id.image_card_end)
-    lateinit var cardEnd: CardView
-    @BindView(R.id.chat_start_image_view)
-    lateinit var chatStartImageView: ImageView
-    @BindView(R.id.chat_end_image_view)
-    lateinit var chatEndImageView: ImageView
-    @BindView(R.id.chat_start_progress_bar)
-    lateinit var startProgressBar: ProgressBar
-    @BindView(R.id.chat_end_progress_bar)
-    lateinit var endProgressBar: ProgressBar
+    @BindView(R.id.image_card_start) lateinit var cardStart: CardView
+    @BindView(R.id.image_card_end) lateinit var cardEnd: CardView
+    @BindView(R.id.chat_start_image_view) lateinit var chatStartImageView: ImageView
+    @BindView(R.id.chat_end_image_view) lateinit var chatEndImageView: ImageView
+    @BindView(R.id.chat_start_progress_bar) lateinit var startProgressBar : ProgressBar
+    @BindView(R.id.chat_end_progress_bar) lateinit var endProgressBar : ProgressBar
 
     private lateinit var userPrefs: UserPrefs
     private var isUserAuthor: Boolean = false
