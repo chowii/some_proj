@@ -6,7 +6,7 @@ import com.soho.sohoapp.SohoApplication
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Calendar.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Jovan on 18/9/17.
@@ -65,26 +65,36 @@ fun Date.durationFromNowAsString(): String {
     val duration = this.durationFromNow()
     Calendar.getInstance().let {
         it.time = duration
-        return when {
-            it[DAY_OF_YEAR] < 2 -> getHourDuration(it)
-            it[DAY_OF_YEAR] < 29 -> getDayDuration(it[DAY_OF_YEAR].minus(adjustIndex))
-            else -> getMonthDuration(it[MONTH].plus(adjustIndex))
-        }
+        return getDuration(it.timeInMillis)
+
     }
 }
 
-private fun getMonthDuration(month: Int) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.month, month, month)
+private fun getDuration(timeInMillis: Long): String {
+    val resources = SohoApplication.getContext().resources
+    val milliseconds = TimeUnit.MILLISECONDS
+    val seconds = milliseconds.toSeconds(timeInMillis)
+    val minutes = milliseconds.toMinutes(timeInMillis)
+    val hours = milliseconds.toHours(timeInMillis)
+    val days = milliseconds.toDays(timeInMillis)
 
-private fun getDayDuration(days: Int) = SohoApplication.getContext()
-        .resources.getQuantityString(R.plurals.day, days, days)
-
-private fun getHourDuration(hour: Calendar): String = when {
-    hour[HOUR_OF_DAY] < 2 -> SohoApplication.getContext()
-            .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
-
-    else -> SohoApplication.getContext()
-            .resources.getQuantityString(R.plurals.hour, hour[HOUR_OF_DAY], hour[HOUR_OF_DAY])
+    return if (seconds < 60)
+        "Just now"
+    else if (minutes < 60)
+        resources.getQuantityString(R.plurals.minute, minutes.toInt(), minutes)
+    else if (hours < 24)
+        resources.getQuantityString(R.plurals.hour, hours.toInt(), hours)
+    else if (days < 30)
+        resources.getQuantityString(R.plurals.day, days.toInt(), days)
+    else {
+        val month = days / 30
+        if (month < 12)
+            resources.getQuantityString(R.plurals.month, month.toInt(), month)
+        else {
+            val year = month / 12
+            resources.getQuantityString(R.plurals.year, year.toInt(), year)
+        }
+    }
 }
 
 fun Date.currentUtcDateTimeStamp(format: String): String {

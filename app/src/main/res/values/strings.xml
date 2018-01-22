@@ -596,6 +596,7 @@
     <string name="chat_channel_no_user_text">No User</string>
     <string name="photo_filename_format">JPEG_%s_</string>
     <string name="chat_conversation_type_indicator_text">Typing...</string>
+    <string name="pending_chat_item_retry_text">Retry</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

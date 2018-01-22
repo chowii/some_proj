@@ -1,7 +1,6 @@
 package com.soho.sohoapp.feature.chat
 
 import android.os.Build
-import android.util.Log
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.preferences.UserPrefs
@@ -32,21 +31,19 @@ class ChatAccessManager(private val userPrefs: UserPrefs): AccessManager.Listene
     }
 
     override fun onError(p0: AccessManager?, errorMessage: String?) {
-        Log.e("LOG_TAG---", "onError: ")
         Dependencies.DEPENDENCIES.logger.d(errorMessage)
     }
 
     override fun onTokenUpdated(updatedToken: String) {
         Dependencies.DEPENDENCIES.userPrefs.twilioToken = updatedToken
-        Log.e("LOG_TAG---", "onTokenUpdated: ")
     }
 
     private fun updateToken(accessManager: AccessManager) {
         compositeDisposable.add(
                 twilioTokenDisposable.subscribe(
                         {
-                            accessManager.updateToken(accessManager.token)
-                            Dependencies.DEPENDENCIES.userPrefs.twilioToken = accessManager.token
+                            accessManager.updateToken(it.accessToken)
+                            userPrefs.twilioToken = it.accessToken
                         },
                         { Dependencies.DEPENDENCIES.logger.e(it.message, it) }
                 ))

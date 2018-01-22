@@ -11,14 +11,19 @@
         <item quantity="other">%d Hours ago</item>
     </plurals>
 
+    <plurals name="day">
+        <item quantity="one">Yesterday</item>
+        <item quantity="other">%d Days ago</item>
+    </plurals>
+
     <plurals name="month">
         <item quantity="one">%d Month ago</item>
         <item quantity="other">%d Months ago</item>
     </plurals>
 
-    <plurals name="day">
-        <item quantity="one">Yesterday</item>
-        <item quantity="other">%d Days ago</item>
+    <plurals name="year">
+        <item quantity="one">%d Year ago</item>
+        <item quantity="other">%d Years ago</item>
     </plurals>
 
 </resources>

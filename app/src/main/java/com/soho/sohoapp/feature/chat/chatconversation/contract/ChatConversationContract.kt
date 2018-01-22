@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.chat.chatconversation.contract
 import android.net.Uri
 import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.feature.home.BaseModel
 import com.twilio.chat.Member
 
 /**
@@ -22,7 +23,7 @@ interface ChatConversationContract {
 
         fun getChatConversation()
 
-        fun uploadGalleryImageFromIntent(uri: Uri)
+        fun uploadGalleryImageFromIntent(uri: Uri, filename: String)
 
         fun cleanImageDisposable()
 
@@ -36,13 +37,17 @@ interface ChatConversationContract {
 
         fun showAvatar(url: String?)
 
-        fun configureAdapter(messageList: MutableList<ChatMessage>)
+        fun configureAdapter(messageList: MutableList<out BaseModel>)
+
+        fun updateImageMessage(message: ChatMessage)
 
         fun appendMessage(message: ChatMessage)
 
         fun pickImage()
 
         fun captureImage()
+
+        fun notifyUploadFailed(filename: Pair<Uri, String>)
 
         fun typingStarted(member: Member)
 

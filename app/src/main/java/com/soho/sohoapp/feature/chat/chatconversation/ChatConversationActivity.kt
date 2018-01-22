@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -26,16 +25,20 @@ import com.soho.sohoapp.feature.chat.chatconversation.adapter.ChatConversationAd
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationContract
 import com.soho.sohoapp.feature.chat.chatconversation.contract.ChatConversationPresenter
 import com.soho.sohoapp.feature.chat.model.ChatMessage
+import com.soho.sohoapp.feature.chat.model.PendingMessage
+import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.editproperty.dialogs.AddPhotoDialog
 import com.soho.sohoapp.feature.home.editproperty.photos.CameraPicker
 import com.soho.sohoapp.feature.home.editproperty.photos.GalleryPicker
 import com.soho.sohoapp.permission.PermissionManagerImpl
+import com.soho.sohoapp.utils.DateUtils
 import com.soho.sohoapp.utils.TextWatcherAdapter
 import com.squareup.picasso.Picasso
 import com.twilio.chat.Member
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
+import java.util.*
 
 
 /**
@@ -95,7 +98,10 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     private lateinit var channelSid: String
     private lateinit var participant: String
     private lateinit var presenter: ChatConversationPresenter
-    private lateinit var chatConversationAdapter: ChatConversationAdapter
+    private var chatConversationAdapter = ChatConversationAdapter(
+            userPrefs = DEPENDENCIES.userPrefs,
+            onRetryClick = retryImageUpload()
+    )
 
     private var camera: CameraPicker? = null
     private var gallery: GalleryPicker? = null
@@ -104,7 +110,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_conversation)
         ButterKnife.bind(this)
-        initAdapter()
         swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
         participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
@@ -130,12 +135,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         })
     }
 
-    private fun initAdapter() {
-        val displayMetrics = DisplayMetrics()
-        this@ChatConversationActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs, displayMetrics)
-    }
-
     private fun configureToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -155,18 +154,24 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     }
 
     override fun showError(throwable: Throwable) {
-        Snackbar.make(findViewById(android.R.id.content), throwable.message ?: "Error occurred", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(
+                findViewById(android.R.id.content),
+                throwable.message ?: getString(R.string.error_occurred),
+                Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     override fun showLoading() {
         swipeRefreshLayout.isRefreshing = true
     }
 
-    override fun configureAdapter(messageList: MutableList<ChatMessage>) {
+    override fun configureAdapter(messageList: MutableList<out BaseModel>) {
         recyclerView.apply {
             chatConversationAdapter.updatedMessageList(messageList)
             adapter = chatConversationAdapter
-            layoutManager = LinearLayoutManager(this@ChatConversationActivity, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager = LinearLayoutManager(this@ChatConversationActivity, LinearLayoutManager.VERTICAL, false)
+            linearLayoutManager.stackFromEnd = true
+            layoutManager = linearLayoutManager
             smoothScrollToPosition(chatConversationAdapter.itemCount)
         }
     }
@@ -177,12 +182,43 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     override fun pickImage() {
         gallery = GalleryPicker(this@ChatConversationActivity)
-        gallery?.choosePhoto { presenter.uploadGalleryImageFromIntent(it) }
+        gallery?.choosePhoto { uploadImage(it) }
     }
 
     override fun captureImage() {
         camera = CameraPicker(this@ChatConversationActivity)
-        camera?.takePhoto { presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it))) }
+        camera?.takePhoto { uploadImage(Uri.fromFile(File(it))) }
+    }
+
+    private fun uploadImage(uri: Uri) {
+        val fileName = String.format(
+                Locale.getDefault(),
+                getString(R.string.photo_filename_format),
+                DateUtils.getDateFormatForFileName())
+        val imageFile = Pair(uri, fileName)
+        showPendingImage(imageFile)
+        presenter.uploadGalleryImageFromIntent(uri, fileName)
+    }
+
+    private fun showPendingImage(imageFile: Pair<Uri, String>) {
+        chatConversationAdapter.apply {
+            appendMessage(PendingMessage(imageFile, true))
+            notifyDataSetChanged()
+            recyclerView.scrollToPosition(itemCount - 1)
+        }
+    }
+
+    override fun notifyUploadFailed(filename: Pair<Uri, String>) {
+        chatConversationAdapter.apply {
+            notifyUploadFailed(filename)
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun updateImageMessage(message: ChatMessage) = chatConversationAdapter.let {
+        it.updateImageMessage(message)
+        it.notifyDataSetChanged()
+        recyclerView.scrollToPosition(it.itemCount - 1)
     }
 
     override fun appendMessage(message: ChatMessage) = chatConversationAdapter.let {
@@ -212,4 +248,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    private fun retryImageUpload(): (Pair<Uri, String>) -> Unit = {
+        presenter.uploadGalleryImageFromIntent(it.first, it.second)
+    }
+
 }
