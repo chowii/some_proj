@@ -1,7 +1,7 @@
 package com.soho.sohoapp.feature.chat.chatconversation.adapter
 
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.soho.sohoapp.R
@@ -19,7 +19,7 @@ import com.soho.sohoapp.preferences.UserPrefs
 class ChatConversationAdapter(
         private var messageList: MutableList<out BaseModel>,
         private val userPrefs: UserPrefs,
-        val displayMetrics: DisplayMetrics
+        private val onRetryClick: (Pair<Uri, String>) -> Unit
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,7 +36,7 @@ class ChatConversationAdapter(
         return when (viewType) {
             R.layout.item_chat_conversation -> ChatConversationViewHolder(itemView)
             R.layout.item_chat_image -> ChatImageViewHolder(itemView)
-            R.layout.item_pending_chat_image -> PendingChatImageViewHolder(itemView)
+            R.layout.item_pending_chat_image -> PendingChatImageViewHolder(itemView, onRetryClick)
             else -> null
         }
     }
@@ -45,7 +45,7 @@ class ChatConversationAdapter(
         when (holder) {
             is ChatConversationViewHolder -> holder.onBindViewHolder(messageList[position] as ChatMessage, userPrefs)
             is ChatImageViewHolder -> holder.onBindViewHolder(messageList[position] as ChatMessage, userPrefs)
-            is PendingChatImageViewHolder -> holder
+            is PendingChatImageViewHolder -> holder.onBindViewHolder(messageList[position] as PendingMessage)
         }
     }
 
@@ -72,13 +72,24 @@ class ChatConversationAdapter(
     }
 
     internal fun updateImageMessage(message: ChatMessage) {
-       val s =  messageList
-                .filter { it is PendingMessage }
-                .map { it as PendingMessage }
-                .find { it.filename == message.chatAttachment?.file?.originalFilename }
-        val index = messageList.indexOf(s as PendingMessage)
-        messageList.removeAt(index)
-        addMessageAt(index, message)
+        findPendingImageItem { it.imageFile.second == message.chatAttachment?.file?.originalFilename }?.let {
+            val index = messageList.indexOf(it)
+            messageList.removeAt(index)
+            addMessageAt(index, message)
+        }
     }
+
+    internal fun notifyUploadFailed(image: Pair<Uri, String>) = findPendingImageItem {
+        it.imageFile.second == image.second
+    }?.apply {
+        val index = messageList.indexOf(this)
+        (messageList[index] as PendingMessage).uploadSuccessful = false
+    }
+
+
+    private fun findPendingImageItem(find: (PendingMessage) -> Boolean) = messageList
+            .filter { it is PendingMessage }
+            .map { it as PendingMessage }
+            .find { find(it) }
 
 }

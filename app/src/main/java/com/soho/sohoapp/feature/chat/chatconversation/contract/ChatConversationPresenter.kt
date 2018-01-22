@@ -92,7 +92,10 @@ class ChatConversationPresenter(private val context: Context,
 
         val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
             override fun onMessageAdded(message: Message) {
-                view.updateImageMessage(ChatMessage(message, chatConversation))
+                if (message.attributes.isNull("type"))
+                    view.appendMessage(ChatMessage(message, chatConversation))
+                else
+                    view.updateImageMessage(ChatMessage(message, chatConversation))
                 super.onMessageAdded(message)
             }
 
@@ -147,6 +150,7 @@ class ChatConversationPresenter(private val context: Context,
                         },
                         {
                             view.hideLoading()
+                            view.notifyUploadFailed(Pair(uri, filename))
                             Log.d("LOG_TAG---", "send media: ${it.message} ")
                         }
                 ))

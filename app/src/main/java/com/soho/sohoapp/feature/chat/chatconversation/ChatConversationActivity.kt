@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -108,7 +107,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_conversation)
         ButterKnife.bind(this)
-        initAdapter()
+        chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs, retryImageUpload())
         swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
         participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
@@ -132,12 +131,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
                 super.onTextChanged(charSequence, i, i1, i2)
             }
         })
-    }
-
-    private fun initAdapter() {
-        val displayMetrics = DisplayMetrics()
-        this@ChatConversationActivity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        chatConversationAdapter = ChatConversationAdapter(mutableListOf(), DEPENDENCIES.userPrefs, displayMetrics)
     }
 
     private fun configureToolbar() {
@@ -184,38 +177,36 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     override fun pickImage() {
         gallery = GalleryPicker(this@ChatConversationActivity)
-        gallery?.choosePhoto {
-            val fileName = String.format(
-                    Locale.getDefault(),
-                    getString(R.string.photo_filename_format),
-                    DateUtils.getDateFormatForFileName())
-
-            showPendingImage(fileName)
-            presenter.uploadGalleryImageFromIntent(
-                    it,
-                    fileName
-            )
-        }
+        gallery?.choosePhoto { uploadImage(it) }
     }
 
     override fun captureImage() {
         camera = CameraPicker(this@ChatConversationActivity)
-        camera?.takePhoto {
-            val fileName = String.format(
-                    Locale.getDefault(),
-                    getString(R.string.photo_filename_format),
-                    DateUtils.getDateFormatForFileName())
+        camera?.takePhoto { uploadImage(Uri.fromFile(File(it))) }
+    }
 
-            showPendingImage(fileName)
-            presenter.uploadGalleryImageFromIntent(Uri.fromFile(File(it)), fileName)
+    private fun uploadImage(it: Uri) {
+        val fileName = String.format(
+                Locale.getDefault(),
+                getString(R.string.photo_filename_format),
+                DateUtils.getDateFormatForFileName())
+        val imageFile = Pair(it, fileName)
+        showPendingImage(imageFile)
+        presenter.uploadGalleryImageFromIntent(it, fileName)
+    }
+
+    private fun showPendingImage(imageFile: Pair<Uri, String>) {
+        chatConversationAdapter.apply {
+            appendMessage(PendingMessage(imageFile, true))
+            notifyDataSetChanged()
+            recyclerView.scrollToPosition(itemCount - 1)
         }
     }
 
-    private fun showPendingImage(fileName: String) {
+    override fun notifyUploadFailed(filename: Pair<Uri, String>) {
         chatConversationAdapter.apply {
-            appendMessage(PendingMessage(fileName))
+            notifyUploadFailed(filename)
             notifyDataSetChanged()
-            recyclerView.scrollToPosition(itemCount - 1)
         }
     }
 
@@ -252,4 +243,9 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    private fun retryImageUpload(): (Pair<Uri, String>) -> Unit = {
+        presenter.uploadGalleryImageFromIntent(it.first, it.second)
+    }
+
 }

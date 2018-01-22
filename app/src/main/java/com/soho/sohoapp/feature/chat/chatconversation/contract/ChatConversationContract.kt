@@ -47,6 +47,8 @@ interface ChatConversationContract {
 
         fun captureImage()
 
+        fun notifyUploadFailed(filename: Pair<Uri, String>)
+
         fun typingStarted(member: Member)
 
         fun typingEnded(member: Member)

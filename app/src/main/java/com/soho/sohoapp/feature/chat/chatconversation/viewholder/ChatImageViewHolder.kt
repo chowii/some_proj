@@ -1,16 +1,13 @@
 package com.soho.sohoapp.feature.chat.chatconversation.viewholder
 
-import android.content.res.Resources
 import android.support.v7.widget.CardView
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.ProgressBar
 import butterknife.BindView
-import com.soho.sohoapp.BaseViewHolder
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.network.Keys.ChatImage
@@ -23,7 +20,7 @@ import java.util.*
  * Created by chowii on 12/1/18.
  */
 
-class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView) {
+class ChatImageViewHolder(itemView: View) : BaseChatImageViewHolder<ChatMessage>(itemView) {
 
     @BindView(R.id.image_card_start) lateinit var cardStart: CardView
     @BindView(R.id.image_card_end) lateinit var cardEnd: CardView
@@ -34,9 +31,6 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
 
     private lateinit var userPrefs: UserPrefs
     private var isUserAuthor: Boolean = false
-
-    private var widthDp: Float = itemView.context.resources.configuration.screenWidthDp.toFloat()
-    private var widthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, widthDp, Resources.getSystem().displayMetrics)
 
     override fun onBindViewHolder(model: ChatMessage) {
         showImage(model)
@@ -52,25 +46,28 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
             chatStartImageView
         }
 
-        val size = resizeImage(model)
-        val endPoint: String = getImageUrl(model)
+        model.chatAttachment?.file?.apply {
 
-        Picasso.with(itemView.context)
-                .load(endPoint)
-                .placeholder(R.drawable.condo)
-                .centerInside()
-                .resize(size.first, size.second)
-                .onlyScaleDown()
-                .into(imageView, object : Callback {
-                    override fun onSuccess() {
-                        if (isUserAuthor) endProgressBar.visibility = GONE
-                        else startProgressBar.visibility = GONE
-                    }
+            val size = resizeImage(Pair(width, height))
+            val endPoint: String = getImageUrl(model)
 
-                    override fun onError() {
-                        Log.d("LOG_TAG---", "error loading image: ")
-                    }
-                })
+            Picasso.with(itemView.context)
+                    .load(endPoint)
+                    .placeholder(R.drawable.condo)
+                    .centerInside()
+                    .resize(size.first, size.second)
+                    .onlyScaleDown()
+                    .into(imageView, object : Callback {
+                        override fun onSuccess() {
+                            if (isUserAuthor) endProgressBar.visibility = GONE
+                            else startProgressBar.visibility = GONE
+                        }
+
+                        override fun onError() {
+                            Log.d("LOG_TAG---", "error loading image: ")
+                        }
+                    })
+        }
     }
 
     private fun showParticipantImage() {
@@ -104,31 +101,6 @@ class ChatImageViewHolder(itemView: View) : BaseViewHolder<ChatMessage>(itemView
                 authToken
         )
     }
-
-    private fun resizeImage(model: ChatMessage): Pair<Int, Int> {
-        itemView.context.let {
-            val imageFile = model.chatAttachment?.file
-            val imageWidth = imageFile?.width ?: 1.0f
-            val aspectRatio = getAspectRatio(imageWidth, imageFile?.height ?: 1.0f)
-            val dimen = getCurrentDimenRatio(imageWidth, widthPx)
-            val minimumScreenToImageRatio = 0.60f
-
-            val newWidth = widthPx.times(minimumScreenToImageRatio)
-            val newHeight: Float?
-            return if (dimen > minimumScreenToImageRatio) {
-                newHeight = newWidth.div(aspectRatio)
-                Pair(newWidth.toInt(), newHeight.toInt())
-            } else {
-                Pair(imageFile?.width?.toInt() ?: 1, imageFile?.height?.toInt() ?: 1)
-            }
-        }
-    }
-
-    private fun getCurrentDimenRatio(imageWidth: Float, widthPx: Float) =
-            imageWidth / widthPx
-
-    private fun getAspectRatio(imageWidth: Float, imageHeight: Float) =
-            imageWidth / imageHeight
 
     fun onBindViewHolder(model: ChatMessage, userPrefs: UserPrefs) {
         this.userPrefs = userPrefs
