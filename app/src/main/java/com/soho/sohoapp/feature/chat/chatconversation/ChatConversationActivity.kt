@@ -54,9 +54,6 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         @JvmField
         val CHAT_CHANNEL_SID_INTENT_EXTRA = packageName + ".chat_channel_sid"
 
-        @JvmField
-        val CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA = packageName + ".chat_channel_participant"
-
     }
 
     @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
@@ -79,28 +76,21 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     @OnClick(R.id.send_button)
     fun onSendClick() {
-        if (messageEditText.text.isNullOrBlank())
+        if (messageEditText.text.isNotBlank())
             DEPENDENCIES.twilioManager.sendMessageToChannel(channelSid, messageEditText.text.toString())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            { appendMessageToView(ChatMessage(it, null)) },
+                            { messageEditText.text.clear() },
                             { DEPENDENCIES.logger.e(it.message, it) })
     }
 
-    private fun appendMessageToView(it: ChatMessage) {
-        messageEditText.text.clear()
-        chatConversationAdapter.appendMessage(it)
-        chatConversationAdapter.notifyDataSetChanged()
-        recyclerView.smoothScrollToPosition(chatConversationAdapter.itemCount)
-    }
-
     private lateinit var channelSid: String
-    private lateinit var participant: String
     private lateinit var presenter: ChatConversationPresenter
     private var chatConversationAdapter = ChatConversationAdapter(
             userPrefs = DEPENDENCIES.userPrefs,
-            onRetryClick = retryImageUpload()
+            onRetryClick = retryImageUpload(),
+            onTopListener = onTopListener()
     )
 
     private var camera: CameraPicker? = null
@@ -112,14 +102,14 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         ButterKnife.bind(this)
         swipeRefreshLayout.isEnabled = false
         channelSid = intent.extras.getString(CHAT_CHANNEL_SID_INTENT_EXTRA, "")
-        participant = intent.extras.getString(CHAT_CHANNEL_PARTICIPANT_INTENT_EXTRA, "")
         presenter = ChatConversationPresenter(
                 this,
                 this,
                 channelSid,
                 RxGallery.photoCapture(this),
                 DEPENDENCIES.twilioManager,
-                PermissionManagerImpl.newInstance(this)
+                PermissionManagerImpl.newInstance(this),
+                DEPENDENCIES.userPrefs
         )
         presenter.startPresenting()
         configureToolbar()
@@ -140,8 +130,11 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
-            participantName.text = participant
         }
+    }
+
+    override fun configureToolbarTitle(title: String) {
+        participantName.text = title
     }
 
     override fun showAvatar(url: String?) {
@@ -163,6 +156,13 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
 
     override fun showLoading() {
         swipeRefreshLayout.isRefreshing = true
+    }
+
+    override fun prependMessageList(messageList: MutableList<out BaseModel>) {
+        chatConversationAdapter.apply {
+            prependMessageListToAdapter(messageList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun configureAdapter(messageList: MutableList<out BaseModel>) {
@@ -253,4 +253,7 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
         presenter.uploadGalleryImageFromIntent(it.first, it.second)
     }
 
+    private fun onTopListener() :(ChatMessage) -> Unit = {
+        presenter.getMessageBefore(it.message)
+    }
 }

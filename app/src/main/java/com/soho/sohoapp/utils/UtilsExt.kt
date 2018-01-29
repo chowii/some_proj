@@ -39,4 +39,4 @@ fun Headers.toPaginationInformation() : PaginationInformation =
                 this[Keys.Pagination.PAGINATION_TOTAL_ITEMS]?.toInt(),
                 this[Keys.Pagination.PAGINATION_OFFSET]?.toInt())
 
-inline fun <T, R> T.and (block: T.() -> R) = block(this)
+inline fun <T, R> T.letX(block: T.() -> R) = block(this)

@@ -5,6 +5,7 @@ import com.soho.sohoapp.feature.BaseViewInteractable
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.home.BaseModel
 import com.twilio.chat.Member
+import com.twilio.chat.Message
 
 /**
  * Created by chowii on 22/12/17.
@@ -25,6 +26,8 @@ interface ChatConversationContract {
 
         fun uploadGalleryImageFromIntent(uri: Uri, filename: String)
 
+        fun getMessageBefore(message: Message)
+
         fun cleanImageDisposable()
 
         fun stopPresenting()
@@ -37,7 +40,11 @@ interface ChatConversationContract {
 
         fun showAvatar(url: String?)
 
+        fun prependMessageList(messageList: MutableList<out BaseModel>)
+
         fun configureAdapter(messageList: MutableList<out BaseModel>)
+
+        fun configureToolbarTitle(st: String)
 
         fun updateImageMessage(message: ChatMessage)
 

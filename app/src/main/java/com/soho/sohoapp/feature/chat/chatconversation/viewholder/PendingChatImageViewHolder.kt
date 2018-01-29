@@ -12,7 +12,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.model.PendingMessage
-import com.soho.sohoapp.utils.and
+import com.soho.sohoapp.utils.letX
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.BlurTransformation
 
@@ -31,7 +31,7 @@ class PendingChatImageViewHolder(
 
     override fun onBindViewHolder(model: PendingMessage) {
         val imageBitmap = BitmapFactory.decodeStream(itemView.context.contentResolver.openInputStream(model.imageFile.first))
-        val imageSize = imageBitmap.and { resizeImage(Pair(width.toFloat(), height.toFloat())) }
+        val imageSize = imageBitmap.letX { resizeImage(Pair(width.toFloat(), height.toFloat())) }
 
         Picasso.with(itemView.context)
                 .load(model.imageFile.first)

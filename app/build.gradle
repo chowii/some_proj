@@ -113,6 +113,8 @@ dependencies {
 
     //firebase
     implementation "com.google.firebase:firebase-core:$playServicesVersion"
+    implementation "com.google.firebase:firebase-messaging:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-base:$playServicesVersion"
 
     //todo facebook sdk uses custom tabs 25.3.1 which can cause runtime bugs
     //check fb update and possible solutions

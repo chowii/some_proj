@@ -1,10 +1,10 @@
 package com.soho.sohoapp.feature.landing
 
 import android.app.AlertDialog
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import butterknife.BindView
@@ -16,6 +16,7 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.navigator.NavigatorImpl
 import com.soho.sohoapp.network.Keys
+import com.soho.sohoapp.network.Keys.DeviceInfo.*
 import com.soho.sohoapp.utils.Converter
 import com.soho.sohoapp.utils.checkEnableDisableAlpha
 import com.soho.sohoapp.utils.orFalse
@@ -66,14 +67,25 @@ class LoginActivity : AppCompatActivity() {
                     .map(Converter::toUser)
                     .switchMap {
                         DEPENDENCIES.userPrefs.login(it)
-                        DEPENDENCIES.sohoService.getTwilioToken(Build.getRadioVersion())
+
+                        val regMap = hashMapOf(
+                                DEVICE_TYPE_KEY to DEVICE_TYPE,
+                                DEVICE_TOKEN_KEY to DEPENDENCIES.userPrefs.fcmPushNotificationToken)
+
+                        DEPENDENCIES.sohoService.registerDevice(hashMapOf("device" to regMap))
+                    }.switchMap {
+                        DEPENDENCIES.userPrefs.deviceApiInfo = it
+                        Log.d("LOG_TAG---", "${it.deviceToken}: ")
+                        DEPENDENCIES.sohoService.getTwilioToken(it.deviceToken.orEmpty())
                     }
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        DEPENDENCIES.userPrefs.twilioToken = it.accessToken
-                        DEPENDENCIES.userPrefs.twilioUser = it.userIdentity
-
+                        DEPENDENCIES.userPrefs.apply {
+                            twilioToken = it.accessToken
+                            twilioUser = it.userIdentity
+                            DEPENDENCIES.twilioManager.initChatClient(this@LoginActivity, this)
+                        }
                         val navigatorImpl = NavigatorImpl.newInstance(this)
                         if (!DEPENDENCIES.userPrefs.isProfileComplete.orFalse()) {
                             navigatorImpl.openRegisterUserInfoActivity()

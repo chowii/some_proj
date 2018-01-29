@@ -1,6 +1,5 @@
 package com.soho.sohoapp.feature.chat
 
-import android.os.Build
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.preferences.UserPrefs
@@ -16,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 class ChatAccessManager(private val userPrefs: UserPrefs): AccessManager.Listener, AccessManager.TokenUpdateListener {
 
     private var twilioTokenDisposable: Observable<TwilioToken> = Dependencies.DEPENDENCIES.sohoService
-            .getTwilioToken(Build.getRadioVersion())
+            .getTwilioToken(userPrefs.fcmPushNotificationToken)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -30,8 +29,9 @@ class ChatAccessManager(private val userPrefs: UserPrefs): AccessManager.Listene
         updateToken(accessManager)
     }
 
-    override fun onError(p0: AccessManager?, errorMessage: String?) {
+    override fun onError(accessManager: AccessManager, errorMessage: String?) {
         Dependencies.DEPENDENCIES.logger.d(errorMessage)
+        updateToken(accessManager)
     }
 
     override fun onTokenUpdated(updatedToken: String) {

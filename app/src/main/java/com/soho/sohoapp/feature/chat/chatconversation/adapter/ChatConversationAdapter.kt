@@ -12,6 +12,7 @@ import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.chat.model.PendingMessage
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.preferences.UserPrefs
+import com.soho.sohoapp.utils.and
 
 /**
  * Created by chowii on 28/12/17.
@@ -19,7 +20,8 @@ import com.soho.sohoapp.preferences.UserPrefs
 class ChatConversationAdapter(
         private var messageList: MutableList<out BaseModel> = mutableListOf(),
         private val userPrefs: UserPrefs,
-        private val onRetryClick: (Pair<Uri, String>) -> Unit
+        private val onRetryClick: (Pair<Uri, String>) -> Unit,
+        private val onTopListener: (ChatMessage) -> Unit
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -47,6 +49,23 @@ class ChatConversationAdapter(
             is ChatImageViewHolder -> holder.onBindViewHolder(messageList[position] as ChatMessage, userPrefs)
             is PendingChatImageViewHolder -> holder.onBindViewHolder(messageList[position] as PendingMessage)
         }
+
+        (messageList[position] as? ChatMessage)?.apply {
+            if (holder.adapterPosition == 0 && message.messageIndex.toInt() != 0)
+                onTopListener(when (holder) {
+                    is ChatConversationViewHolder -> messageList[position] as ChatMessage
+                    else -> messageList[position] as ChatMessage
+                })
+        }
+    }
+
+    internal fun prependMessageListToAdapter(messageList: MutableList<out BaseModel>) {
+        val tempList = mutableListOf<BaseModel>()
+        tempList.and {
+            addAll(messageList)
+            addAll(this@ChatConversationAdapter.messageList)
+        }
+        this.messageList = tempList
     }
 
     internal fun updatedMessageList(messageList: MutableList<out BaseModel>) {
@@ -72,11 +91,15 @@ class ChatConversationAdapter(
     }
 
     internal fun updateImageMessage(message: ChatMessage) {
-        findPendingImageItem { it.imageFile.second == message.chatAttachment?.file?.originalFilename }?.let {
-            val index = messageList.indexOf(it)
-            messageList.removeAt(index)
-            addMessageAt(index, message)
-        }
+        val pendingMessage = findPendingImageItem { it.imageFile.second == message.chatAttachment?.file?.originalFilename }
+        if (pendingMessage == null)
+            addMessageAt(itemCount, message)
+        else
+            pendingMessage.let {
+                val index = messageList.indexOf(it)
+                messageList.removeAt(index)
+                addMessageAt(index, message)
+            }
     }
 
     internal fun notifyUploadFailed(image: Pair<Uri, String>) = findPendingImageItem {

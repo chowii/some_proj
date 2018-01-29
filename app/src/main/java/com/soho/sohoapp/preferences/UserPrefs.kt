@@ -1,22 +1,28 @@
 package com.soho.sohoapp.preferences
 
 import android.content.Context
-import android.util.Log
 import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.data.models.User
+import com.soho.sohoapp.feature.chat.model.DeviceToken
 import com.soho.sohoapp.utils.orFalse
 import io.outbound.sdk.Outbound
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class UserPrefs(context: Context) {
+
+    private val packageName = this::class.java.`package`.name
+
     private val SHARED_PREFS_AUTH_TOKEN: String = "SHARED_PREFS_AUTH_TOKEN"
-    private val twilioTokenKey = this::class.java.`package`.name + ".twilioToken"
-    private val twilioUserKey = this::class.java.`package`.name + ".twilioUser"
+    private val twilioTokenKey = packageName + ".twilioToken"
+    private val twilioUserKey = packageName + ".twilioUser"
+    private val pushNotificationKey = packageName + ".push_notification_token"
+    private val deviceIdKey = packageName + ".device_id"
+    private val deviceTokenKey = packageName + ".device_token"
+    private val deviceType = "DeviceGcm"
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+    private val INVALID_ID: Int = -1
 
     var authToken: String
-        private set(value) {
+        internal set(value) {
             prefs.edit()?.putString(SHARED_PREFS_AUTH_TOKEN, value)?.apply()
             DEPENDENCIES.logger.d(prefs.getString(SHARED_PREFS_AUTH_TOKEN, ""))
         }
@@ -50,23 +56,6 @@ class UserPrefs(context: Context) {
         Outbound.identify(outboundUser)
     }
 
-    fun logout() {
-        DEPENDENCIES.userPrefs.apply {
-            authToken = ""
-            user = null
-            twilioToken = ""
-            twilioUser = ""
-        }
-        DEPENDENCIES.twilioManager.chatObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { it.shutdown() },
-                        { Log.d("LOG_TAG---", "${it.message}: ") }
-                )
-        Outbound.logout()
-    }
-
     val isUserLoggedIn: Boolean
         get() = user != null && authToken.isNotBlank()
 
@@ -88,5 +77,38 @@ class UserPrefs(context: Context) {
         set(value) {
             prefs.edit()?.putString(twilioUserKey, value)?.apply()
         }
+
+    var fcmPushNotificationToken: String
+        get() = prefs.getString(pushNotificationKey, "")
+        set(value) {
+            prefs.edit()?.putString(pushNotificationKey, value)?.apply()
+        }
+
+    private var deviceId: Int
+        get() = prefs.getInt(deviceIdKey, INVALID_ID)
+        set(value) {
+            prefs.edit()?.putInt(deviceIdKey, value)?.apply()
+        }
+
+    private var deviceToken: String
+        get() = prefs.getString(deviceTokenKey, "")
+        set(value) {
+            prefs.edit()?.putString(deviceTokenKey, value)?.apply()
+        }
+
+    var deviceApiInfo: DeviceToken
+        get() = DeviceToken(
+                id = deviceId,
+                deviceType = deviceType,
+                deviceToken = deviceToken
+        )
+        set(value) {
+            value.apply {
+                this@UserPrefs.deviceId = id ?: INVALID_ID
+                this@UserPrefs.deviceToken = deviceToken.orEmpty()
+            }
+
+        }
+
 
 }

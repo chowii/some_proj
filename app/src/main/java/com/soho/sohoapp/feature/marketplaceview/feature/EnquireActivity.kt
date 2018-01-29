@@ -46,9 +46,8 @@ class EnquireActivity : AppCompatActivity() {
         val userId = DEPENDENCIES.userPrefs.user?.id ?: 0
         val chatType = if (userId != 0) CHAT_PROPERTY else CHAT_USER
         val conversationMap = hashMapOf(
-                RESOURCE_ID to userId,
-                CHAT_TYPE to chatType,
-                PROPERTY_ID to property.id
+                RESOURCE_ID to property.id,
+                CHAT_TYPE to chatType
         )
         val loading = LoadingDialog(this)
         loading.show("Loading messages")

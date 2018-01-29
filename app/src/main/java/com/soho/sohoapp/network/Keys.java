@@ -196,6 +196,12 @@ public interface Keys {
         String CHAT_USER = "USER";
     }
 
+    interface DeviceInfo {
+        String DEVICE_TYPE_KEY = "device_type";
+        String DEVICE_TYPE = "DeviceGcm";
+        String DEVICE_TOKEN_KEY = "device_token";
+    }
+
     abstract class ChatImage {
         public static String CHAT_ATTACHMENT_ENDPOINT_FORMAT = "http://staging.sohoapp.com/api/twilio/conversations/%d/attachments/%d?authorization=%s";
         public static String CHAT_ATTACH_IMAGE = "file";

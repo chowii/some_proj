@@ -29,16 +29,13 @@ class ChatChannelPresenter(private val context: Context?,
                            private val userPrefs: UserPrefs
 ) : ChatChannelContract.ViewPresentable {
 
-    private val chatAccessManager = ChatAccessManager(DEPENDENCIES.userPrefs)
+    override fun startPresenting() = getChatChannelList()
 
-    override fun startPresenting() {
-        view.showLoading()
-        getChatChannelList()
-    }
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun getChatChannelList() {
+        view.showLoading()
         DEPENDENCIES.twilioManager.chatObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -152,6 +149,5 @@ class ChatChannelPresenter(private val context: Context?,
 
     override fun stopPresenting() {
         compositeDisposable.clear()
-        chatAccessManager.clearDisposable()
     }
 }

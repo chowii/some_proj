@@ -13,6 +13,7 @@ interface MoreContract {
         fun stopPresenting()
         fun getUser(forHelpActivity  : Boolean = false)
         fun addPropertyClicked()
+        fun logout()
     }
 
     interface ViewInteractable {

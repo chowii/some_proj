@@ -3,6 +3,7 @@ package com.soho.sohoapp.network
 import com.soho.sohoapp.data.dtos.*
 import com.soho.sohoapp.feature.chat.model.ChatAttachmentRequest
 import com.soho.sohoapp.feature.chat.model.ChatConversation
+import com.soho.sohoapp.feature.chat.model.DeviceToken
 import com.soho.sohoapp.feature.chat.model.TwilioToken
 import com.soho.sohoapp.network.results.PortfolioCategoryResult
 import com.soho.sohoapp.network.results.PortfolioPropertyResult
@@ -164,6 +165,12 @@ interface SohoService {
 
     @GET("twilio/conversations/channel_sids/{channel_sid}")
     fun getChatConversation(@Path("channel_sid") channelSid: String): Observable<ChatConversation>
+
+    @POST("devices")
+    fun registerDevice(@Body map: Map<String, @JvmSuppressWildcards Any>): Observable<DeviceToken>
+
+    @DELETE("devices")
+    fun unRegisterDevice(@Query("device_token") deviceToken: String): Observable<DeviceToken>
 }
 
 

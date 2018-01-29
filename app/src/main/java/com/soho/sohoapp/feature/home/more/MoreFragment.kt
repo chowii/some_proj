@@ -60,7 +60,15 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_more, container, false)
         ButterKnife.bind(this, view)
-        presenter = MorePresenter(this, context, (activity as AbsActivity), NavigatorImpl.newInstance(this))
+        presenter = MorePresenter(
+                this,
+                context,
+                (activity as AbsActivity),
+                NavigatorImpl.newInstance(this),
+                DEPENDENCIES.sohoService,
+                DEPENDENCIES.userPrefs,
+                DEPENDENCIES.twilioManager
+                )
         presenter.startPresenting()
         return view
     }
@@ -79,14 +87,9 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
         when (button) {
             getString(R.string.settings_help_item_text) -> presenter.getUser(true)
             getString(R.string.settings_item_text) -> NavigatorImpl.newInstance(this).openSettingActivity()
-            getString(R.string.settings_log_out_item_text) -> logoutUser()
+            getString(R.string.settings_log_out_item_text) -> presenter.logout()
             else -> DEPENDENCIES.logger.d(button)
         }
-    }
-
-    private fun logoutUser() {
-        DEPENDENCIES.userPrefs.logout()
-        NavigatorImpl.newInstance(this).openLandingActivity()
     }
 
     override fun showSupportActivity(user: User) {

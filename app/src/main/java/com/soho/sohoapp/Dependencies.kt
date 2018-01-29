@@ -31,8 +31,7 @@ enum class Dependencies {
     lateinit var database: SohoDatabase
         private set
 
-    lateinit var twilioManager: TwilioChatManager
-        private set
+    val twilioManager: TwilioChatManager = TwilioChatManager()
 
     val sohoService: SohoService = ApiClient.getService()
 
@@ -44,6 +43,7 @@ enum class Dependencies {
         database = Room.databaseBuilder(context, SohoDatabase::class.java, DB_NAME)
                 .addMigrations(SohoDatabase.migration1to2)
                 .build()
-        twilioManager = TwilioChatManager().initChatClient(context, userPrefs)
+        if (userPrefs.twilioToken.isNotBlank())
+            twilioManager.initChatClient(context, userPrefs)
     }
 }
