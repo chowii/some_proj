@@ -597,6 +597,7 @@
     <string name="photo_filename_format">JPEG_%s_</string>
     <string name="chat_conversation_type_indicator_text">Typing...</string>
     <string name="pending_chat_item_retry_text">Retry</string>
+    <string name="more_logging_out_text">Logging out</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>

@@ -1,6 +1,7 @@
 package com.soho.sohoapp.feature.home.more
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.soho.sohoapp.Dependencies.DEPENDENCIES
 import com.soho.sohoapp.R
 import com.soho.sohoapp.abs.AbsActivity
 import com.soho.sohoapp.data.models.User
+import com.soho.sohoapp.dialogs.LoadingDialog
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.feature.home.more.adapter.MoreAdapter
 import com.soho.sohoapp.feature.home.more.contract.MoreContract
@@ -56,10 +58,13 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
     @BindView(R.id.user_avatar_iv)
     lateinit var userAvatarIv: CircleImageView
 
+    lateinit var loading: LoadingDialog
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_more, container, false)
         ButterKnife.bind(this, view)
+        loading = LoadingDialog(context)
         presenter = MorePresenter(
                 this,
                 context,
@@ -98,6 +103,22 @@ class MoreFragment : BaseFragment(), MoreContract.ViewInteractable, MoreViewHold
                 .withEmailIdentifier(user.email)
                 .build())
         NavigatorImpl.newInstance(this).openHelpActivity()
+    }
+
+    override fun showLoading() {
+        loading.show(getString(R.string.more_logging_out_text))
+    }
+
+    override fun showError(message: String) {
+        loading.dismiss()
+        AlertDialog.Builder(context).apply {
+            setMessage(message)
+            show()
+        }
+    }
+
+    override fun hideLoading() {
+        loading.dismiss()
     }
 
     override fun showUserProfileInfo(user: User) {

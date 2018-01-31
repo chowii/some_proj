@@ -16,19 +16,20 @@ import com.soho.sohoapp.feature.home.BaseModel
 /**
  * Created by chowii on 19/12/17.
  */
-class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>,
+class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel>,
                          private val onChatChannelClick: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = subscribedChannels.size
 
-    override fun getItemViewType(position: Int) = R.layout.item_chat_channel
+    override fun getItemViewType(position: Int) = subscribedChannels[position].itemViewType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_channel, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
 
         return when (viewType) {
             R.layout.item_chat_channel -> ChatChannelViewHolder(itemView)
+            R.layout.item_empty_dataset -> EmptyDataSetViewHolder(itemView, {})
             else -> null
         }
     }
@@ -90,7 +91,7 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel?>
 
     private fun getString(@StringRes res: Int, holder: RecyclerView.ViewHolder) = holder.itemView.context.getString(res)
 
-    fun appendToMessageList(messageList: BaseModel?) {
+    fun appendToMessageList(messageList: BaseModel) {
         subscribedChannels.add(messageList)
     }
 

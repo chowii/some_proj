@@ -22,7 +22,7 @@ class MessagingService : FirebaseMessagingService() {
     companion object {
         private val packageName = this::class.java.`package`.name
         @JvmStatic
-        val DEFAULT_CHANNEL =  packageName + ".DEFAULT_CHANNEL"
+        val DEFAULT_CHANNEL = packageName + ".DEFAULT_CHANNEL"
 
         @JvmStatic
         val DEFAULT_CHANNEL_NAME = packageName + ".default_channel"
@@ -33,7 +33,7 @@ class MessagingService : FirebaseMessagingService() {
         private val defaultChannelDescription = packageName + ".Default_Notification"
         private const val MESSAGE_BODY_KEY = "twi_body"
         private const val MESSAGE_CHANNEL_ID_KEY = "channel_id"
-        private const val NEW_MESSAGE_STRING = "A New message: "
+        private val NEW_MESSAGE_STRING = "A New message: "
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -45,7 +45,7 @@ class MessagingService : FirebaseMessagingService() {
 
         val notif = NotificationCompat.Builder(this, DEFAULT_CHANNEL).letX {
             setStyle(NotificationCompat.BigTextStyle().bigText(messageLong))
-            setSmallIcon(R.mipmap.ic_launcher)
+            setSmallIcon(R.drawable.ic_logo_notif)
             setContentTitle(getString(R.string.app_name1))
             setContentText(messageShort)
             setAutoCancel(true)

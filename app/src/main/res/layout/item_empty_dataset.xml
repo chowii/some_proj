@@ -13,7 +13,7 @@
         app:srcCompat="@drawable/soho_logo_tagline" />
 
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/header_text_view"
         style="@style/TextView.Message.Large.Center.HyperLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         tools:text="Test Header" />
 
     <TextView
-        android:id="@+id/subheader"
+        android:id="@+id/subheader_text_view"
         style="@style/TextView.SubTitle.Center.Grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

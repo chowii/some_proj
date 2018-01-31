@@ -86,6 +86,7 @@ class MorePresenter(
 
 
     override fun logout() {
+        interactable.showLoading()
         sohoService.unRegisterDevice(userPrefs.deviceApiInfo.deviceToken.orEmpty())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -100,11 +101,14 @@ class MorePresenter(
                                 deviceApiInfo = DeviceToken(-1, "", "")
                             }
                             twilioManager.shutdown()
+                            interactable.hideLoading()
                             navigator.openLandingActivity()
                         },
                         {
                             Log.d("LOG_TAG---", "${it.message}: ")
                             DEPENDENCIES.logger.e(it.message, it)
+                            interactable.showError(it.message?: getString(R.string.error_occurred))
+                            interactable.hideLoading()
                         }
                 )
     }

@@ -12,7 +12,7 @@ import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.chat.model.PendingMessage
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.preferences.UserPrefs
-import com.soho.sohoapp.utils.and
+import com.soho.sohoapp.utils.letX
 
 /**
  * Created by chowii on 28/12/17.
@@ -61,7 +61,7 @@ class ChatConversationAdapter(
 
     internal fun prependMessageListToAdapter(messageList: MutableList<out BaseModel>) {
         val tempList = mutableListOf<BaseModel>()
-        tempList.and {
+        tempList.letX {
             addAll(messageList)
             addAll(this@ChatConversationAdapter.messageList)
         }
