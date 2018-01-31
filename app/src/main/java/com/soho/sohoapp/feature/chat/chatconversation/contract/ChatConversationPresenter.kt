@@ -81,7 +81,6 @@ class ChatConversationPresenter(private val context: Context,
 
     private fun takePhoto() {
         if (permissionManager.hasCameraPermission()) {
-            Log.d("LOG_TAG---", "hasCameraPermission: ${permissionManager.hasCameraPermission()}")
             view.captureImage()
         } else {
             cleanImageDisposable()
@@ -111,14 +110,13 @@ class ChatConversationPresenter(private val context: Context,
         }
     }
 
-    val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
+    private val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
         override fun onMessageAdded(message: Message) {
             if (message.attributes.isNull(CHAT_ATTACH_IMAGE)) {
                 message.channel.messages.setAllMessagesConsumed()
                 view.appendMessage(ChatMessage(message, chatConversation))
             } else
                 view.updateImageMessage(ChatMessage(message, chatConversation))
-//            super.onMessageAdded(message)
         }
 
         override fun onTypingStarted(member: Member) {
@@ -144,7 +142,6 @@ class ChatConversationPresenter(private val context: Context,
                 .subscribe(
                         {
                             val messageList = it.map { message ->
-                                /**/
                                 message.channel.addListener(channelChangeListener)
                                 ChatMessage(message, chatConversation)
                             }.toMutableList()
