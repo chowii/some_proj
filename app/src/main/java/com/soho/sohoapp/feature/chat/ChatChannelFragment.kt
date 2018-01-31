@@ -18,8 +18,10 @@ import com.soho.sohoapp.R
 import com.soho.sohoapp.feature.chat.adapter.ChatChannelAdapter
 import com.soho.sohoapp.feature.chat.chatconversation.ChatConversationActivity
 import com.soho.sohoapp.feature.chat.contract.ChatChannelContract
+import com.soho.sohoapp.feature.chat.model.ChatChannel
 import com.soho.sohoapp.feature.chat.presenter.ChatChannelPresenter
 import com.soho.sohoapp.feature.home.BaseModel
+import com.twilio.chat.Message
 
 /**
  * Created by mariolopez on 16/10/17.
@@ -70,6 +72,18 @@ class ChatChannelFragment : Fragment(), ChatChannelContract.ViewInteractable {
 
     override fun updateChannelList(baseList: BaseModel) {
         adapter.appendToMessageList(baseList)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun updateChannelLastMessage(message: Message) {
+        adapter.apply {
+            updateChannelLastMessage(message)
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun prependChannel(s: ChatChannel) {
+        adapter.prependChannel(s)
         adapter.notifyDataSetChanged()
     }
 

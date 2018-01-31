@@ -87,10 +87,12 @@ class MorePresenter(
 
     override fun logout() {
         interactable.showLoading()
-        sohoService.unRegisterDevice(userPrefs.deviceApiInfo.deviceToken.orEmpty())
+        twilioManager.unregisterFcm(userPrefs.fcmPushNotificationToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .switchMap { twilioManager.unregisterFcm(userPrefs.fcmPushNotificationToken) }
+                .switchMap {
+                    sohoService.unRegisterDevice(userPrefs.deviceApiInfo.deviceToken.orEmpty())
+                }
                 .subscribe(
                         {
                             userPrefs.letX {
@@ -107,7 +109,7 @@ class MorePresenter(
                         {
                             Log.d("LOG_TAG---", "${it.message}: ")
                             DEPENDENCIES.logger.e(it.message, it)
-                            interactable.showError(it.message?: getString(R.string.error_occurred))
+                            interactable.showError(it.message ?: getString(R.string.error_occurred))
                             interactable.hideLoading()
                         }
                 )

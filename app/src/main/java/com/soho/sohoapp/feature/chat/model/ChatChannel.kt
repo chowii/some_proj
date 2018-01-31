@@ -18,9 +18,10 @@ class ChatChannel(private val chatChannel: Channel?) : BaseModel {
     override fun getItemViewType() = R.layout.item_chat_channel
 
     var property: ChatAttributes = Gson().fromJson<ChatAttributes>(chatChannel?.attributes.toString(), object : TypeToken<ChatAttributes>() {}.type)
-    var messageList: List<Message> = listOf()
+    var messageList: MutableList<Message> = mutableListOf()
     var isUnconsumed: Boolean = false
 
+    var channelSid: String? = chatChannel?.sid
     var propertyId: Int? = null
     var propertyAddress: String? = null
     var users: List<String> = mutableListOf()

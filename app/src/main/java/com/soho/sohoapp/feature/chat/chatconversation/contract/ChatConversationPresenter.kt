@@ -136,7 +136,7 @@ class ChatConversationPresenter(private val context: Context,
         compositeDisposable.add(DEPENDENCIES.sohoService.getChatConversation(channelSid)
                 .switchMap {
                     chatConversation = it
-                    view.showAvatar(it.conversionUsers[1].user.avatar?.imageUrl)
+                    view.showAvatar(it.conversionUsers[0].user.avatar?.imageUrl)
                     twilioManager.getChatMessages(context, userPrefs, channelSid, numberOfLastMessages)
                 }
                 .subscribeOn(Schedulers.io())
@@ -168,7 +168,7 @@ class ChatConversationPresenter(private val context: Context,
     private fun getParticipantName(messageList: MutableList<ChatMessage>): String? {
         return messageList.map {
             Gson().fromJson(it.message.channel.attributes.toString(), ChatAttributes::class.java)
-        }.firstOrNull()?.chatConversation?.conversionUsers?.get(1)
+        }.firstOrNull()?.chatConversation?.conversionUsers?.get(0)
     }
 
     override fun uploadGalleryImageFromIntent(uri: Uri, filename: String) {

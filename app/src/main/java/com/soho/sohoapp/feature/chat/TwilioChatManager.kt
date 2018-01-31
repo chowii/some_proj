@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.chat
 import android.content.Context
 import android.util.Log
 import com.soho.sohoapp.Dependencies
+import com.soho.sohoapp.feature.chat.adapter.ChatChannelListenerAdapter
 import com.soho.sohoapp.preferences.UserPrefs
 import com.soho.sohoapp.utils.letX
 import com.twilio.chat.*
@@ -78,16 +79,28 @@ class TwilioChatManager {
         return Observable.create { emitter ->
             chatClient?.channels?.getChannel(channelSid, object : CallbackListener<Channel>() {
                 override fun onSuccess(channel: Channel) {
-                    channel.messages.sendMessage(
-                            Message.options()
-                                    .withBody(messageText)
-                                    .withAttributes(JSONObject("{}")),
-                            object : CallbackListener<Message>() {
-                                override fun onSuccess(message: Message) {
-                                    onMessageSent(message)
-                                    emitter.onNext(message)
-                                }
-                            })
+                    Log.d("LOG_TAG---", "onSuccessSyncState(): ${channel.synchronizationStatus}")
+                    channel.addListener(object : ChatChannelListenerAdapter() {
+
+                        override fun onSynchronizationChanged(channel: Channel) {
+                            sendMessage(channel)
+                        }
+                    })
+                    sendMessage(channel)
+                }
+
+                private fun sendMessage(channel: Channel) {
+                    if (channel.synchronizationStatus == Channel.SynchronizationStatus.ALL)
+                        channel.messages.sendMessage(
+                                Message.options()
+                                        .withBody(messageText)
+                                        .withAttributes(JSONObject("{}")),
+                                object : CallbackListener<Message>() {
+                                    override fun onSuccess(message: Message) {
+                                        onMessageSent(message)
+                                        emitter.onNext(message)
+                                    }
+                                })
                 }
 
                 override fun onError(errorInfo: ErrorInfo) {
@@ -127,7 +140,7 @@ class TwilioChatManager {
                     }
 
                     override fun onError(errorInfo: ErrorInfo) {
-                        emitter.onError(Throwable (errorInfo.message))
+                        emitter.onError(Throwable(errorInfo.message))
                         super.onError(errorInfo)
                     }
                 })
@@ -168,9 +181,12 @@ class TwilioChatManager {
 
     }
 
-    fun shutdown() {
-        chatClient?.shutdown()
-        chatClient = null
+    fun shutdown(): Observable<Boolean> {
+        return Observable.create {
+            chatClient?.shutdown()
+            chatClient = null
+            it.onNext(true)
+        }
     }
 
 }

@@ -54,7 +54,9 @@ class EnquireActivity : AppCompatActivity() {
         if (isEnquiryValid()) {
             loading.show(getString(R.string.chat_loading_messages_text))
             DEPENDENCIES.sohoService.getConversation(conversationMap)
-                    .switchMap { DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
+                    .switchMap { 
+                        Log.d("LOG_TAG---", "onSubmitClick() isChannelNull: ${it.channelSid == null}")
+                        DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

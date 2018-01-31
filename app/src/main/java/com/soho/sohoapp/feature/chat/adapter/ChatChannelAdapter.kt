@@ -3,6 +3,7 @@ package com.soho.sohoapp.feature.chat.adapter
 import android.graphics.Typeface
 import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.soho.sohoapp.R
@@ -12,6 +13,7 @@ import com.soho.sohoapp.feature.chat.viewholder.ChatChannelViewHolder
 import com.soho.sohoapp.feature.common.model.EmptyDataSet
 import com.soho.sohoapp.feature.common.viewholder.EmptyDataSetViewHolder
 import com.soho.sohoapp.feature.home.BaseModel
+import com.twilio.chat.Message
 
 /**
  * Created by chowii on 19/12/17.
@@ -63,6 +65,16 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel>,
         }
     }
 
+    fun updateChannelLastMessage(message: Message) = subscribedChannels.forEach {
+        when (it) {
+            is ChatChannel -> {
+                if (it.messageList.firstOrNull()?.channelSid == message.channelSid)
+                    it.messageList.add(0, message)
+            }
+
+        }
+    }
+
     private fun setChannelMessageAsRead(chatChannel: ChatChannel) {
         chatChannel.apply {
             isUnconsumed = false
@@ -100,6 +112,16 @@ class ChatChannelAdapter(private val subscribedChannels: MutableList<BaseModel>,
     fun updateChannelList(updatedChannelList: List<BaseModel>) {
         subscribedChannels.clear()
         subscribedChannels.addAll(updatedChannelList)
+    }
+
+    fun test(channelSid: String) {
+
+        Log.d("LOG_TAG---", "test(): $channelSid")
+//        Log.d("LOG_TAG---", "test()1: ${subscribedChannels.filter { it is ChatChannel }.map { it as ChatChannel }.map { it.messageList.first().channelSid == channelSid }}")
+    }
+
+    fun prependChannel(s: ChatChannel) {
+        subscribedChannels.add(0, s)
     }
 
 }

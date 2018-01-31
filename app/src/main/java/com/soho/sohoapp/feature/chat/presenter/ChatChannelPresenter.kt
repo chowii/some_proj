@@ -50,6 +50,20 @@ class ChatChannelPresenter(private val context: Context?,
                                         context?.let { addSubscribedChannelListToAdapter(it, client) }
                                     }
                                 }
+
+                                override fun onChannelAdded(channel: Channel) {
+                                    val s = createChatChannel(channel, true)
+                                    configureChatChannel(s)
+                                            .subscribe(
+                                                    {
+                                                        view.prependChannel(it)
+                                                    },
+                                                    {
+                                                        Log.d("LOG_TAG---", "Twilio error: " + it?.message)
+                                                        view.showError(it)
+                                                    }
+                                            )
+                                }
                             })
 
                         },
@@ -75,13 +89,70 @@ class ChatChannelPresenter(private val context: Context?,
                     hideLoading()
                 }
             } else {
-                makeChannelList(channelList, true)
+                view.onChannelUpdated(makeChannelList(channelList, true).toMutableList())
+                view.hideLoading()
             }
         }
     }
 
-    private fun makeChannelList(channelList: MutableList<Channel>, addListener: Boolean = false): List<Boolean> {
-        val chatChannel = configureChatChannel(channelList, addListener)
+    private fun makeChannelList(channelList: MutableList<Channel>, addListener: Boolean = false): List<ChatChannel> {
+        val chatChannelList = channelList.map { channel ->
+            createChatChannel(channel, addListener)
+        }.toMutableList()
+
+        val configuredChatChannelList = chatChannelList.map { chat ->
+            configureChatChannel(chat)
+        }
+
+        configuredChatChannelList.map {
+            it.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                chatChannelList.add(it)
+                            },
+                            {
+
+                            }
+                    )
+        }
+
+
+        return chatChannelList.sortedByDescending {
+            it.messageList.firstOrNull()
+                    ?.timeStampAsDate
+                    ?.time
+        }
+
+        /*
+
+
+                    compositeDisposable.add(
+                    chatChannel.getLastMessageObservable()
+                            .switchMap {
+                            }
+                            .switchMap {
+                                chatChannel.isUnconsumed = it > 0
+                                temp.add(chatChannel)
+                                Observable.create<MutableList<ChatChannel>> { it.onNext(temp) }
+                            }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        it
+                                    },
+                                    {
+
+                                    }
+                            )
+            )
+
+
+        */
+
+        /*
+        val chatChannel = configureChatChannelList(channelList, addListener)
 
         val chatChannelList = mutableListOf<ChatChannel>()
 
@@ -89,7 +160,7 @@ class ChatChannelPresenter(private val context: Context?,
 
             compositeDisposable.add(chat.getLastMessageObservable()
                     .switchMap {
-                        chat.messageList = it
+                        chat.messageList = it.toMutableList()
                         chat.getUnconsumedMessageCount()
                     }
                     .switchMap {
@@ -107,32 +178,69 @@ class ChatChannelPresenter(private val context: Context?,
                                             ?.time
                                 }
                                 view.onChannelUpdated(updatedChannelList.toMutableList())
-                                view.hideLoading()
                             },
                             {
                                 Log.d("LOG_TAG---", "message error: " + it.message)
                                 view.hideLoading()
                             }))
         }
+        */
     }
 
-    private fun configureChatChannel(channelList: MutableList<Channel>, addListener: Boolean = false) = channelList
-            .map { channel ->
-                if (addListener) {
-                    addChannelListener(channel, channelList)
+    private fun configureChatChannel(chat: ChatChannel): Observable<ChatChannel> {
+        return chat.getLastMessageObservable()
+                .switchMap {
+                    chat.messageList = it.toMutableList()
+                    chat.getUnconsumedMessageCount()
                 }
-                ChatChannel(channel)
+                .switchMap {
+                    chat.isUnconsumed = it > 0
+                    Observable.create<ChatChannel> { it.onNext(chat) }
+                }
+//                        .switchMap {
+//
+//                            Observable.create<List<ChatChannel>> { it.onNext(temp) }
+//                        }
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(
+//                                {
+//                                    val s = it.sortedByDescending {
+//                                        it.messageList.firstOrNull()
+//                                                ?.timeStampAsDate
+//                                                ?.time
+//                                    }
+//                                    view.onChannelUpdated(s.toMutableList())
+//                                    view.hideLoading()
+//                                },
+//                                {
+//
+//                                }
+//                        )
+
+    }
+
+    private fun configureChatChannelList(channelList: MutableList<Channel>, addListener: Boolean = false) = channelList
+            .map { channel ->
+                createChatChannel(channel, addListener)
             }
 
+    private fun createChatChannel(channel: Channel, addListener: Boolean): ChatChannel {
+        if (addListener) {
+            addChannelListener(channel)
 
-    private fun addChannelListener(channel: Channel, channelList: MutableList<Channel>) {
+        return ChatChannel(channel)
+    }
+
+
+    private fun addChannelListener(channel: Channel) {
         channel.addListener(object : ChatChannelListenerAdapter() {
             override fun onMessageAdded(message: Message) {
-                makeChannelList(channelList)
+                view.updateChannelLastMessage(message)
             }
 
             override fun onMessageDeleted(message: Message) {
-                makeChannelList(channelList)
+//                makeChannelList(channelList)
             }
 
         })

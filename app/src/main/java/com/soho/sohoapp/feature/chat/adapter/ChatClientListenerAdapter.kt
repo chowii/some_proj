@@ -27,7 +27,7 @@ open class ChatClientListenerAdapter : ChatClientListener{
     override fun onChannelJoined(channel: Channel?) {
     }
 
-    override fun onChannelAdded(channel: Channel?) {
+    override fun onChannelAdded(channel: Channel) {
     }
 
     override fun onChannelSynchronizationChange(channel: Channel?) {

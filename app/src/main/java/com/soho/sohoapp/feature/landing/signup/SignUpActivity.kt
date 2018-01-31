@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.widget.Button
@@ -93,6 +94,10 @@ class SignUpActivity : AppCompatActivity() {
                         { throwable ->
                             DEPENDENCIES.logger.e("error", throwable)
                             loadingDialog?.dismiss()
+                            AlertDialog.Builder(this).apply {
+                                setMessage(getString(R.string.error_occurred))
+                                show()
+                            }
                         }
                 )
     }

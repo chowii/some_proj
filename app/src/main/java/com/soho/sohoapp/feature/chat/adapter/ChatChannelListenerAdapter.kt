@@ -27,7 +27,7 @@ open class ChatChannelListenerAdapter : ChannelListener {
     override fun onTypingStarted(member: Member) {
     }
 
-    override fun onSynchronizationChanged(channel: Channel?) {
+    override fun onSynchronizationChanged(channel: Channel) {
     }
 
     override fun onMessageUpdated(message: Message?, updateReason: Message.UpdateReason?) {
