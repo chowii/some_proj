@@ -52,7 +52,7 @@ class EnquireActivity : AppCompatActivity() {
         )
         val loading = LoadingDialog(this)
         if (isEnquiryValid()) {
-            loading.show("Loading messages")
+            loading.show(getString(R.string.chat_loading_messages_text))
             DEPENDENCIES.sohoService.getConversation(conversationMap)
                     .switchMap { DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
                     .subscribeOn(Schedulers.io())

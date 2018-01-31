@@ -63,19 +63,21 @@ class ChatConversationPresenter(private val context: Context,
         if (permissionManager.hasStoragePermission())
             takePhoto()
         else {
-            imageDisposable.add(
-                    permissionManager.requestStoragePermission(CHAT_CAMERA_STORAGE_PERMISSION)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        if (it.isPermissionGranted)
-                                            takePhoto()
-                                    },
-                                    {
-                                        view.showError(it)
-                                        Log.d("LOG_TAG---", "${it.message}: ")
-                                    })
-            )
+            imageDisposable.apply {
+                clear()
+                add(permissionManager.requestStoragePermission(CHAT_CAMERA_STORAGE_PERMISSION)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                {
+                                    if (it.isPermissionGranted)
+                                        takePhoto()
+                                },
+                                {
+                                    view.showError(it)
+                                    Log.d("LOG_TAG---", "${it.message}: ")
+                                })
+                )
+            }
         }
     }
 

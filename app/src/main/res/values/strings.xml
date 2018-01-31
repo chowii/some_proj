@@ -598,6 +598,7 @@
     <string name="chat_conversation_type_indicator_text">Typing...</string>
     <string name="pending_chat_item_retry_text">Retry</string>
     <string name="more_logging_out_text">Logging out</string>
+    <string name="chat_loading_messages_text">Loading messages</string>
 
     <string-array name="filter_buy_price_range">
         <item>Any</item>
