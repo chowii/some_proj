@@ -13,6 +13,7 @@ import com.soho.sohoapp.feature.chat.model.ChatConversation
 import com.soho.sohoapp.feature.chat.model.ChatMessage
 import com.soho.sohoapp.feature.home.BaseModel
 import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_PERMISSION
+import com.soho.sohoapp.navigator.RequestCode.CHAT_CAMERA_STORAGE_PERMISSION
 import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE
 import com.soho.sohoapp.network.Keys.ChatImage.CHAT_ATTACH_IMAGE_FILE_NAME
 import com.soho.sohoapp.permission.PermissionManagerImpl
@@ -55,13 +56,31 @@ class ChatConversationPresenter(private val context: Context,
     }
 
     override fun pickImageFromGallery() {
-        view.showLoading()
         view.pickImage()
     }
 
     override fun takeImageWithCamera() {
+        if (permissionManager.hasStoragePermission())
+            takePhoto()
+        else {
+            imageDisposable.add(
+                    permissionManager.requestStoragePermission(CHAT_CAMERA_STORAGE_PERMISSION)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        if (it.isPermissionGranted)
+                                            takePhoto()
+                                    },
+                                    {
+                                        view.showError(it)
+                                        Log.d("LOG_TAG---", "${it.message}: ")
+                                    })
+            )
+        }
+    }
+
+    private fun takePhoto() {
         if (permissionManager.hasCameraPermission()) {
-            view.showLoading()
             view.captureImage()
         } else {
             cleanImageDisposable()
@@ -69,14 +88,12 @@ class ChatConversationPresenter(private val context: Context,
                     .observeOn(AndroidSchedulers.mainThread())
                     .flatMap {
                         if (it.isPermissionGranted) {
-                            view.captureImage()
                             rxCamera.toObservable()
                         } else
                             Observable.empty<Uri>()
                     }.subscribe(
                             {
                                 imageDisposable.clear()
-                                view.showLoading()
                                 uploadGalleryImageFromIntent(
                                         it,
                                         String.format(
@@ -93,13 +110,13 @@ class ChatConversationPresenter(private val context: Context,
         }
     }
 
-    val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
+    private val channelChangeListener: ChatChannelListenerAdapter = object : ChatChannelListenerAdapter() {
         override fun onMessageAdded(message: Message) {
-            if (message.attributes.isNull(CHAT_ATTACH_IMAGE))
+            if (message.attributes.isNull(CHAT_ATTACH_IMAGE)) {
+                message.channel.messages.setAllMessagesConsumed()
                 view.appendMessage(ChatMessage(message, chatConversation))
-            else
+            } else
                 view.updateImageMessage(ChatMessage(message, chatConversation))
-            super.onMessageAdded(message)
         }
 
         override fun onTypingStarted(member: Member) {

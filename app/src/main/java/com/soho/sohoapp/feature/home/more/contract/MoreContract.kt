@@ -19,6 +19,9 @@ interface MoreContract {
     interface ViewInteractable {
         fun configureAdapter(model: List<BaseModel>)
         fun showSupportActivity(user: User)
+        fun showLoading()
+        fun showError(message: String)
+        fun hideLoading()
         fun showUserProfileInfo(user: User)
     }
 }

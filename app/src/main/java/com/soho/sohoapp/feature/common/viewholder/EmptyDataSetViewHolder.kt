@@ -13,8 +13,8 @@ import com.soho.sohoapp.feature.common.model.EmptyDataSet
  */
 class EmptyDataSetViewHolder(itemView: View, private val onButtonClick: () -> Unit) : BaseViewHolder<EmptyDataSet>(itemView) {
 
-    @BindView(R.id.header) lateinit var headerTextView: TextView
-    @BindView(R.id.subheader) lateinit var subheaderTextView: TextView
+    @BindView(R.id.header_text_view) lateinit var headerTextView: TextView
+    @BindView(R.id.subheader_text_view) lateinit var subheaderTextView: TextView
     @BindView(R.id.redirect_button) lateinit var button: Button
 
     override fun onBindViewHolder(model: EmptyDataSet) {

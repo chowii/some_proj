@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
@@ -75,14 +76,21 @@ class ChatConversationActivity : AppCompatActivity(), ChatConversationContract.V
     }
 
     @OnClick(R.id.send_button)
-    fun onSendClick() {
-        if (messageEditText.text.isNotBlank())
-            DEPENDENCIES.twilioManager.sendMessageToChannel(channelSid, messageEditText.text.toString())
+    fun onSendClick(view: View) {
+        val message = messageEditText.text.toString()
+        if (message.isNotBlank()) {
+            view.isEnabled = false
+            DEPENDENCIES.twilioManager.sendMessageToChannel(channelSid, message)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            { messageEditText.text.clear() },
+                            {
+                                messageEditText.text.clear()
+                                it.channel.messages.setAllMessagesConsumed()
+                                view.isEnabled = true
+                            },
                             { DEPENDENCIES.logger.e(it.message, it) })
+        }
     }
 
     private lateinit var channelSid: String

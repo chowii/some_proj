@@ -1,5 +1,6 @@
 package com.soho.sohoapp.feature.marketplaceview.feature
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -50,24 +51,55 @@ class EnquireActivity : AppCompatActivity() {
                 CHAT_TYPE to chatType
         )
         val loading = LoadingDialog(this)
-        loading.show("Loading messages")
-        DEPENDENCIES.sohoService.getConversation(conversationMap)
-                .switchMap { DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            startActivity(Intent(this, ChatConversationActivity::class.java).apply {
-                                putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it.channelSid)
-                            })
-                            loading.dismiss()
-                        },
-                        {
-                            Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
-                            Log.d("LOG_TAG---", "onSubmitClick error: " + it.message)
-                            loading.dismiss()
-                        }
-                )
+        if (isEnquiryValid()) {
+            loading.show("Loading messages")
+            DEPENDENCIES.sohoService.getConversation(conversationMap)
+                    .switchMap { DEPENDENCIES.twilioManager.sendMessageToChannel(it.channelSid, enquiryMessage()) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                startActivity(Intent(this, ChatConversationActivity::class.java).apply {
+                                    putExtra(ChatConversationActivity.CHAT_CHANNEL_SID_INTENT_EXTRA, it.channelSid)
+                                })
+                                loading.dismiss()
+                            },
+                            {
+                                Snackbar.make(findViewById(android.R.id.content), R.string.error_occurred, Snackbar.LENGTH_SHORT).show()
+                                Log.d("LOG_TAG---", "onSubmitClick error: " + it.message)
+                                loading.dismiss()
+                            }
+                    )
+        }
+    }
+
+    private fun isEnquiryValid(): Boolean {
+        if (!validateEnquiryTypeSelected()) {
+            AlertDialog.Builder(this).apply {
+                setMessage("Please select what the type of enquiry is related to")
+                show()
+            }
+            return false
+        }
+        if (!validateComment()) {
+            AlertDialog.Builder(this).apply {
+                setMessage("Please enter a comment")
+                show()
+            }
+            return false
+        }
+        return true
+    }
+
+    private fun validateComment() = commentsEditText.text.isNotBlank()
+
+    private fun validateEnquiryTypeSelected() = when {
+        priceCheckBox.isChecked -> true
+        contractCheckBox.isChecked -> true
+        inspectCheckBox.isChecked -> true
+        contactForSimilarCheckBox.isChecked -> true
+        otherCheckBox.isChecked -> true
+        else -> false
     }
 
     private fun enquiryMessage() = String.format(

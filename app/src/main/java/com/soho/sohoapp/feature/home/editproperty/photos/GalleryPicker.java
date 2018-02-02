@@ -30,9 +30,11 @@ public class GalleryPicker {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         if (fragment != null) {
             Intent chooser = Intent.createChooser(intent, fragment.getString(R.string.edit_property_image_chooser_title));
+            chooser.putExtra(Intent.EXTRA_MIME_TYPES, "image/*");
             fragment.startActivityForResult(chooser, REQUEST_PICK_PHOTO);
         } else {
             Intent chooser = Intent.createChooser(intent, activity.getString(R.string.edit_property_image_chooser_title));
+            chooser.putExtra(Intent.EXTRA_MIME_TYPES, "image/*");
             activity.startActivityForResult(chooser, REQUEST_PICK_PHOTO);
         }
     }

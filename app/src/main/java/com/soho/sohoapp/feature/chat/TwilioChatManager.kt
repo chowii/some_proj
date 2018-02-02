@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.soho.sohoapp.Dependencies
 import com.soho.sohoapp.preferences.UserPrefs
-import com.soho.sohoapp.utils.and
+import com.soho.sohoapp.utils.letX
 import com.twilio.chat.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
@@ -89,6 +89,11 @@ class TwilioChatManager {
                                 }
                             })
                 }
+
+                override fun onError(errorInfo: ErrorInfo) {
+                    emitter.onError(Throwable(errorInfo.message))
+                    super.onError(errorInfo)
+                }
             })
         }
     }
@@ -134,7 +139,7 @@ class TwilioChatManager {
         channel?.typing()
     }
 
-    fun getMessageBefore(message: Message, numberOfLastMessages: Int) = message.and {
+    fun getMessageBefore(message: Message, numberOfLastMessages: Int) = message.letX {
         Observable.create<MutableList<Message>> {
 
             messages.getMessagesBefore(messageIndex - 1, numberOfLastMessages, object : CallbackListener<MutableList<Message>>() {
@@ -158,7 +163,6 @@ class TwilioChatManager {
 
             override fun onError(errorInfo: ErrorInfo) {
                 it.onError(Throwable(errorInfo.message))
-                super.onError(errorInfo)
             }
         })
 
